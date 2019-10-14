@@ -3,36 +3,36 @@
      cdkDropListOrientation="vertical"
      (cdkDropListEntered)="isPlaced = true"
      (cdkDropListExited)="isPlaced = false"
+     [class.available]="isSomeDragging"
+     [class.placed]="isPlaced"
      [cdkDropListData]="lessons"
      (cdkDropListDropped)="drop($event)"
      [cdkDropListConnectedTo]="connectedList"
      [cdkDropListEnterPredicate]="isLessonNotSpecified">
   <div class="drag-box"
        cdkDrag
-       (cdkDragStarted)="dragStart.emit($event)"
+       (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
        (cdkDragEnded)="dragEnd.emit($event)"
-       *ngIf="lessons.length; else addElem">
-    <span>{{lessons[0]}}</span>
+       *ngFor="let lesson of lessons; let i = index">
+    <span>{{lesson}}</span>
     <div class="control-row">
-      <button mat-icon-button (click)="edit()">
+      <button mat-icon-button (click)="edit(i)">
         <mat-icon>edit</mat-icon>
       </button>
       <button mat-icon-button (click)="addToClipBoard.emit(lessons[0])">
         <mat-icon>file_copy</mat-icon>
       </button>
-      <button mat-icon-button (click)="getFromClipBoard.emit()" [disabled]="!isSomethingInClipboard">
+      <button mat-icon-button (click)="getFromClipBoard.emit(i)" [disabled]="!isSomethingInClipboard">
         <mat-icon>archive</mat-icon>
       </button>
     </div>
   </div>
-  <ng-template #addElem>
-    <div class="add-box"
-         [class.available]="isSomeDragging"
-         [class.placed]="isPlaced"
-         (click)="addLesson()">
-      <button mat-icon-button>
-        <mat-icon *ngIf="!isSomeDragging && !isPlaced">{{isSomethingInClipboard ? 'archive' : 'add_circle_outline'}}</mat-icon>
-      </button>
-    </div>
-  </ng-template>
+  <div class="add-box"
+       *ngIf="isLessonNotSpecified()"
+       (click)="addLesson()">
+    <button mat-icon-button>
+      <mat-icon
+        *ngIf="!isSomeDragging && !isPlaced">{{isSomethingInClipboard ? 'archive' : 'add_circle_outline'}}</mat-icon>
+    </button>
+  </div>
 </div>

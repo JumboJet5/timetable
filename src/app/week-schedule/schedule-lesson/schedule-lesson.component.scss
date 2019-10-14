@@ -12,20 +12,6 @@
   width: 100px;
   height: 100px;
   position: relative;
-}
-
-.box-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
-  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-}
-
-.add-box {
-  position: absolute;
-  border: dashed transparent 1px;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  cursor: pointer;
 
   &.available {
     background-color: #3b8035;
@@ -34,6 +20,23 @@
   &.placed {
     background-color: #7c800b;
   }
+}
+
+.box-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.add-box {
+  position: relative;
+  border: dashed transparent 1px;
+  flex: 1 0 0;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
 
   .mat-icon-button {
     position: absolute;
@@ -45,6 +48,7 @@
 
 .drag-box {
   background-color: yellow;
+  border: dashed red 1px;
   cursor: move;
   flex: 1 0 0;
   width: 100%;
@@ -58,10 +62,12 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
     .mat-icon, .mat-icon-button {
       height: 28px;
       width: 28px;
     }
+
     .mat-icon {
       font-size: 14px;
       line-height: 14px;

@@ -22,8 +22,8 @@ export class WeekScheduleComponent implements OnInit {
 
   public ngOnInit(): void {}
 
-  public paste(lesson: ScheduleLessonComponent) {
-    lesson.lessons[0] = this.clipboard || lesson.lessons[0];
+  public paste(lesson: ScheduleLessonComponent, index: number) {
+    lesson.lessons[index] = this.clipboard || lesson.lessons[index];
     this.clipboard = undefined;
   }
 }

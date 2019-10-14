@@ -11,7 +11,7 @@ export class ScheduleLessonComponent {
   @Output() public dragStart: EventEmitter<CdkDragStart> = new EventEmitter();
   @Output() public dragEnd: EventEmitter<CdkDragEnd> = new EventEmitter();
   @Output() public addToClipBoard: EventEmitter<string> = new EventEmitter();
-  @Output() public getFromClipBoard: EventEmitter<void> = new EventEmitter();
+  @Output() public getFromClipBoard: EventEmitter<number> = new EventEmitter();
   @Input() public lessons: any[];
   @Input() public connectedList: any[];
   @Input() public isSomeDragging: any[];
@@ -20,7 +20,7 @@ export class ScheduleLessonComponent {
   public isPlaced = false;
   private index = 0;
 
-  public isLessonNotSpecified: () => boolean = () => !this.lessons || !this.lessons.length;
+  public isLessonNotSpecified: () => boolean = () => !this.lessons || this.lessons.length < 2;
 
   public drop(event: CdkDragDrop<string[]>): void {
     if (event.previousContainer === event.container) {
@@ -37,14 +37,15 @@ export class ScheduleLessonComponent {
         event.currentIndex,
       );
     }
+    this.isPlaced = false;
     this.dropEnd.emit(event);
   }
 
   public addLesson() {
-    this.isSomethingInClipboard ? this.getFromClipBoard.emit() : this.lessons.push('new Item');
+    this.isSomethingInClipboard ? this.getFromClipBoard.emit(0) : this.lessons.push('new Item');
   }
 
-  public edit() {
-    this.lessons[0] = 'item' + ++this.index;
+  public edit(index) {
+    this.lessons[index] = 'item' + ++this.index;
   }
 }

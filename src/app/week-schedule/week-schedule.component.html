@@ -9,7 +9,7 @@
                        (addToClipBoard)="clipboard = $event"
                        (dragEnd)="isDragging = false"
                        (dragStart)="isDragging = true"
-                       (getFromClipBoard)="paste(lesson)"
+                       (getFromClipBoard)="paste(lesson, $event)"
                        [connectedList]="dropLists"
                        [isSomeDragging]="isDragging"
                        [isSomethingInClipboard]="!!clipboard"
