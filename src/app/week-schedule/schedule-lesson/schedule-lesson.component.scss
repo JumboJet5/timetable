@@ -1,0 +1,95 @@
+:host {
+  display: flex;
+}
+
+.box-list {
+  border: dashed black 1px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: .5em;
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.box-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.add-box {
+  position: absolute;
+  border: dashed transparent 1px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+
+  &.available {
+    background-color: #3b8035;
+  }
+
+  &.placed {
+    background-color: #7c800b;
+  }
+
+  .mat-icon-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.drag-box {
+  background-color: yellow;
+  cursor: move;
+  flex: 1 0 0;
+  width: 100%;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+
+  .control-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .mat-icon, .mat-icon-button {
+      height: 28px;
+      width: 28px;
+    }
+    .mat-icon {
+      font-size: 14px;
+      line-height: 14px;
+    }
+  }
+}
+
+.cdk-drag {
+  /* this is the animation that fires for the drag */
+  transition: transform 150ms ease;
+}
+
+.cdk-drag-animating {
+  /* this is the animation that fires for the drop */
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdk-drag-placeholder {
+  /* setting opacity to zero makes a blank space between list items during drag preview */
+  opacity: 0;
+}
+
+.cdk-drag-preview {
+  background-color: greenyellow;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+  opacity: .7;
+}

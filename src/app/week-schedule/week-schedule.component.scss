@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+}
+
+.day-column, .time-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .lesson-time {
+    border: solid transparent 1px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: .5em;
+    width: 100px;
+    height: 100px;
+  }
+}
