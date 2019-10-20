@@ -1,0 +1,23 @@
+<mat-form-field>
+  <mat-select
+    #matSelect
+    [placeholder]="placeholder"
+    [multiple]="multiple"
+    [formControl]="selectControl"
+    (selectionChange)="onSelect()"
+    (closed)="onOptionSelectClose()">
+    <div class="wrapper" appScroll (isDown)="onDown()" >
+      <div class="mat-option" *ngIf="withSearch">
+        <input #selectInput class="select-input" placeholder="Пошук..." (input)="onInput()">
+      </div>
+      <ng-container *ngIf="selectedOptions.length">
+        <mat-option *ngFor="let option of selectedOptions" [value]="option.id">
+          {{option.name && option.name.length < 20 ? option.name : option.short_name}}
+        </mat-option>
+      </ng-container>
+      <mat-option *ngFor="let option of displayedOptions" [value]="option.id">
+        {{option.name && option.name.length < 20 ? option.name : option.short_name}}
+      </mat-option>
+    </div>
+  </mat-select>
+</mat-form-field>

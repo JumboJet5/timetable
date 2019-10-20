@@ -1,17 +1,29 @@
-<div class="time-column">
-  <span>N/N</span>
-  <div class="lesson-time" *ngFor="let time of lessonTimes">{{time}}</div>
+<div class="select-group-wrapper">
+  <app-menu-select
+    placeholder="Група"
+    [withSearch]="true"
+    [loadPage]="loadGroups"
+    [loadItem]="loadGroup"
+    [selectControl]="groupIdControl"
+    (changeSelected)="changeSlug($event)"></app-menu-select>
 </div>
-<div class="day-column" *ngFor="let day of week; let index = index">
-  <span>{{weekDays[index]}}</span>
-  <app-schedule-lesson #lesson
-                       *ngFor="let lessons of day"
-                       (addToClipBoard)="clipboard = $event"
-                       (dragEnd)="isDragging = false"
-                       (dragStart)="isDragging = true"
-                       (getFromClipBoard)="paste(lesson, $event)"
-                       [connectedList]="dropLists"
-                       [isSomeDragging]="isDragging"
-                       [isSomethingInClipboard]="!!clipboard"
-                       [lessons]="lessons"></app-schedule-lesson>
+<div class="time-row">
+  <span class="lesson-time">N/N</span>
+  <div class="lessons" *ngFor="let day of weekDays">{{day}}</div>
 </div>
+<ng-container *ngFor="let time of week; let index = index">
+  <div class="divider"></div>
+  <div class="time-row">
+    <span class="lesson-time">{{lessonTimes[index].num}} пара {{lessonTimes[index].start}} - {{lessonTimes[index].end}}</span>
+    <app-schedule-lessons #lesson
+                          *ngFor="let lessons of time"
+                          (addToClipBoard)="clipboard = $event"
+                          (dragEnd)="isDragging = false"
+                          (dragStart)="isDragging = true"
+                          (getFromClipBoard)="paste(lesson, $event)"
+                          [connectedList]="dropLists"
+                          [isSomeDragging]="isDragging"
+                          [clipboardData]="clipboard"
+                          [lessons]="lessons"></app-schedule-lessons>
+  </div>
+</ng-container>

@@ -1,20 +1,22 @@
 <div class="box-list"
      cdkDropList
      cdkDropListOrientation="vertical"
-     (cdkDropListEntered)="isPlaced = true"
-     (cdkDropListExited)="isPlaced = false"
      [class.available]="isSomeDragging"
      [class.placed]="isPlaced"
+     [cdkDropListEnterPredicate]="isLessonNotSpecified()"
+     (cdkDropListEntered)="isPlaced = true"
+     (cdkDropListExited)="isPlaced = false"
      [cdkDropListData]="lessons"
      (cdkDropListDropped)="drop($event)"
-     [cdkDropListConnectedTo]="connectedList"
-     [cdkDropListEnterPredicate]="isLessonNotSpecified">
+     [cdkDropListConnectedTo]="connectedList">
   <div class="drag-box"
        cdkDrag
        (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
        (cdkDragEnded)="dragEnd.emit($event)"
+       [cdkDragData]="lesson"
        *ngFor="let lesson of lessons; let i = index">
-    <span>{{lesson}}</span>
+    <div>{{lesson.name_short}}</div>
+    <div *ngFor="let teacher of lesson.teachers">{{teacher.short_name}}</div>
     <div class="control-row">
       <button mat-icon-button (click)="edit(i)">
         <mat-icon>edit</mat-icon>
@@ -22,17 +24,14 @@
       <button mat-icon-button (click)="addToClipBoard.emit(lessons[0])">
         <mat-icon>file_copy</mat-icon>
       </button>
-      <button mat-icon-button (click)="getFromClipBoard.emit(i)" [disabled]="!isSomethingInClipboard">
+      <button mat-icon-button (click)="getFromClipBoard.emit(i)" [disabled]="!clipboardData">
         <mat-icon>archive</mat-icon>
       </button>
     </div>
   </div>
-  <div class="add-box"
-       *ngIf="isLessonNotSpecified()"
-       (click)="addLesson()">
-    <button mat-icon-button>
-      <mat-icon
-        *ngIf="!isSomeDragging && !isPlaced">{{isSomethingInClipboard ? 'archive' : 'add_circle_outline'}}</mat-icon>
-    </button>
-  </div>
+</div>
+<div class="add-box">
+  <button mat-icon-button [disabled]="!isLessonNotSpecified()({data: clipboardData})">
+    <mat-icon *ngIf="!isSomeDragging && !isPlaced">{{!!clipboardData ? 'archive' : 'add_circle_outline'}}</mat-icon>
+  </button>
 </div>
