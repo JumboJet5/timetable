@@ -1,0 +1,6 @@
+<div class="overlay-backdrop" (click)="closeModal()"></div>
+<div class="modal-wrapper">
+  <div *ngFor="let entry of lessonEntry">{{entry[0]}}: {{entry[1]}}</div>
+  <hr/>
+  <div *ngIf="vacantWeeks">vacant weeks: {{vacantWeeks}}</div>
+</div>

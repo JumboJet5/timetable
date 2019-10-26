@@ -12,6 +12,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { MatSelect } from '@angular/material';
 import { Observable, Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 
 @Component({
@@ -61,7 +62,8 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
     this.options = [];
     this.displayedOptions = [];
     this.selectedOptions = [];
-    this.getSelectedFromFormControl().forEach(id => this.loadOption(id));
+    this.getSelectedFromFormControl()
+      .forEach(id => this.loadOption(id));
     this.loadOptions();
     this.isInitiated = true;
     setTimeout(() => this.needRefreshChange.emit(false));
@@ -85,6 +87,7 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
 
   public loadOption(id: number): void {
     this.subscriptions.push(this.loadItem(id)
+      .pipe(tap(resp => this.selectedOptions.push(resp)))
       .subscribe(resp => this.addSelectedToAllOption([resp])));
   }
 
@@ -137,7 +140,6 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   }
 
   public onDown(): void {
-    console.log('here');
     return !this.allLoaded ? this.loadOptions() : undefined;
   }
 

@@ -11,20 +11,26 @@
      [cdkDropListConnectedTo]="connectedList">
   <div class="drag-box"
        cdkDrag
+       (click)="onLessonClick.emit(lesson)"
        (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
        (cdkDragEnded)="dragEnd.emit($event)"
        [cdkDragData]="lesson"
        *ngFor="let lesson of lessons; let i = index">
     <div>{{lesson.name_short}}</div>
+    <div>{{lessonTypesMap.get(lesson.format)}}</div>
     <div *ngFor="let teacher of lesson.teachers">{{teacher.short_name}}</div>
+    <div *ngIf="lesson.room">ауд. {{lesson.room.num}}</div>
+    <div *ngIf="lesson.subgroup">пг. {{lesson.subgroup}}</div>
+    <div *ngIf="lesson.subgroups">'пг. {{lesson.subgroups}}</div>
+    <div>{{getWeeks(lesson)}}</div>
     <div class="control-row">
       <button mat-icon-button (click)="edit(i)">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button (click)="addToClipBoard.emit(lessons[0])">
+      <button mat-icon-button (click)="copy(lesson)">
         <mat-icon>file_copy</mat-icon>
       </button>
-      <button mat-icon-button (click)="getFromClipBoard.emit(i)" [disabled]="!clipboardData">
+      <button mat-icon-button (click)="paste(i)" [disabled]="!clipboardData">
         <mat-icon>archive</mat-icon>
       </button>
     </div>

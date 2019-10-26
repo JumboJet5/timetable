@@ -17,6 +17,7 @@
     <span class="lesson-time">{{lessonTimes[index].num}} пара {{lessonTimes[index].start}} - {{lessonTimes[index].end}}</span>
     <app-schedule-lessons #lesson
                           *ngFor="let lessons of time"
+                          (onLessonClick)="openLessonDetail($event, lessons)"
                           (addToClipBoard)="clipboard = $event"
                           (dragEnd)="isDragging = false"
                           (dragStart)="isDragging = true"

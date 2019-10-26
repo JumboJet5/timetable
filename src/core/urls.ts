@@ -11,3 +11,4 @@ export const GET_GROUPS = (params: GroupsRequestParamInterface): string =>
   `${HOST}/groups/?${SEARCH(params)}${PAGINATION(params)}`;
 export const GET_GROUP = (id: number): string => `${HOST}/groups/${id}/`;
 export const GET_TIMETABLE_LIST = (slug: string) => `${HOST}/timetable/?${GROUP(slug)}`;
+export const GET_LESSON = (id: number): string => `${HOST}/lessons/${id}/`;
