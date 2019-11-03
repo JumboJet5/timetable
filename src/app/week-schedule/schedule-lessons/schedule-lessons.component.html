@@ -11,7 +11,7 @@
      [cdkDropListConnectedTo]="connectedList">
   <div class="drag-box"
        cdkDrag
-       (click)="onLessonClick.emit(lesson)"
+       (click)="log(); onLessonClick.emit(lesson)"
        (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
        (cdkDragEnded)="dragEnd.emit($event)"
        [cdkDragData]="lesson"
@@ -24,13 +24,13 @@
     <div *ngIf="lesson.subgroups">'пг. {{lesson.subgroups}}</div>
     <div>{{getWeeks(lesson)}}</div>
     <div class="control-row">
-      <button mat-icon-button (click)="edit(i)">
+      <button mat-icon-button [disabled]="true" (click)="edit(i); $event.stopPropagation()">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button (click)="copy(lesson)">
+      <button mat-icon-button [disabled]="true" (click)="copy(lesson); $event.stopPropagation()">
         <mat-icon>file_copy</mat-icon>
       </button>
-      <button mat-icon-button (click)="paste(i)" [disabled]="!clipboardData">
+      <button mat-icon-button (click)="paste(i); $event.stopPropagation()" [disabled]="!clipboardData">
         <mat-icon>archive</mat-icon>
       </button>
     </div>

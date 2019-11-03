@@ -1,19 +1,9 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { MatSelect } from '@angular/material';
 import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
+import { SelectComponent } from 'src/app/shared/select-input/select/select.component';
 
 @Component({
   selector: 'app-menu-select',
@@ -26,12 +16,14 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   @Input() public placeholder: string;
   @Input() public sortByField = 'name';
   @Input() public multiple: boolean;
+  @Input() public maxLength = 20;
   @Input() public withSearch: boolean;
+  @Input() public disabled: boolean;
   @Input() public selectControl: FormControl;
   @Input() public loadPage: (option: LoadPageInterface) => Observable<OptionsResponseInterface>;
   @Input() public loadItem: (id: number) => Observable<OptionInterface>;
   @ViewChild('selectInput', {static: false}) selectInput: ElementRef;
-  @ViewChild('matSelect', {static: false}) matSelect: MatSelect;
+  @ViewChild(SelectComponent, {static: false}) select: SelectComponent;
   public options: OptionInterface[];
   public selectedOptions: OptionInterface[];
   public allOptionsCount: number;
@@ -39,6 +31,7 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   public pageNumberForAllOptions: number;
   public pageNumber: number;
   public pageSize: number;
+  public optionMap: Map<number, any> = new Map();
   private allLoaded: boolean;
   private isInitiated = false;
   private subscriptions: Subscription[] = [];
@@ -55,6 +48,8 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
     }
   }
 
+  @Input() public itemToSting = (item) => item ? item.name && item.name.length < this.maxLength ? item.name : item.short_name : '';
+
   public ngOnInit(): void {
     this.pageNumberForAllOptions = 0;
     this.pageNumber = 0;
@@ -62,9 +57,14 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
     this.options = [];
     this.displayedOptions = [];
     this.selectedOptions = [];
-    this.getSelectedFromFormControl()
-      .forEach(id => this.loadOption(id));
-    this.loadOptions();
+    this.selectControl.valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe(() => this.onSelect());
+    if (this.selectControl.enabled) {
+      this.getSelectedFromFormControl()
+        .forEach(id => this.loadOption(id));
+      this.loadOptions();
+    }
     this.isInitiated = true;
     setTimeout(() => this.needRefreshChange.emit(false));
   }
@@ -93,12 +93,19 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
 
   public addSelectedToAllOption(selectedOptions: OptionInterface[]): void {
     this.options.push(...selectedOptions);
-    this.formatService.unificationOptions(this.options, this.sortByField);
+    selectedOptions.forEach(item => this.optionMap.set(item.id, item));
+    if (this.sortByField) {
+      this.formatService.unificationOptions(this.options, this.sortByField);
+    }
   }
 
   public formatResponse(response: OptionsResponseInterface): void {
     this.pageNumber++;
-    this.displayedOptions.push(...response.results);
+    this.displayedOptions.push(...response.results
+      .filter(i => this.selectedOptions
+        .every(s => s.id !== i.id)));
+    response.results
+      .forEach(item => this.optionMap.set(item.id, item));
     this.allLoaded = !response.next;
     return !this.getSearchString() ? this.changeAllOptions(response) : undefined;
   }
@@ -106,7 +113,9 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   public changeAllOptions(response: OptionsResponseInterface): void {
     this.pageNumberForAllOptions++;
     this.options.push(...response.results);
-    this.formatService.unificationOptions(this.options, this.sortByField);
+    if (this.sortByField) {
+      this.formatService.unificationOptions(this.options, this.sortByField);
+    }
     this.allOptionsCount = response.count;
   }
 
@@ -128,7 +137,7 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   }
 
   public onOptionSelectClose(): void {
-    if (this.withSearch) {
+    if (this.withSearch && this.selectInput) {
       this.selectInput.nativeElement.value = '';
     }
     this.addSelectedToAllOption([...this.selectedOptions, ...this.displayedOptions]);

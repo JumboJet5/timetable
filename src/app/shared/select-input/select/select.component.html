@@ -1,0 +1,10 @@
+<div class="content-wrapper" [class.opened]="isOpened">
+  <div class="select-result" (click)="toggle()">
+    <ng-content select="app-select-result"></ng-content>
+  </div>
+  <div class="options" *ngIf="isOpened">
+    <ng-content></ng-content>
+  </div>
+</div>
+
+<div class="background-overflow" *ngIf="isOpened" (click)="isOpened = false"></div>

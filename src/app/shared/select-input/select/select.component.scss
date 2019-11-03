@@ -1,0 +1,58 @@
+@import '../../../../assets/stylesheet/functions';
+
+.content-wrapper {
+  position: relative;
+
+  &.opened {
+    z-index: 21;
+  }
+
+  ::ng-deep ngx-simplebar [data-simplebar] {
+    max-height: 180px;
+
+    .simplebar-mask {
+      border-radius: 0 0 4px 4px;
+    }
+
+    .simplebar-track.simplebar-vertical {
+      right: 5px;
+      width: 9px;
+
+      .simplebar-scrollbar {
+        width: 5px;
+        border-radius: 4px;
+
+        &.simplebar-visible:before {
+          opacity: 1;
+        }
+
+        &:before {
+          top: 10px;
+          bottom: 10px;
+          background-color: #F0F0F0;
+        }
+      }
+    }
+  }
+}
+
+.background-overflow {
+  position: fixed;
+  z-index: 20;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: transparent;
+}
+
+.options {
+  width: 100%;
+  max-height: 300px;
+  position: absolute;
+  border-radius: 0 0 4px 4px;
+  background-color: white;
+  clip-path: inset(0 -25px -25px -25px);
+  box-shadow: 0 3px 25px 0 rgba(179, 179, 179, 0.48);
+  overflow: hidden;
+}

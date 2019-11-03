@@ -1,8 +1,7 @@
-declare interface TeachersRequestParamInterface {
+declare interface HousingsRequestParamInterface {
   search?: string;
   pageNumber?: number;
   pageSize?: number;
   universityId?: number;
-  degreeId?: number;
   groupId?: number;
 }

@@ -1,0 +1,98 @@
+.tb-form {
+  position: relative;
+}
+
+.tb-form-row {
+  display: flex;
+
+  & > .long, & > .wrapper-short, & > .wrapper-short > * {
+    flex: 1 0 0;
+    margin-right: 30px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  & > .wrapper-short {
+    display: flex;
+  }
+}
+
+.tb-input-label {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin: 19px 0 0;
+}
+
+.tb-error {
+  position: absolute;
+  bottom: -17px;
+  left: 0;
+  color: #F5A623;
+  font-size: 11px;
+  line-height: 13px;
+}
+
+.placeholder.lighter {
+  color: rgba(119, 119, 119, 0.5);
+}
+
+.tb-input {
+  width: calc(100% - 72px);
+  padding: 0 50px 0 20px;
+  color: #3B3B3B;
+  outline: unset;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 24px;
+  margin-top: 7px;
+  height: 43px;
+  border: 1px solid #F0F0F0;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.5s, filter, opacity, background);
+
+  &.disabled, &:disabled {
+    color: rgba(59, 59, 59, 0.5);
+    filter: grayscale(100%);
+    background-color: #FBFBFB;
+  }
+
+  &.tb-invalid, &:invalid {
+    border: 1px solid #f8941e;
+  }
+
+  &[type="password"] {
+    letter-spacing: 2px;
+  }
+
+  &:focus, &:active {
+    &:not(.disabled):not(:disabled):not(.readonly) {
+      border: 1px solid #A1EDD3;
+      border-radius: 4px;
+      background-color: #FBFBFB;
+    }
+  }
+
+  &:disabled {
+    background-color: #FBFBFB;
+  }
+
+  &::placeholder {
+    opacity: 0.5;
+    color: #3B3B3B;
+    font-weight: 300;
+    font-size: 13px;
+    line-height: 24px;
+  }
+}
+
+.suffix-icon {
+  position: absolute;
+  right: 17px;
+  bottom: 10px;
+  color: rgba(119, 119, 119, 0.5);
+  cursor: pointer;
+}

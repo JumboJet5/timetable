@@ -74,11 +74,14 @@ export class WeekScheduleComponent implements OnInit {
     this.clipboard = undefined;
   }
 
-  public changeSlug($event: OptionInterface[]) {
-    this.router.navigate([$event[0].slug, $event[0].id]);
+  public changeSlug(event: OptionInterface[]) {
+    if (event && event.length) {
+      this.router.navigate([event[0].slug, event[0].id]);
+    }
   }
 
-  public openLessonDetail(lesson: LessonInterface, state: LessonInterface[]) {
+  public openLessonDetail(lesson: LessonInterface, associatedLessons: LessonInterface[]) {
+    const state = {associatedLessons, groupId: this.groupIdControl.value};
     this.router.navigate([{outlets: {modal: ['modal', 'lesson', lesson.id]}}], {state: {state}});
   }
 }

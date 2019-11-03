@@ -15,7 +15,8 @@ export class FormatService {
   }
 
   public unificationOptions(array: OptionInterface[], sortByField: string): void {
-    const sortedCopy = [...array.sort((first, second) => first[sortByField].localeCompare(second[sortByField]))];
+    const sortedCopy = [...array.sort((first, second) =>
+      first[sortByField] ? first[sortByField].localeCompare(second[sortByField]) : first[sortByField] === second[sortByField])];
     array.splice(0, array.length);
     array.push(...sortedCopy.filter((item, index, arr) => !arr[index + 1] || item.id !== arr[index + 1].id));
   }

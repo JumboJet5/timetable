@@ -1,7 +1,7 @@
 declare interface LessonInterface {
   dates: string[];
   format: number;
-  housing: {
+  housing: number | {
     id: number;
     name: string;
     short_name: string;
@@ -11,7 +11,7 @@ declare interface LessonInterface {
   lesson_time: number | LessonTimeInterface;
   name_full: string;
   name_short: string;
-  room: {
+  room: number | {
     id: number;
     num: string;
     floor: number;
@@ -19,6 +19,7 @@ declare interface LessonInterface {
   subgroup: number | string;
   teachers: TimetableTeacherInfoInterface[];
   weeks: string;
+  theme?: number;
   group?: {
     id: number;
     list: {name: string, short_name: string, slug: string}[];

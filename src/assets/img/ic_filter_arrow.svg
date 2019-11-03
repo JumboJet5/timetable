@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="7px" viewBox="0 0 13 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.4 (67378) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_filter_arrow</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="03_01_filters_orders@2x" transform="translate(-1114.000000, -203.000000)" fill="#000000">
+            <g id="ic_filter_arrow" transform="translate(1120.500000, 206.500000) scale(1, -1) translate(-1120.500000, -206.500000) translate(1114.000000, 203.000000)">
+                <path d="M12.8111111,0.177777778 C12.6333333,0 12.3444444,0 12.1666667,0.177777778 L6.5,5.85555556 L0.822222222,0.177777778 C0.644444444,0 0.355555556,0 0.177777778,0.177777778 C-2.15105711e-16,0.355555556 -2.15105711e-16,0.644444444 0.177777778,0.822222222 L6.16666667,6.81111111 C6.25555556,6.9 6.36666667,6.94444444 6.48888889,6.94444444 C6.6,6.94444444 6.72222222,6.9 6.81111111,6.81111111 L12.8,0.822222222 C12.9888889,0.644444444 12.9888889,0.355555556 12.8111111,0.177777778 Z" id="Path"></path>
+            </g>
+        </g>
+    </g>
+</svg>

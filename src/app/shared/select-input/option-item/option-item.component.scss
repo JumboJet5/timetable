@@ -1,0 +1,79 @@
+@import '../../../../assets/stylesheet/functions';
+
+:host {
+  display: flex;
+  align-items: center;
+  padding: 0 23px;
+  min-height: 44px;
+  border-top: 1px solid #F0F0F0;
+  cursor: pointer;
+  background-color: white;
+
+  &:hover {
+    background-color: #F9F9F9;
+  }
+
+  .mat-checkbox {
+    margin-right: 10px;
+  }
+  ::ng-deep {
+
+    .tb-item {
+      flex: 1 0 0;
+      text-align: left;
+    }
+
+    .bold {
+      color: #3B3B3B;
+      font-size: 13px;
+      font-weight: 500;
+      line-height: 24px;
+    }
+
+    .description {
+      color: rgba(119, 119, 119, 0.51);
+      font-size: 12px;
+      font-weight: 300;
+      line-height: 14px;
+      margin: 2px 0 0 10px;
+    }
+
+    .suffix-wrapper {
+
+      img {
+        max-height: 21px;
+        max-width: 21px;
+      }
+
+      &:not(.active) .colored {
+        filter: grayscale(100%);
+        opacity: .4;
+      }
+
+      .colored {
+        transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.5s, filter, opacity);
+      }
+    }
+
+    .dot {
+      width: 3px;
+      height: 3px;
+      border: 2px solid transparent;
+      border-radius: 50%;
+
+      &.active, &.connected {
+        background-color: #72E0BB;
+      }
+
+      &.pause {
+        background-color: #F2BB7A;
+      }
+
+      &.closed, &.no.connected {
+        background-color: #EFB1B1;
+      }
+    }
+  }
+}
+
+

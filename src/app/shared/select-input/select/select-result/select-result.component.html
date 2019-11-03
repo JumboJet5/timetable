@@ -1,0 +1,10 @@
+<div class="tb-input"
+     [class.tb-invalid]="isInvalid"
+     [class.opened]="isOpened"
+     [class.readonly]="isReadonly"
+     [class.disabled]="isDisabled">
+  <div class="result-content">
+    <ng-content></ng-content>
+  </div>
+  <img *ngIf="!isReadonly && !isDisabled" src="../../../../../assets/img/ic_filter_arrow.svg" alt="arrow">
+</div>

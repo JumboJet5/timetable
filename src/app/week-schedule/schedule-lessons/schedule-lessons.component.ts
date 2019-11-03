@@ -94,11 +94,16 @@ export class ScheduleLessonsComponent {
 
   public copy(lesson) {
     this.addToClipBoard.emit(lesson);
+    console.log('here')
     return false;
   }
 
   public paste(i: number) {
     this.getFromClipBoard.emit(i);
     return false;
+  }
+
+  public log() {
+    console.log('wer')
   }
 }

@@ -1,17 +1,24 @@
 .select-input {
   width: 100%;
+  box-sizing: border-box;
   background-color: initial;
   border: none;
   outline: none;
   font: inherit;
   color: inherit;
-}
-
-.mat-form-field {
-  width: 100%;
+  padding: 0 23px;
+  min-height: 44px;
 }
 
 .wrapper {
   max-height: 250px;
   overflow: auto;
+}
+
+.multiple-result {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 250px;
+  white-space: nowrap;
 }
