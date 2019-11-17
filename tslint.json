@@ -8,6 +8,7 @@
     },
     "component-class-suffix": true,
     "contextual-lifecycle": true,
+    "curly": [true, "as-needed", "ignore-same-line"],
     "directive-class-suffix": true,
     "directive-selector": [
       true,
@@ -78,7 +79,7 @@
     "no-input-rename": true,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
-    "no-output-on-prefix": true,
+    "no-output-on-prefix": false,
     "no-output-rename": true,
     "no-outputs-metadata-property": true,
     "template-banana-in-box": true,

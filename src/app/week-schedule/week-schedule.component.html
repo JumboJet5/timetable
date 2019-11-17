@@ -1,30 +1,30 @@
 <div class="select-group-wrapper">
-  <app-menu-select
-    placeholder="Група"
-    withSearch="true"
-    [loadPage]="loadGroups"
-    [loadItem]="loadGroup"
-    [selectControl]="groupIdControl"
-    (changeSelected)="changeSlug($event)"></app-menu-select>
+  <app-menu-select placeholder="Група"
+                   withSearch="true"
+                   [loadPage]="loadGroups"
+                   [loadItem]="loadGroup"
+                   [selectControl]="groupIdControl"
+                   (changeSelected)="changeSlug($event)"></app-menu-select>
 </div>
 <div class="time-row">
   <span class="lesson-time">N/N</span>
   <div class="lessons" *ngFor="let day of weekDays">{{day}}</div>
 </div>
-<ng-container *ngFor="let time of week; let index = index">
+<ng-container *ngFor="let time of week; let dIndex = index">
   <div class="divider"></div>
   <div class="time-row">
-    <span class="lesson-time">{{lessonTimes[index].num}} пара {{lessonTimes[index].start}} - {{lessonTimes[index].end}}</span>
+    <span class="lesson-time">{{lessonTimes[dIndex].num}} пара {{lessonTimes[dIndex].start}} - {{lessonTimes[dIndex].end}}</span>
     <app-schedule-lessons #lesson
-                          *ngFor="let lessons of time"
-                          (onLessonClick)="openLessonDetail($event, lessons)"
                           (addToClipBoard)="clipboard = $event"
                           (dragEnd)="isDragging = false"
                           (dragStart)="isDragging = true"
                           (getFromClipBoard)="paste(lesson, $event)"
+                          (onLessonClick)="openLessonDetail($event, lessons)"
+                          (onAddLesson)="openAddLessonModal(dIndex, tIndex)"
+                          *ngFor="let lessons of time; let tIndex = index"
+                          [clipboardData]="clipboard"
                           [connectedList]="dropLists"
                           [isSomeDragging]="isDragging"
-                          [clipboardData]="clipboard"
                           [lessons]="lessons"></app-schedule-lessons>
   </div>
 </ng-container>

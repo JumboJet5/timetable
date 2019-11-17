@@ -1,104 +1,149 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
+// @ts-ignore
+import { dayMap, lessonFormatMap, lessonFormats, weekDays } from 'src/core/const/collections';
+import { lessonForm } from 'src/core/const/form';
 
 @Component({
-  selector: 'app-lesson-editor',
-  templateUrl: './lesson-editor.component.html',
-  styleUrls: ['./lesson-editor.component.scss'],
+    selector: 'app-lesson-editor',
+    templateUrl: './lesson-editor.component.html',
+    styleUrls: ['./lesson-editor.component.scss'],
 })
 export class LessonEditorComponent implements OnInit {
-  public lesson: LessonInterface;
-  public lessonEntry: string[][];
-  public vacantWeeks: string;
-  public lessonForm: FormGroup = new FormGroup({
-    theme: new FormControl('', Validators.required),
-    housing: new FormControl('', Validators.required),
-    room: new FormControl('', Validators.required),
-    format: new FormControl('', Validators.required),
-    subgroup: new FormControl(''),
-    teachers: new FormControl('', Validators.required),
-  });
-  public lessonFormats = [
-    {id: 0, name: 'лекція'},
-    {id: 1, name: 'семінар'},
-    {id: 2, name: 'практика'},
-    {id: 3, name: 'лабораторні'},
-    {id: 4, name: 'інше'},
-  ];
-  public subgroups;
-  public lessonsMap: Map<number, string> = new Map<number, string>(this.lessonFormats.map(i => [i.id, i.name]));
-  public groupId: number;
+    public lessonEntry: string[][];
+    public vacantWeeks: VacantWeekInfoInterface[];
+    public lessonForm: FormGroup = lessonForm();
+    public lessonFormats = lessonFormats();
+    public subgroups;
+    public lessonsMap: Map<number, LessonFormatInterface> = lessonFormatMap();
+    public dayMap: Map<number, string> = dayMap();
+    public weekDays: string[] = weekDays();
+    public lessonTimes: LessonTimeInterface[] = [];
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private formatService: FormatService,
-              private scheduleService: ScheduleService,
-              private lessonService: LessonService) { }
+    private _groupId: number;
 
-  private getVacantWeeks(associatedLessons: LessonInterface[]): number[] {
-    return new Array(20).fill(true)
-      .map((week, index) => !associatedLessons
-        .some(lesson => this.isWeekNotVacant(lesson, index)) ? 1 : 0);
-  }
-
-  private isWeekNotVacant(associatedLesson: LessonInterface, index: number): boolean {
-    const associatedLessonWeeks = associatedLesson.weeks.split('')
-      .map(week => !!+week);
-
-    return associatedLessonWeeks[index] && !this.formatService.isDifferentSubgroups(associatedLesson, this.lesson)
-      && !this.formatService.isSameName(associatedLesson, this.lesson);
-  }
-
-  ngOnInit() {
-    const params = this.route.snapshot.paramMap;
-    if (!history.state.state) {
-      return this.closeModal();
-    } else {
-      const lessonId = +params.get('lessonId');
-      if (params.has('lessonId')) {
-        const associatedLessons = (history.state.state.associatedLessons as LessonInterface[])
-          .filter(lesson => lesson.id !== lessonId);
-
-        this.groupId = history.state.state.groupId;
-
-        this.lessonService.getLesson(lessonId)
-          .subscribe(lesson => this.lesson = lesson)
-          .add(() => this.lessonForm.patchValue({...this.lesson}))
-          .add(() => this.lessonEntry = Object.entries(this.lesson))
-          .add(() => this.vacantWeeks = this.getVacantWeeks(associatedLessons).join(''));
-      }
-
-      if (this.groupId) {
-        this.scheduleService.getGroup(this.groupId)
-          .subscribe(group => this.subgroups = new Array(+group.subgroups + 1).fill('')
-            .map((_, i) => i ? i : 'Всі'));
-      }
+    public get groupId(): number {
+        return this._groupId;
     }
-  }
 
-  public loadThemes = (option: LoadPageInterface) => this.scheduleService.getThemes({...option, groupId: this.groupId});
+    public set groupId(value: number) {
+        this._groupId = value;
+        this._getSubgroupList();
+    }
 
-  public loadTheme = (id: number) => this.scheduleService.getTheme(id);
+    private _lesson: LessonInterface;
 
-  public loadHousings = (option: LoadPageInterface) => this.scheduleService.getHousings({...option, groupId: this.groupId});
+    public get lesson(): LessonInterface {
+        return this._lesson;
+    }
 
-  public loadHousing = (id: number) => this.scheduleService.getHousing(id);
+    public set lesson(value: LessonInterface) {
+        this._lesson = value;
+        if (value) {
+            this.lessonForm.patchValue({...value});
+            this.lessonEntry = Object.entries(value);
+            this._initVacantWeeksList();
+        }
+    }
 
-  public loadRooms = (option: LoadPageInterface) => this.scheduleService.getRooms({...option, housingId: this.lessonForm.value.housing});
+    private _groupSchedule: TimetableInterface;
 
-  public loadRoom = (id: number) => this.scheduleService.getRoom(id);
+    private get groupSchedule(): TimetableInterface {
+        return this._groupSchedule;
+    }
 
-  public loadTeachers = (option: LoadPageInterface) => this.scheduleService.getTeachers({...option, groupId: this.groupId});
+    private set groupSchedule(value: TimetableInterface) {
+        this._groupSchedule = value;
+        if (value) {
+            this.groupId = value.info.group.id;
+            [this.lessonTimes, this.weekSchedule] = this.formatService.initSchedule(value);
+        }
+    }
 
-  public loadTeacher = (id: number) => this.scheduleService.getTeacher(id);
+    private _weekSchedule: LessonInterface[][][];
 
-  public roomToSting = (room) => room ? room.num : '';
+    private get weekSchedule(): LessonInterface[][][] {
+        return this._weekSchedule;
+    }
 
-  public closeModal() {
-    this.router.navigate([{outlets: {modal: null}}]);
-  }
+    private set weekSchedule(value: LessonInterface[][][]) {
+        this._weekSchedule = value;
+        this._initVacantWeeksList();
+    }
+
+    constructor(private router: Router,
+                private route: ActivatedRoute,
+                private formatService: FormatService,
+                private scheduleService: ScheduleService,
+                private lessonService: LessonService) { }
+
+    ngOnInit() {
+        const params = this.route.snapshot.paramMap;
+
+        if (history.state.state) {
+            this.groupSchedule = history.state.state.groupSchedule;
+        }
+
+        if (params.has('lessonId')) this._getLesson(+params.get('lessonId'));
+
+        if (!this.weekSchedule || !this.lessonTimes)
+            this.scheduleService.getTimetable(params.get('groupSlug'))
+                .pipe(tap(res => this.groupId = this.groupId || res.info.group.id))
+                .subscribe(res => this.groupSchedule = res);
+    }
+
+    public loadThemes = (option: LoadPageInterface) => this.scheduleService.getThemes({...option, groupId: this.groupId});
+
+    public loadTheme = (id: number) => this.scheduleService.getTheme(id);
+
+    public loadHousings = (option: LoadPageInterface) => this.scheduleService.getHousings({...option, groupId: this.groupId});
+
+    public loadHousing = (id: number) => this.scheduleService.getHousing(id);
+
+    public loadRooms = (option: LoadPageInterface) => this.scheduleService.getRooms({...option, housingId: this.lessonForm.value.housing});
+
+    public loadRoom = (id: number) => this.scheduleService.getRoom(id);
+
+    public loadTeachers = (option: LoadPageInterface) => this.scheduleService.getTeachers({...option, groupId: this.groupId});
+
+    public loadTeacher = (id: number) => this.scheduleService.getTeacher(id);
+
+    public roomToSting = (room) => room ? room.num : '';
+
+    public getLessonTimeById(id: number): string {
+        const lessonTime = this.lessonTimes.find(i => i.id === id);
+        return lessonTime ? lessonTime.start + ' - ' + lessonTime.end : '';
+    }
+
+    public closeModal() {
+        this.router.navigate([{outlets: {modal: null}}]);
+    }
+
+    public onLessonTimeOrDayChange() {
+      this.lesson.day = this.lessonForm.value.day;
+      this.lesson.lesson_time = this.lessonForm.value.lesson_time;
+      this._initVacantWeeksList();
+    }
+
+    private _getLesson(lessonId: number) {
+        this.lessonService.getLesson(lessonId)
+            .subscribe(lesson => this.lesson = lesson);
+    }
+
+    private _getSubgroupList() {
+        this.scheduleService.getGroup(this.groupId)
+            .subscribe(group => this.subgroups = new Array(+group.subgroups).fill('').map((_, i) => i + 1));
+    }
+
+    private _initVacantWeeksList() {
+        if (this.weekSchedule && this.lesson) {
+          this.vacantWeeks = this.formatService.getVacantWeeks(this._groupSchedule, this.weekSchedule, this.lessonTimes, this.lesson);
+          this.vacantWeeks.forEach(week => week.isUsed = week.isUsed && week.isVacant);
+        }
+    }
 }

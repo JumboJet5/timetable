@@ -1,32 +1,34 @@
-<app-select
-  [abstractControl]="selectControl"
-  [isMulti]="multiple"
-  [isDisabled]="selectControl.disabled || disabled"
-  (closed)="onOptionSelectClose()">
+<app-select [abstractControl]="selectControl"
+            [isMulti]="multiple"
+            [isDisabled]="selectControl.disabled || disabled"
+            (closed)="onOptionSelectClose()">
+
   <app-select-result *ngIf="!multiple; else multipleResult">
     {{itemToSting(optionMap.get(selectControl.value)) || placeholder}}
   </app-select-result>
+
   <ng-template #multipleResult>
     <app-select-result>
-      <span class="multiple-result">
-        <ng-container *ngFor="let item of selectControl.value; let isLast = last">
-          {{itemToSting(optionMap.get(item)) || placeholder}}{{isLast ? '' : ',  '}}
-        </ng-container>
-      </span>
+      <ng-container *ngFor="let item of selectControl.value; let isLast = last">
+        {{itemToSting(optionMap.get(item)) || placeholder}}{{isLast ? '' : ',  '}}
+      </ng-container>
     </app-select-result>
   </ng-template>
+
   <div class="wrapper" appScroll (isDown)="onDown()">
-    <div *ngIf="withSearch">
+
+    <label *ngIf="withSearch">
       <input #selectInput class="select-input" placeholder="Пошук..." (input)="onInput()">
-    </div>
-    <app-option-item
-      class="tb-item"
-      checked="true"
-      *ngFor="let option of selectedOptions"
-      [value]="option.id">{{itemToSting(option)}}</app-option-item>
-    <app-option-item
-      class="tb-item"
-      *ngFor="let option of displayedOptions"
-      [value]="option.id">{{itemToSting(option)}}</app-option-item>
+    </label>
+
+    <app-option-item class="tb-item"
+                     checked="true"
+                     *ngFor="let option of selectedOptions"
+                     [value]="option.id">{{itemToSting(option)}}</app-option-item>
+
+    <app-option-item class="tb-item"
+                     *ngFor="let option of displayedOptions"
+                     [value]="option.id">{{itemToSting(option)}}</app-option-item>
   </div>
+
 </app-select>
