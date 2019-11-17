@@ -15,7 +15,7 @@
   overflow: auto;
 }
 
-.multiple-result {
+::ng-deep.result-content, .tb-item {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;

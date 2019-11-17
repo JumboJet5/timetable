@@ -35,9 +35,7 @@ export class SelectComponent implements OnDestroy, OnInit, OnChanges {
   @Input()
   public set isOpened(value: boolean) {
     this._isOpened = value && !this.isDisabled && !this.isReadonly && !!this.controlArray.controls.length;
-    if (!this.isOpened) {
-      this.closed.emit();
-    }
+    if (!this.isOpened) this.closed.emit();
     this.selectState.next(this);
   }
 
@@ -58,8 +56,8 @@ export class SelectComponent implements OnDestroy, OnInit, OnChanges {
 
   private emitFilters(): void {
     const value = this.isMulti ? this.getSelectedValue() : this.getSelectedValue()[0];
-    this.changes.emit(value);
     this.updateAbstractControl(value);
+    setTimeout(() => this.changes.emit(value));
   }
 
   private updateAbstractControl(value: any) {

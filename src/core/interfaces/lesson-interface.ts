@@ -1,4 +1,5 @@
 declare interface LessonInterface {
+  day?: number;
   dates: string[];
   format: number;
   housing: number | {

@@ -1,43 +1,43 @@
-<div class="box-list"
-     cdkDropList
-     cdkDropListOrientation="vertical"
-     [class.available]="isSomeDragging"
-     [class.placed]="isPlaced"
-     [cdkDropListEnterPredicate]="isLessonNotSpecified()"
+<div (cdkDropListDropped)="drop($event)"
      (cdkDropListEntered)="isPlaced = true"
      (cdkDropListExited)="isPlaced = false"
+     [cdkDropListConnectedTo]="connectedList"
      [cdkDropListData]="lessons"
-     (cdkDropListDropped)="drop($event)"
-     [cdkDropListConnectedTo]="connectedList">
-  <div class="drag-box"
-       cdkDrag
-       (click)="log(); onLessonClick.emit(lesson)"
-       (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
-       (cdkDragEnded)="dragEnd.emit($event)"
-       [cdkDragData]="lesson"
-       *ngFor="let lesson of lessons; let i = index">
-    <div>{{lesson.name_short}}</div>
-    <div>{{lessonTypesMap.get(lesson.format)}}</div>
-    <div *ngFor="let teacher of lesson.teachers">{{teacher.short_name}}</div>
-    <div *ngIf="lesson.room">ауд. {{lesson.room.num}}</div>
-    <div *ngIf="lesson.subgroup">пг. {{lesson.subgroup}}</div>
-    <div *ngIf="lesson.subgroups">'пг. {{lesson.subgroups}}</div>
-    <div>{{getWeeks(lesson)}}</div>
-    <div class="control-row">
-      <button mat-icon-button [disabled]="true" (click)="edit(i); $event.stopPropagation()">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button [disabled]="true" (click)="copy(lesson); $event.stopPropagation()">
-        <mat-icon>file_copy</mat-icon>
-      </button>
-      <button mat-icon-button (click)="paste(i); $event.stopPropagation()" [disabled]="!clipboardData">
-        <mat-icon>archive</mat-icon>
-      </button>
+     [cdkDropListEnterPredicate]="isLessonNotSpecified()"
+     [class.available]="isSomeDragging"
+     [class.placed]="isPlaced"
+     cdkDropList
+     cdkDropListOrientation="vertical"
+     class="box-list">
+    <div (cdkDragEnded)="dragEnd.emit($event)"
+         (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
+         (click)="onLessonClick.emit(lesson)"
+         *ngFor="let lesson of lessons; let i = index"
+         [cdkDragData]="lesson"
+         cdkDrag
+         class="drag-box">
+        <div>{{lesson.name_short}}</div>
+        <div>{{lessonTypesMap.get(lesson.format)?.shortName}}</div>
+        <div *ngFor="let teacher of lesson.teachers">{{teacher.short_name}}</div>
+        <div *ngIf="lesson.room">ауд. {{lesson.room.num}}</div>
+        <div *ngIf="lesson.subgroup">пг. {{lesson.subgroup}}</div>
+        <div *ngIf="lesson.subgroups">'пг. {{lesson.subgroups}}</div>
+        <div>{{getWeeks(lesson)}}</div>
+        <div class="control-row">
+            <button (click)="edit(i); $event.stopPropagation()" [disabled]="true" mat-icon-button>
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button (click)="copy(lesson); $event.stopPropagation()" [disabled]="true" mat-icon-button>
+                <mat-icon>file_copy</mat-icon>
+            </button>
+            <button (click)="paste(i); $event.stopPropagation()" [disabled]="!clipboardData" mat-icon-button>
+                <mat-icon>archive</mat-icon>
+            </button>
+        </div>
     </div>
-  </div>
 </div>
 <div class="add-box">
-  <button mat-icon-button [disabled]="!isLessonNotSpecified()({data: clipboardData})">
-    <mat-icon *ngIf="!isSomeDragging && !isPlaced">{{!!clipboardData ? 'archive' : 'add_circle_outline'}}</mat-icon>
-  </button>
+    <button (click)="onAddLesson.emit()" disabled mat-icon-button>
+        <mat-icon *ngIf="!isSomeDragging && !isPlaced">{{!!clipboardData ? 'archive' : 'add_circle_outline'}}</mat-icon>
+    </button>
 </div>

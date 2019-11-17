@@ -1,9 +1,9 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-import { distinctUntilChanged, tap } from 'rxjs/operators';
-import { FormatService } from 'src/app/service/format/format.service';
-import { SelectComponent } from 'src/app/shared/select-input/select/select.component';
+import {Component, ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {AbstractControl, FormControl} from '@angular/forms';
+import {Observable, Subscription} from 'rxjs';
+import {distinctUntilChanged, tap} from 'rxjs/operators';
+import {FormatService} from 'src/app/service/format/format.service';
+import {SelectComponent} from 'src/app/shared/select-input/select/select.component';
 
 @Component({
   selector: 'app-menu-select',
@@ -19,7 +19,7 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   @Input() public maxLength = 20;
   @Input() public withSearch: boolean;
   @Input() public disabled: boolean;
-  @Input() public selectControl: FormControl;
+  @Input() public selectControl: AbstractControl;
   @Input() public loadPage: (option: LoadPageInterface) => Observable<OptionsResponseInterface>;
   @Input() public loadItem: (id: number) => Observable<OptionInterface>;
   @ViewChild('selectInput', {static: false}) selectInput: ElementRef;
@@ -36,7 +36,8 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   private isInitiated = false;
   private subscriptions: Subscription[] = [];
 
-  constructor(public formatService: FormatService) { }
+  constructor(public formatService: FormatService) {
+  }
 
   get needRefresh(): boolean {
     return false;
@@ -70,7 +71,7 @@ export class MenuSelectComponent implements OnInit, OnDestroy {
   }
 
   public getSelectedFromFormControl(): number[] {
-    return this.multiple ? this.selectControl.value : (this.selectControl.value ? [this.selectControl.value] : []);
+    return this.multiple ? this.selectControl.value || [] : (this.selectControl.value ? [this.selectControl.value] : []);
   }
 
   public getSearchString(): string {

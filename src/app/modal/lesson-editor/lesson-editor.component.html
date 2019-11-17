@@ -1,43 +1,70 @@
-<div class="overlay-backdrop" (click)="closeModal()"></div>
-<div class="modal-wrapper">
-  <form [formGroup]="lessonForm" *ngIf="lesson">
-    <app-menu-select placeholder="Theme"
-                     maxLength="40"
-                     [loadPage]="loadThemes"
-                     [loadItem]="loadTheme"
-                     [selectControl]="lessonForm.get('theme')"></app-menu-select>
-    <app-menu-select placeholder="Housing"
-                     maxLength="40"
-                     [loadPage]="loadHousings"
-                     [loadItem]="loadHousing"
-                     [selectControl]="lessonForm.get('housing')"
-                     (changeSelected)="roomsSelect.needRefresh = true"></app-menu-select>
-    <app-menu-select #roomsSelect
-                     placeholder="Room"
-                     maxLength="40"
-                     sortByField="num"
-                     [disabled]="!lessonForm.get('housing')"
-                     [loadPage]="loadRooms"
-                     [loadItem]="loadRoom"
-                     [itemToSting]="roomToSting"
-                     [selectControl]="lessonForm.get('room')"></app-menu-select>
-    <app-menu-select #roomsSelect
-                     placeholder="Teacher"
-                     maxLength="40"
-                     withSearch="true"
-                     multiple="true"
-                     [loadPage]="loadTeachers"
-                     [loadItem]="loadTeacher"
-                     [selectControl]="lessonForm.get('teachers')"></app-menu-select>
-    <app-select [abstractControl]="lessonForm.get('format')">
-      <app-select-result>{{lessonsMap.get(lessonForm.value.format) || 'Format'}}</app-select-result>
-      <app-option-item *ngFor="let option of lessonFormats" [value]="option.id">{{option.name}}</app-option-item>
-    </app-select>
-    <app-select [abstractControl]="lessonForm.get('subgroup')">
-      <app-select-result>{{lessonForm.value.subgroup || 'Всі'}}</app-select-result>
-      <app-option-item *ngFor="let option of subgroups" [value]="option">{{option}}</app-option-item>
-    </app-select>
-  </form>
-  <div *ngIf="vacantWeeks">vacant weeks: {{vacantWeeks}}</div>
+<div (click)="closeModal()" class="overlay-backdrop"></div>
+
+<div *ngIf="lesson" class="modal-wrapper">
+    <form [formGroup]="lessonForm">
+        <app-menu-select [loadItem]="loadTheme"
+                         [loadPage]="loadThemes"
+                         [selectControl]="lessonForm.get('theme')"
+                         maxLength="40"
+                         placeholder="Назва"></app-menu-select>
+
+        <app-menu-select (changeSelected)="roomsSelect.needRefresh = true"
+                         [loadItem]="loadHousing"
+                         [loadPage]="loadHousings"
+                         [selectControl]="lessonForm.get('housing')"
+                         maxLength="40"
+                         placeholder="Корпус"></app-menu-select>
+
+        <app-menu-select #roomsSelect
+                         [disabled]="!lessonForm.get('housing')"
+                         [itemToSting]="roomToSting"
+                         [loadItem]="loadRoom"
+                         [loadPage]="loadRooms"
+                         [selectControl]="lessonForm.get('room')"
+                         maxLength="40"
+                         placeholder="Аудиторія"
+                         sortByField="num"></app-menu-select>
+
+        <app-menu-select [loadItem]="loadTeacher"
+                         [loadPage]="loadTeachers"
+                         [selectControl]="lessonForm.get('teachers')"
+                         maxLength="40"
+                         multiple="true"
+                         placeholder="Викладач(*чі)"
+                         withSearch="true"></app-menu-select>
+
+        <app-select [abstractControl]="lessonForm.get('format')">
+            <app-select-result>{{lessonsMap.get(lessonForm.value.format)?.name || 'Формат'}}</app-select-result>
+            <app-option-item *ngFor="let option of lessonFormats" [value]="option.id">{{option.name}}</app-option-item>
+        </app-select>
+
+        <app-select [abstractControl]="lessonForm.get('subgroup')">
+            <app-select-result>{{lessonForm.value.subgroup || 'Підгрупи'}}</app-select-result>
+            <app-option-item value="">Всі</app-option-item>
+            <app-option-item *ngFor="let option of subgroups" [value]="option">{{option}}</app-option-item>
+        </app-select>
+
+        <app-select [abstractControl]="lessonForm.get('vacantWeeks')" isMulti="true">
+            <app-select-result>Тижні</app-select-result>
+            <ng-container *ngFor="let option of vacantWeeks">
+                <app-option-item *ngIf="!option.isHidden"
+                                 [checked]="option.isUsed"
+                                 [disabled]="!option.isVacant"
+                                 [value]="option.isUsed">{{option.date | date: 'dd MMM yyyy'}}</app-option-item>
+            </ng-container>
+        </app-select>
+
+        <app-select [abstractControl]="lessonForm.get('day')" (changes)="onLessonTimeOrDayChange()">
+            <app-select-result>{{dayMap.get(lessonForm.value.day) || 'День'}}</app-select-result>
+            <app-option-item *ngFor="let option of weekDays; let index = index"
+                             [value]="index">{{option}}</app-option-item>
+        </app-select>
+
+        <app-select [abstractControl]="lessonForm.get('lesson_time')" (changes)="onLessonTimeOrDayChange()">
+            <app-select-result>{{getLessonTimeById(lessonForm.value.lesson_time) || 'Час'}}</app-select-result>
+            <app-option-item *ngFor="let option of lessonTimes"
+                             [value]="option.id">{{getLessonTimeById(option.id)}}</app-option-item>
+        </app-select>
+    </form>
 </div>
 
