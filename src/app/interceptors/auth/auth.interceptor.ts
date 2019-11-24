@@ -20,7 +20,8 @@ export class AuthInterceptor implements HttpInterceptor {
     }
 
     private _getAuthorizeRequest(req: HttpRequest<any>, forth: boolean = false): HttpRequest<any> {
-        const needUpdateAuthHeader = forth || (!req.headers.get('Authorization') && this.authService.isAuthorized());
+        const needUpdateAuthHeader = forth || (req.method !== 'GET'
+            && !req.headers.get('Authorization') && this.authService.isAuthorized());
         const authHeader = 'Token ' + this.authService.getToken();
         return needUpdateAuthHeader ? req.clone({headers: req.headers.set('Authorization', authHeader)}) : req;
     }
