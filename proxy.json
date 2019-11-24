@@ -1,0 +1,14 @@
+{
+  "/rest/": {
+    "target": "https://mytt.pp.ua/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/api-token-auth/": {
+    "target": "https://mytt.pp.ua/",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

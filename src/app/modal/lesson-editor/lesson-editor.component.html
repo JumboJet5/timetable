@@ -1,6 +1,6 @@
 <div (click)="closeModal()" class="overlay-backdrop"></div>
 
-<div *ngIf="lesson" class="modal-wrapper">
+<div class="modal-wrapper">
     <form [formGroup]="lessonForm">
         <app-menu-select [loadItem]="loadTheme"
                          [loadPage]="loadThemes"
@@ -46,11 +46,11 @@
 
         <app-select [abstractControl]="lessonForm.get('vacantWeeks')" isMulti="true">
             <app-select-result>Тижні</app-select-result>
-            <ng-container *ngFor="let option of vacantWeeks">
+            <ng-container *ngFor="let option of vacantWeeks; let i = index">
                 <app-option-item *ngIf="!option.isHidden"
                                  [checked]="option.isUsed"
                                  [disabled]="!option.isVacant"
-                                 [value]="option.isUsed">{{option.date | date: 'dd MMM yyyy'}}</app-option-item>
+                                 [value]="i">{{option.date | date: 'dd MMM yyyy'}}</app-option-item>
             </ng-container>
         </app-select>
 
@@ -65,6 +65,10 @@
             <app-option-item *ngFor="let option of lessonTimes"
                              [value]="option.id">{{getLessonTimeById(option.id)}}</app-option-item>
         </app-select>
+
+        <button mat-raised-button *ngIf="!lesson" (click)="onCreate()" [disabled]="lessonForm.invalid">Create</button>
+        <button mat-raised-button *ngIf="lesson" (click)="onUpdate()" [disabled]="lessonForm.invalid">Save</button>
+        <button mat-raised-button [routerLink]="[{outlets: {modal: null}}]">Cancel</button>
     </form>
 </div>
 

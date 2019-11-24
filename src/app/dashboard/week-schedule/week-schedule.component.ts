@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
-import { ScheduleLessonsComponent } from 'src/app/week-schedule/schedule-lessons/schedule-lessons.component';
+import { ScheduleLessonsComponent } from 'src/app/dashboard/week-schedule/schedule-lessons/schedule-lessons.component';
 
 @Component({
     selector: 'app-week-schedule',
@@ -22,6 +22,7 @@ export class WeekScheduleComponent implements OnInit {
     public clipboard: LessonInterface;
     public groupIdControl: FormControl = new FormControl(undefined);
     private _groupSlug: string;
+    private _groupsemester: number;
 
     @ViewChildren(ScheduleLessonsComponent)
     public set lessons(value: QueryList<ScheduleLessonsComponent>) {
@@ -48,7 +49,7 @@ export class WeekScheduleComponent implements OnInit {
     public ngOnInit(): void {
         this._updatePage();
         this.router.events
-            .pipe(filter(event => event instanceof NavigationEnd))
+            .pipe(filter(event => event instanceof NavigationEnd && !/\(modal/.test(event.url)))
             .subscribe(() => this._updatePage());
     }
 
@@ -62,25 +63,32 @@ export class WeekScheduleComponent implements OnInit {
     }
 
     public changeSlug(event: OptionInterface[]) {
-        if (event && event.length) this.router.navigate([event[0].slug, event[0].id]);
+        if (event && event.length) this.router.navigate(['dashboard', 'lessons-schedule', event[0].slug, event[0].id]);
     }
 
     public openLessonDetail(lesson: LessonInterface, associatedLessons: LessonInterface[]) {
-        const state = {associatedLessons, groupSchedule: this._groupSchedule};
+        const state = {associatedLessons, groupSchedule: this._groupSchedule, groupsemester: this._groupsemester};
         this.router.navigate([{outlets: {modal: ['modal', 'lesson', lesson.id, this._groupSlug]}}], {state: {state}});
     }
 
     public openAddLessonModal(day: number, time: number) {
-        const state = {day, time: this.lessonTimes[time].id, groupSchedule: this._groupSchedule};
+        const state = {day, time: this.lessonTimes[time].id, groupSchedule: this._groupSchedule, groupsemester: this._groupsemester};
         this.router.navigate([{outlets: {modal: ['modal', 'lesson', this._groupSlug]}}], {state: {state}});
     }
 
     private _updatePage() {
+        const isSlugChanged = !this._groupSlug || this._groupSlug !== this.route.snapshot.paramMap.get('groupSlug');
         this._groupSlug = this.route.snapshot.paramMap.get('groupSlug');
         if (this._groupSlug !== 'groupSlug') {
             this.groupIdControl.patchValue(+this.route.snapshot.paramMap.get('groupId'));
             this.scheduleService.getTimetable(this._groupSlug)
-                .subscribe(res => this.groupSchedule = res);
+                .subscribe(res => this.groupSchedule = res)
+                .add(() => isSlugChanged ? this._getGroupsemester() : null);
         }
+    }
+
+    private _getGroupsemester() {
+        this.scheduleService.getGroupsemester(this.groupSchedule.info.group.id, this.groupSchedule.info.semester.id)
+            .subscribe(res => this._groupsemester = res && res.count ? res.results[0].id : undefined);
     }
 }

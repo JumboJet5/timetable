@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { FormatService } from 'src/app/service/format/format.service';
 import * as URLS from 'src/core/urls';
 
 @Injectable()
 export class ScheduleService {
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient,
+                private formatService: FormatService) {}
 
     public getTimetable(slug: string): Observable<TimetableInterface> {
         return this.http.get<TimetableInterface>(URLS.GET_TIMETABLE_LIST(slug));
@@ -50,5 +52,17 @@ export class ScheduleService {
 
     public getTeacher(id: number): Observable<any> {
         return this.http.get<any>(URLS.GET_TEACHER(id));
+    }
+
+    public getGroupsemester(groupId: number, semesterId: number): Observable<any> {
+        return this.http.get<any>(URLS.GET_GROUPSEMESTER(groupId, semesterId));
+    }
+
+    public createLesson(body: ICreateLessonBody): Observable<any> {
+        return this.http.post<any>(URLS.CREATE_LESSON, this.formatService.getFormDataFromObject(body));
+    }
+
+    public updateLesson(body: ICreateLessonBody, id: number): Observable<any> {
+        return this.http.put<any>(URLS.UPDATE_LESSON(id), this.formatService.getFormDataFromObject(body));
     }
 }
