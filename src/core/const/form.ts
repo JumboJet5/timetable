@@ -1,13 +1,15 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export const lessonForm = () => new FormGroup({
-    theme: new FormControl('', Validators.required),
-    housing: new FormControl('', Validators.required),
-    room: new FormControl('', Validators.required),
-    format: new FormControl('', Validators.required),
-    subgroup: new FormControl(''),
-    teachers: new FormControl('', Validators.required),
-    vacantWeeks: new FormControl('', Validators.required),
-    day: new FormControl('', Validators.required),
-    lesson_time: new FormControl('', Validators.required),
+    theme: new FormControl(null, Validators.required),
+    housing: new FormControl(null, Validators.required),
+    room: new FormControl(null, Validators.required),
+    format: new FormControl(null, Validators.required),
+    subgroup: new FormControl(null),
+    teachers: new FormControl([], Validators.required),
+    vacantWeeks: new FormControl([], Validators.required),
+    day: new FormControl(null, Validators.required),
+    lesson_time: new FormControl(null, Validators.required),
+    group_semester: new FormControl(null, Validators.required),
 });
+

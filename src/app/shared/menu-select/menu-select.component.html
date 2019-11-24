@@ -12,6 +12,7 @@
       <ng-container *ngFor="let item of selectControl.value; let isLast = last">
         {{itemToSting(optionMap.get(item)) || placeholder}}{{isLast ? '' : ',  '}}
       </ng-container>
+      <ng-container *ngIf="!selectControl.value || !selectControl.value.length">{{placeholder}}</ng-container>
     </app-select-result>
   </ng-template>
 

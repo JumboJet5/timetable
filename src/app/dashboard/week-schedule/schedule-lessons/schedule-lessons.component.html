@@ -37,7 +37,7 @@
     </div>
 </div>
 <div class="add-box">
-    <button (click)="onAddLesson.emit()" disabled mat-icon-button>
+    <button (click)="onAddLesson.emit()" mat-icon-button>
         <mat-icon *ngIf="!isSomeDragging && !isPlaced">{{!!clipboardData ? 'archive' : 'add_circle_outline'}}</mat-icon>
     </button>
 </div>

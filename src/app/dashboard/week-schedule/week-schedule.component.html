@@ -20,7 +20,7 @@
                           (dragStart)="isDragging = true"
                           (getFromClipBoard)="paste(lesson, $event)"
                           (onLessonClick)="openLessonDetail($event, lessons)"
-                          (onAddLesson)="openAddLessonModal(dIndex, tIndex)"
+                          (onAddLesson)="openAddLessonModal(tIndex, dIndex)"
                           *ngFor="let lessons of time; let tIndex = index"
                           [clipboardData]="clipboard"
                           [connectedList]="dropLists"

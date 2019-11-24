@@ -57,12 +57,18 @@ export class ScheduleLessonsComponent {
         return lesson.weeks.split('')
                      .map(bite => !!+bite)
                      .reduce((weeksSequence, isLesson, index, weeksBool) => {
-                         if (isLesson)
-                             if (!weeksSequence) weeksSequence = (index + 1).toString();
-                             else if (!weeksBool[index - 1]) weeksSequence += ', ' + (index + 1);
-                             else if (index === weeksBool.length - 1) weeksSequence += '-' + (index + 1);
-                             else if (weeksBool[index - 1] && weeksBool[index - 2]) weeksSequence += '-' + index;
-                         return weeksSequence;
+                         switch (true) {
+                             case isLesson && !weeksSequence:
+                                 return weeksSequence = (index + 1).toString();
+                             case isLesson && !weeksBool[index - 1]:
+                                 return weeksSequence + ', ' + (index + 1);
+                             case isLesson && index === weeksBool.length - 1:
+                                 return weeksSequence + '-' + (index + 1);
+                             case !isLesson && weeksBool[index - 1] && weeksBool[index - 2]:
+                                 return weeksSequence + '-' + index;
+                             default:
+                                 return weeksSequence;
+                         }
                      }, '');
     }
 

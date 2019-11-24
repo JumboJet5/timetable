@@ -1,0 +1,33 @@
+.login-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4d8cdb;
+  border-radius: 23px;
+  padding: 25px;
+  max-width: 390px;
+  width: 100%;
+
+  .tb-form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .black-logo-card {
+    width: 366px;
+    padding: 42px 44px 50px;
+  }
+
+  .smallest-text {
+    opacity: 0.7;
+
+    &.additional-link {
+      opacity: 0.5;
+    }
+  }
+
+  .control-row {
+    margin-top: 21px;
+  }
+}

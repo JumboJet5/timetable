@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ScheduleLessonsComponent } from './schedule-lessons.component';
+import { ScheduleLessonsComponent } from 'src/app/dashboard/week-schedule/schedule-lessons/schedule-lessons.component';
 
 describe('ScheduleLessonsComponent', () => {
   let component: ScheduleLessonsComponent;
