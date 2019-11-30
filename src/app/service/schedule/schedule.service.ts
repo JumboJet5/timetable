@@ -65,4 +65,8 @@ export class ScheduleService {
     public updateLesson(body: ICreateLessonBody, id: number): Observable<any> {
         return this.http.put<any>(URLS.UPDATE_LESSON(id), this.formatService.getFormDataFromObject(body));
     }
+
+    public deleteLesson(id: number): Observable<any> {
+        return this.http.delete<any>(URLS.DELETE_LESSON(id));
+    }
 }

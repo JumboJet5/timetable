@@ -6,6 +6,7 @@
   height: 1px;
   background-color: dimgray;
 }
+
 .time-row {
   display: flex;
   align-items: center;
@@ -34,4 +35,21 @@
   width: 300px;
   margin: auto;
   position: relative;
+}
+
+.loading-wrapper {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #ffffff9e;
+
+  .mat-progress-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

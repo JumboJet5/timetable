@@ -34,3 +34,4 @@ export const GET_GROUPSEMESTER = (groupId: number, semesterId: number): string =
     `${API}/groupsemester/?group=${groupId}&semester=${semesterId}`;
 export const CREATE_LESSON = `${API}/lessons/`;
 export const UPDATE_LESSON = (id: number) => `${API}/lessons/${id}/`;
+export const DELETE_LESSON = UPDATE_LESSON;

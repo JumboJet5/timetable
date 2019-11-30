@@ -7,7 +7,7 @@ import * as URLS from 'src/core/urls';
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-    private _authInfo: {token: string};
+    private _authInfo: {token: string} = JSON.parse(localStorage.getItem('token')) || undefined;
 
     constructor(private http: HttpClient,
                 private formatService: FormatService) {}
@@ -17,7 +17,13 @@ export class AuthService {
                    .pipe(
                        catchError(err => of(false)),
                        map(res => {
-                           this._authInfo = typeof res !== 'boolean' ? res : undefined;
+                           if (typeof res !== 'boolean') {
+                               this._authInfo = res;
+                               localStorage.setItem('token', JSON.stringify(res));
+                           } else {
+                               this._authInfo = undefined;
+                               localStorage.removeItem('token');
+                           }
                            return true;
                        }),
                    );

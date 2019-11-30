@@ -1,7 +1,6 @@
 <div (cdkDropListDropped)="drop($event)"
      (cdkDropListEntered)="isPlaced = true"
      (cdkDropListExited)="isPlaced = false"
-     [cdkDropListConnectedTo]="connectedList"
      [cdkDropListData]="lessons"
      [cdkDropListEnterPredicate]="isLessonNotSpecified()"
      [class.available]="isSomeDragging"
@@ -11,7 +10,6 @@
      class="box-list">
     <div (cdkDragEnded)="dragEnd.emit($event)"
          (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
-         (click)="onLessonClick.emit(lesson)"
          *ngFor="let lesson of lessons; let i = index"
          [cdkDragData]="lesson"
          cdkDrag
@@ -24,20 +22,23 @@
         <div *ngIf="lesson.subgroups">'пг. {{lesson.subgroups}}</div>
         <div>{{getWeeks(lesson)}}</div>
         <div class="control-row">
-            <button (click)="edit(i); $event.stopPropagation()" [disabled]="true" mat-icon-button>
+            <button (click)="onLessonClick.emit(lesson); $event.stopPropagation()" mat-icon-button>
                 <mat-icon>edit</mat-icon>
             </button>
-            <button (click)="copy(lesson); $event.stopPropagation()" [disabled]="true" mat-icon-button>
+            <button (click)="addToClipBoard.emit(lesson)" mat-icon-button>
                 <mat-icon>file_copy</mat-icon>
             </button>
-            <button (click)="paste(i); $event.stopPropagation()" [disabled]="!clipboardData" mat-icon-button>
-                <mat-icon>archive</mat-icon>
+            <button (click)="deleteLesson.emit(lesson.id); $event.stopPropagation()" mat-icon-button>
+                <mat-icon>delete</mat-icon>
             </button>
         </div>
     </div>
 </div>
 <div class="add-box">
     <button (click)="onAddLesson.emit()" mat-icon-button>
-        <mat-icon *ngIf="!isSomeDragging && !isPlaced">{{!!clipboardData ? 'archive' : 'add_circle_outline'}}</mat-icon>
+        <mat-icon *ngIf="!isSomeDragging && !isPlaced">add_circle_outline</mat-icon>
+    </button>
+    <button *ngIf="!!clipboardData && isLessonNotSpecified()({data: clipboardData})" (click)="onPasteLesson.emit()" mat-icon-button>
+        <mat-icon>archive</mat-icon>
     </button>
 </div>

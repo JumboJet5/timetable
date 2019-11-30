@@ -14,13 +14,14 @@ export class ScheduleLessonsComponent {
     @Output() public dragStart: EventEmitter<CdkDragStart> = new EventEmitter();
     @Output() public dragEnd: EventEmitter<CdkDragEnd> = new EventEmitter();
     @Output() public addToClipBoard: EventEmitter<LessonInterface> = new EventEmitter();
-    @Output() public getFromClipBoard: EventEmitter<number> = new EventEmitter();
     @Output() public onLessonClick: EventEmitter<LessonInterface> = new EventEmitter();
     @Output() public onAddLesson: EventEmitter<void> = new EventEmitter();
+    @Output() public onPasteLesson: EventEmitter<void> = new EventEmitter();
     @Input() public lessons: LessonInterface[];
-    @Input() public connectedList: any[];
     @Input() public isSomeDragging: boolean;
     @Input() public clipboardData: LessonInterface;
+    @Output() public deleteLesson: EventEmitter<number> = new EventEmitter<number>();
+    @Output() public moveLesson: EventEmitter<number> = new EventEmitter<number>();
     @ViewChild(CdkDropList, {static: false}) dropList: CdkDropList;
     public lessonTypesMap: Map<number, LessonFormatInterface> = lessonFormatMap();
     public isPlaced = false;
@@ -43,14 +44,12 @@ export class ScheduleLessonsComponent {
 
     drop(event: CdkDragDrop<LessonInterface[], any>) {
         if (event.previousContainer === event.container) moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-        else transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
-        this.isPlaced = false;
+        else {
+            transferArrayItem(event.previousContainer.data, event.container.data, event.previousIndex, event.currentIndex);
+            this.moveLesson.emit(event.item.data.id);
+        }
         this.dropEnd.emit(event);
-    }
-
-    public edit(index) {
-        this.lessons[index].name_short += ++this.index;
-        return false;
+        this.isPlaced = false;
     }
 
     getWeeks(lesson: LessonInterface): string {
@@ -70,16 +69,6 @@ export class ScheduleLessonsComponent {
                                  return weeksSequence;
                          }
                      }, '');
-    }
-
-    public copy(lesson: LessonInterface) {
-        this.addToClipBoard.emit(lesson);
-        return false;
-    }
-
-    public paste(i: number) {
-        this.getFromClipBoard.emit(i);
-        return false;
     }
 
     private isDifferentSchedule(weeks1: boolean[], weeks2: boolean[]): boolean {
