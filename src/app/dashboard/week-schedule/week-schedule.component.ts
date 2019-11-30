@@ -1,12 +1,11 @@
-import { CdkDropList } from '@angular/cdk/drag-drop';
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, switchMap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
+import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
-import { ScheduleLessonsComponent } from 'src/app/dashboard/week-schedule/schedule-lessons/schedule-lessons.component';
 
 @Component({
     selector: 'app-week-schedule',
@@ -14,20 +13,15 @@ import { ScheduleLessonsComponent } from 'src/app/dashboard/week-schedule/schedu
     styleUrls: ['./week-schedule.component.scss'],
 })
 export class WeekScheduleComponent implements OnInit {
-    public dropLists: CdkDropList[] = [];
     public isDragging = false;
     public weekDays = this.formatService.weekDays();
     public lessonTimes: LessonTimeInterface[] = [];
     public week: LessonInterface[][][] = [];
     public clipboard: LessonInterface;
     public groupIdControl: FormControl = new FormControl(undefined);
+    public isLoading = true;
     private _groupSlug: string;
     private _groupsemester: number;
-
-    @ViewChildren(ScheduleLessonsComponent)
-    public set lessons(value: QueryList<ScheduleLessonsComponent>) {
-        setTimeout(() => this.dropLists = value.toArray().map(lesson => lesson.dropList));
-    }
 
     private _groupSchedule: TimetableInterface;
 
@@ -41,6 +35,7 @@ export class WeekScheduleComponent implements OnInit {
     }
 
     constructor(private scheduleService: ScheduleService,
+                private lessonService: LessonService,
                 private route: ActivatedRoute,
                 private formatService: FormatService,
                 private router: Router) {
@@ -57,11 +52,6 @@ export class WeekScheduleComponent implements OnInit {
 
     public loadGroup = (id: number): Observable<GroupInterface> => this.scheduleService.getGroup(id);
 
-    public paste(lesson: ScheduleLessonsComponent, index: number) {
-        lesson.lessons[index] = this.clipboard || lesson.lessons[index];
-        this.clipboard = undefined;
-    }
-
     public changeSlug(event: OptionInterface[]) {
         if (event && event.length) this.router.navigate(['dashboard', 'lessons-schedule', event[0].slug, event[0].id]);
     }
@@ -76,14 +66,54 @@ export class WeekScheduleComponent implements OnInit {
         this.router.navigate([{outlets: {modal: ['modal', 'lesson', this._groupSlug]}}], {state: {state}});
     }
 
+    public delete(lessonId: number) {
+        this.isLoading = true;
+        this.scheduleService.deleteLesson(lessonId)
+            .subscribe(() => this._updatePage());
+    }
+
+    public moveLesson(lessonId: number, day: number, time: number) {
+        this.isLoading = true;
+        this.lessonService.getLesson(lessonId)
+            .pipe(switchMap(lesson => this.scheduleService.updateLesson({
+                theme: lesson.theme.toString(),
+                format: lesson.format.toString(),
+                weeks: lesson.weeks,
+                room: lesson.room.toString(),
+                teachers: lesson.teachers.map(teacher => teacher.toString()),
+                lesson_time: this.lessonTimes[time].id.toString(),
+                day: day.toString(),
+                group_semester: this._groupsemester.toString(),
+            }, lesson.id)))
+            .subscribe(() => this._updatePage());
+    }
+
+    public pasteLesson(time: number, day: number) {
+        this.isLoading = true;
+        this.lessonService.getLesson(this.clipboard.id)
+            .pipe(switchMap(lesson => this.scheduleService.createLesson({
+                theme: lesson.theme.toString(),
+                format: lesson.format.toString(),
+                weeks: lesson.weeks,
+                room: lesson.room.toString(),
+                teachers: lesson.teachers.map(teacher => teacher.toString()),
+                lesson_time: this.lessonTimes[time].id.toString(),
+                day: day.toString(),
+                group_semester: this._groupsemester.toString(),
+            })))
+            .subscribe(() => this._updatePage());
+    }
+
     private _updatePage() {
         const isSlugChanged = !this._groupSlug || this._groupSlug !== this.route.snapshot.paramMap.get('groupSlug');
         this._groupSlug = this.route.snapshot.paramMap.get('groupSlug');
         if (this._groupSlug !== 'groupSlug') {
+            this.isLoading = true;
             this.groupIdControl.patchValue(+this.route.snapshot.paramMap.get('groupId'));
             this.scheduleService.getTimetable(this._groupSlug)
                 .subscribe(res => this.groupSchedule = res)
-                .add(() => isSlugChanged ? this._getGroupsemester() : null);
+                .add(() => isSlugChanged ? this._getGroupsemester() : null)
+                .add(() => this.isLoading = false);
         }
     }
 

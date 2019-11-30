@@ -1,7 +1,7 @@
 declare interface ICreateLessonBody {
     theme: string;
     format: string;
-    teachers: string;
+    teachers: string | string[];
     room: string;
     weeks: string;
     lesson_time: string;
