@@ -19,7 +19,7 @@ export class WeekScheduleComponent implements OnInit {
     public week: LessonInterface[][][] = [];
     public clipboard: LessonInterface;
     public groupIdControl: FormControl = new FormControl(undefined);
-    public isLoading = true;
+    public isLoading = false;
     private _groupSlug: string;
     private _groupsemester: number;
 
@@ -61,7 +61,7 @@ export class WeekScheduleComponent implements OnInit {
         this.router.navigate([{outlets: {modal: ['modal', 'lesson', lesson.id, this._groupSlug]}}], {state: {state}});
     }
 
-    public openAddLessonModal(day: number, time: number) {
+    public openAddLessonModal(time: number, day: number) {
         const state = {day, time: this.lessonTimes[time].id, groupSchedule: this._groupSchedule, groupsemester: this._groupsemester};
         this.router.navigate([{outlets: {modal: ['modal', 'lesson', this._groupSlug]}}], {state: {state}});
     }
@@ -72,7 +72,7 @@ export class WeekScheduleComponent implements OnInit {
             .subscribe(() => this._updatePage());
     }
 
-    public moveLesson(lessonId: number, day: number, time: number) {
+    public moveLesson(lessonId: number, time: number, day: number) {
         this.isLoading = true;
         this.lessonService.getLesson(lessonId)
             .pipe(switchMap(lesson => this.scheduleService.updateLesson({
