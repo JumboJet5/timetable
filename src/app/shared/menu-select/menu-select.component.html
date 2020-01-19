@@ -22,14 +22,19 @@
       <input #selectInput class="select-input" placeholder="Пошук..." (input)="onInput()">
     </label>
 
-    <app-option-item class="tb-item"
-                     checked="true"
-                     *ngFor="let option of selectedOptions"
-                     [value]="option.id">{{itemToSting(option)}}</app-option-item>
+    <ng-container *ngFor="let option of selectedOptions">
+      <app-option-item class="tb-item"
+                       checked="true"
+                       *ngIf="!without?.length || !without.includes(option.id)"
+                       [value]="option.id">{{itemToSting(option)}}</app-option-item>
+    </ng-container>
 
-    <app-option-item class="tb-item"
-                     *ngFor="let option of displayedOptions"
-                     [value]="option.id">{{itemToSting(option)}}</app-option-item>
+    <ng-container *ngFor="let option of displayedOptions">
+      <app-option-item class="tb-item"
+                       *ngIf="!without?.length || !without.includes(option)"
+                       [value]="option.id">{{itemToSting(option)}}</app-option-item>
+    </ng-container>
+
   </div>
 
 </app-select>

@@ -9,17 +9,19 @@ import { SelectInputModule } from 'src/app/shared/select-input/select-input.modu
 import { LessonEditorComponent } from './lesson-editor/lesson-editor.component';
 
 import { ModalRoutingModule } from './modal-routing.module';
+import { MatCheckboxModule } from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [LessonEditorComponent],
-    imports: [
-        CommonModule,
-        ModalRoutingModule,
-        ReactiveFormsModule,
-        MenuSelectModule,
-        SelectInputModule,
-        MatButtonModule,
-    ],
+  imports: [
+    CommonModule,
+    ModalRoutingModule,
+    ReactiveFormsModule,
+    MenuSelectModule,
+    SelectInputModule,
+    MatButtonModule,
+    MatCheckboxModule,
+  ],
     providers: [
         LessonService,
         ScheduleService,

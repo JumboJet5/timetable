@@ -3,7 +3,7 @@
      (cdkDropListExited)="isPlaced = false"
      [cdkDropListData]="lessons"
      [cdkDropListEnterPredicate]="isLessonNotSpecified()"
-     [class.available]="isSomeDragging"
+     [class.available]="isSomeDragging && isLessonNotSpecified()({data: draggedLesson})"
      [class.placed]="isPlaced"
      cdkDropList
      cdkDropListOrientation="vertical"
@@ -12,6 +12,7 @@
          (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
          *ngFor="let lesson of lessons; let i = index"
          [cdkDragData]="lesson"
+         (click)="onLessonClick.emit(lesson)"
          cdkDrag
          class="drag-box">
         <div>{{lesson.name_short}}</div>
@@ -25,7 +26,7 @@
             <button (click)="onLessonClick.emit(lesson); $event.stopPropagation()" mat-icon-button>
                 <mat-icon>edit</mat-icon>
             </button>
-            <button (click)="addToClipBoard.emit(lesson)" mat-icon-button>
+            <button (click)="addToClipBoard.emit(lesson); $event.stopPropagation()" mat-icon-button>
                 <mat-icon>file_copy</mat-icon>
             </button>
             <button (click)="deleteLesson.emit(lesson.id); $event.stopPropagation()" mat-icon-button>

@@ -1,11 +1,12 @@
-<mat-checkbox (change)="checkedChange.emit($event.checked)"
-              *ngIf="isMulti"
-              [checked]="checked"
-              [disabled]="disabled"
-              color="primary"></mat-checkbox>
+<div class="option-wrapper" [class.dark]="parent?.isDark">
+  <mat-checkbox *ngIf="parent?.isMulti"
+                [checked]="checked"
+                [disabled]="disabled"
+                color="primary"></mat-checkbox>
 
-<ng-content></ng-content>
+  <ng-content></ng-content>
 
-<div class="suffix-wrapper" [class.active]="checked">
+  <div class="suffix-wrapper" [class.active]="checked">
     <ng-content select=".tb-item-suffix"></ng-content>
+  </div>
 </div>

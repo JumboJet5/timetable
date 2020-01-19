@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OptionItemComponent } from './option-item.component';
+import { OptionItemComponent } from 'app/shared/select-input/option-item/option-item.component';
 
 describe('OptionItemComponent', () => {
   let component: OptionItemComponent;
@@ -8,9 +8,9 @@ describe('OptionItemComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [OptionItemComponent],
+      declarations: [ OptionItemComponent ]
     })
-      .compileComponents();
+    .compileComponents();
   }));
 
   beforeEach(() => {

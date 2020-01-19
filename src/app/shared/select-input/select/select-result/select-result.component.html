@@ -1,10 +1,11 @@
 <div class="tb-input"
-     [class.tb-invalid]="isInvalid"
-     [class.opened]="isOpened"
-     [class.readonly]="isReadonly"
-     [class.disabled]="isDisabled">
+     [class.dark]="parent?.isDark"
+     [class.tb-invalid]="parent?.isInvalid"
+     [class.opened]="parent?.isOpened"
+     [class.readonly]="parent?.isReadonly"
+     [class.disabled]="parent?.isDisabled">
   <div class="result-content">
     <ng-content></ng-content>
   </div>
-  <img *ngIf="!isReadonly && !isDisabled" src="../../../../../assets/img/ic_filter_arrow.svg" alt="arrow">
+  <img *ngIf="!parent?.isReadonly && !parent?.isDisabled" src="../../../../../assets/img/ic_filter_arrow.svg" alt="arrow">
 </div>
