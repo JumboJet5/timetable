@@ -1,4 +1,5 @@
 @import "../../../../../assets/stylesheet/functions";
+@import '../../../../../assets/stylesheet/breakpoints';
 
 :host {
   .tb-input {
@@ -6,22 +7,35 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: calc(100% - 42px);
-    padding-right: 20px;
-
-    &.disabled {
-      color: rgba(59, 59, 59, 0.5);
-      filter: grayscale(100%);
-      background-color: #FBFBFB;
-    }
-
+    padding-right: 19px;
 
     &.opened, &:focus, &:active {
       &:not(.disabled):not(:disabled):not(.readonly) {
         border-width: 0;
-        height: 45px;
-        padding: 0 21px;
+        padding: 0 20px;
       }
+    }
+
+    &.dark {
+      img {
+        filter: invert(1);
+      }
+
+      &.opened {
+        box-shadow: 0 3px 25px 0 rgba(179, 179, 179, 0.15);
+      }
+
+      &.opened, &:focus, &:active {
+        &:not(.disabled):not(:disabled):not(.readonly) {
+          border-width: 0;
+          padding: 0 20px;
+        }
+      }
+    }
+
+    &:not(.opened) {
+      transition-property: all;
+      transition-delay: .18s;
     }
   }
 
@@ -36,15 +50,41 @@
     }
   }
 
+
   img {
     margin-left: 5px;
     opacity: .5;
     transform: scaleY(-1);
-    transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.5s, transform, opacity);
+    transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.3s, transform, opacity);
   }
 
   .result-content {
     display: flex;
     align-items: center;
+  }
+
+  @media screen and (max-width: $x-large) {
+    .tb-input {
+      padding-right: 15px;
+
+      &.opened, &:focus, &:active {
+        &:not(.disabled):not(:disabled):not(.readonly) {
+          padding: 0 16px;
+        }
+      }
+
+      &.dark {
+        &.opened, &:focus, &:active {
+          &:not(.disabled):not(:disabled):not(.readonly) {
+            padding: 0 16px;
+          }
+        }
+      }
+
+      &:not(.opened) {
+        transition-property: all;
+        transition-delay: .18s;
+      }
+    }
   }
 }

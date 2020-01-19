@@ -20,8 +20,8 @@
       <span class="lesson-time">{{lessonTimes[tIndex].num}} пара {{lessonTimes[tIndex].start}} - {{lessonTimes[tIndex].end}}</span>
       <app-schedule-lessons #lesson
                             (addToClipBoard)="clipboard = $event"
-                            (dragEnd)="isDragging = false"
-                            (dragStart)="isDragging = true"
+                            (dragEnd)="isDragging = false; draggedLesson = null"
+                            (dragStart)="isDragging = true; draggedLesson = $event.source.data"
                             (onLessonClick)="openLessonDetail($event, lessons)"
                             (onAddLesson)="openAddLessonModal(tIndex, dIndex)"
                             (onPasteLesson)="pasteLesson(tIndex, dIndex)"
@@ -30,6 +30,7 @@
                             *ngFor="let lessons of time; let dIndex = index"
                             [clipboardData]="clipboard"
                             [isSomeDragging]="isDragging"
+                            [draggedLesson]="draggedLesson"
                             [lessons]="lessons"></app-schedule-lessons>
     </div>
   </ng-container>

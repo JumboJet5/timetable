@@ -8,11 +8,12 @@ import { SelectComponent } from 'src/app/shared/select-input/select/select.compo
 @Component({
     selector: 'app-menu-select',
     templateUrl: './menu-select.component.html',
-    styleUrls: ['./menu-select.component.scss'],
+    styleUrls: ['./menu-select.component.scss', '../../../assets/stylesheet/default-form.scss'],
 })
 export class MenuSelectComponent implements OnInit, OnDestroy {
     @Output() public changeSelected: EventEmitter<OptionInterface[]> = new EventEmitter<OptionInterface[]>();
     @Output() public needRefreshChange: EventEmitter<boolean> = new EventEmitter<boolean>();
+    @Input() public without: any[] = [];
     @Input() public placeholder: string;
     @Input() public sortByField = 'name';
     @Input() public multiple: boolean;

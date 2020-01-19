@@ -19,6 +19,7 @@ export class ScheduleLessonsComponent {
     @Output() public onPasteLesson: EventEmitter<void> = new EventEmitter();
     @Input() public lessons: LessonInterface[];
     @Input() public isSomeDragging: boolean;
+    @Input() public draggedLesson: LessonInterface;
     @Input() public clipboardData: LessonInterface;
     @Output() public deleteLesson: EventEmitter<number> = new EventEmitter<number>();
     @Output() public moveLesson: EventEmitter<number> = new EventEmitter<number>();

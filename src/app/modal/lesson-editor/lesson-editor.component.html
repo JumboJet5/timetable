@@ -1,74 +1,104 @@
 <div (click)="closeModal()" class="overlay-backdrop"></div>
 
 <div class="modal-wrapper">
-    <form [formGroup]="lessonForm">
-        <app-menu-select [loadItem]="loadTheme"
-                         [loadPage]="loadThemes"
-                         [selectControl]="lessonForm.get('theme')"
-                         maxLength="40"
-                         placeholder="Назва"></app-menu-select>
+  <form [formGroup]="lessonForm" class="lesson-form">
+    <div class="first-column">
 
-        <app-menu-select (changeSelected)="roomsSelect.needRefresh = true"
-                         [loadItem]="loadHousing"
-                         [loadPage]="loadHousings"
-                         [selectControl]="lessonForm.get('housing')"
-                         maxLength="40"
-                         placeholder="Корпус"></app-menu-select>
+      <div class="placeholder">Назва</div>
+      <app-menu-select [loadItem]="loadTheme"
+                       [loadPage]="loadThemes"
+                       [selectControl]="lessonForm.get('theme')"
+                       maxLength="40"
+                       placeholder="Назва"></app-menu-select>
 
-        <app-menu-select #roomsSelect
-                         [disabled]="!lessonForm.get('housing')"
-                         [itemToSting]="roomToSting"
-                         [loadItem]="loadRoom"
-                         [loadPage]="loadRooms"
-                         [selectControl]="lessonForm.get('room')"
-                         maxLength="40"
-                         placeholder="Аудиторія"
-                         sortByField="num"></app-menu-select>
+      <div class="placeholder">Корпус</div>
+      <app-menu-select (changeSelected)="roomsSelect.needRefresh = true"
+                       [loadItem]="loadHousing"
+                       [loadPage]="loadHousings"
+                       [selectControl]="lessonForm.get('housing')"
+                       maxLength="40"
+                       placeholder="Корпус"></app-menu-select>
 
-        <app-menu-select [loadItem]="loadTeacher"
-                         [loadPage]="loadTeachers"
-                         [selectControl]="lessonForm.get('teachers')"
-                         maxLength="40"
-                         multiple="true"
-                         placeholder="Викладач(*чі)"
-                         withSearch="true"></app-menu-select>
+      <div class="placeholder">Аудиторія</div>
+      <app-menu-select #roomsSelect
+                       [disabled]="!lessonForm.get('housing')"
+                       [itemToSting]="roomToSting"
+                       [loadItem]="loadRoom"
+                       [loadPage]="loadRooms"
+                       [selectControl]="lessonForm.get('room')"
+                       maxLength="40"
+                       placeholder="Аудиторія"
+                       sortByField="num"></app-menu-select>
 
-        <app-select [abstractControl]="lessonForm.get('format')">
-            <app-select-result>{{lessonsMap.get(lessonForm.value.format)?.name || 'Формат'}}</app-select-result>
-            <app-option-item *ngFor="let option of lessonFormats" [value]="option.id">{{option.name}}</app-option-item>
-        </app-select>
+      <div class="placeholder">Викладач(*чі)</div>
+      <app-menu-select [loadItem]="loadTeacher"
+                       [loadPage]="loadTeachers"
+                       [selectControl]="lessonForm.get('teachers')"
+                       maxLength="40"
+                       multiple="true"
+                       placeholder="Викладач(*чі)"
+                       withSearch="true"></app-menu-select>
 
-        <app-select [abstractControl]="lessonForm.get('subgroup')">
-            <app-select-result>{{lessonForm.value.subgroup || 'Підгрупи'}}</app-select-result>
-            <app-option-item value="">Всі</app-option-item>
-            <app-option-item *ngFor="let option of subgroups" [value]="option">{{option}}</app-option-item>
-        </app-select>
+      <div class="placeholder">Формат</div>
+      <app-select [abstractControl]="lessonForm.get('format')">
+        <app-select-result>{{lessonsMap.get(lessonForm.value.format)?.name || 'Формат'}}</app-select-result>
+        <app-option-item *ngFor="let option of lessonFormats" [value]="option.id">{{option.name}}</app-option-item>
+      </app-select>
 
-        <app-select [abstractControl]="lessonForm.get('vacantWeeks')" isMulti="true">
-            <app-select-result>Тижні</app-select-result>
-            <ng-container *ngFor="let option of vacantWeeks; let i = index">
-                <app-option-item *ngIf="!option.isHidden"
-                                 [checked]="option.isUsed"
-                                 [disabled]="!option.isVacant"
-                                 [value]="i">{{option.date | date: 'dd MMM yyyy'}}</app-option-item>
-            </ng-container>
-        </app-select>
+      <div class="placeholder">Підгрупи</div>
+      <app-select [abstractControl]="lessonForm.get('subgroup')">
+        <app-select-result>{{lessonForm.value.subgroup || 'Всі'}}</app-select-result>
+        <app-option-item value="">Всі</app-option-item>
+        <app-option-item *ngFor="let option of subgroups" [value]="option">{{option}}</app-option-item>
+      </app-select>
+    </div>
 
-        <app-select [abstractControl]="lessonForm.get('day')" (changes)="onLessonTimeOrDayChange()">
+    <div class="second-column">
+      <div class="tb-form-row">
+        <div class="time-selector">
+          <div class="placeholder">День</div>
+          <app-select [abstractControl]="lessonForm.get('day')" (changes)="onLessonTimeOrDayChange()">
             <app-select-result>{{dayMap.get(lessonForm.value.day) || 'День'}}</app-select-result>
             <app-option-item *ngFor="let option of weekDays; let index = index"
                              [value]="index">{{option}}</app-option-item>
-        </app-select>
-
-        <app-select [abstractControl]="lessonForm.get('lesson_time')" (changes)="onLessonTimeOrDayChange()">
+          </app-select>
+        </div>
+        <div class="time-selector">
+          <div class="placeholder">Час</div>
+          <app-select [abstractControl]="lessonForm.get('lesson_time')" (changes)="onLessonTimeOrDayChange()">
             <app-select-result>{{getLessonTimeById(lessonForm.value.lesson_time) || 'Час'}}</app-select-result>
             <app-option-item *ngFor="let option of lessonTimes"
                              [value]="option.id">{{getLessonTimeById(option.id)}}</app-option-item>
-        </app-select>
+          </app-select>
+        </div>
+      </div>
 
-        <button mat-raised-button *ngIf="!lesson" (click)="onCreate()" [disabled]="lessonForm.invalid">Create</button>
-        <button mat-raised-button *ngIf="lesson" (click)="onUpdate()" [disabled]="lessonForm.invalid">Save</button>
-        <button mat-raised-button [routerLink]="[{outlets: {modal: null}}]">Cancel</button>
-    </form>
+      <div class="placeholder">Тижні</div>
+      <div class="weeks-wrapper"
+           *ngIf="lessonForm.get('lesson_time').valid && lessonForm.get('day').valid; else weeksSelectorLocked">
+        <ng-container *ngFor="let week of vacantWeeks; let i = index">
+          <button (click)="changeWeekStatus(week)"
+                  *ngIf="!week.isHidden"
+                  [class.used]="week.isUsed"
+                  [disabled]="!week.isVacant"
+                  class="week-selector"
+                  mat-flat-button>
+            <mat-checkbox [checked]="week.isUsed" color="primary"></mat-checkbox>
+            <span>{{week.date | date: 'dd. MM. yyyy'}} ({{i + 1}} тиждень)</span>
+          </button>
+        </ng-container>
+      </div>
+
+      <ng-template #weeksSelectorLocked>
+        <span>Оберіть спочатку день тижня і час пари</span>
+      </ng-template>
+
+      <div class="control-row">
+        <button mat-raised-button *ngIf="!lesson" (click)="onCreate()" [disabled]="lessonForm.invalid" color="primary">Create</button>
+        <button mat-raised-button *ngIf="lesson" (click)="onUpdate()" [disabled]="lessonForm.invalid" color="primary">Save</button>
+        <button mat-raised-button (click)="closeModal()">Cancel</button>
+      </div>
+    </div>
+  </form>
 </div>
 

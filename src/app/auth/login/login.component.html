@@ -5,6 +5,8 @@
             <span class="placeholder smallest-text">Enter username</span>
             <input [class.tb-invalid]="!formatService.isControlValid(loginForm, 'username')"
                    class="tb-input"
+                   name="username"
+                   autocomplete="username"
                    formControlName="username"/>
             <span class="tb-error">{{formatService.getControlError(loginForm, 'username')}}</span>
         </label>
@@ -13,6 +15,8 @@
             <input [type]="isPasswordVisible ? 'text' : 'password'"
                    [class.tb-invalid]="!formatService.isControlValid(loginForm, 'password')"
                    class="tb-input"
+                   name="password"
+                   autocomplete="current-password"
                    formControlName="password"/>
             <span class="tb-error">{{formatService.getControlError(loginForm, 'password')}}</span>
             <mat-icon (click)="isPasswordVisible = !isPasswordVisible"

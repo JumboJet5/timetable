@@ -14,6 +14,7 @@ import { ScheduleService } from 'src/app/service/schedule/schedule.service';
 })
 export class WeekScheduleComponent implements OnInit {
     public isDragging = false;
+    public draggedLesson: LessonInterface = undefined;
     public weekDays = this.formatService.weekDays();
     public lessonTimes: LessonTimeInterface[] = [];
     public week: LessonInterface[][][] = [];
