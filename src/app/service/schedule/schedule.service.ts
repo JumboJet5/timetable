@@ -10,8 +10,8 @@ export class ScheduleService {
     constructor(private http: HttpClient,
                 private formatService: FormatService) {}
 
-    public getTimetable(slug: string): Observable<TimetableInterface> {
-        return this.http.get<TimetableInterface>(URLS.GET_TIMETABLE_LIST(slug));
+    public getTimetable(slug: string): Observable<ITimetable> {
+        return this.http.get<ITimetable>(URLS.GET_TIMETABLE_LIST(slug));
     }
 
     public getGroups(params: GroupsRequestParamInterface): Observable<GroupsResponseInterface> {
@@ -54,7 +54,7 @@ export class ScheduleService {
         return this.http.get<any>(URLS.GET_TEACHER(id));
     }
 
-    public getGroupsemester(groupId: number, semesterId: number): Observable<any> {
+    public getGroupSemester(groupId: number, semesterId: number): Observable<any> {
         return this.http.get<any>(URLS.GET_GROUPSEMESTER(groupId, semesterId));
     }
 

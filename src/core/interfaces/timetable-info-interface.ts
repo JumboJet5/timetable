@@ -1,4 +1,4 @@
-declare interface TimetableInfoInterface {
+declare interface ITimetableInfo {
   university: {
     img: string;
     name: string;

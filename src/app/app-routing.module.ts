@@ -13,7 +13,7 @@ const routes: Routes = [
         path: 'authentication', loadChildren: () => import('./auth/auth.module')
             .then(module => module.AuthModule),
     },
-    {path: '**', pathMatch: 'full', redirectTo: '/authentication/login'},
+    {path: '**', pathMatch: 'full', redirectTo: '/dashboard/lessons-schedule/groupSlug/groupId'},
 ];
 
 @NgModule({

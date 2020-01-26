@@ -25,6 +25,11 @@
     }
   }
 
+  .option-content {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   mat-checkbox {
     margin-right: 10px;
   }

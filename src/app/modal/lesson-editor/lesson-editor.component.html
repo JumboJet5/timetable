@@ -1,7 +1,7 @@
 <div (click)="closeModal()" class="overlay-backdrop"></div>
 
 <div class="modal-wrapper">
-  <form [formGroup]="lessonForm" class="lesson-form">
+  <form [formGroup]="lessonForm" class="lesson-form" *ngIf="weekSchedule">
     <div class="first-column">
 
       <div class="placeholder">Назва</div>
@@ -67,8 +67,8 @@
           <div class="placeholder">Час</div>
           <app-select [abstractControl]="lessonForm.get('lesson_time')" (changes)="onLessonTimeOrDayChange()">
             <app-select-result>{{getLessonTimeById(lessonForm.value.lesson_time) || 'Час'}}</app-select-result>
-            <app-option-item *ngFor="let option of lessonTimes"
-                             [value]="option.id">{{getLessonTimeById(option.id)}}</app-option-item>
+            <app-option-item *ngFor="let option of weekSchedule.getScheduleTimes()"
+                             [value]="option.id">{{option.start}} - {{option.end}}</app-option-item>
           </app-select>
         </div>
       </div>
@@ -83,7 +83,7 @@
                   [disabled]="!week.isVacant"
                   class="week-selector"
                   mat-flat-button>
-            <mat-checkbox [checked]="week.isUsed" color="primary"></mat-checkbox>
+            <mat-checkbox [checked]="week.isUsed" color="primary" [disabled]="!week.isVacant"></mat-checkbox>
             <span>{{week.date | date: 'dd. MM. yyyy'}} ({{i + 1}} тиждень)</span>
           </button>
         </ng-container>

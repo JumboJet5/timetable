@@ -1,4 +1,4 @@
-declare interface LessonInterface {
+declare interface ILesson {
   day?: number;
   dates: string[];
   format: number;
@@ -9,7 +9,7 @@ declare interface LessonInterface {
     location: null
   };
   id: number;
-  lesson_time: number | LessonTimeInterface;
+  lesson_time: number | ILessonTime;
   name_full: string;
   name_short: string;
   room: number | {
