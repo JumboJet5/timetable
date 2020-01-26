@@ -12,26 +12,30 @@
   </div>
   <div class="time-row">
     <span class="lesson-time">N/N</span>
-    <div class="lessons" *ngFor="let day of weekDays">{{day}}</div>
+    <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
   </div>
-  <ng-container *ngFor="let time of week; let tIndex = index">
+  <ng-container *ngFor="let time of weekSchedule.getScheduleTimes()">
     <div class="divider"></div>
-    <div class="time-row" >
-      <span class="lesson-time">{{lessonTimes[tIndex].num}} пара {{lessonTimes[tIndex].start}} - {{lessonTimes[tIndex].end}}</span>
+    <div class="time-row">
+      <span class="lesson-time">
+        <span class="lesson-counter">{{time.num}} пара</span>
+        <span>{{time.start}} - {{time.end}}</span>
+      </span>
       <app-schedule-lessons #lesson
                             (addToClipBoard)="clipboard = $event"
                             (dragEnd)="isDragging = false; draggedLesson = null"
                             (dragStart)="isDragging = true; draggedLesson = $event.source.data"
-                            (onLessonClick)="openLessonDetail($event, lessons)"
-                            (onAddLesson)="openAddLessonModal(tIndex, dIndex)"
-                            (onPasteLesson)="pasteLesson(tIndex, dIndex)"
+                            (onLessonClick)="openLessonDetail($event, weekSchedule.getConcreteLessons(day, time.id))"
+                            (onAddLesson)="openAddLessonModal(time.id, dIndex)"
+                            (onPasteLesson)="pasteLesson(time.id, dIndex)"
                             (deleteLesson)="delete($event)"
-                            (moveLesson)="moveLesson($event, tIndex, dIndex)"
-                            *ngFor="let lessons of time; let dIndex = index"
+                            (moveLesson)="moveLesson($event, time.id, dIndex)"
+                            *ngFor="let day of weekSchedule.getScheduleDays(); let dIndex = index"
                             [clipboardData]="clipboard"
                             [isSomeDragging]="isDragging"
                             [draggedLesson]="draggedLesson"
-                            [lessons]="lessons"></app-schedule-lessons>
+                            [schedule]="weekSchedule"
+                            [lessons]="weekSchedule.getConcreteLessons(day, time.id)"></app-schedule-lessons>
     </div>
   </ng-container>
 </div>

@@ -1,4 +1,4 @@
-declare interface PeriodInterface {
+declare interface IPeriod {
   end: string;
   id: number;
   kind: number;

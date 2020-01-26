@@ -3,8 +3,9 @@
                 [checked]="checked"
                 [disabled]="disabled"
                 color="primary"></mat-checkbox>
-
-  <ng-content></ng-content>
+  <div class="option-content">
+    <ng-content></ng-content>
+  </div>
 
   <div class="suffix-wrapper" [class.active]="checked">
     <ng-content select=".tb-item-suffix"></ng-content>

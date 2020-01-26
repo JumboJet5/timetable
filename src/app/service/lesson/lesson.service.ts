@@ -10,7 +10,7 @@ export class LessonService {
 
   constructor(private http: HttpClient) {}
 
-  public getLesson(id: number): Observable<LessonInterface> {
-    return this.http.get<LessonInterface>(URLS.GET_LESSON(id));
+  public getLesson(id: number): Observable<ILesson> {
+    return this.http.get<ILesson>(URLS.GET_LESSON(id));
   }
 }

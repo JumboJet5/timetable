@@ -1,4 +1,4 @@
-declare interface LessonTimeInterface {
+declare interface ILessonTime {
   end: string;
   half_end: string;
   half_start: string;

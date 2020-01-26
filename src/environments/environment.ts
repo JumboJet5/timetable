@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  host: '',
+  // host: 'https://api.mytimetable.live',
+  host: 'https://mytt.pp.ua',
   api: '/rest',
 };
 
