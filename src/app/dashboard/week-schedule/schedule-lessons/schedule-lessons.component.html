@@ -3,49 +3,66 @@
      (cdkDropListExited)="isPlaced = false"
      [cdkDropListData]="lessons"
      [cdkDropListEnterPredicate]="isLessonNotSpecified()"
-     [class.available]="isSomeDragging && isLessonNotSpecified()({data: draggedLesson})"
+     [class.available]="parent.isDragging && isLessonNotSpecified()({data: parent.draggedLesson})"
      [class.placed]="isPlaced"
      cdkDropList
      cdkDropListOrientation="vertical"
      class="box-list">
-  <div (cdkDragEnded)="dragEnd.emit($event)"
-       (cdkDragStarted)="dragStart.emit($event); isPlaced = true"
+
+  <div (cdkDragEnded)="onDragEnd()"
+       (cdkDragStarted)="onDragStart($event.source.data)"
+       (click)="parent.openLessonDetail(lesson, lessons)"
        *ngFor="let lesson of lessons; let i = index"
        [cdkDragData]="lesson"
-       (click)="onLessonClick.emit(lesson)"
+       [class.additional]="parent.weekSchedule.isLessonAdditional(lesson, lessons)"
        cdkDrag
-       class="drag-box {{lessonTypesMap.get(lesson.format)?.class}}">
-    <div class="description-row" [title]="lesson.name_full">{{lesson.name_full}}</div>
-    <div class="description-row" [title]="lessonTypesMap.get(lesson.format)?.name">{{lessonTypesMap.get(lesson.format)?.name}}</div>
-    <div class="teachers-wrapper">
-      <div *ngFor="let teacher of lesson.teachers">{{teacher.short_name}}</div>
+       class="drag-box">
+    <div class="teachers-col">
+      <div class="lesson-format {{lessonTypesMap.get(lesson.format)?.class}}"
+           [title]="lessonTypesMap.get(lesson.format)?.name">{{lessonTypesMap.get(lesson.format)?.shortName}}</div>
+
+      <ng-container *ngFor="let teacher of lesson.teachers">
+        <img *ngIf="teacher.img; else generated"
+             [alt]="teacher.short_name"
+             [src]="teacher.img"
+             [title]="teacher.full_name" class="teacher-avatar">
+
+        <ng-template #generated>
+          <app-default-avatar [fullName]="teacher.full_name"></app-default-avatar>
+        </ng-template>
+      </ng-container>
     </div>
-    <div *ngIf="lesson.room" [title]="'ауд. ' + lesson.room.num">ауд. {{lesson.room.num}}</div>
-    <div *ngIf="lesson.subgroup">пг. {{lesson.subgroup}}</div>
-    <div class="week-points-wrapper">
-      <div *ngFor="let point of lesson.getLessonWeekSchedule(); let index = index"
-           [class.vacant]="point"
-           class="week-point"
-           [title]="schedule.getDateByWeekIndexAndDay(index, lesson.day) | date: 'dd. MM. yyyy'"></div>
+
+    <div class="description-col">
+      <div class="lesson-name" [title]="lesson.name_full">{{lesson.name_full}}</div>
+      <div class="small-test weeks-info-row">Тижні: {{lesson.getWeeksAsString()}}</div>
+      <div class="small-test description-info-row">
+        <span *ngIf="lesson.getLocation()" [title]="lesson.getLocation()">{{lesson.getLocation()}}</span>
+        <span *ngIf="lesson.subgroup">пг. {{lesson.subgroup}}</span>
+      </div>
     </div>
-    <div class="control-row">
-      <button (click)="onLessonClick.emit(lesson); $event.stopPropagation()" mat-icon-button>
+
+    <div class="control-col">
+      <button mat-icon-button>
         <mat-icon>edit</mat-icon>
       </button>
-      <button (click)="addToClipBoard.emit(lesson); $event.stopPropagation()" mat-icon-button>
+      <button (click)="parent.clipboard = lesson; $event.stopPropagation()" mat-icon-button>
         <mat-icon>file_copy</mat-icon>
       </button>
-      <button (click)="deleteLesson.emit(lesson.id); $event.stopPropagation()" mat-icon-button>
+      <button (click)="parent.delete(lesson.id); $event.stopPropagation()" mat-icon-button>
         <mat-icon>delete</mat-icon>
       </button>
     </div>
   </div>
+
 </div>
+
 <div class="add-box">
-  <button (click)="onAddLesson.emit()" mat-icon-button>
-    <mat-icon *ngIf="!isSomeDragging && !isPlaced">add_circle_outline</mat-icon>
+  <button (click)="parent.openAddLessonModal(timeId, dayIndex)" mat-icon-button>
+    <mat-icon *ngIf="!parent.isDragging && !isPlaced">add_circle_outline</mat-icon>
   </button>
-  <button *ngIf="!!clipboardData && isLessonNotSpecified()({data: clipboardData})" (click)="onPasteLesson.emit()"
+  <button *ngIf="!!parent.clipboard && isLessonNotSpecified()({data: parent.clipboard})"
+          (click)="parent.pasteLesson(timeId, dayIndex)"
           mat-icon-button>
     <mat-icon>archive</mat-icon>
   </button>

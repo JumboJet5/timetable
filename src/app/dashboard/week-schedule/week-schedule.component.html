@@ -1,7 +1,4 @@
 <div cdkDropListGroup>
-  <div class="loading-wrapper" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
   <div class="select-group-wrapper">
     <app-menu-select placeholder="Група"
                      withSearch="true"
@@ -9,33 +6,25 @@
                      [loadItem]="loadGroup"
                      [selectControl]="groupIdControl"
                      (changeSelected)="changeSlug($event)"></app-menu-select>
+    <ng-container *ngIf="!!this.weekSchedule?.getSchedule()">
+      <span class="group-info">Курс: {{this.weekSchedule.getSchedule()?.info?.course?.name}}</span>
+      <span class="group-info">Семестр: {{this.weekSchedule.getSchedule()?.info?.semester?.num}}</span>
+    </ng-container>
   </div>
-  <div class="time-row">
-    <span class="lesson-time">N/N</span>
-    <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
+  <div class="loading-wrapper" *ngIf="isLoading; else schedule">
+    <mat-spinner></mat-spinner>
   </div>
-  <ng-container *ngFor="let time of weekSchedule.getScheduleTimes()">
-    <div class="divider"></div>
-    <div class="time-row">
-      <span class="lesson-time">
-        <span class="lesson-counter">{{time.num}} пара</span>
-        <span>{{time.start}} - {{time.end}}</span>
-      </span>
-      <app-schedule-lessons #lesson
-                            (addToClipBoard)="clipboard = $event"
-                            (dragEnd)="isDragging = false; draggedLesson = null"
-                            (dragStart)="isDragging = true; draggedLesson = $event.source.data"
-                            (onLessonClick)="openLessonDetail($event, weekSchedule.getConcreteLessons(day, time.id))"
-                            (onAddLesson)="openAddLessonModal(time.id, dIndex)"
-                            (onPasteLesson)="pasteLesson(time.id, dIndex)"
-                            (deleteLesson)="delete($event)"
-                            (moveLesson)="moveLesson($event, time.id, dIndex)"
-                            *ngFor="let day of weekSchedule.getScheduleDays(); let dIndex = index"
-                            [clipboardData]="clipboard"
-                            [isSomeDragging]="isDragging"
-                            [draggedLesson]="draggedLesson"
-                            [schedule]="weekSchedule"
-                            [lessons]="weekSchedule.getConcreteLessons(day, time.id)"></app-schedule-lessons>
+  <ng-template #schedule>
+    <div class="time-row days-header">
+      <span class="lesson-time"></span>
+      <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
     </div>
-  </ng-container>
+    <div class="time-row" *ngFor="let time of weekSchedule.getScheduleTimes()">
+      <span class="lesson-time" [title]="time.start + ' - ' + time.end">{{time.num}} пара</span>
+      <app-schedule-lessons *ngFor="let day of weekSchedule.getScheduleDays(); let dIndex = index"
+                            [day]="day"
+                            [dayIndex]="dIndex"
+                            [timeId]="time.id"></app-schedule-lessons>
+    </div>
+  </ng-template>
 </div>

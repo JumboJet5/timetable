@@ -31,8 +31,6 @@ export class WeekScheduleComponent implements OnInit {
               private router: Router) {
   }
 
-  private _groupSchedule: ITimetable;
-
   public ngOnInit(): void {
     this._updatePage();
     this.router.events
@@ -49,12 +47,16 @@ export class WeekScheduleComponent implements OnInit {
   }
 
   public openLessonDetail(lesson: Lesson, associatedLessons: Lesson[]) {
-    const state = {associatedLessons, groupSchedule: this._groupSchedule, groupsemester: this._groupsemester};
+    const state = {
+      associatedLessons,
+      groupSchedule: this.weekSchedule.getSchedule(),
+      groupsemester: this._groupsemester
+    };
     this.router.navigate([{outlets: {modal: ['modal', 'lesson', lesson.id, this._groupSlug]}}], {state: {state}});
   }
 
   public openAddLessonModal(time: number, day: number) {
-    const state = {day, time, groupSchedule: this._groupSchedule, groupsemester: this._groupsemester};
+    const state = {day, time, groupSchedule: this.weekSchedule.getSchedule(), groupsemester: this._groupsemester};
     this.router.navigate([{outlets: {modal: ['modal', 'lesson', this._groupSlug]}}], {state: {state}});
   }
 
@@ -66,7 +68,7 @@ export class WeekScheduleComponent implements OnInit {
 
   public moveLesson(lessonId: number, time: number, day: number) {
     this.isLoading = true;
-    this.lessonService.getLesson(lessonId)
+    this.lessonService.getLesson(lessonId) // todo remove get lesson from server
       .pipe(switchMap(lesson => this.scheduleService.updateLesson({
         theme: lesson.theme.toString(),
         format: lesson.format.toString(),
@@ -82,7 +84,7 @@ export class WeekScheduleComponent implements OnInit {
 
   public pasteLesson(time: number, day: number) {
     this.isLoading = true;
-    this.lessonService.getLesson(this.clipboard.id)
+    this.lessonService.getLesson(this.clipboard.id) // todo remove get lesson from server
       .pipe(switchMap(lesson => this.scheduleService.createLesson({
         theme: lesson.theme.toString(),
         format: lesson.format.toString(),
@@ -103,8 +105,7 @@ export class WeekScheduleComponent implements OnInit {
       this.isLoading = true;
       this.groupIdControl.patchValue(+this.route.snapshot.paramMap.get('groupId'));
       this.scheduleService.getTimetable(this._groupSlug)
-        .subscribe(res => this._groupSchedule = res)
-        .add(() => this.weekSchedule = new WeekSchedule(this._groupSchedule))
+        .subscribe(res => this.weekSchedule = new WeekSchedule(res))
         .add(() => isSlugChanged ? this._getGroupsemester() : null)
         .add(() => this.isLoading = false);
     }

@@ -35,6 +35,29 @@ export class Lesson implements ILesson {
     return this.weeks.split('')[index] === '0';
   }
 
+  public getWeeksAsString(): string {
+    return this.getLessonWeekSchedule()
+      .reduce((weeksSequence, isLesson, index, weeksBool) => {
+        switch (true) {
+          case isLesson && !weeksSequence:
+            return weeksSequence = (index + 1).toString();
+          case isLesson && !weeksBool[index - 1]:
+            return weeksSequence + ', ' + (index + 1);
+          case isLesson && index === weeksBool.length - 1:
+            return weeksSequence + '-' + (index + 1);
+          case !isLesson && weeksBool[index - 1] && weeksBool[index - 2]:
+            return weeksSequence + '-' + index;
+          default:
+            return weeksSequence;
+        }
+      }, '');
+  }
+
+  public getLocation(): string {
+    const housing = !!this.housing && typeof this.housing === 'object' ? `${this.housing.short_name}-` : '';
+    return !!this.room && typeof this.room === 'object' ? 'ауд. ' + housing + this.room.num : '';
+  }
+
   private _hasLessonDifferentSubgroup(that: Lesson): boolean {
     return !!that && !!this.subgroup && !!that.subgroup && this.subgroup !== that.subgroup;
   }

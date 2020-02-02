@@ -2,46 +2,16 @@
   display: block;
 }
 
-.description-row {
-  margin-bottom: 10px;
-  max-height: 19px;
-  line-height: 19px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100px;
-  white-space: nowrap;
-  padding: 0 15px;
-  cursor: help;
-}
-
-.week-points-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 8px 0;
-}
-
-.week-point {
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: #b4b4b4;
-  border: 2px solid white;
-  cursor: help;
-  margin: 2px;
-
-  &.vacant {
-    background-color: #3060c0;
-  }
+.small-test {
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .box-list {
   border: dashed black 1px;
   border-radius: 4px;
-  padding: 4px;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  margin: 4px;
+  padding: 2px;
+  margin: 2px;
   min-height: 50px;
   position: relative;
 
@@ -52,8 +22,6 @@
 
 .add-box {
   position: relative;
-  border: dashed transparent 1px;
-  flex: 1 0 0;
   width: 100%;
   text-align: center;
   align-items: center;
@@ -68,25 +36,108 @@
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
   0 4px 5px 1px rgba(0, 0, 0, 0.14),
   0 2px 7px 2px rgba(0, 0, 0, 0.12);
-  margin: 4px;
+  margin: 2px;
   cursor: move;
   flex: 1 0 0;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
   display: flex;
-  flex-direction: column;
-  padding: 10px;
+  align-items: flex-start;
+  padding: 8px 0 8px 8px;
   position: relative;
 
-  .control-row {
-    display: flex;
+  &.additional:not(:hover) {
+    background-color: rgba(144, 144, 144, 0.1);
     align-items: center;
-    justify-content: center;
+
+    .lesson-format, .teacher-avatar:not(:first-of-type), .lesson-name, .weeks-info-row, .mat-icon-button {
+      display: none;
+    }
+  }
+
+  .lesson-format {
+    font-size: 10px;
+    line-height: 16px;
+    border-radius: 8px;
+    width: 24px;
+    text-align: center;
+    cursor: help;
+    margin-bottom: 8px;
+
+    &.lecture {
+      background-color: #8080ff;
+    }
+
+    &.seminar {
+      background-color: #80ff80;
+    }
+
+    &.practice {
+      background-color: #ff8080;
+    }
+
+    &.lab {
+      background-color: #ffc080;
+    }
+  }
+
+  .teachers-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-right: 4px;
+  }
+
+  .teacher-avatar {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    border-radius: 50%;
+    box-shadow: -1px 1px 5px -3px rgba(0, 0, 0, 0.2), 1px 1px 5px 1px rgba(0, 0, 0, 0.14), -1px 2px 7px 2px rgba(0, 0, 0, 0.12);
+    margin-bottom: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .description-col {
+    width: 100%;
+
+    .lesson-name {
+      word-break: break-word;
+      font-weight: 500;
+      margin-bottom: 4px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid #909090;
+    }
+
+    .description-info-row {
+      display: flex;
+      justify-content: space-between;
+
+      span:not(:last-child) {
+        margin-right: 5px;
+      }
+    }
+  }
+
+  .control-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: auto;
+    transform: translateY(-8px);
+    min-height: 1px;
+    min-width: 28px;
 
     .mat-icon, .mat-icon-button {
       height: 28px;
       width: 28px;
+    }
+
+    .mat-icon-button:last-child {
+      margin-bottom: -16px;
     }
 
     .mat-icon {
@@ -94,37 +145,6 @@
       line-height: 14px;
     }
   }
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    border-top: 8px solid #b1b1b1;
-    border-left: 8px solid #b1b1b1;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid transparent;
-  }
-}
-
-.lecture:before {
-  border-top: 8px solid #81affd;
-  border-left: 8px solid #81affd;
-}
-
-.seminar:before {
-  border-top: 8px solid #80ffd4;
-  border-left: 8px solid #80ffd4;
-}
-
-.practice:before {
-  border-top: 8px solid #ff8080;
-  border-left: 8px solid #ff8080;
-}
-
-.lab:before {
-  border-top: 8px solid #ffe580;
-  border-left: 8px solid #ffe580;
 }
 
 .box-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {

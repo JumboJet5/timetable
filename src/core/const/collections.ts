@@ -8,6 +8,6 @@ export const lessonFormats: () => LessonFormatInterface[] = () => [
 
 export const lessonFormatMap = () => new Map(lessonFormats().map(i => [i.id, i]));
 
-export const weekDays = () => ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота', 'Неділя'];
+export const weekDays = () => ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота'];
 
 export const dayMap = () => new Map(weekDays().map((day, index) => [index, day]));
