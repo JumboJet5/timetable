@@ -3,31 +3,31 @@ import { Lesson } from './lesson';
 
 export class WeekSchedule {
   private _daysScheduleMap: Map<string, Map<number, Lesson[]>> = new Map();
-  private readonly _lessonTimes: ILessonTime[] = [];
-  private readonly _scheduleInfo: ITimetableInfo;
-  private readonly _periods: IPeriod = {end: undefined, id: undefined, kind: undefined, start: undefined};
+  private _days: string[] = weekDays();
+  private readonly _schedule: ITimetable;
+  private readonly _period: IPeriod = {end: undefined, id: undefined, kind: undefined, start: undefined};
 
   constructor(schedule?: ITimetable) {
+    console.log(schedule);
     if (schedule) {
-      const days = weekDays();
-      schedule.lessons.forEach(item => {
-        const lesson = new Lesson(item);
-        return this.insertLesson(days[lesson.day], lesson.lesson_time as number, lesson);
-      });
-      this._lessonTimes = schedule.lesson_time || [];
-      this._scheduleInfo = schedule.info;
-      console.log(schedule);
-      this._periods = schedule.periods.find(period => period.kind === 0) || this._periods;
-      console.log(this._periods);
+      schedule.lessons.forEach(lesson => this.insertLesson(lesson));
+      this._schedule = schedule;
+      this._period = schedule.periods.find(period => period.kind === 0) || this._period;
+      this._days.forEach(day => schedule.lesson_time
+        .forEach(time => this.sortLessons(this._getCellByDayAndTime(day, time.id))));
     }
   }
 
+  public getSchedule(): ITimetable {
+    return this._schedule;
+  }
+
   public getScheduleTimes(): ILessonTime[] {
-    return this._lessonTimes;
+    return this._schedule && this._schedule.lesson_time || [];
   }
 
   public getSchedulePeriod(): IPeriod {
-    return this._periods;
+    return this._period;
   }
 
   public getScheduleDays(): string[] {
@@ -35,11 +35,11 @@ export class WeekSchedule {
   }
 
   public getScheduleGroupId(): number {
-    return this._scheduleInfo && this._scheduleInfo.group ? this._scheduleInfo.group.id : undefined;
+    return this._schedule && this._schedule.info && this._schedule.info.group ? this._schedule.info.group.id : undefined;
   }
 
   public getScheduleSemesterId(): number {
-    return this._scheduleInfo && this._scheduleInfo.semester ? this._scheduleInfo.semester.id : undefined;
+    return this._schedule && this._schedule.info && this._schedule.info.semester ? this._schedule.info.semester.id : undefined;
   }
 
   public hasConcreteLessons(day: string, timeId: number): boolean {
@@ -71,14 +71,32 @@ export class WeekSchedule {
     return lessons.every(item => lesson.hasLessonsInsertConflicts(item));
   }
 
-  public insertLesson(day: string, timeId: number, lesson: Lesson): boolean {
-    if (this.canLessonBeInserted(day, timeId, lesson)) return this._addLesson(day, timeId, lesson);
+  public insertLesson(lessonInfo: ILesson): boolean {
+    const lesson = new Lesson(lessonInfo);
+    if (this.canLessonBeInserted(this._days[lesson.day], lesson.lesson_time as number, lesson))
+      return this._addLesson(this._days[lesson.day], lesson.lesson_time as number, lesson);
     return false;
   }
 
   public getDateByWeekIndexAndDay(index: number, day: number) {
     const firstDate = new Date(this.getSchedulePeriod().start);
     return new Date(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate() + index * 7 + day);
+  }
+
+  public sortLessons(array: Lesson[]): Lesson[] {
+    return array.sort((l1, l2) => {
+      if (l1.format !== l2.format) return l1.format - l2.format;
+      if (l1.name_full !== l2.name_full) return l1.name_full > l2.name_full ? 1 : -1;
+      if (l1.getWeeksAsString() !== l2.getWeeksAsString()) return l1.weeks > l2.weeks ? 1 : -1;
+      if (!!l1.subgroup && !!l2.subgroup && l1.subgroup !== l2.subgroup) return (+l1.subgroup) - (+l2.subgroup);
+      return 0;
+    });
+  }
+
+  public isLessonAdditional(lesson: Lesson, associativeLessons: Lesson[]): boolean {
+    const mainLesson = associativeLessons.find(item => item.format === lesson.format
+      && item.name_full === lesson.name_full && item.getWeeksAsString() === lesson.getWeeksAsString());
+    return mainLesson !== lesson;
   }
 
   private _getVacantWeekInfo(concreteLesson: Lesson, day: number, timeId: number, weekIndex: number): VacantWeekInfoInterface {
@@ -93,10 +111,14 @@ export class WeekSchedule {
   }
 
   private _addLesson(day: string, timeId: number, lesson: Lesson): boolean {
+    this._getCellByDayAndTime(day, timeId).push(lesson);
+    return true;
+  }
+
+  private _getCellByDayAndTime(day: string, timeId: number): Lesson[] {
     if (!this._daysScheduleMap.has(day)) this._daysScheduleMap.set(day, new Map<number, Lesson[]>());
     const dayScheduleMap = this._daysScheduleMap.get(day);
     if (!dayScheduleMap.has(timeId)) dayScheduleMap.set(timeId, []);
-    dayScheduleMap.get(timeId).push(lesson);
-    return true;
+    return dayScheduleMap.get(timeId);
   }
 }

@@ -2,32 +2,41 @@
   display: block;
 }
 
-.divider {
-  height: 1px;
-  background-color: dimgray;
-}
-
-.lesson-counter {
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 30px;
+.days-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: white;
 }
 
 .time-row {
   display: flex;
-  align-items: center;
+  min-height: 50px;
+  border-bottom: 1px solid #909090;
 
-  & > * {
-    flex: 1 0 0;
+  &:last-child {
+    border-bottom: unset;
+  }
+
+  .lessons, app-schedule-lessons {
+    flex: 1 0 150px;
+  }
+
+  .lesson-time {
+    flex: 0 0 48px;
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    white-space: nowrap;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 30px;
+    letter-spacing: -6px;
   }
 
   .lesson-time, .lessons {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    margin: 4px;
-    height: 100px;
   }
 
   .lessons {
@@ -37,9 +46,27 @@
 }
 
 .select-group-wrapper {
-  width: 300px;
-  margin: auto;
   position: relative;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  background-color: #80cdff;
+  padding: 0 48px;
+
+  app-menu-select {
+    width: 300px;
+
+    ::ng-deep.tb-input {
+      margin: 0;
+    }
+  }
+
+  .group-info {
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+  }
 }
 
 .loading-wrapper {
