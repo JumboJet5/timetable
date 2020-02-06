@@ -137,7 +137,9 @@ export class LessonEditorComponent implements OnInit {
     if (!!this.weekSchedule && this.lessonForm.get('day').valid && this.lessonForm.get('lesson_time').valid) {
       const {day, lesson_time} = this.lessonForm.value;
       this.vacantWeeks = this.weekSchedule.getVacantWeeks(this.lesson, +day, +lesson_time);
+      console.log(this.vacantWeeks.map(item => ({...item})));
       this.vacantWeeks.forEach(week => week.isUsed = week.isUsed && week.isVacant);
+      console.log('after', this.vacantWeeks.map(item => ({...item})));
       this._setVacantWeekControl();
     }
   }

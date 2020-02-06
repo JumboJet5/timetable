@@ -1,3 +1,5 @@
+import { teacherDegreeTypesMap } from '../const/collections';
+
 export class Lesson implements ILesson {
   public dates: string[];
   public format: number;
@@ -53,6 +55,10 @@ export class Lesson implements ILesson {
       }, '');
   }
 
+  public getTeachersInfoString(): string {
+    return this.teachers.map(teacher => `${teacherDegreeTypesMap.get(teacher.degree)}\xa0${teacher.short_name}`).join(', ');
+  }
+
   public getLocation(): string {
     const housing = !!this.housing && typeof this.housing === 'object' ? `${this.housing.short_name}-` : '';
     return !!this.room && typeof this.room === 'object' ? 'ауд. ' + housing + this.room.num : '';
@@ -63,8 +69,8 @@ export class Lesson implements ILesson {
   }
 
   private _isLessonSimilar(that: Lesson): boolean {
-    return this === that || (!!that && !this.subgroup && !that.subgroup
-      && this.name_full === that.name_full && this._hasDifferentTeachers(that));
+    return that && (this.id === that.id || (!this.subgroup && !that.subgroup
+      && this.name_full === that.name_full && this._hasDifferentTeachers(that)));
   }
 
   private _getDay(): number {

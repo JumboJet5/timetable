@@ -35,8 +35,9 @@
 
     <div class="description-col">
       <div class="lesson-name" [title]="lesson.name_full">{{lesson.name_full}}</div>
-      <div class="small-test weeks-info-row">Тижні: {{lesson.getWeeksAsString()}}</div>
-      <div class="small-test description-info-row">
+      <div class="small-text teachers-info-row">Викладач/чі: {{lesson.getTeachersInfoString()}}</div>
+      <div class="small-text weeks-info-row">Тижні: {{lesson.getWeeksAsString()}}</div>
+      <div class="small-text description-info-row">
         <span *ngIf="lesson.getLocation()" [title]="lesson.getLocation()">{{lesson.getLocation()}}</span>
         <span *ngIf="lesson.subgroup">пг. {{lesson.subgroup}}</span>
       </div>

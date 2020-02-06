@@ -11,3 +11,12 @@ export const lessonFormatMap = () => new Map(lessonFormats().map(i => [i.id, i])
 export const weekDays = () => ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота'];
 
 export const dayMap = () => new Map(weekDays().map((day, index) => [index, day]));
+
+export const teacherDegreeTypesMap = new Map([
+  [0, 'викл.'],
+  [1, 'ст. в.'],
+  [2, 'доц.'],
+  [3, 'проф.'],
+  [4, 'ас.'],
+  [5, ''],
+]);
