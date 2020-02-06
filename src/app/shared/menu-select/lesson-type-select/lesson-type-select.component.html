@@ -1,0 +1,4 @@
+<app-select [abstractControl]="selectControl">
+  <app-select-result>{{lessonsMap.get(selectControl.value)?.name || 'Оберіть тип'}}</app-select-result>
+  <app-option-item *ngFor="let option of lessonFormats" [value]="option.id">{{option.name}}</app-option-item>
+</app-select>

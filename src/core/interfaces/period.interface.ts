@@ -1,4 +1,4 @@
-declare interface IPeriod {
+export interface IPeriod {
   end: string;
   id: number;
   kind: number;

@@ -1,4 +1,4 @@
-declare interface RoomsRequestParamInterface {
+export interface RoomsRequestParamInterface {
   search?: string;
   pageNumber?: number;
   pageSize?: number;

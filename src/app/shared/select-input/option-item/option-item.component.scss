@@ -1,5 +1,6 @@
 @import '../../../../assets/stylesheet/functions';
 @import '../../../../assets/stylesheet/breakpoints';
+@import '../../../../assets/stylesheet/constants';
 
 .option-wrapper {
   display: flex;
@@ -12,8 +13,12 @@
   font-size: 13px;
   line-height: 24px;
 
+  &.selected {
+    background-color: mix($primary-color, white, 10%);
+  }
+
   &:hover {
-    background-color: #F9F9F9;
+    background-color: mix($primary-color, white, 5%);
   }
 
   &.dark {

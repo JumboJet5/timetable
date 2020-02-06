@@ -1,5 +1,10 @@
 import { dayMap, weekDays } from '../const/collections';
 import { Lesson } from './lesson';
+import { VacantWeekInfoInterface } from '../interfaces/vacant-week-info.interface';
+import { ITimetable } from '../interfaces/timetable.interface';
+import { IPeriod } from '../interfaces/period.interface';
+import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
+import { ILesson } from 'src/core/interfaces/lesson.interface';
 
 export class WeekSchedule {
   private _daysScheduleMap: Map<string, Map<number, Lesson[]>> = new Map();
@@ -8,14 +13,13 @@ export class WeekSchedule {
   private readonly _period: IPeriod = {end: undefined, id: undefined, kind: undefined, start: undefined};
 
   constructor(schedule?: ITimetable) {
-    console.log(schedule);
-    if (schedule) {
-      schedule.lessons.forEach(lesson => this.insertLesson(lesson));
-      this._schedule = schedule;
-      this._period = schedule.periods.find(period => period.kind === 0) || this._period;
-      this._days.forEach(day => schedule.lesson_time
-        .forEach(time => this.sortLessons(this._getCellByDayAndTime(day, time.id))));
-    }
+    if (!schedule) return;
+
+    schedule.lessons.forEach(lesson => this.insertLesson(lesson));
+    this._schedule = schedule;
+    this._period = schedule.periods.find(period => period.kind === 0) || this._period;
+    this._days.forEach(day => schedule.lesson_time
+      .forEach(time => this.sortLessons(this._getCellByDayAndTime(day, time.id))));
   }
 
   public getSchedule(): ITimetable {

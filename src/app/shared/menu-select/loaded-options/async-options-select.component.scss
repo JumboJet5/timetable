@@ -1,0 +1,39 @@
+:host {
+  .select-input {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: initial;
+    border: none;
+    outline: none;
+    font: inherit;
+    color: inherit;
+    padding: 0 23px;
+    min-height: 44px;
+  }
+
+  .fixed-wrapper {
+    max-height: 250px;
+    overflow: auto;
+  }
+
+  .relative-wrapper {
+    position: relative;
+  }
+
+  .viewport-bottom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    z-index: -1;
+  }
+
+  ::ng-deep app-select-result .tb-input .result-content, .tb-item {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: inherit;
+    white-space: nowrap;
+    line-height: 45px;
+  }
+}

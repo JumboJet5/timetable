@@ -1,0 +1,5 @@
+<app-select [abstractControl]="selectControl">
+  <app-select-result>{{selectControl.value || 'Всі'}}</app-select-result>
+  <app-option-item value="">Всі</app-option-item>
+  <app-option-item *ngFor="let option of subgroups" [value]="option">{{option}}</app-option-item>
+</app-select>

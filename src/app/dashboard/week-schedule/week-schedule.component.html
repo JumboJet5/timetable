@@ -1,21 +1,16 @@
 <div cdkDropListGroup>
   <div class="select-group-wrapper">
-    <app-menu-select placeholder="Група"
-                     withSearch="true"
-                     [loadPage]="loadGroups"
-                     [loadItem]="loadGroup"
-                     [selectControl]="groupIdControl"
-                     (changeSelected)="changeSlug($event)"></app-menu-select>
-    <ng-container *ngIf="!!this.weekSchedule?.getSchedule()">
-      <span class="group-info">Курс: {{this.weekSchedule.getSchedule()?.info?.course?.name}}</span>
-      <span class="group-info">Семестр: {{this.weekSchedule.getSchedule()?.info?.semester?.num}}</span>
+    <app-group-select [selectControl]="groupIdControl"></app-group-select>
+    <ng-container *ngIf="!!weekSchedule?.getSchedule()">
+      <span class="group-info">Курс: {{weekSchedule.getSchedule()?.info?.course?.name}}</span>
+      <span class="group-info">Семестр: {{weekSchedule.getSchedule()?.info?.semester?.num}}</span>
     </ng-container>
   </div>
   <div class="loading-wrapper" *ngIf="isLoading; else schedule">
     <mat-spinner></mat-spinner>
   </div>
   <ng-template #schedule>
-    <div class="time-row days-header">
+    <div class="time-row days-header" *ngIf="weekSchedule.getScheduleTimes().length; else choseGroupPlz">
       <div class="lesson-time"></div>
       <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
     </div>
@@ -29,5 +24,9 @@
                             [dayIndex]="dIndex"
                             [timeId]="time.id"></app-schedule-lessons>
     </div>
+  </ng-template>
+
+  <ng-template #choseGroupPlz>
+    <div class="not-selected-info">Виберіть будь ласка групу</div>
   </ng-template>
 </div>

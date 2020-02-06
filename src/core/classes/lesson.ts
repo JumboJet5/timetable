@@ -1,4 +1,7 @@
 import { teacherDegreeTypesMap } from '../const/collections';
+import { TimetableTeacherInfoInterface } from 'src/core/interfaces/timetable-teacher-info.interface';
+import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
+import { ILesson } from 'src/core/interfaces/lesson.interface';
 
 export class Lesson implements ILesson {
   public dates: string[];
@@ -61,7 +64,7 @@ export class Lesson implements ILesson {
 
   public getLocation(): string {
     const housing = !!this.housing && typeof this.housing === 'object' ? `${this.housing.short_name}-` : '';
-    return !!this.room && typeof this.room === 'object' ? 'ауд. ' + housing + this.room.num : '';
+    return !!this.room && typeof this.room === 'object' ? housing + this.room.num : '-';
   }
 
   private _hasLessonDifferentSubgroup(that: Lesson): boolean {

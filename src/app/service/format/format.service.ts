@@ -1,24 +1,13 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormGroup } from '@angular/forms';
+import { OptionInterface } from 'src/core/interfaces/interfaces';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class FormatService {
-  public isControlValid(formGroup: FormGroup, controlName: string, control?: AbstractControl): boolean {
-    control = control || (formGroup ? formGroup.get(controlName) : undefined);
-    return control && (control.valid || control.untouched);
-  }
-
-  public getControlError(formGroup: FormGroup, controlName: string): string {
-    const control = formGroup ? formGroup.get(controlName) : undefined;
-    return this.isControlValid(formGroup, controlName, control) ? '' : control.errors.custom;
-  }
-
   public getFormDataFromObject(obj: object): FormData {
     const formData = new FormData();
     Object.keys(obj).forEach(key => {
-      if (obj[key] instanceof Array) obj[key].forEach(item => formData.append(key, item !== null && item !== undefined ? item : ''));
+      if (obj[key] instanceof Array) obj[key].forEach(
+        item => formData.append(key, item !== null && item !== undefined ? item : ''));
       else formData.append(key, obj[key] !== null && obj[key] !== undefined ? obj[key] : '');
     });
     return formData;

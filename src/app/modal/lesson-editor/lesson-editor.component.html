@@ -2,102 +2,85 @@
 
 <div class="modal-wrapper">
   <form [formGroup]="lessonForm" class="lesson-form" *ngIf="weekSchedule">
-    <div class="first-column">
+    <div class="info-row">
+      <div class="select-column">
+        <div class="placeholder">Назва предмета</div>
+        <app-theme-select [filters]="{group: weekSchedule.getScheduleGroupId()}"
+                          [selectControl]="lessonForm.get('theme')"></app-theme-select>
 
-      <div class="placeholder">Назва</div>
-      <app-menu-select [loadItem]="loadTheme"
-                       [loadPage]="loadThemes"
-                       [selectControl]="lessonForm.get('theme')"
-                       maxLength="40"
-                       placeholder="Назва"></app-menu-select>
+        <div class="placeholder">Тип</div>
+        <app-lesson-type-select [selectControl]="lessonForm.get('format')"></app-lesson-type-select>
+      </div>
 
-      <div class="placeholder">Корпус</div>
-      <app-menu-select (changeSelected)="roomsSelect.needRefresh = true"
-                       [loadItem]="loadHousing"
-                       [loadPage]="loadHousings"
-                       [selectControl]="lessonForm.get('housing')"
-                       maxLength="40"
-                       placeholder="Корпус"></app-menu-select>
+      <div class="select-column">
+        <div class="placeholder">Корпус</div>
+        <app-housing-select [filters]="{group: weekSchedule.getScheduleGroupId()}"
+                            [selectControl]="lessonForm.get('housing')"></app-housing-select>
 
-      <div class="placeholder">Аудиторія</div>
-      <app-menu-select #roomsSelect
-                       [disabled]="!lessonForm.get('housing')"
-                       [itemToSting]="roomToSting"
-                       [loadItem]="loadRoom"
-                       [loadPage]="loadRooms"
-                       [selectControl]="lessonForm.get('room')"
-                       maxLength="40"
-                       placeholder="Аудиторія"
-                       sortByField="num"></app-menu-select>
+        <div class="placeholder">Аудиторія</div>
+        <app-room-select [filters]="{housing: lessonForm.get('housing').value}"
+                         [disabled]="lessonForm.get('housing').invalid"
+                         [selectControl]="lessonForm.get('room')"></app-room-select>
+      </div>
 
-      <div class="placeholder">Викладач(*чі)</div>
-      <app-menu-select [loadItem]="loadTeacher"
-                       [loadPage]="loadTeachers"
-                       [selectControl]="lessonForm.get('teachers')"
-                       maxLength="40"
-                       multiple="true"
-                       placeholder="Викладач(*чі)"
-                       withSearch="true"></app-menu-select>
-
-      <div class="placeholder">Формат</div>
-      <app-select [abstractControl]="lessonForm.get('format')">
-        <app-select-result>{{lessonsMap.get(lessonForm.value.format)?.name || 'Формат'}}</app-select-result>
-        <app-option-item *ngFor="let option of lessonFormats" [value]="option.id">{{option.name}}</app-option-item>
-      </app-select>
-
-      <div class="placeholder">Підгрупи</div>
-      <app-select [abstractControl]="lessonForm.get('subgroup')">
-        <app-select-result>{{lessonForm.value.subgroup || 'Всі'}}</app-select-result>
-        <app-option-item value="">Всі</app-option-item>
-        <app-option-item *ngFor="let option of subgroups" [value]="option">{{option}}</app-option-item>
-      </app-select>
+      <div class="select-column">
+        <div class="placeholder">Підгрупи</div>
+        <app-lesson-subgroup-select [selectControl]="lessonForm.get('subgroup')"
+                                    [group]="group"></app-lesson-subgroup-select>
+      </div>
     </div>
 
-    <div class="second-column">
-      <div class="tb-form-row">
-        <div class="time-selector">
-          <div class="placeholder">День</div>
-          <app-select [abstractControl]="lessonForm.get('day')" (changes)="onLessonTimeOrDayChange()">
-            <app-select-result>{{dayMap.get(lessonForm.value.day) || 'День'}}</app-select-result>
-            <app-option-item *ngFor="let option of weekDays; let index = index"
-                             [value]="index">{{option}}</app-option-item>
-          </app-select>
-        </div>
-        <div class="time-selector">
-          <div class="placeholder">Час</div>
-          <app-select [abstractControl]="lessonForm.get('lesson_time')" (changes)="onLessonTimeOrDayChange()">
-            <app-select-result>{{getLessonTimeById(lessonForm.value.lesson_time) || 'Час'}}</app-select-result>
-            <app-option-item *ngFor="let option of weekSchedule.getScheduleTimes()"
-                             [value]="option.id">{{option.start}} - {{option.end}}</app-option-item>
-          </app-select>
-        </div>
+    <div class="info-row">
+      <div class="select-column long">
+        <div class="placeholder">Викладач(*чі)</div>
+        <app-teacher-select [filters]="{group: weekSchedule.getScheduleGroupId()}"
+                            [selectControl]="lessonForm.get('teachers')"
+                            multiple="true"></app-teacher-select>
+      </div>
+    </div>
+
+    <div class="info-row">
+      <div class="select-column">
+        <div class="placeholder">День</div>
+        <app-day-select [selectControl]="lessonForm.get('day')"></app-day-select>
       </div>
 
-      <div class="placeholder">Тижні</div>
-      <div class="weeks-wrapper"
-           *ngIf="lessonForm.get('lesson_time').valid && lessonForm.get('day').valid; else weeksSelectorLocked">
-        <ng-container *ngFor="let week of vacantWeeks; let i = index">
-          <button (click)="changeWeekStatus(week)"
-                  *ngIf="!week.isHidden"
-                  [class.used]="week.isUsed"
-                  [disabled]="!week.isVacant"
-                  class="week-selector"
-                  mat-flat-button>
-            <mat-checkbox [checked]="week.isUsed" color="primary" [disabled]="!week.isVacant"></mat-checkbox>
-            <span>{{week.date | date: 'dd. MM. yyyy'}} ({{i + 1}} тиждень)</span>
-          </button>
-        </ng-container>
+      <div class="select-column">
+        <div class="placeholder">Час</div>
+        <app-lesson-time-select [selectControl]="lessonForm.get('lesson_time')"
+                                [disabled]="lessonForm.get('day').invalid"
+                                [lessonTimes]="weekSchedule.getScheduleTimes()"></app-lesson-time-select>
       </div>
+    </div>
 
-      <ng-template #weeksSelectorLocked>
-        <span>Оберіть спочатку день тижня і час пари</span>
-      </ng-template>
+    <div class="placeholder">Тижні</div>
+    <div class="weeks-wrapper"
+         *ngIf="lessonForm.get('lesson_time').valid && lessonForm.get('day').valid; else weeksSelectorLocked">
+      <ng-container *ngFor="let week of vacantWeeks; let i = index">
+        <button (click)="changeWeekStatus(week)"
+                *ngIf="!week.isHidden"
+                [class.used]="week.isUsed"
+                [disabled]="!week.isVacant"
+                class="week-selector"
+                mat-flat-button>
+          <mat-checkbox [checked]="week.isUsed" [disabled]="!week.isVacant" color="primary">
+            <span>#{{i + 1}} <span class="small-text">({{week.date | date: 'dd.MM.yy'}})</span></span>
+          </mat-checkbox>
+        </button>
+      </ng-container>
+    </div>
 
-      <div class="control-row">
-        <button mat-raised-button *ngIf="!lesson" (click)="onCreate()" [disabled]="lessonForm.invalid" color="primary">Create</button>
-        <button mat-raised-button *ngIf="lesson" (click)="onUpdate()" [disabled]="lessonForm.invalid" color="primary">Save</button>
-        <button mat-raised-button (click)="closeModal()">Cancel</button>
-      </div>
+    <ng-template #weeksSelectorLocked>
+      <span>Оберіть спочатку день тижня і час пари</span>
+    </ng-template>
+
+    <div class="control-row">
+      <button mat-flat-button
+              (click)="lesson ? onUpdate() : onCreate()"
+              [disabled]="lessonForm.invalid"
+              color="primary">Зберегти
+      </button>
+      <button mat-stroked-button (click)="closeModal()" color="primary">Повернутися</button>
     </div>
   </form>
 </div>

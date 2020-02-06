@@ -1,4 +1,4 @@
-declare interface HousingsRequestParamInterface {
+export interface HousingsRequestParamInterface {
   search?: string;
   pageNumber?: number;
   pageSize?: number;

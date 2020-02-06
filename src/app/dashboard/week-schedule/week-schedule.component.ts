@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { filter, switchMap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
-import { WeekSchedule } from '../../../core/classes/week-schedule';
-import { Lesson } from '../../../core/classes/lesson';
+import { WeekSchedule } from '@classes/week-schedule';
+import { Lesson } from '@classes/lesson';
+import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
 
 @Component({
   selector: 'app-week-schedule',
@@ -21,6 +21,7 @@ export class WeekScheduleComponent implements OnInit {
   public groupIdControl: FormControl = new FormControl(undefined);
   public isLoading = false;
   public weekSchedule: WeekSchedule = new WeekSchedule();
+  @ViewChild(GroupSelectComponent) private _groupSelector: GroupSelectComponent;
   private _groupSlug: string;
   private _groupsemester: number;
 
@@ -36,14 +37,9 @@ export class WeekScheduleComponent implements OnInit {
     this.router.events
       .pipe(filter(event => event instanceof NavigationEnd && !/\(modal/.test(event.url)))
       .subscribe(() => this._updatePage());
-  }
 
-  public loadGroups = (option: LoadPageInterface): Observable<GroupsResponseInterface> => this.scheduleService.getGroups({...option});
-
-  public loadGroup = (id: number): Observable<GroupInterface> => this.scheduleService.getGroup(id);
-
-  public changeSlug(event: OptionInterface[]) {
-    if (event && event.length) this.router.navigate(['dashboard', 'lessons-schedule', event[0].slug, event[0].id]);
+    this.groupIdControl.valueChanges
+      .subscribe(id => this.router.navigate(['dashboard', 'lessons-schedule', this._groupSelector.getOptionById(id).slug, id]));
   }
 
   public openLessonDetail(lesson: Lesson, associatedLessons: Lesson[]) {

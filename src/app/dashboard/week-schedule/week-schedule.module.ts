@@ -2,7 +2,9 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { MatButtonModule, MatIconModule, MatProgressSpinnerModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ScheduleLessonsComponent } from 'src/app/dashboard/week-schedule/schedule-lessons/schedule-lessons.component';
 import { WeekScheduleComponent } from 'src/app/dashboard/week-schedule/week-schedule.component';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
@@ -22,7 +24,6 @@ import { DefaultAvatarModule } from '../../shared/default-avatar/default-avatar.
     DragDropModule,
     MatIconModule,
     MatButtonModule,
-    HttpClientModule,
     MenuSelectModule,
     MatProgressSpinnerModule,
     DefaultAvatarModule,
