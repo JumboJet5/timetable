@@ -16,11 +16,14 @@
   </div>
   <ng-template #schedule>
     <div class="time-row days-header">
-      <span class="lesson-time"></span>
+      <div class="lesson-time"></div>
       <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
     </div>
     <div class="time-row" *ngFor="let time of weekSchedule.getScheduleTimes()">
-      <span class="lesson-time" [title]="time.start + ' - ' + time.end">{{time.num}} пара</span>
+      <div class="lesson-time">
+        <span class="number">{{time.num}}</span>
+        <span class="time">{{time.start}} - {{time.end}}</span>
+      </div>
       <app-schedule-lessons *ngFor="let day of weekSchedule.getScheduleDays(); let dIndex = index"
                             [day]="day"
                             [dayIndex]="dIndex"
