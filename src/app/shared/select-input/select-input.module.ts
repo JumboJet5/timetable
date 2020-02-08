@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatCheckboxModule } from '@angular/material';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ClickOutsideModule } from '../click-outside/click-outside.module';
 import { OptionItemComponent } from './option-item/option-item.component';
 import { SelectResultComponent } from './select/select-result/select-result.component';

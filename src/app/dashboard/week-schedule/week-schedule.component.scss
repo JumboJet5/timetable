@@ -1,5 +1,16 @@
+@import '../../../assets/stylesheet/constants';
+
 :host {
   display: block;
+  padding-bottom: 40px;
+}
+
+.not-selected-info {
+  margin: 40px 0;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 100;
+  line-height: 33px;
 }
 
 .days-header {
@@ -22,7 +33,7 @@
     flex: 1 0 150px;
 
     &:nth-child(even) {
-      background-color: rgba(77, 140, 219, 0.1);
+      background-color: mix($primary-color, white, 10%);;
     }
   }
 
@@ -65,16 +76,8 @@
   height: 60px;
   display: flex;
   align-items: center;
-  background-color: #80cdff;
+  background-color: mix($primary-color, white, 70%);
   padding: 0 48px;
-
-  app-menu-select {
-    width: 300px;
-
-    ::ng-deep.tb-input {
-      margin: 0;
-    }
-  }
 
   .group-info {
     margin-left: 10px;

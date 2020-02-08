@@ -4,13 +4,12 @@ import { accordionTransitionAnimation } from '../../../../core/animations/accord
 import { BehaviorSubject, Subject } from 'rxjs';
 import { distinctUntilChanged, takeUntil } from 'rxjs/operators';
 
+
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
-  animations: [
-    accordionTransitionAnimation,
-  ],
+  animations: [accordionTransitionAnimation],
 })
 export class SelectComponent implements OnDestroy {
   @Input() public isDark = false;

@@ -19,6 +19,7 @@ export class OptionItemComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
+    this.checked = this._isValueChecked(this.parent.abstractControl.value);
     this.parent.selectState
       .subscribe((control) => this._updateItem(control));
   }

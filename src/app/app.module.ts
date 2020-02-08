@@ -1,26 +1,31 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { WeekScheduleModule } from 'src/app/dashboard/week-schedule/week-schedule.module';
+import { AuthGuard } from 'src/app/guards/auth/auth.guard';
 import { AuthInterceptor } from 'src/app/interceptors/auth/auth.interceptor';
+import { AuthService } from 'src/app/service/auth/auth.service';
+import { FormatService } from 'src/app/service/format/format.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
-    declarations: [
-        AppComponent,
-    ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        WeekScheduleModule,
-    ],
-    providers: [
-        {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    ],
-    bootstrap: [AppComponent],
+  declarations: [
+    AppComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+  ],
+  providers: [
+    AuthService,
+    AuthGuard,
+    FormatService,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+  ],
+  bootstrap: [AppComponent],
 })
 export class AppModule {
 }

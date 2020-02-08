@@ -1,4 +1,4 @@
-declare interface LessonFormatInterface {
+export interface LessonFormatInterface {
   name: string;
   shortName: string;
   class: string;

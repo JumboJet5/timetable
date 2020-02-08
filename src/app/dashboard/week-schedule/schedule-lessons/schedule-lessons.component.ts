@@ -1,7 +1,8 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Host, Input, OnInit, ViewChild } from '@angular/core';
-import { lessonFormatMap } from 'src/core/const/collections';
-import { Lesson } from '../../../../core/classes/lesson';
+import { Lesson } from '@classes/lesson';
+import { lessonTypesMap } from '@const/collections';
+import { LessonFormatInterface } from 'src/core/interfaces/lesson-format.interface';
 import { WeekScheduleComponent } from '../week-schedule.component';
 
 @Component({
@@ -13,9 +14,9 @@ export class ScheduleLessonsComponent implements OnInit {
   @Input() public day: string;
   @Input() public dayIndex: number;
   @Input() public timeId: number;
-  @ViewChild(CdkDropList, {static: false}) dropList: CdkDropList;
+  @ViewChild(CdkDropList) dropList: CdkDropList;
   public lessons: Lesson[] = [];
-  public lessonTypesMap: Map<number, LessonFormatInterface> = lessonFormatMap();
+  public lessonTypesMap: Map<number, LessonFormatInterface> = lessonTypesMap();
   public isPlaced = false;
 
   constructor(@Host() public parent: WeekScheduleComponent) {
@@ -25,8 +26,9 @@ export class ScheduleLessonsComponent implements OnInit {
     this.lessons = this.parent.weekSchedule.getConcreteLessons(this.day, this.timeId);
   }
 
-  public isLessonNotSpecified(): (data: CdkDrag) => boolean {
-    return (data: CdkDrag) => !!data.data && this.lessons.every(lesson => lesson.hasLessonsInsertConflicts(data.data));
+  public isLessonNotSpecified(): (data: { data: Lesson }) => boolean {
+    return (data: { data: Lesson }) => !!data.data && this.lessons.every(
+      lesson => lesson.hasLessonsInsertConflicts(data.data));
   }
 
   public drop(event: CdkDragDrop<Lesson[], any>) {

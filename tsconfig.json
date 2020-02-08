@@ -17,6 +17,16 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "@app/*": ["src/app/*"],
+      "@img/*": ["src/assets/img/*"],
+      "@stylesheet/*": ["src/assets/stylesheet/*"],
+      "@animations/*": ["src/core/animations/*"],
+      "@classes/*": ["src/core/classes/*"],
+      "@const/*": ["src/core/const/*"],
+      "@interfaces*": ["src/core/interfaces/interfaces.ts"],
+      "@environment/*": ["src/environments/*"]
+    }
   }
 }

@@ -1,4 +1,4 @@
-declare interface TeachersRequestParamInterface {
+export interface TeachersRequestParamInterface {
   search?: string;
   pageNumber?: number;
   pageSize?: number;

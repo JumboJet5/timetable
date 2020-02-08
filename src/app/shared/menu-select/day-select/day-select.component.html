@@ -1,0 +1,5 @@
+<app-select [abstractControl]="selectControl">
+  <app-select-result>{{dayMap.get(selectControl.value) || 'Оберіть день'}}</app-select-result>
+  <app-option-item *ngFor="let option of weekDays; let index = index"
+                   [value]="index">{{option}}</app-option-item>
+</app-select>

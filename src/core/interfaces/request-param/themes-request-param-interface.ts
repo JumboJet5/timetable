@@ -1,4 +1,4 @@
-declare interface ThemesRequestParamInterface {
+export interface ThemesRequestParamInterface {
   search?: string;
   pageNumber?: number;
   pageSize?: number;

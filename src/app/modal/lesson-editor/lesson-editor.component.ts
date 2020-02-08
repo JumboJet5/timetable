@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { GroupService } from '@app/service/group/group.service';
+import { IGroup, ITimetable, VacantWeekInfoInterface } from '@interfaces';
 import { FormatService } from 'src/app/service/format/format.service';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
-import { dayMap, lessonFormatMap, lessonFormats, weekDays } from 'src/core/const/collections';
+import { Lesson } from 'src/core/classes/lesson';
+import { WeekSchedule } from 'src/core/classes/week-schedule';
 import { lessonForm } from 'src/core/const/form';
-import { WeekSchedule } from '../../../core/classes/week-schedule';
-import { Lesson } from '../../../core/classes/lesson';
 
 @Component({
   selector: 'app-lesson-editor',
@@ -17,11 +18,7 @@ import { Lesson } from '../../../core/classes/lesson';
 export class LessonEditorComponent implements OnInit {
   public vacantWeeks: VacantWeekInfoInterface[];
   public lessonForm: FormGroup = lessonForm();
-  public lessonFormats = lessonFormats();
-  public subgroups;
-  public lessonsMap: Map<number, LessonFormatInterface> = lessonFormatMap();
-  public dayMap: Map<number, string> = dayMap();
-  public weekDays: string[] = weekDays();
+  public group: IGroup;
   public weekSchedule: WeekSchedule;
   public lesson: Lesson;
 
@@ -29,8 +26,8 @@ export class LessonEditorComponent implements OnInit {
               private route: ActivatedRoute,
               private formatService: FormatService,
               private scheduleService: ScheduleService,
-              private lessonService: LessonService) {
-  }
+              private groupService: GroupService,
+              private lessonService: LessonService) {}
 
   ngOnInit() {
     const params = this.route.snapshot.paramMap;
@@ -39,6 +36,10 @@ export class LessonEditorComponent implements OnInit {
     if (history.state.state) this.setDetailsFromState();
     else this.scheduleService.getTimetable(params.get('groupSlug'))
       .subscribe(res => this.setWeekSchedule(res));
+
+    ['lesson_time', 'day']
+      .forEach(controlName => this.lessonForm.get(controlName).valueChanges
+        .subscribe(() => this._initVacantWeeksList()));
   }
 
   public setDetailsFromState() {
@@ -56,45 +57,8 @@ export class LessonEditorComponent implements OnInit {
     this._initVacantWeeksList();
   }
 
-  public loadThemes = (option: LoadPageInterface) =>
-    this.scheduleService.getThemes({...option, groupId: this.weekSchedule.getScheduleGroupId()})
-
-  public loadTheme = (id: number) => this.scheduleService.getTheme(id);
-
-  public loadHousings = (option: LoadPageInterface) => this.scheduleService.getHousings({
-    ...option,
-    groupId: this.weekSchedule.getScheduleGroupId()
-  })
-
-  public loadHousing = (id: number) => this.scheduleService.getHousing(id);
-
-  public loadRooms = (option: LoadPageInterface) => this.scheduleService.getRooms({
-    ...option,
-    housingId: this.lessonForm.value.housing
-  })
-
-  public loadRoom = (id: number) => this.scheduleService.getRoom(id);
-
-  public loadTeachers = (option: LoadPageInterface) => this.scheduleService.getTeachers({
-    ...option,
-    groupId: this.weekSchedule.getScheduleGroupId()
-  })
-
-  public loadTeacher = (id: number) => this.scheduleService.getTeacher(id);
-
-  public roomToSting = (room) => room ? room.num : '';
-
-  public getLessonTimeById(id: number): string {
-    const lessonTime = this.weekSchedule.getScheduleTimes().find(i => i.id === id);
-    return lessonTime ? lessonTime.start + ' - ' + lessonTime.end : '';
-  }
-
   public closeModal() {
     this.router.navigate([{outlets: {modal: null}}]);
-  }
-
-  public onLessonTimeOrDayChange() {
-    this._initVacantWeeksList();
   }
 
   public onCreate() {
@@ -129,17 +93,15 @@ export class LessonEditorComponent implements OnInit {
   }
 
   private _getSubgroupList() {
-    this.scheduleService.getGroup(this.weekSchedule.getScheduleGroupId())
-      .subscribe(group => this.subgroups = new Array(+group.subgroups).fill('').map((_, i) => i + 1));
+    this.groupService.getGroup(this.weekSchedule.getScheduleGroupId())
+      .subscribe(group => this.group = group);
   }
 
   private _initVacantWeeksList() {
     if (!!this.weekSchedule && this.lessonForm.get('day').valid && this.lessonForm.get('lesson_time').valid) {
       const {day, lesson_time} = this.lessonForm.value;
       this.vacantWeeks = this.weekSchedule.getVacantWeeks(this.lesson, +day, +lesson_time);
-      console.log(this.vacantWeeks.map(item => ({...item})));
       this.vacantWeeks.forEach(week => week.isUsed = week.isUsed && week.isVacant);
-      console.log('after', this.vacantWeeks.map(item => ({...item})));
       this._setVacantWeekControl();
     }
   }

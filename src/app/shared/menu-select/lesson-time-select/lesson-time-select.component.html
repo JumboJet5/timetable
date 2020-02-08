@@ -1,0 +1,5 @@
+<app-select [abstractControl]="selectControl" [isDisabled]="disabled">
+  <app-select-result>{{getLessonTimeById(selectControl.value) || 'Оберіть час'}}</app-select-result>
+  <app-option-item *ngFor="let option of lessonTimes"
+                   [value]="option.id">{{getLessonTimeById(option.id)}}</app-option-item>
+</app-select>
