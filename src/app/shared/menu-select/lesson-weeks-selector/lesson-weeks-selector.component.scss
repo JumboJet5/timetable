@@ -1,0 +1,45 @@
+@import '../../../../assets/stylesheet/constants';
+
+.placeholder {
+  font-size: 16px;
+  line-height: 24px;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .filters-button {
+    display: flex;
+
+    .mat-flat-button {
+      line-height: 24px;
+      margin: 0 1px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+.weeks-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 8px -5px 0;
+  padding-bottom: 20px;
+}
+
+.week-selector {
+  margin: 4px 5px;
+  flex: 0 0 147px;
+  text-align: left;
+  background-color: mix($primary-color, white, 5%);
+
+  &.used {
+    background-color: mix($primary-color, white, 40%);
+    color: white;
+  }
+
+  ::ng-deep.mat-checkbox-layout {
+    margin: 0 8px 4px 0;
+  }
+}

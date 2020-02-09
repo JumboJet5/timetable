@@ -52,22 +52,13 @@
       </div>
     </div>
 
-    <div class="placeholder">Тижні</div>
-    <div class="weeks-wrapper"
-         *ngIf="lessonForm.get('lesson_time').valid && lessonForm.get('day').valid; else weeksSelectorLocked">
-      <ng-container *ngFor="let week of vacantWeeks; let i = index">
-        <button (click)="changeWeekStatus(week)"
-                *ngIf="!week.isHidden"
-                [class.used]="week.isUsed"
-                [disabled]="!week.isVacant"
-                class="week-selector"
-                mat-flat-button>
-          <mat-checkbox [checked]="week.isUsed" [disabled]="!week.isVacant" color="primary">
-            <span>#{{i + 1}} <span class="small-text">({{week.date | date: 'dd.MM.yy'}})</span></span>
-          </mat-checkbox>
-        </button>
-      </ng-container>
-    </div>
+    <app-lesson-weeks-selector
+      *ngIf="lessonForm.get('lesson_time').valid && lessonForm.get('day').valid; else weeksSelectorLocked"
+      [selectControl]="lessonForm.get('weeks')"
+      [day]="lessonForm.get('day').value"
+      [lesson_time]="lessonForm.get('lesson_time').value"
+      [lesson]="lesson"
+      [weekSchedule]="weekSchedule"></app-lesson-weeks-selector>
 
     <ng-template #weeksSelectorLocked>
       <span>Оберіть спочатку день тижня і час пари</span>
