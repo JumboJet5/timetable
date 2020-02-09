@@ -47,13 +47,13 @@
     </div>
 
     <div class="control-col">
-      <button mat-icon-button>
+      <button mat-icon-button title="Редагувати">
         <mat-icon>edit</mat-icon>
       </button>
-      <button (click)="parent.clipboard = lesson; $event.stopPropagation()" mat-icon-button>
+      <button (click)="parent.clipboard = lesson; $event.stopPropagation()" mat-icon-button title="Копіювати">
         <mat-icon>file_copy</mat-icon>
       </button>
-      <button (click)="parent.delete(lesson.id); $event.stopPropagation()" mat-icon-button>
+      <button (click)="parent.delete(lesson.id); $event.stopPropagation()" mat-icon-button title="Видалити">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

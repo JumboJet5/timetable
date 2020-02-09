@@ -1,0 +1,57 @@
+@import '../../../../assets/stylesheet/constants';
+
+:host {
+  .selected-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+    min-height: 7px;
+
+    .selected {
+      line-height: 24px;
+      font-size: 12px;
+      color: white;
+      background-color: #104BA9;
+      margin: 4px 2px;
+      border-radius: 12px;
+      display: flex;
+
+      .selected-text {
+        padding-left: 8px;
+      }
+
+      .mat-icon, .mat-icon-button, ::ng-deep.mat-button-wrapper {
+        height: 20px;
+        width: 20px;
+        display: block;
+      }
+
+      .mat-icon-button {
+        margin: 2px;
+
+        &:hover {
+          background: mix($primary-color, white, 20%);
+          color: mix($primary-color, white, 80%);
+        }
+      }
+
+      .mat-icon {
+        font-size: 12px;
+        line-height: 20px;
+      }
+    }
+  }
+
+  .select-input {
+    padding: 0;
+  }
+
+  ::ng-deep app-select-result .tb-input img, ::ng-deep .option-wrapper mat-checkbox {
+    display: none;
+  }
+
+  ::ng-deep app-select-result .tb-input {
+    margin-top: 0;
+  }
+}

@@ -2,13 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { GroupService } from 'src/app/service/group/group.service';
 import { IGroup } from '@interfaces';
-import { AsyncOptionsSelectComponent, optionServiceFactory } from '../loaded-options/async-options-select.component';
+import { AsyncOptionsSelectComponent, optionServiceFactory } from '../async-options-select/async-options-select.component';
 
 
 @Component({
   selector: 'app-group-select',
-  templateUrl: '../loaded-options/async-options-select.component.html',
-  styleUrls: ['../loaded-options/async-options-select.component.scss'],
+  templateUrl: '../async-options-select/async-options-select.component.html',
+  styleUrls: ['../async-options-select/async-options-select.component.scss'],
   providers: [GroupService]
 })
 export class GroupSelectComponent extends AsyncOptionsSelectComponent<IGroup> {

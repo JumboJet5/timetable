@@ -128,11 +128,16 @@
     margin-left: auto;
     transform: translateY(-8px);
     min-height: 1px;
-    min-width: 28px;
+    min-width: 32px;
 
-    .mat-icon, .mat-icon-button {
-      height: 28px;
-      width: 28px;
+    .mat-icon, .mat-icon-button, ::ng-deep.mat-button-wrapper {
+      height: 32px;
+      width: 32px;
+      display: block;
+    }
+
+    .mat-icon-button:hover {
+      background-color: mix($primary-color, white, 10%);
     }
 
     .mat-icon-button:last-child {
@@ -140,8 +145,8 @@
     }
 
     .mat-icon {
-      font-size: 14px;
-      line-height: 14px;
+      font-size: 16px;
+      line-height: 32px;
     }
   }
 }

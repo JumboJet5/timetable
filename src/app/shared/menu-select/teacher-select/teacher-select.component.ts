@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { TeacherService } from 'src/app/service/teacher/teacher.service';
 import { ITeacher } from 'src/core/interfaces/teacher.interface';
-import { AsyncOptionsSelectComponent, optionServiceFactory } from '../loaded-options/async-options-select.component';
+import { AsyncOptionsSelectComponent, optionServiceFactory } from '../async-options-select/async-options-select.component';
 
 @Component({
   selector: 'app-teacher-select',
-  templateUrl: '../loaded-options/async-options-select.component.html',
-  styleUrls: ['../loaded-options/async-options-select.component.scss'],
+  templateUrl: '../async-options-select/async-options-select.component.html',
+  styleUrls: ['../async-options-select/async-options-select.component.scss'],
   providers: [TeacherService]
 })
 export class TeacherSelectComponent extends AsyncOptionsSelectComponent<ITeacher> {

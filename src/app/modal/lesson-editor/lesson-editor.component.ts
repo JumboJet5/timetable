@@ -53,7 +53,7 @@ export class LessonEditorComponent implements OnInit {
 
   public setWeekSchedule(value: ITimetable): void {
     this.weekSchedule = new WeekSchedule(value);
-    this._getSubgroupList();
+    this._getGroup();
     this._initVacantWeeksList();
   }
 
@@ -92,7 +92,7 @@ export class LessonEditorComponent implements OnInit {
       });
   }
 
-  private _getSubgroupList() {
+  private _getGroup() {
     this.groupService.getGroup(this.weekSchedule.getScheduleGroupId())
       .subscribe(group => this.group = group);
   }

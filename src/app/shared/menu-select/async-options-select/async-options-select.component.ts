@@ -12,7 +12,7 @@ export function optionServiceFactory<T>(getOption: (id: number) => Observable<T>
 }
 
 export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnInit, OnDestroy {
-  @ViewChild(SelectComponent) selectComponent: SelectComponent;
+  @ViewChild(SelectComponent) public selectComponent: SelectComponent;
   @Input() public selectControl: AbstractControl;
   @Input() public multiple: boolean;
   @Input() public disabled = false;
