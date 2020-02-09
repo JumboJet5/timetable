@@ -33,7 +33,7 @@
     <div class="info-row">
       <div class="select-column long">
         <div class="placeholder">Викладач(*чі)</div>
-        <app-teacher-autocomplete [filters]="{group: weekSchedule.getScheduleGroupId()}"
+        <app-teacher-autocomplete [filters]="{group: weekSchedule.getScheduleGroupId(), ordering: 'last_name'}"
                                   [selectControl]="lessonForm.get('teachers')"></app-teacher-autocomplete>
       </div>
     </div>

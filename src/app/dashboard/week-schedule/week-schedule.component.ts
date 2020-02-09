@@ -1,13 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
+import { Lesson } from '@classes/lesson';
+import { WeekSchedule } from '@classes/week-schedule';
 import { filter, switchMap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
-import { WeekSchedule } from '@classes/week-schedule';
-import { Lesson } from '@classes/lesson';
-import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
+import { ICreateLessonBody } from '@interfaces';
 
 @Component({
   selector: 'app-week-schedule',
@@ -39,7 +40,8 @@ export class WeekScheduleComponent implements OnInit {
       .subscribe(() => this._updatePage());
 
     this.groupIdControl.valueChanges
-      .subscribe(id => this.router.navigate(['dashboard', 'lessons-schedule', this._groupSelector.getOptionById(id).slug, id]));
+      .subscribe(
+        id => this.router.navigate(['dashboard', 'lessons-schedule', this._groupSelector.getOptionById(id).slug, id]));
   }
 
   public openLessonDetail(lesson: Lesson, associatedLessons: Lesson[]) {
@@ -62,35 +64,29 @@ export class WeekScheduleComponent implements OnInit {
       .subscribe(() => this._updatePage());
   }
 
-  public moveLesson(lessonId: number, time: number, day: number) {
+  public moveLesson(lessonId: number, lesson_time: number, day: number) {
     this.isLoading = true;
     this.lessonService.getLesson(lessonId) // todo remove get lesson from server
       .pipe(switchMap(lesson => this.scheduleService.updateLesson({
-        theme: lesson.theme.toString(),
-        format: lesson.format.toString(),
-        weeks: lesson.weeks,
-        room: lesson.room.toString(),
-        teachers: lesson.teachers.map(teacher => teacher.toString()),
-        lesson_time: time.toString(),
-        day: day.toString(),
-        group_semester: this._groupsemester.toString(),
-      }, lesson.id)))
+        ...lesson,
+        teachers: lesson.teachers.toString(),
+        lesson_time,
+        day,
+        group_semester: this._groupsemester,
+      } as ICreateLessonBody, lesson.id)))
       .subscribe(() => this._updatePage());
   }
 
-  public pasteLesson(time: number, day: number) {
+  public pasteLesson(lesson_time: number, day: number) {
     this.isLoading = true;
     this.lessonService.getLesson(this.clipboard.id) // todo remove get lesson from server
       .pipe(switchMap(lesson => this.scheduleService.createLesson({
-        theme: lesson.theme.toString(),
-        format: lesson.format.toString(),
-        weeks: lesson.weeks,
-        room: lesson.room.toString(),
-        teachers: lesson.teachers.map(teacher => teacher.toString()),
-        lesson_time: time.toString(),
-        day: day.toString(),
-        group_semester: this._groupsemester.toString(),
-      })))
+        ...lesson,
+        teachers: lesson.teachers.toString(),
+        lesson_time,
+        day,
+        group_semester: this._groupsemester,
+      } as ICreateLessonBody)))
       .subscribe(() => this._updatePage());
   }
 
@@ -108,7 +104,8 @@ export class WeekScheduleComponent implements OnInit {
   }
 
   private _getGroupsemester() {
-    this.scheduleService.getGroupSemester(this.weekSchedule.getScheduleGroupId(), this.weekSchedule.getScheduleSemesterId())
+    this.scheduleService.getGroupSemester(this.weekSchedule.getScheduleGroupId(),
+      this.weekSchedule.getScheduleSemesterId())
       .subscribe(res => this._groupsemester = res && res.count ? res.results[0].id : undefined);
   }
 }

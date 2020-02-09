@@ -9,7 +9,6 @@ import { ScheduleService } from 'src/app/service/schedule/schedule.service';
 import { Lesson } from 'src/core/classes/lesson';
 import { WeekSchedule } from 'src/core/classes/week-schedule';
 import { lessonForm } from 'src/core/const/form';
-import { log } from "util";
 
 @Component({
   selector: 'app-lesson-editor',
@@ -102,7 +101,6 @@ export class LessonEditorComponent implements OnInit {
     if (!!this.weekSchedule && this.lessonForm.get('day').valid && this.lessonForm.get('lesson_time').valid) {
       const {day, lesson_time} = this.lessonForm.value;
       this.vacantWeeks = this.weekSchedule.getVacantWeeks(this.lesson, +day, +lesson_time);
-      console.log([...this.vacantWeeks]);
       this.vacantWeeks.forEach(week => week.isUsed = week.isUsed && week.isVacant);
       this._setVacantWeekControl();
     }
