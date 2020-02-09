@@ -59,7 +59,7 @@ export class Lesson implements ILesson {
   }
 
   public getTeachersInfoString(): string {
-    return this.teachers.map(teacher => `${teacherDegreeTypesMap.get(teacher.degree)}\xa0${teacher.short_name}`).join(', ');
+    return this.teachers.map(teacher => `${teacherDegreeTypesMap.get(teacher.degree) || ''}\xa0${teacher.short_name}`).join(', ');
   }
 
   public getLocation(): string {

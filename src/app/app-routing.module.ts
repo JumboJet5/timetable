@@ -8,7 +8,7 @@ const routes: Routes = [
       .then(module => module.DashboardModule), canLoad: [AuthGuard]
   },
   {
-    path: 'modal', outlet: 'modal', loadChildren: () => import('./modal/modal.module')
+    path: 'modal', outlet: 'modal', loadChildren: () => import('src/app/popup/modal/modal.module')
       .then(module => module.ModalModule),
   },
   {

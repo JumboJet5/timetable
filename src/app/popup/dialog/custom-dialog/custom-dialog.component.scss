@@ -1,0 +1,44 @@
+.modal-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.default-modal-wrapper {
+  min-width: 364px;
+  min-height: 200px;
+}
+
+.image-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body {
+  text-align: center;
+  padding: 20px 0;
+  max-width: 325px;
+  margin: auto;
+
+  .modal-header {
+    color: #333333;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 24px;
+    margin-bottom: 13px;
+  }
+
+  .modal-text {
+    color: #777777;
+    font-size: 12px;
+    font-weight: 300;
+    line-height: 22px;
+  }
+}
+
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

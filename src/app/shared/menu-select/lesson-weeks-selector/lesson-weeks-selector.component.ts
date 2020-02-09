@@ -51,7 +51,7 @@ export class LessonWeeksSelectorComponent implements OnInit, OnChanges {
   }
 
   private _initVacantWeeksList() {
-    if (!!this.weekSchedule && this.day && this.lesson_time) {
+    if (!!this.weekSchedule && (!!this.day || this.day === 0) && (!!this.lesson_time || this.lesson_time === 0)) {
       this.vacantWeeks = this.weekSchedule.getVacantWeeks(this.lesson, this.day, this.lesson_time);
       this.vacantWeeks.forEach(week => week.isUsed = week.isUsed && week.isVacant);
       this._setVacantWeekControl();

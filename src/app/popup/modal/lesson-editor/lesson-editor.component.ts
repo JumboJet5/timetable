@@ -3,12 +3,12 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '@app/service/group/group.service';
 import { IGroup, ITimetable } from '@interfaces';
-import { FormatService } from 'src/app/service/format/format.service';
-import { LessonService } from 'src/app/service/lesson/lesson.service';
-import { ScheduleService } from 'src/app/service/schedule/schedule.service';
-import { Lesson } from 'src/core/classes/lesson';
-import { WeekSchedule } from 'src/core/classes/week-schedule';
-import { lessonForm } from 'src/core/const/form';
+import { FormatService } from '@app/service/format/format.service';
+import { LessonService } from '@app/service/lesson/lesson.service';
+import { ScheduleService } from '@app/service/schedule/schedule.service';
+import { Lesson } from '@classes/lesson';
+import { WeekSchedule } from '@classes/week-schedule';
+import { lessonForm } from '@const/form';
 
 @Component({
   selector: 'app-lesson-editor',

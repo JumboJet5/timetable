@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LessonEditorComponent } from 'src/app/modal/lesson-editor/lesson-editor.component';
+import { LessonEditorComponent } from '@app/popup/modal/lesson-editor/lesson-editor.component';
 
 const routes: Routes = [
   {path: 'lesson/:lessonId/:groupSlug', component: LessonEditorComponent},
