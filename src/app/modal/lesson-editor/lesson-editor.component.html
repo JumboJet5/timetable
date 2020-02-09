@@ -33,9 +33,9 @@
     <div class="info-row">
       <div class="select-column long">
         <div class="placeholder">Викладач(*чі)</div>
-        <app-teacher-select [filters]="{group: weekSchedule.getScheduleGroupId()}"
-                            [selectControl]="lessonForm.get('teachers')"
-                            multiple="true"></app-teacher-select>
+        <app-teacher-autocomplete [filters]="{group: weekSchedule.getScheduleGroupId()}"
+                                  [selectControl]="lessonForm.get('teachers')"
+                                  multiple="true"></app-teacher-autocomplete>
       </div>
     </div>
 

@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ThemeService } from 'src/app/service/theme/theme.service';
-import { AsyncOptionsSelectComponent, optionServiceFactory } from '../loaded-options/async-options-select.component';
+import { AsyncOptionsSelectComponent, optionServiceFactory } from '../async-options-select/async-options-select.component';
 
 @Component({
   selector: 'app-theme-select',
-  templateUrl: '../loaded-options/async-options-select.component.html',
-  styleUrls: ['../loaded-options/async-options-select.component.scss'],
+  templateUrl: '../async-options-select/async-options-select.component.html',
+  styleUrls: ['../async-options-select/async-options-select.component.scss'],
   providers: [ThemeService]
 })
 export class ThemeSelectComponent extends AsyncOptionsSelectComponent<any> {

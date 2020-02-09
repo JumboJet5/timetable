@@ -1,0 +1,32 @@
+<div class="selected-wrapper">
+  <div class="selected" *ngFor="let selected of selectControl.value">
+    <span class="selected-text">{{getOptionText(selected)}}</span>
+    <button mat-icon-button (click)="onDeleteOption(selected)"><mat-icon>close</mat-icon></button>
+  </div>
+</div>
+
+<app-select (closed)="onClose()"
+            [abstractControl]="selectControl"
+            [isMulti]="multiple"
+            [isDisabled]="selectControl.disabled || disabled">
+
+  <app-select-result>
+    <label [formGroup]="filterForm">
+      <input class="select-input" placeholder="Додати викладача" formControlName="search">
+    </label>
+  </app-select-result>
+
+  <div class="fixed-wrapper">
+    <div class="relative-wrapper">
+      <ng-container *ngFor="let option of options">
+        <app-option-item *ngIf="!selectControl.value || !selectControl.value.includes(option.id)"
+                         [value]="option.id"
+                         [title]="getOptionText(option.id)"
+                         (click)="selectComponent.isOpened = false"
+                         class="tb-item">{{getOptionText(option.id)}}</app-option-item>
+      </ng-container>
+      <div *ngIf="!isLoading" class="viewport-bottom" inViewport (inViewportAction)="onViewportAction($event)"></div>
+    </div>
+  </div>
+
+</app-select>

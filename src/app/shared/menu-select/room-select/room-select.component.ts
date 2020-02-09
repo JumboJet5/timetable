@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { RoomService } from 'src/app/service/room/room.service';
-import { AsyncOptionsSelectComponent, optionServiceFactory } from '../loaded-options/async-options-select.component';
+import { AsyncOptionsSelectComponent, optionServiceFactory } from '../async-options-select/async-options-select.component';
 
 
 @Component({
   selector: 'app-room-select',
-  templateUrl: '../loaded-options/async-options-select.component.html',
-  styleUrls: ['../loaded-options/async-options-select.component.scss'],
+  templateUrl: '../async-options-select/async-options-select.component.html',
+  styleUrls: ['../async-options-select/async-options-select.component.scss'],
   providers: [RoomService]
 })
 export class RoomSelectComponent extends AsyncOptionsSelectComponent<any> {
