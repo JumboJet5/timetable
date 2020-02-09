@@ -2,29 +2,47 @@
   <div class="select-group-wrapper">
     <app-group-select [selectControl]="groupIdControl"></app-group-select>
     <ng-container *ngIf="!!weekSchedule?.getSchedule()">
-      <span class="group-info">Курс: {{weekSchedule.getSchedule()?.info?.course?.name}}</span>
-      <span class="group-info">Семестр: {{weekSchedule.getSchedule()?.info?.semester?.num}}</span>
+      <div class="additional-wrapper">
+        <div class="info-row">
+          <span class="group-info">
+            Університет: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.university?.short_name}}</span>
+          </span>
+          <span class="group-info">
+            Факультет: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.faculty?.name}}</span>
+          </span>
+          <span class="group-info">
+            Спеціальність: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.specialty?.name}}</span>
+          </span>
+        </div>
+        <div class="info-row">
+          <span class="group-info">
+            Курс: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.course?.name}}</span>
+          </span>
+          <span class="group-info">
+            Семестр: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.semester?.num}}</span>
+          </span>
+        </div>
+      </div>
     </ng-container>
   </div>
-  <div class="loading-wrapper" *ngIf="isLoading; else schedule">
+  <div class="loading-wrapper" *ngIf="isLoading">
     <mat-spinner></mat-spinner>
   </div>
-  <ng-template #schedule>
-    <div class="time-row days-header" *ngIf="weekSchedule.getScheduleTimes().length; else choseGroupPlz">
-      <div class="lesson-time"></div>
-      <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
+
+  <div class="time-row days-header" *ngIf="weekSchedule.getScheduleTimes().length; else choseGroupPlz">
+    <div class="lesson-time"></div>
+    <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
+  </div>
+  <div class="time-row" *ngFor="let time of weekSchedule.getScheduleTimes()">
+    <div class="lesson-time">
+      <span class="number">{{time.num}}</span>
+      <span class="time">{{time.start}} - {{time.end}}</span>
     </div>
-    <div class="time-row" *ngFor="let time of weekSchedule.getScheduleTimes()">
-      <div class="lesson-time">
-        <span class="number">{{time.num}}</span>
-        <span class="time">{{time.start}} - {{time.end}}</span>
-      </div>
-      <app-schedule-lessons *ngFor="let day of weekSchedule.getScheduleDays(); let dIndex = index"
-                            [day]="day"
-                            [dayIndex]="dIndex"
-                            [timeId]="time.id"></app-schedule-lessons>
-    </div>
-  </ng-template>
+    <app-schedule-lessons *ngFor="let day of weekSchedule.getScheduleDays(); let dIndex = index"
+                          [day]="day"
+                          [dayIndex]="dIndex"
+                          [timeId]="time.id"></app-schedule-lessons>
+  </div>
 
   <ng-template #choseGroupPlz>
     <div class="not-selected-info">Виберіть будь ласка групу</div>

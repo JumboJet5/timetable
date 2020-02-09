@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 import { IPageable } from './pageable.interface';
-import { IRequestParams } from './request-param/request-param.interface';
+import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 
 export interface IWithId {
   id: number;

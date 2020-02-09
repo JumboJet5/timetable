@@ -1,12 +1,14 @@
-.modal-wrapper {
+.dialog-wrapper {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.default-modal-wrapper {
+.custom-dialog-wrapper {
   min-width: 364px;
   min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .image-wrapper {
@@ -15,13 +17,13 @@
   justify-content: center;
 }
 
-.modal-body {
+.dialog-body {
   text-align: center;
   padding: 20px 0;
   max-width: 325px;
-  margin: auto;
+  margin: 0 auto;
 
-  .modal-header {
+  .dialog-header {
     color: #333333;
     font-size: 18px;
     font-weight: 500;
@@ -29,7 +31,7 @@
     margin-bottom: 13px;
   }
 
-  .modal-text {
+  .dialog-text {
     color: #777777;
     font-size: 12px;
     font-weight: 300;
@@ -41,4 +43,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: auto;
+
+  .mat-flat-button, .mat-stroked-button {
+    min-width: 120px;
+  }
 }

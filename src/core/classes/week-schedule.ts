@@ -20,6 +20,7 @@ export class WeekSchedule {
     this._period = schedule.periods.find(period => period.kind === 0) || this._period;
     this._days.forEach(day => schedule.lesson_time
       .forEach(time => this.sortLessons(this._getCellByDayAndTime(day, time.id))));
+    console.log(this);
   }
 
   public getSchedule(): ITimetable {

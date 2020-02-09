@@ -1,14 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PopupService } from '@app/service/modal/popup.service';
 import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
-import { filter, switchMap } from 'rxjs/operators';
+import { ICreateLessonBody } from '@interfaces';
+import { switchMap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
-import { ICreateLessonBody } from '@interfaces';
 
 @Component({
   selector: 'app-week-schedule',
@@ -30,18 +31,15 @@ export class WeekScheduleComponent implements OnInit {
               private lessonService: LessonService,
               private route: ActivatedRoute,
               private formatService: FormatService,
+              private popupService: PopupService,
               private router: Router) {
   }
 
   public ngOnInit(): void {
     this._updatePage();
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd && !/\(modal/.test(event.url)))
-      .subscribe(() => this._updatePage());
 
     this.groupIdControl.valueChanges
-      .subscribe(
-        id => this.router.navigate(['dashboard', 'lessons-schedule', this._groupSelector.getOptionById(id).slug, id]));
+      .subscribe(id => this._getNextUrl(id));
   }
 
   public openLessonDetail(lesson: Lesson, associatedLessons: Lesson[]) {
@@ -50,18 +48,18 @@ export class WeekScheduleComponent implements OnInit {
       groupSchedule: this.weekSchedule.getSchedule(),
       groupsemester: this._groupsemester
     };
-    this.router.navigate([{outlets: {modal: ['modal', 'lesson', lesson.id, this._groupSlug]}}], {state: {state}});
+    this.popupService.openModal(['lesson', '' + lesson.id, this._groupSlug], () => this._updatePage(), null, state);
   }
 
   public openAddLessonModal(time: number, day: number) {
     const state = {day, time, groupSchedule: this.weekSchedule.getSchedule(), groupsemester: this._groupsemester};
-    this.router.navigate([{outlets: {modal: ['modal', 'lesson', this._groupSlug]}}], {state: {state}});
+    this.popupService.openModal(['lesson', this._groupSlug], () => this._updatePage(), null, state);
   }
 
   public delete(lessonId: number) {
-    this.isLoading = true;
-    this.scheduleService.deleteLesson(lessonId)
-      .subscribe(() => this._updatePage());
+    this.popupService.openDialog({header: 'Видалити пару?', body: 'Видалення має невідворотню силу'},
+      () => (this.isLoading = true) && this.scheduleService.deleteLesson(lessonId)
+        .subscribe(() => this._updatePage()));
   }
 
   public moveLesson(lessonId: number, lesson_time: number, day: number) {
@@ -88,6 +86,16 @@ export class WeekScheduleComponent implements OnInit {
         group_semester: this._groupsemester,
       } as ICreateLessonBody)))
       .subscribe(() => this._updatePage());
+  }
+
+  private _getNextUrl(groupId: number): void {
+    if (this._groupSelector.getOptionById(groupId))
+      this.router.navigate([
+        'dashboard',
+        'lessons-schedule',
+        this._groupSelector.getOptionById(groupId).slug,
+        '' + groupId
+      ]);
   }
 
   private _updatePage() {

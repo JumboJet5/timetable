@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
+import { CustomDialogComponent } from '@app/popup/dialog/custom-dialog/custom-dialog.component';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  {path: 'custom', component: CustomDialogComponent}
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DialogRoutingModule { }
+export class DialogRoutingModule {}

@@ -13,7 +13,7 @@ import { lessonForm } from '@const/form';
 @Component({
   selector: 'app-lesson-editor',
   templateUrl: './lesson-editor.component.html',
-  styleUrls: ['./lesson-editor.component.scss'],
+  styleUrls: ['../../../../assets/stylesheet/modal.scss',  './lesson-editor.component.scss'],
 })
 export class LessonEditorComponent implements OnInit {
   public lessonForm: FormGroup = lessonForm();
@@ -51,18 +51,18 @@ export class LessonEditorComponent implements OnInit {
     this._getGroup();
   }
 
-  public closeModal() {
-    this.router.navigate([{outlets: {modal: null}}]);
+  public closeModal(answer: 'accept' | 'cancel' = 'cancel') {
+    this.router.navigate([{outlets: {modal: null}}], {state: {answer}});
   }
 
   public onCreate() {
     if (this.lessonForm.valid) this.scheduleService.createLesson(this.lessonForm.value)
-      .subscribe(() => this.closeModal());
+      .subscribe(() => this.closeModal('accept'));
   }
 
   public onUpdate() {
     if (this.lessonForm.valid) this.scheduleService.updateLesson(this.lessonForm.value, this.lesson.id)
-      .subscribe(() => this.closeModal());
+      .subscribe(() => this.closeModal('accept'));
   }
 
   private _getLesson(lessonId: number) {

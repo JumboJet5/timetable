@@ -12,6 +12,10 @@ const routes: Routes = [
       .then(module => module.ModalModule),
   },
   {
+    path: 'dialog', outlet: 'dialog', loadChildren: () => import('src/app/popup/dialog/dialog.module')
+      .then(module => module.DialogModule),
+  },
+  {
     path: 'authentication', loadChildren: () => import('./auth/auth.module')
       .then(module => module.AuthModule),
   },

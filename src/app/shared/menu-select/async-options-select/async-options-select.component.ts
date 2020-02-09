@@ -2,7 +2,7 @@ import { HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { IFilterParams, IOptionService, IPageable, IPaginationParams, IRequestParams, IWithId } from '@interfaces';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SelectComponent } from '../../select-input/select/select.component';
 
 
@@ -50,6 +50,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
       .subscribe(() => this._applyControlChanges());
 
     this.filterForm.valueChanges
+      .pipe(debounceTime(500))
       .pipe(takeUntil(this._destroyUnsubscribe$))
       .subscribe(() => this._applyFilters());
   }
