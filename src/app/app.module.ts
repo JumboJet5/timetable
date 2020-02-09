@@ -2,12 +2,13 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AuthGuard } from 'src/app/guards/auth/auth.guard';
-import { AuthInterceptor } from 'src/app/interceptors/auth/auth.interceptor';
-import { AuthService } from 'src/app/service/auth/auth.service';
-import { FormatService } from 'src/app/service/format/format.service';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { PopupService } from '@app/service/modal/popup.service';
+import { AuthGuard } from '@app/guards/auth/auth.guard';
+import { AuthInterceptor } from '@app/interceptors/auth/auth.interceptor';
+import { AuthService } from '@app/service/auth/auth.service';
+import { FormatService } from '@app/service/format/format.service';
+import { AppRoutingModule } from '@app/app-routing.module';
+import { AppComponent } from '@app/app.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AppComponent } from './app.component';
     AuthService,
     AuthGuard,
     FormatService,
+    PopupService,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
   ],
   bootstrap: [AppComponent],

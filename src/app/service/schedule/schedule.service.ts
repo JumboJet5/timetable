@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { FormatService } from 'src/app/service/format/format.service';
-import { ICreateLessonBody } from 'src/core/interfaces/request-param/create-lesson-body.interface';
+import { ICreateLessonBody } from 'src/core/interfaces/create-lesson-body.interface';
 import * as URLS from 'src/core/urls';
 import { ITimetable } from 'src/core/interfaces/timetable.interface';
 

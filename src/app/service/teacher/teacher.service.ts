@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IRequestParams } from 'src/core/interfaces/request-param/request-param.interface';
+import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 import * as URLS from 'src/core/urls';
 
 @Injectable()

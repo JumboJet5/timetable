@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import * as URLS from '../../../core/urls';
 import { IPageable } from 'src/core/interfaces/pageable.interface';
 import { IGroup } from 'src/core/interfaces/group.interface';
-import { IRequestParams } from 'src/core/interfaces/request-param/request-param.interface';
+import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 
 @Injectable()
 export class GroupService {

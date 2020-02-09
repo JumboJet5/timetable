@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from "@angular/material/button";
 import { CustomDialogComponent } from '@app/popup/dialog/custom-dialog/custom-dialog.component';
 import { DialogRoutingModule } from 'src/app/popup/dialog/dialog-routing.module';
 
@@ -8,7 +9,8 @@ import { DialogRoutingModule } from 'src/app/popup/dialog/dialog-routing.module'
   declarations: [CustomDialogComponent],
   imports: [
     CommonModule,
-    DialogRoutingModule
+    DialogRoutingModule,
+    MatButtonModule
   ]
 })
 export class DialogModule {}
