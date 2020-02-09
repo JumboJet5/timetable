@@ -1,0 +1,32 @@
+<div class="background-overflow" (click)="onCancel()"></div>
+<div [@modalGrowthTransitionAnimation]>
+  <div class="modal-wrapper growth-animation-wrapper main-theme" *ngIf="!!data">
+    <div class="default-modal-wrapper">
+      <div class="image-wrapper">
+        <img [src]="data.imageLocation" alt="modal-image"/>
+      </div>
+
+      <div class="modal-body">
+        <div class="modal-header">{{data.header}}</div>
+        <div class="modal-text">{{data.body}}</div>
+      </div>
+
+      <div class="control-row">
+        <button aria-label="Yes"
+                mat-flat-button
+                class="rounded"
+                color="primary"
+                (click)="onAccept()">Yes
+        </button>
+
+        <button aria-label="Cancel"
+                mat-stroked-button
+                class="rounded"
+                color="primary"
+                (click)="onCancel()">Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

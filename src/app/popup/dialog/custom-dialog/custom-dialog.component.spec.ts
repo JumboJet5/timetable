@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LessonEditorComponent } from './lesson-editor.component';
+import { CustomDialogComponent } from 'src/app/popup/dialog/custom-dialog/custom-dialog.component';
 
-describe('LessonEditorComponent', () => {
-  let component: LessonEditorComponent;
-  let fixture: ComponentFixture<LessonEditorComponent>;
+describe('DefaultModalComponent', () => {
+  let component: CustomDialogComponent;
+  let fixture: ComponentFixture<CustomDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LessonEditorComponent ]
+      declarations: [CustomDialogComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LessonEditorComponent);
+    fixture = TestBed.createComponent(CustomDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
