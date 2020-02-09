@@ -117,7 +117,14 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     this.options = [];
     this.isLoading = false;
     this._isLast = false;
-    this._optionIdsMap = new Map<number, TOption>();
+    const tempMap = new Map<number, TOption>();
+    if (this.selectControl && (this.selectControl.value || this.selectControl.value === 0)) {
+      if (this.multiple && this.selectControl.value instanceof Array) this.selectControl.value
+        .forEach(option => this._optionIdsMap.has(option) ? tempMap.set(option, this._optionIdsMap.get(option)) : null);
+      if (!this.multiple && this._optionIdsMap.has(this.selectControl.value))
+        tempMap.set(this.selectControl.value, this._optionIdsMap.get(this.selectControl.value))
+    }
+    this._optionIdsMap = tempMap;
     this._paginationFilters.offset = 0;
     this._pageUnsubscribe$.next();
     this._loadOptions();
