@@ -1,10 +1,10 @@
 export interface ICreateLessonBody {
-    theme: string;
-    format: string;
+    theme: number;
+    format: number;
     teachers: string | string[];
-    room: string;
+    room: number;
     weeks: string;
-    lesson_time: string;
-    day: string;
-    group_semester: string;
+    lesson_time: number;
+    day: number;
+    group_semester: number;
 }
