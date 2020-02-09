@@ -14,11 +14,11 @@
 
       <div class="select-column">
         <div class="placeholder">Корпус</div>
-        <app-housing-select [filters]="{group: weekSchedule.getScheduleGroupId()}"
+        <app-housing-select [filters]="{group: weekSchedule.getScheduleGroupId(), ordering: 'name'}"
                             [selectControl]="lessonForm.get('housing')"></app-housing-select>
 
         <div class="placeholder">Аудиторія</div>
-        <app-room-select [filters]="{housing: lessonForm.get('housing').value}"
+        <app-room-select [filters]="{housing: lessonForm.get('housing').value, ordering: 'num'}"
                          [disabled]="lessonForm.get('housing').invalid"
                          [selectControl]="lessonForm.get('room')"></app-room-select>
       </div>
@@ -34,8 +34,7 @@
       <div class="select-column long">
         <div class="placeholder">Викладач(*чі)</div>
         <app-teacher-autocomplete [filters]="{group: weekSchedule.getScheduleGroupId()}"
-                                  [selectControl]="lessonForm.get('teachers')"
-                                  multiple="true"></app-teacher-autocomplete>
+                                  [selectControl]="lessonForm.get('teachers')"></app-teacher-autocomplete>
       </div>
     </div>
 

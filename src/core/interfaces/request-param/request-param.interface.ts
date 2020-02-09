@@ -13,4 +13,5 @@ export interface IFilterParams {
   degreeId?: number | string;
   specialtyId?: number;
   search?: string;
+  ordering?: string;
 }
