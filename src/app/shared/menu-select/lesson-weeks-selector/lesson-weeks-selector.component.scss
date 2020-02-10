@@ -21,6 +21,7 @@
     }
   }
 }
+
 .weeks-wrapper {
   display: flex;
   flex-wrap: wrap;
@@ -37,6 +38,14 @@
   &.used {
     background-color: mix($primary-color, white, 40%);
     color: white;
+  }
+
+  &.conflicted {
+    background-color: mix($warn-color, white, 10%);
+  }
+
+  &.used.conflicted {
+    background-color: mix($light-orange, white, 70%);
   }
 
   ::ng-deep.mat-checkbox-layout {

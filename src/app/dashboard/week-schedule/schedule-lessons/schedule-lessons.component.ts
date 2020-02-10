@@ -26,10 +26,11 @@ export class ScheduleLessonsComponent implements OnInit {
     this.lessons = this.parent.weekSchedule.getConcreteLessons(this.day, this.timeId);
   }
 
-  public isLessonNotSpecified(): (data: { data: Lesson }) => boolean {
-    return (data: { data: Lesson }) => !!data.data && this.lessons.every(
-      lesson => true || lesson.hasLessonsInsertConflicts(data.data)); // todo remove temporary week vacant filter
-  }
+  // todo add temporary week vacant filter
+  // public isLessonNotSpecified(): (data: { data: Lesson }) => boolean {
+  //   return (data: { data: Lesson }) => !!data.data && this.lessons.every(
+  //     lesson => lesson.hasLessonsInsertConflicts(data.data));
+  // }
 
   public drop(event: CdkDragDrop<Lesson[], any>) {
     if (event.previousContainer !== event.container) {
