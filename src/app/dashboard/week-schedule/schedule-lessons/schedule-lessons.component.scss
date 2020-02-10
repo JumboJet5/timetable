@@ -14,7 +14,7 @@
   background-color: white;
 
   &.available {
-    background-color: mix($light-green, white, 30%);
+    background-color: mix($light-green, white, 20%);
   }
 }
 
@@ -25,7 +25,6 @@
   align-items: center;
   justify-content: center;
   display: flex;
-  cursor: pointer;
 }
 
 .drag-box {
@@ -35,7 +34,7 @@
   0 4px 5px 1px rgba(0, 0, 0, 0.14),
   0 2px 7px 2px rgba(0, 0, 0, 0.12);
   margin: 2px;
-  cursor: move;
+  cursor: grab;
   flex: 1 0 0;
   display: flex;
   align-items: flex-start;
@@ -49,6 +48,10 @@
     .lesson-format, .teacher-avatar:not(:first-of-type), .lesson-name, .weeks-info-row, .teachers-info-row, .mat-icon-button {
       display: none;
     }
+  }
+
+  &.conflicted {
+    background-color: mix($pink, white, 20%);
   }
 
   .lesson-format {

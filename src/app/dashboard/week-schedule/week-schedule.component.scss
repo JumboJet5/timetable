@@ -13,21 +13,23 @@
   line-height: 33px;
 }
 
-.days-header {
+.sticky-header {
   position: sticky;
   top: 0;
   z-index: 1;
+}
+
+.days-header {
   background-color: white;
   height: 30px;
+
+  &.time-row .lesson-time {
+    border-top: unset;
+  }
 }
 
 .time-row {
   display: flex;
-  border-bottom: 1px solid #909090;
-
-  &:last-child {
-    border-bottom: unset;
-  }
 
   .lessons, app-schedule-lessons {
     flex: 1 0 150px;
@@ -49,6 +51,7 @@
     padding: 10px 0;
     display: flex;
     flex-direction: column;
+    border-top: 1px solid #909090;
 
     .number {
       font-size: 36px;
@@ -73,7 +76,6 @@
 
 .select-group-wrapper {
   position: relative;
-  height: 60px;
   display: flex;
   align-items: center;
   background-color: mix($primary-color, white, 70%);
@@ -82,8 +84,6 @@
 
   .additional-wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
     height: 100%;
   }
 
@@ -93,16 +93,42 @@
   }
 
   .group-info {
-    margin-left: 10px;
+    margin-right: 10px;
     font-size: 14px;
     font-weight: 300;
     color: white;
   }
 
-  ::ng-deep app-select-result .tb-input {
-    margin-top: 0;
+  .temporary {
+    display: inline;
   }
 
+  ::ng-deep app-group-select {
+    display: none;
+
+    app-select-result .tb-input {
+      margin-top: 0;
+    }
+  }
+
+  &.empty, &:hover {
+    app-group-select {
+      display: unset;
+    }
+
+    .additional-wrapper {
+      flex-direction: column-reverse;
+      justify-content: space-evenly;
+    }
+
+    .info-row {
+      margin: 0 10px;
+    }
+
+    .temporary {
+      display: none;
+    }
+  }
 }
 
 .loading-wrapper {

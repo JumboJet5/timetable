@@ -1,10 +1,10 @@
-import { dayMap, weekDays } from '../const/collections';
-import { Lesson } from './lesson';
-import { VacantWeekInfoInterface } from '../interfaces/vacant-week-info.interface';
-import { ITimetable } from '../interfaces/timetable.interface';
-import { IPeriod } from '../interfaces/period.interface';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ILesson } from 'src/core/interfaces/lesson.interface';
+import { dayMap, weekDays } from '../const/collections';
+import { IPeriod } from '../interfaces/period.interface';
+import { ITimetable } from '../interfaces/timetable.interface';
+import { VacantWeekInfoInterface } from '../interfaces/vacant-week-info.interface';
+import { Lesson } from './lesson';
 
 export class WeekSchedule {
   private _daysScheduleMap: Map<string, Map<number, Lesson[]>> = new Map();
@@ -20,7 +20,6 @@ export class WeekSchedule {
     this._period = schedule.periods.find(period => period.kind === 0) || this._period;
     this._days.forEach(day => schedule.lesson_time
       .forEach(time => this.sortLessons(this._getCellByDayAndTime(day, time.id))));
-    console.log(this);
   }
 
   public getSchedule(): ITimetable {
@@ -73,7 +72,7 @@ export class WeekSchedule {
 
   public canLessonBeInserted(day: string, timeId: number, lesson: Lesson): boolean {
     const lessons = this.getConcreteLessons(day, timeId);
-    return lessons.every(item => lesson.hasLessonsInsertConflicts(item));
+    return lessons.every(item => true || lesson.hasLessonsInsertConflicts(item)); // todo remove temporary week vacant filter
   }
 
   public insertLesson(lessonInfo: ILesson): boolean {
@@ -104,13 +103,15 @@ export class WeekSchedule {
     return mainLesson !== lesson;
   }
 
-  private _getVacantWeekInfo(concreteLesson: Lesson, day: number, timeId: number, weekIndex: number): VacantWeekInfoInterface {
+  private _getVacantWeekInfo(concreteLesson: Lesson, day: number,
+                             timeId: number, weekIndex: number): VacantWeekInfoInterface {
     const lastDate = new Date(this.getSchedulePeriod().end);
+    // todo remove temporary week vacant filter
     return {
       date: this.getDateByWeekIndexAndDay(weekIndex, day),
       isUsed: !!concreteLesson && !concreteLesson.isVacantByWeek(weekIndex),
       isVacant: this.getAssociativeLessons(dayMap().get(day), timeId, concreteLesson)
-        .every(associatedLesson => associatedLesson.isWeekVacant(concreteLesson, weekIndex)),
+        .every(associatedLesson => true || associatedLesson.isWeekVacant(concreteLesson, weekIndex)),
       isHidden: this.getDateByWeekIndexAndDay(weekIndex, day).getTime() > lastDate.getTime(),
     };
   }

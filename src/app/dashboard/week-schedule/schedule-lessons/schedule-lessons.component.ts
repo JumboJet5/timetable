@@ -1,4 +1,4 @@
-import { CdkDragDrop, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragSortEvent, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Host, Input, OnInit, ViewChild } from '@angular/core';
 import { Lesson } from '@classes/lesson';
 import { lessonTypesMap } from '@const/collections';
@@ -28,7 +28,7 @@ export class ScheduleLessonsComponent implements OnInit {
 
   public isLessonNotSpecified(): (data: { data: Lesson }) => boolean {
     return (data: { data: Lesson }) => !!data.data && this.lessons.every(
-      lesson => lesson.hasLessonsInsertConflicts(data.data));
+      lesson => true || lesson.hasLessonsInsertConflicts(data.data)); // todo remove temporary week vacant filter
   }
 
   public drop(event: CdkDragDrop<Lesson[], any>) {
