@@ -12,6 +12,7 @@
     <button (click)="changeWeekStatus(week)"
             *ngIf="!week.isHidden"
             [class.used]="week.isUsed"
+            [class.conflicted]="!week.isConflicted"
             [disabled]="!week.isVacant"
             class="week-selector"
             mat-flat-button>

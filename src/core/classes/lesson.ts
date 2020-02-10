@@ -1,7 +1,7 @@
-import { teacherDegreeTypesMap } from '../const/collections';
-import { TimetableTeacherInfoInterface } from 'src/core/interfaces/timetable-teacher-info.interface';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ILesson } from 'src/core/interfaces/lesson.interface';
+import { TimetableTeacherInfoInterface } from 'src/core/interfaces/timetable-teacher-info.interface';
+import { teacherDegreeTypesMap } from '@const/collections';
 
 export class Lesson implements ILesson {
   public dates: string[];
@@ -59,7 +59,8 @@ export class Lesson implements ILesson {
   }
 
   public getTeachersInfoString(): string {
-    return this.teachers.map(teacher => `${teacherDegreeTypesMap.get(teacher.degree) || ''}\xa0${teacher.short_name}`).join(', ');
+    return this.teachers.map(
+      teacher => `${teacherDegreeTypesMap.get(teacher.degree) || ''}\xa0${teacher.short_name}`).join(', ');
   }
 
   public getLocation(): string {

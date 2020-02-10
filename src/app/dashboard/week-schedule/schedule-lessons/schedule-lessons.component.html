@@ -2,8 +2,7 @@
      (cdkDropListEntered)="isPlaced = true"
      (cdkDropListExited)="isPlaced = false"
      [cdkDropListData]="lessons"
-     [cdkDropListEnterPredicate]="isLessonNotSpecified()"
-     [class.available]="parent.isDragging && isLessonNotSpecified()({data: parent.draggedLesson})"
+     [class.available]="parent.isDragging"
      [class.placed]="isPlaced"
      cdkDropList
      cdkDropListOrientation="vertical"
@@ -66,7 +65,7 @@
   <button (click)="parent.openAddLessonModal(timeId, dayIndex)" mat-icon-button>
     <mat-icon *ngIf="!parent.isDragging && !isPlaced">add_circle_outline</mat-icon>
   </button>
-  <button *ngIf="!!parent.clipboard && isLessonNotSpecified()({data: parent.clipboard})"
+  <button *ngIf="!!parent.clipboard"
           (click)="parent.pasteLesson(timeId, dayIndex)"
           mat-icon-button>
     <mat-icon>archive</mat-icon>
