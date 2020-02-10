@@ -137,10 +137,10 @@
   bottom: 0;
   right: 0;
   left: 0;
-  z-index: 100;
+  z-index: 40;
   background-color: #ffffff9e;
 
-  .mat-progress-spinner {
+  .loader-wrapper {
     position: absolute;
     top: 50%;
     left: 50%;

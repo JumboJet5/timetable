@@ -1,19 +1,17 @@
 <div class="overlay-backdrop" (click)="closeModal()"></div>
-<div class="dialog-wrapper growth-animation-wrapper main-theme" *ngIf="!!data">
-  <div class="custom-dialog-wrapper">
-    <div class="image-wrapper" *ngIf="data.imageLocation">
-      <img [src]="data.imageLocation" alt="dialog-image"/>
-    </div>
+<div class="dialog-wrapper custom-dialog-wrapper growth-animation-wrapper main-theme" *ngIf="!!data">
+  <div class="image-wrapper" *ngIf="data.imageLocation">
+    <img [src]="data.imageLocation" alt="dialog-image"/>
+  </div>
 
-    <div class="dialog-body">
-      <div class="dialog-header">{{data.header}}</div>
-      <div class="dialog-text">{{data.body}}</div>
-    </div>
+  <div class="dialog-body">
+    <div class="dialog-header">{{data.header}}</div>
+    <div class="dialog-text">{{data.body}}</div>
+  </div>
 
-    <div class="control-row">
-      <button mat-flat-button class="rounded" color="primary" (click)="closeModal('accept')">Yes</button>
-      <button mat-stroked-button class="rounded" color="primary" (click)="closeModal()">Cancel</button>
-    </div>
+  <div class="control-row">
+    <button mat-flat-button class="rounded" color="primary" (click)="closeModal('accept')">підтвердити</button>
+    <button mat-stroked-button class="rounded" color="primary" (click)="closeModal()">Відхилити</button>
   </div>
 </div>
 

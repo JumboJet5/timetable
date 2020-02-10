@@ -30,18 +30,16 @@ export class LessonWeeksSelectorComponent implements OnInit, OnChanges {
     this._setVacantWeekControl();
   }
 
-  public selectAll(asValue: boolean) { // todo don't forgot change after customize week vacant filter
+  public selectAll(like: boolean) { // todo don't forgot change after customize week vacant filter
     if (this.vacantWeeks) {
-      this.vacantWeeks.forEach(week => !week.isHidden && week.isVacant && (week.isUsed = asValue));
+      this.vacantWeeks.forEach(week => !week.isHidden && week.isVacant && (week.isUsed = like));
       this._setVacantWeekControl();
     }
   }
 
-  public selectAllOdd(asValue: boolean) { // todo don't forgot change after customize week vacant filter
+  public selectAllOdd(like: boolean) { // todo don't forgot change after customize week vacant filter
     if (this.vacantWeeks) {
-      const firstNotHidden = this.vacantWeeks.findIndex(week => !week.isHidden);
-      this.vacantWeeks.forEach((week, i) => i >= firstNotHidden && !week.isHidden && week.isVacant
-        && (week.isUsed = ((i - firstNotHidden) % 2 === 0) === asValue));
+      this.vacantWeeks.forEach((week, i) => !week.isHidden && week.isVacant && (week.isUsed = (i % 2 === 0) === like));
       this._setVacantWeekControl();
     }
   }

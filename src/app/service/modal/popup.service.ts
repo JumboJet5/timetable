@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { ICustomDialog } from '@interfaces';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { ICustomDialog } from '@interfaces';
 
 @Injectable()
 export class PopupService {
@@ -23,7 +23,10 @@ export class PopupService {
       this.router.navigate([{outlets: {dialog: null}}]);
   }
 
-  public openModal(restUrl: string[], onAccept: () => void = () => {}, onCancel: () => void = () => {}, state?: any) {
+  public openModal(restUrl: (string | number)[],
+                   onAccept: () => void = () => {},
+                   onCancel: () => void = () => {},
+                   state?: any) {
     this.router.navigate([{outlets: {modal: ['modal', ...restUrl]}}], {state: {state}})
       .then(() => this.router.events
         .pipe(takeUntil(this.unsubscribe), filter(event => event instanceof NavigationEnd))

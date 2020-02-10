@@ -7,7 +7,7 @@
     <button mat-flat-button color="accent" (click)="selectAll(false)">Жоден</button>
   </div>
 </div>
-<div class="weeks-wrapper">
+<div class="weeks-wrapper" *ngIf="(lesson_time || lesson_time === 0 ) && (day || day === 0); else weeksSelectorLocked">
   <ng-container *ngFor="let week of vacantWeeks; let i = index">
     <button (click)="changeWeekStatus(week)"
             *ngIf="!week.isHidden"
@@ -22,3 +22,7 @@
     </button>
   </ng-container>
 </div>
+
+<ng-template #weeksSelectorLocked>
+  <span class="small-text">Оберіть спочатку день тижня і час пари</span>
+</ng-template>

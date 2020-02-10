@@ -16,7 +16,7 @@ export class TeacherSelectComponent extends AsyncOptionsSelectComponent<ITeacher
     super(optionServiceFactory<ITeacher>(id => teacherService.getTeacher(id),
       params => teacherService.getTeachers(params)), formBuilder);
     this.simplePlaceholder = 'Оберіть викладача';
-    this.simplePlaceholder = 'Оберіть викладачів';
+    this.multiplePlaceholder = 'Оберіть викладачів';
     this.withSearch = true;
   }
 

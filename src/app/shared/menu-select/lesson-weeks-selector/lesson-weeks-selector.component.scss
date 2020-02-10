@@ -31,7 +31,7 @@
 
 .week-selector {
   margin: 4px 5px;
-  flex: 0 0 147px;
+  flex: 0 0 140px;
   text-align: left;
   background-color: mix($primary-color, white, 5%);
 
@@ -41,7 +41,7 @@
   }
 
   &.conflicted {
-    background-color: mix($warn-color, white, 10%);
+    background-color: mix($light-orange, white, 10%);
   }
 
   &.used.conflicted {

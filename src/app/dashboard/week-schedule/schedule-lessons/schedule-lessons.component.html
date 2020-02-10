@@ -10,11 +10,12 @@
 
   <div (cdkDragEnded)="onDragEnd()"
        (cdkDragStarted)="onDragStart($event.source.data)"
-       (click)="parent.openLessonDetail(lesson, lessons)"
+       (click)="parent.openLessonDetail(lesson)"
        *ngFor="let lesson of lessons; let i = index"
        [cdkDragData]="lesson"
        [class.additional]="parent.weekSchedule.isLessonAdditional(lesson, lessons)"
-       [class.conflicted]="parent.draggedLesson?.hasLessonsInsertConflicts(lesson)"
+       [class.drag-conflicted]="parent.draggedLesson?.hasLessonsInsertConflicts(lesson)"
+       [class.conflicted]="parent.weekSchedule.hasLessonConflictsWithAssociative(lesson, lessons)"
        cdkDrag
        class="drag-box">
     <div class="teachers-col">

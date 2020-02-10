@@ -42,7 +42,6 @@
   position: relative;
 
   &.additional:not(:hover):not(.cdk-drag-placeholder):not(.cdk-drag-preview) {
-    background-color: inherit;
     align-items: center;
 
     .lesson-format, .teacher-avatar:not(:first-of-type), .lesson-name, .weeks-info-row, .teachers-info-row, .mat-icon-button {
@@ -51,7 +50,11 @@
   }
 
   &.conflicted {
-    background-color: mix($pink, white, 20%);
+    background-color: mix($light-orange, white, 15%);
+  }
+
+  &.drag-conflicted {
+    background-color: mix($light-orange, white, 50%);
   }
 
   .lesson-format {

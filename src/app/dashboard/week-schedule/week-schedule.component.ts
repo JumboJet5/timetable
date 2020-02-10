@@ -5,7 +5,7 @@ import { PopupService } from '@app/service/modal/popup.service';
 import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
-import { ICreateLessonBody } from '@interfaces';
+import { ICreateLessonBody, ILesson } from '@interfaces';
 import { switchMap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
@@ -22,9 +22,9 @@ export class WeekScheduleComponent implements OnInit {
   public clipboard: Lesson;
   public groupIdControl: FormControl = new FormControl(undefined);
   public isLoading = false;
-  public weekSchedule: WeekSchedule = new WeekSchedule();
-  @ViewChild(GroupSelectComponent) private _groupSelector: GroupSelectComponent;
-  private _groupSlug: string;
+  public weekSchedule: WeekSchedule;
+  @ViewChild(GroupSelectComponent, {static: true}) private _groupSelector: GroupSelectComponent;
+  private _groupSlug = this.route.snapshot.paramMap.get('groupSlug');
   private _groupsemester: number;
 
   constructor(private scheduleService: ScheduleService,
@@ -32,88 +32,80 @@ export class WeekScheduleComponent implements OnInit {
               private route: ActivatedRoute,
               private formatService: FormatService,
               private popupService: PopupService,
-              private router: Router) {
-  }
+              private router: Router) {}
 
   public ngOnInit(): void {
-    this._updatePage();
-
     this.groupIdControl.valueChanges
       .subscribe(id => this._getNextUrl(id));
+
+    this.scheduleService.getActualSchedule$()
+      .subscribe(res => {
+        this.weekSchedule = res;
+        this._getGroupsemester();
+        this.isLoading = false;
+      });
+
+    if (this.route.snapshot.paramMap.has('groupId'))
+      this.groupIdControl.patchValue(+this.route.snapshot.paramMap.get('groupId'));
+
+    this._updatePage();
   }
 
-  public openLessonDetail(lesson: Lesson, associatedLessons: Lesson[]) {
-    const state = {
-      associatedLessons,
-      groupSchedule: this.weekSchedule.getSchedule(),
-      groupsemester: this._groupsemester
-    };
-    this.popupService.openModal(['lesson', '' + lesson.id, this._groupSlug], () => this._updatePage(), null, state);
+  public openLessonDetail(lesson: Lesson) {
+    this.popupService.openModal(['lesson', this._groupSlug, lesson.id], () => this._updatePage(true), null);
   }
 
   public openAddLessonModal(time: number, day: number) {
-    const state = {day, time, groupSchedule: this.weekSchedule.getSchedule(), groupsemester: this._groupsemester};
-    this.popupService.openModal(['lesson', this._groupSlug], () => this._updatePage(), null, state);
+    this.popupService.openModal(['add-lesson', this._groupSlug, day, time], () => this._updatePage(true), null);
   }
 
   public delete(lessonId: number) {
     this.popupService.openDialog({header: 'Видалити пару?', body: 'Видалення має невідворотню силу'},
       () => (this.isLoading = true) && this.scheduleService.deleteLesson(lessonId)
-        .subscribe(() => this._updatePage()));
+        .subscribe(() => this._updatePage(true)));
   }
 
-  public moveLesson(lessonId: number, lesson_time: number, day: number) {
+  public moveLesson(lessonId: number, time: number, day: number) {
     this.isLoading = true;
     this.lessonService.getLesson(lessonId) // todo remove get lesson from server
-      .pipe(switchMap(lesson => this.scheduleService.updateLesson({
-        ...lesson,
-        teachers: lesson.teachers.toString(),
-        lesson_time,
-        day,
-        group_semester: this._groupsemester,
-      } as ICreateLessonBody, lesson.id)))
-      .subscribe(() => this._updatePage());
+      .pipe(switchMap(lesson => this.scheduleService.updateLesson(this._formatCreateLessonBody(lesson, time, day), lesson.id)))
+      .subscribe(() => this._updatePage(true));
   }
 
-  public pasteLesson(lesson_time: number, day: number) {
+  public pasteLesson(time: number, day: number) {
     this.isLoading = true;
     this.lessonService.getLesson(this.clipboard.id) // todo remove get lesson from server
-      .pipe(switchMap(lesson => this.scheduleService.createLesson({
-        ...lesson,
-        teachers: lesson.teachers.toString(),
-        lesson_time,
-        day,
-        group_semester: this._groupsemester,
-      } as ICreateLessonBody)))
-      .subscribe(() => this._updatePage());
+      .pipe(switchMap(lesson => this.scheduleService.createLesson(this._formatCreateLessonBody(lesson, time, day))))
+      .subscribe(() => this._updatePage(true));
+  }
+
+  private _formatCreateLessonBody(lesson: ILesson, lesson_time: number, day: number): ICreateLessonBody {
+    return {
+      ...lesson,
+      teachers: lesson.teachers.toString(),
+      lesson_time,
+      day,
+      group_semester: this._groupsemester,
+    } as ICreateLessonBody;
   }
 
   private _getNextUrl(groupId: number): void {
-    if (this._groupSelector.getOptionById(groupId))
-      this.router.navigate([
-        'dashboard',
-        'lessons-schedule',
-        this._groupSelector.getOptionById(groupId).slug,
-        '' + groupId
-      ]);
-  }
-
-  private _updatePage() {
-    const isSlugChanged = !this._groupSlug || this._groupSlug !== this.route.snapshot.paramMap.get('groupSlug');
-    this._groupSlug = this.route.snapshot.paramMap.get('groupSlug');
-    if (this._groupSlug !== 'groupSlug') {
-      this.isLoading = true;
-      this.groupIdControl.patchValue(+this.route.snapshot.paramMap.get('groupId'));
-      this.scheduleService.getTimetable(this._groupSlug)
-        .subscribe(res => this.weekSchedule = new WeekSchedule(res))
-        .add(() => isSlugChanged ? this._getGroupsemester() : null)
-        .add(() => this.isLoading = false);
+    const group = this._groupSelector.getOptionById(groupId);
+    if (!!group) {
+      this.router.navigate(['dashboard', 'lessons-schedule', group.slug, groupId])
+        .then(() => this._updatePage());
+      this._groupSlug = group.slug;
     }
   }
 
+  private _updatePage(isForce: boolean = false) {
+    this.isLoading = true;
+    this.scheduleService.getTimetable(this._groupSlug, isForce);
+  }
+
   private _getGroupsemester() {
-    this.scheduleService.getGroupSemester(this.weekSchedule.getScheduleGroupId(),
-      this.weekSchedule.getScheduleSemesterId())
-      .subscribe(res => this._groupsemester = res && res.count ? res.results[0].id : undefined);
+    if (this.weekSchedule)
+      this.scheduleService.getGroupSemester(this.weekSchedule.getScheduleGroupId(), this.weekSchedule.getScheduleSemesterId())
+        .subscribe(res => this._groupsemester = res && res.count ? res.results[0].id : undefined);
   }
 }

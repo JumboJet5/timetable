@@ -17,7 +17,7 @@ export class GroupSelectComponent extends AsyncOptionsSelectComponent<IGroup> {
     super(optionServiceFactory<IGroup>(id => groupService.getGroup(id),
       params => groupService.getGroups(params)), formBuilder);
     this.simplePlaceholder = 'Оберіть групу';
-    this.simplePlaceholder = 'Оберіть групи';
+    this.multiplePlaceholder = 'Оберіть групи';
     this.withSearch = true;
   }
 }

@@ -15,7 +15,7 @@ export class AuthService {
   public login(body: { username: string, password: string }): Observable<boolean> {
     return this._getNewToken(body)
       .pipe(
-        catchError(err => of(false)),
+        catchError(() => of(false)),
         map(res => {
           if (typeof res !== 'boolean') {
             this._authInfo = res;
