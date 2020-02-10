@@ -23,13 +23,13 @@ export class Lesson implements ILesson {
   }
 
   public isWeekVacant(associatedLesson: Lesson, index: number): boolean {
-    return true || this.isVacantByWeek(index) || this._hasLessonDifferentSubgroup(associatedLesson)
-      || this._isLessonSimilar(associatedLesson); // todo remove temporary week vacant filter
+    return this.isVacantByWeek(index) || this._hasLessonDifferentSubgroup(associatedLesson)
+      || this._isLessonSimilar(associatedLesson);
   }
 
   public hasLessonsInsertConflicts(that: Lesson): boolean {
-    return true || !this._hasLessonsScheduleConflicts(that)
-      || this._hasLessonDifferentSubgroup(that) || this._isLessonSimilar(that); // todo remove temporary week vacant filter
+    return !this._hasLessonsScheduleConflicts(that)
+      || this._hasLessonDifferentSubgroup(that) || this._isLessonSimilar(that);
   }
 
   public getLessonWeekSchedule(): boolean[] {

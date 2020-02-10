@@ -15,6 +15,7 @@
        *ngFor="let lesson of lessons; let i = index"
        [cdkDragData]="lesson"
        [class.additional]="parent.weekSchedule.isLessonAdditional(lesson, lessons)"
+       [class.conflicted]="parent.draggedLesson?.hasLessonsInsertConflicts(lesson)"
        cdkDrag
        class="drag-box">
     <div class="teachers-col">
