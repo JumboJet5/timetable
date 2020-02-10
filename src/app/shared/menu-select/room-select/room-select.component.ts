@@ -16,7 +16,7 @@ export class RoomSelectComponent extends AsyncOptionsSelectComponent<any> {
     super(optionServiceFactory<any>(id => roomService.getRoom(id),
       params => roomService.getRooms(params)), formBuilder);
     this.simplePlaceholder = 'Оберіть аудиторію';
-    this.simplePlaceholder = 'Оберіть аудиторії';
+    this.multiplePlaceholder = 'Оберіть аудиторії';
     this.withSearch = true;
   }
 

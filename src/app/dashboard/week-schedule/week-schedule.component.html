@@ -30,21 +30,23 @@
       </ng-container>
     </div>
 
-    <div class="time-row days-header" *ngIf="weekSchedule.getScheduleTimes().length; else choseGroupPlz">
+    <div class="time-row days-header" *ngIf="weekSchedule?.getScheduleTimes().length; else choseGroupPlz">
       <div class="lesson-time"></div>
-      <div class="lessons" *ngFor="let dayNames of weekSchedule.getScheduleDays()">{{dayNames}}</div>
+      <div class="lessons" *ngFor="let dayNames of weekSchedule?.getScheduleDays()">{{dayNames}}</div>
     </div>
   </div>
 
   <div class="loading-wrapper" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
+    <div class="loader-wrapper">
+      <mat-spinner></mat-spinner>
+    </div>
   </div>
-  <div class="time-row" *ngFor="let time of weekSchedule.getScheduleTimes()">
+  <div class="time-row" *ngFor="let time of weekSchedule?.getScheduleTimes()">
     <div class="lesson-time">
       <span class="number">{{time.num}}</span>
       <span class="time">{{time.start}} - {{time.end}}</span>
     </div>
-    <app-schedule-lessons *ngFor="let day of weekSchedule.getScheduleDays(); let dIndex = index"
+    <app-schedule-lessons *ngFor="let day of weekSchedule?.getScheduleDays(); let dIndex = index"
                           [day]="day"
                           [dayIndex]="dIndex"
                           [timeId]="time.id"></app-schedule-lessons>

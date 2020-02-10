@@ -34,9 +34,10 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   private _filters: IFilterParams;
 
   @Input()
-  public set filters(value: IFilterParams) {
-    if (value !== this._filters) {
-      this._filters = value;
+  public set filters(filters: IFilterParams) {
+    if (filters !== this._filters) {
+      this._filters = filters;
+      Object.entries(filters).forEach(([key, value]) => !value && value !== 0 && (filters[key] = ''));
       this._applyFilters();
     }
   }

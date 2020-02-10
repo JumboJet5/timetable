@@ -1,19 +1,29 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { WeekSchedule } from '@classes/week-schedule';
+import { ICreateLessonBody, ITimetable } from '@interfaces';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FormatService } from 'src/app/service/format/format.service';
-import { ICreateLessonBody } from 'src/core/interfaces/create-lesson-body.interface';
 import * as URLS from 'src/core/urls';
-import { ITimetable } from 'src/core/interfaces/timetable.interface';
 
 @Injectable()
 export class ScheduleService {
+  private _lastTimeTableGroupSlug: string = undefined;
+  private _actualSchedule: BehaviorSubject<WeekSchedule> = new BehaviorSubject<WeekSchedule>(undefined);
 
   constructor(private http: HttpClient,
               private formatService: FormatService) {}
 
-  public getTimetable(group: string): Observable<ITimetable> {
-    return this.http.get<ITimetable>(URLS.TIMETABLE, {params: {group}});
+  public getTimetable(group: string, isForce: boolean = false): void {
+    if (!this._lastTimeTableGroupSlug || this._lastTimeTableGroupSlug !== group || isForce) {
+      this._lastTimeTableGroupSlug = group;
+      this.http.get<ITimetable>(URLS.TIMETABLE, {params: {group}})
+        .subscribe(res => this._actualSchedule.next(new WeekSchedule(res)));
+    }
+  }
+
+  public getActualSchedule$(): Observable<WeekSchedule> {
+    return this._actualSchedule.asObservable();
   }
 
   public getGroupSemester(group: number, semester: number): Observable<any> {

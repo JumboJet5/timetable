@@ -1,6 +1,6 @@
+import { dayMap, weekDays } from '@const/collections';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ILesson } from 'src/core/interfaces/lesson.interface';
-import { dayMap, weekDays } from '@const/collections';
 import { IPeriod } from '../interfaces/period.interface';
 import { ITimetable } from '../interfaces/timetable.interface';
 import { VacantWeekInfoInterface } from '../interfaces/vacant-week-info.interface';
@@ -38,8 +38,12 @@ export class WeekSchedule {
     return weekDays();
   }
 
+  public getScheduleGroup(): { name: string; short_name: string; id: number; slug: string } {
+    return this._schedule && this._schedule.info ? this._schedule.info.group : undefined;
+  }
+
   public getScheduleGroupId(): number {
-    return this._schedule && this._schedule.info && this._schedule.info.group ? this._schedule.info.group.id : undefined;
+    return (this.getScheduleGroup() || {id: undefined}).id;
   }
 
   public getScheduleSemesterId(): number {
@@ -102,6 +106,10 @@ export class WeekSchedule {
     const mainLesson = associativeLessons.find(item => item.format === lesson.format
       && item.name_full === lesson.name_full && item.getWeeksAsString() === lesson.getWeeksAsString());
     return mainLesson !== lesson;
+  }
+
+  public hasLessonConflictsWithAssociative(lesson: Lesson, associativeLessons: Lesson[]): boolean {
+    return associativeLessons.some(item => item.hasLessonsInsertConflicts(lesson));
   }
 
   private _getVacantWeekInfo(concreteLesson: Lesson, day: number,

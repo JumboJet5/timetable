@@ -15,7 +15,7 @@ export class HousingSelectComponent extends AsyncOptionsSelectComponent<any> {
     super(optionServiceFactory<any>(id => housingService.getHousing(id),
       params => housingService.getHousings(params)), formBuilder);
     this.simplePlaceholder = 'Оберіть корпус';
-    this.simplePlaceholder = 'Оберіть корпуси';
+    this.multiplePlaceholder = 'Оберіть корпуси';
     this.withSearch = false;
   }
 }

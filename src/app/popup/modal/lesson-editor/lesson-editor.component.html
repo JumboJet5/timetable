@@ -1,36 +1,41 @@
 <div (click)="closeModal()" class="overlay-backdrop"></div>
 
 <div class="modal-wrapper">
-  <form [formGroup]="lessonForm" class="lesson-form" *ngIf="weekSchedule">
+  <form [formGroup]="lessonForm" class="lesson-form" *ngIf="weekSchedule && !isLessonLoading; else loading">
     <div class="info-row">
-      <div class="select-column">
+      <div class="select-column long">
         <div class="placeholder">Назва предмета</div>
         <app-theme-select [filters]="{group: weekSchedule.getScheduleGroupId()}"
                           [selectControl]="lessonForm.get('theme')"></app-theme-select>
+      </div>
 
+      <div class="select-column short">
         <div class="placeholder">Тип</div>
         <app-lesson-type-select [selectControl]="lessonForm.get('format')"></app-lesson-type-select>
       </div>
+    </div>
 
-      <div class="select-column">
+    <div class="info-row with-border">
+      <div class="select-column short">
         <div class="placeholder">Корпус</div>
         <app-housing-select [filters]="{group: weekSchedule.getScheduleGroupId(), ordering: 'name'}"
                             [selectControl]="lessonForm.get('housing')"></app-housing-select>
-
+      </div>
+      <div class="select-column long">
         <div class="placeholder">Аудиторія</div>
         <app-room-select [filters]="{housing: lessonForm.get('housing').value, ordering: 'num'}"
                          [disabled]="lessonForm.get('housing').invalid"
                          [selectControl]="lessonForm.get('room')"></app-room-select>
       </div>
 
-      <div class="select-column">
+      <div class="select-column long">
         <div class="placeholder">Підгрупи</div>
         <app-lesson-subgroup-select [selectControl]="lessonForm.get('subgroup')"
                                     [group]="group"></app-lesson-subgroup-select>
       </div>
     </div>
 
-    <div class="info-row">
+    <div class="info-row with-border">
       <div class="select-column long">
         <div class="placeholder">Викладач(*чі)</div>
         <app-teacher-autocomplete [filters]="{group: weekSchedule.getScheduleGroupId(), ordering: 'last_name'}"
@@ -38,13 +43,13 @@
       </div>
     </div>
 
-    <div class="info-row">
-      <div class="select-column">
+    <div class="info-row with-border">
+      <div class="select-column long">
         <div class="placeholder">День</div>
         <app-day-select [selectControl]="lessonForm.get('day')"></app-day-select>
       </div>
 
-      <div class="select-column">
+      <div class="select-column long">
         <div class="placeholder">Час</div>
         <app-lesson-time-select [selectControl]="lessonForm.get('lesson_time')"
                                 [disabled]="lessonForm.get('day').invalid"
@@ -52,17 +57,11 @@
       </div>
     </div>
 
-    <app-lesson-weeks-selector
-      *ngIf="lessonForm.get('lesson_time').valid && lessonForm.get('day').valid; else weeksSelectorLocked"
-      [selectControl]="lessonForm.get('weeks')"
-      [day]="lessonForm.get('day').value"
-      [lesson_time]="lessonForm.get('lesson_time').value"
-      [lesson]="lesson"
-      [weekSchedule]="weekSchedule"></app-lesson-weeks-selector>
-
-    <ng-template #weeksSelectorLocked>
-      <span>Оберіть спочатку день тижня і час пари</span>
-    </ng-template>
+    <app-lesson-weeks-selector [selectControl]="lessonForm.get('weeks')"
+                               [day]="lessonForm.get('day').value"
+                               [lesson_time]="lessonForm.get('lesson_time').value"
+                               [lesson]="lesson"
+                               [weekSchedule]="weekSchedule"></app-lesson-weeks-selector>
 
     <div class="control-row">
       <button mat-flat-button
@@ -75,3 +74,8 @@
   </form>
 </div>
 
+<ng-template #loading>
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</ng-template>

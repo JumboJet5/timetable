@@ -15,7 +15,7 @@ export class ThemeSelectComponent extends AsyncOptionsSelectComponent<any> {
     super(optionServiceFactory<any>(id => themeService.getTheme(id),
       params => themeService.getThemes(params)), formBuilder);
     this.simplePlaceholder = 'Оберіть назву предмета';
-    this.simplePlaceholder = 'Оберіть назви предмета';
+    this.multiplePlaceholder = 'Оберіть назви предмета';
     this.withSearch = false;
   }
 }

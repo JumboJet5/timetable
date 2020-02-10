@@ -5,8 +5,8 @@
 }
 
 .custom-dialog-wrapper {
-  min-width: 364px;
-  min-height: 200px;
+  min-width: 400px;
+  min-height: 260px;
   display: flex;
   flex-direction: column;
 }
@@ -15,19 +15,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-bottom: 20px;
 }
 
 .dialog-body {
   text-align: center;
-  padding: 20px 0;
   max-width: 325px;
   margin: 0 auto;
 
   .dialog-header {
     color: #333333;
-    font-size: 18px;
+    font-size: 24px;
     font-weight: 500;
-    line-height: 24px;
+    line-height: 36px;
     margin-bottom: 13px;
   }
 
