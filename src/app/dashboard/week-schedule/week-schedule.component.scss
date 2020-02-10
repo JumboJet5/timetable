@@ -105,6 +105,7 @@
 
   ::ng-deep app-group-select {
     display: none;
+    flex: 0 0 300px;
 
     app-select-result .tb-input {
       margin-top: 0;

@@ -64,7 +64,7 @@
 
 <div class="add-box">
   <button (click)="parent.openAddLessonModal(timeId, dayIndex)" mat-icon-button>
-    <mat-icon *ngIf="!parent.isDragging && !isPlaced">add_circle_outline</mat-icon>
+    <mat-icon>add_circle_outline</mat-icon>
   </button>
   <button *ngIf="!!parent.clipboard"
           (click)="parent.pasteLesson(timeId, dayIndex)"

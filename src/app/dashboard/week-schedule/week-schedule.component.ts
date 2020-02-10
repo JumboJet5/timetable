@@ -41,12 +41,10 @@ export class WeekScheduleComponent implements OnInit {
     this.scheduleService.getActualSchedule$()
       .subscribe(res => {
         this.weekSchedule = res;
+        if (res) this.groupIdControl.patchValue(res.getScheduleGroupId());
         this._getGroupsemester();
         this.isLoading = false;
       });
-
-    if (this.route.snapshot.paramMap.has('groupId'))
-      this.groupIdControl.patchValue(+this.route.snapshot.paramMap.get('groupId'));
 
     this._updatePage();
   }
@@ -91,14 +89,16 @@ export class WeekScheduleComponent implements OnInit {
 
   private _getNextUrl(groupId: number): void {
     const group = this._groupSelector.getOptionById(groupId);
-    if (!!group) {
-      this.router.navigate(['dashboard', 'lessons-schedule', group.slug, groupId])
+    if (!!group && (!this.weekSchedule || this.weekSchedule.getScheduleGroupId() !== groupId)) {
+      this.router.navigate(['dashboard', 'lessons-schedule', group.slug])
         .then(() => this._updatePage());
       this._groupSlug = group.slug;
     }
   }
 
   private _updatePage(isForce: boolean = false) {
+    if (this._groupSlug === 'groupSlug') return;
+
     this.isLoading = true;
     this.scheduleService.getTimetable(this._groupSlug, isForce);
   }

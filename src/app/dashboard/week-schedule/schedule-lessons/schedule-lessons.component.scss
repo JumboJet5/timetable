@@ -7,14 +7,19 @@
 .box-list {
   border: dashed black 1px;
   border-radius: 4px;
-  padding: 2px;
+  padding: 2px 2px 25px;
+  box-sizing: border-box;
   margin: 2px;
   min-height: 50px;
   position: relative;
   background-color: white;
 
   &.available {
-    background-color: mix($light-green, white, 20%);
+    background-color: mix($light-green, white, 30%);
+
+    .drag-box.drag-conflicted {
+      background-color: mix($light-orange, white, 35%);
+    }
   }
 }
 
@@ -28,7 +33,7 @@
 }
 
 .drag-box {
-  background-color: inherit;
+  background-color: white;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
   0 4px 5px 1px rgba(0, 0, 0, 0.14),
@@ -50,11 +55,8 @@
   }
 
   &.conflicted {
-    background-color: mix($light-orange, white, 15%);
-  }
-
-  &.drag-conflicted {
-    background-color: mix($light-orange, white, 50%);
+    border-left: 4px solid mix($light-orange, white, 50%);
+    padding-left: 4px;
   }
 
   .lesson-format {
