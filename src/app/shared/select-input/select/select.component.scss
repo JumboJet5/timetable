@@ -18,6 +18,8 @@
   clip-path: inset(0 -25px -25px -25px);
   box-shadow: 0 3px 25px 0 rgba(179, 179, 179, 0.48);
   z-index: 10;
+  max-height: 250px;
+  overflow: auto;
 
   &.dark {
     box-shadow: 0 3px 25px 0 rgba(179, 179, 179, 0.15);

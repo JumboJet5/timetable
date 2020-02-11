@@ -17,21 +17,22 @@
 
     <div class="info-row with-border">
       <div class="select-column short">
+        <div class="placeholder">Підгрупи</div>
+        <app-lesson-subgroup-select [selectControl]="lessonForm.get('subgroup')"
+                                    [group]="group"></app-lesson-subgroup-select>
+      </div>
+
+      <div class="select-column long">
         <div class="placeholder">Корпус</div>
         <app-housing-select [filters]="{group: weekSchedule.getScheduleGroupId(), ordering: 'name'}"
                             [selectControl]="lessonForm.get('housing')"></app-housing-select>
       </div>
+
       <div class="select-column long">
         <div class="placeholder">Аудиторія</div>
         <app-room-select [filters]="{housing: lessonForm.get('housing').value, ordering: 'num'}"
                          [disabled]="lessonForm.get('housing').invalid"
                          [selectControl]="lessonForm.get('room')"></app-room-select>
-      </div>
-
-      <div class="select-column long">
-        <div class="placeholder">Підгрупи</div>
-        <app-lesson-subgroup-select [selectControl]="lessonForm.get('subgroup')"
-                                    [group]="group"></app-lesson-subgroup-select>
       </div>
     </div>
 

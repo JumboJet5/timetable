@@ -54,7 +54,9 @@ export class WeekScheduleComponent implements OnInit {
   }
 
   public openAddLessonModal(time: number, day: number) {
-    this.popupService.openModal(['add-lesson', this._groupSlug, day, time], () => this._updatePage(true), null);
+    this.popupService.openModal(['add-lesson', this._groupSlug, day, time, this._groupsemester],
+      () => this._updatePage(true),
+      null);
   }
 
   public delete(lessonId: number) {

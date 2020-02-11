@@ -9,14 +9,14 @@
 </div>
 <div class="weeks-wrapper" *ngIf="(lesson_time || lesson_time === 0 ) && (day || day === 0); else weeksSelectorLocked">
   <ng-container *ngFor="let week of vacantWeeks; let i = index">
-    <button (click)="changeWeekStatus(week)"
+    <button (click)="changeWeekStatus(week, checkbox)"
             *ngIf="!week.isHidden"
             [class.used]="week.isUsed"
             [class.conflicted]="!week.isConflicted"
             [disabled]="!week.isVacant"
             class="week-selector"
             mat-flat-button>
-      <mat-checkbox [checked]="week.isUsed" [disabled]="!week.isVacant" color="primary">
+      <mat-checkbox #checkbox [checked]="week.isUsed" [disabled]="!week.isVacant" color="primary">
         <span>#{{i + 1}} <span class="small-text">({{week.date | date: 'dd.MM.yy'}})</span></span>
       </mat-checkbox>
     </button>

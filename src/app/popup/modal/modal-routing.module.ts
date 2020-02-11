@@ -5,7 +5,7 @@ import { LessonEditorComponent } from '@app/popup/modal/lesson-editor/lesson-edi
 const routes: Routes = [
   {path: 'lesson/:groupSlug/:lessonId', component: LessonEditorComponent},
   {path: 'lesson/:groupSlug', redirectTo: ''},
-  {path: 'add-lesson/:groupSlug/:day/:time', component: LessonEditorComponent},
+  {path: 'add-lesson/:groupSlug/:day/:time/:groupsemesterId', component: LessonEditorComponent},
 ];
 
 @NgModule({

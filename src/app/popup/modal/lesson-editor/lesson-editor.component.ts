@@ -39,6 +39,7 @@ export class LessonEditorComponent implements OnInit {
     if (params.has('day') && params.has('time')) this.lessonForm.patchValue({
       day: +params.get('day'),
       lesson_time: +params.get('time'),
+      group_semester: +params.get('groupsemesterId'),
     });
   }
 

@@ -7,18 +7,22 @@
 .box-list {
   border: dashed black 1px;
   border-radius: 4px;
-  padding: 2px 2px 25px;
+  padding: 2px;
   box-sizing: border-box;
   margin: 2px;
-  min-height: 50px;
   position: relative;
   background-color: white;
 
   &.available {
     background-color: mix($light-green, white, 30%);
+    padding-bottom: 42px;
 
     .drag-box.drag-conflicted {
       background-color: mix($light-orange, white, 35%);
+    }
+
+    .add-box {
+      display: none;
     }
   }
 }

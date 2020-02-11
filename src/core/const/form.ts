@@ -7,7 +7,7 @@ export const lessonForm = () => new FormGroup({
     format: new FormControl(null, Validators.required),
     subgroup: new FormControl(null),
     teachers: new FormControl([], Validators.required),
-    weeks: new FormControl('', Validators.required),
+    weeks: new FormControl('', Validators.pattern(/1/)),
     day: new FormControl(null, Validators.required),
     lesson_time: new FormControl(null, Validators.required),
     group_semester: new FormControl(null, Validators.required),
