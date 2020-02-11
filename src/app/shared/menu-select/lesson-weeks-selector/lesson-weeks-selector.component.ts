@@ -1,5 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
+import { MatCheckbox } from "@angular/material/checkbox";
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
 import { VacantWeekInfoInterface } from '@interfaces';
@@ -25,9 +26,10 @@ export class LessonWeeksSelectorComponent implements OnInit, OnChanges {
     this._initVacantWeeksList();
   }
 
-  public changeWeekStatus(week: VacantWeekInfoInterface) {
+  public changeWeekStatus(week: VacantWeekInfoInterface, checkbox: MatCheckbox) {
     week.isUsed = !week.isUsed;
     this._setVacantWeekControl();
+    setTimeout(() => checkbox.checked = week.isUsed);
   }
 
   public selectAll(like: boolean) { // todo don't forgot change after customize week vacant filter
@@ -45,13 +47,13 @@ export class LessonWeeksSelectorComponent implements OnInit, OnChanges {
   }
 
   private _getWeeksString(): string {
-    return this.vacantWeeks.map((week, i) => week && week.isUsed ? 1 : 0).join('');
+    return this.vacantWeeks.map(week => week && week.isUsed ? 1 : 0).join('');
   }
 
   private _initVacantWeeksList() {
     if (!!this.weekSchedule && (!!this.day || this.day === 0) && (!!this.lesson_time || this.lesson_time === 0)) {
       this.vacantWeeks = this.weekSchedule.getVacantWeeks(this.lesson, this.day, this.lesson_time);
-      this.vacantWeeks.forEach(week => week.isUsed = week.isUsed && week.isVacant);
+      this.vacantWeeks.forEach(week => week.isUsed = week.isUsed && week.isVacant && !week.isHidden);
       this._setVacantWeekControl();
     }
   }
