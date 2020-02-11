@@ -1,10 +1,10 @@
 <div class="placeholder">
   <span>Тижні</span>
   <div class="filters-button">
-    <button mat-flat-button color="accent" (click)="selectAll(true)">Всі</button>
-    <button mat-flat-button color="accent" (click)="selectAllOdd(true)">Непарні</button>
-    <button mat-flat-button color="accent" (click)="selectAllOdd(false)">Парні</button>
-    <button mat-flat-button color="accent" (click)="selectAll(false)">Жоден</button>
+    <button mat-flat-button color="primary" (click)="selectAll(true)">Всі</button>
+    <button mat-flat-button color="primary" (click)="selectAllOdd(true)">Непарні</button>
+    <button mat-flat-button color="primary" (click)="selectAllOdd(false)">Парні</button>
+    <button mat-flat-button color="primary" (click)="selectAll(false)">Жоден</button>
   </div>
 </div>
 <div class="weeks-wrapper" *ngIf="(lesson_time || lesson_time === 0 ) && (day || day === 0); else weeksSelectorLocked">
@@ -16,7 +16,7 @@
             [disabled]="!week.isVacant"
             class="week-selector"
             mat-flat-button>
-      <mat-checkbox #checkbox [checked]="week.isUsed" [disabled]="!week.isVacant" color="primary">
+      <mat-checkbox #checkbox [checked]="week.isUsed" [disabled]="!week.isVacant" [color]="!week.isConflicted ? 'accent' : 'primary'">
         <span>#{{i + 1}} <span class="small-text">({{week.date | date: 'dd.MM.yy'}})</span></span>
       </mat-checkbox>
     </button>

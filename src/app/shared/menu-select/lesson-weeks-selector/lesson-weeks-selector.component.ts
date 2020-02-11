@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { MatCheckbox } from "@angular/material/checkbox";
+import { MatCheckbox } from '@angular/material/checkbox';
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
 import { VacantWeekInfoInterface } from '@interfaces';

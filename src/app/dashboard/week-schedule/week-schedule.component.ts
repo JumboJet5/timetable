@@ -5,6 +5,8 @@ import { PopupService } from '@app/service/modal/popup.service';
 import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
+import { degreeMap } from '@const/collections';
+import { environment } from '@environment/environment.prod';
 import { ICreateLessonBody, ILesson } from '@interfaces';
 import { switchMap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
@@ -17,6 +19,8 @@ import { ScheduleService } from 'src/app/service/schedule/schedule.service';
   styleUrls: ['./week-schedule.component.scss'],
 })
 export class WeekScheduleComponent implements OnInit {
+  public isHeaderAlwaysClosed = environment.production;
+  public degreeMap = degreeMap();
   public isDragging = false;
   public draggedLesson: Lesson = undefined;
   public clipboard: Lesson;

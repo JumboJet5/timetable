@@ -55,7 +55,7 @@
     margin-left: 5px;
     opacity: .5;
     transform: scaleY(-1);
-    transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.3s, transform, opacity);
+    transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.15s, transform, opacity);
   }
 
   .result-content {

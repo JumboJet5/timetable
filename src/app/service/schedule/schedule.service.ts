@@ -18,7 +18,7 @@ export class ScheduleService {
     if (!this._lastTimeTableGroupSlug || this._lastTimeTableGroupSlug !== group || isForce) {
       this._lastTimeTableGroupSlug = group;
       this.http.get<ITimetable>(URLS.TIMETABLE, {params: {group}})
-        .subscribe(res => this._actualSchedule.next(new WeekSchedule(res)));
+        .subscribe(res => this._actualSchedule.next(new WeekSchedule(res)), () => this._actualSchedule.next(undefined));
     }
   }
 
