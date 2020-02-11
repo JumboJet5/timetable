@@ -13,15 +13,13 @@
   line-height: 33px;
 }
 
-.sticky-header {
+.days-header {
   position: sticky;
   top: 0;
   z-index: 1;
-}
-
-.days-header {
   background-color: white;
-  height: 30px;
+  height: 29px;
+  padding-top: 30px;
 
   &.time-row .lesson-time {
     border-top: unset;
@@ -75,7 +73,10 @@
 }
 
 .select-group-wrapper {
-  position: relative;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2;
   display: flex;
   align-items: center;
   background-color: mix($primary-color, white, 70%);

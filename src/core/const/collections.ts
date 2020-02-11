@@ -8,11 +8,19 @@ export const lessonTypes: () => LessonFormatInterface[] = () => [
     {id: 4, class: 'other', name: 'інше', shortName: ''},
 ];
 
+export const degreeTypes: () => LessonFormatInterface[] = () => [
+    {id: 0, class: 'bachelor', name: 'бакалавр', shortName: 'б.'},
+    {id: 1, class: 'master', name: 'магістр', shortName: 'м.'},
+    {id: 2, class: 'specialist', name: 'спеціаліст', shortName: 'сп.'},
+    {id: 3, class: 'other', name: 'інше', shortName: ''},
+];
+
 export const lessonTypesMap = () => new Map(lessonTypes().map(i => [i.id, i]));
 
 export const weekDays = () => ['Понеділок', 'Вівторок', 'Середа', 'Четвер', 'П\'ятниця', 'Субота'];
 
 export const dayMap = () => new Map(weekDays().map((day, index) => [index, day]));
+export const degreeMap = () => new Map(degreeTypes().map((degree, index) => [index, degree]));
 
 export const teacherDegreeTypesMap = new Map([
   [0, 'викл.'],

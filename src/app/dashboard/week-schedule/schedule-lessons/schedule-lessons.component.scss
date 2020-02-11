@@ -14,7 +14,7 @@
   background-color: white;
 
   &.available {
-    background-color: mix($light-green, white, 30%);
+    background-color: mix($light-green, white, 20%);
     padding-bottom: 42px;
 
     .drag-box.drag-conflicted {

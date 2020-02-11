@@ -1,39 +1,43 @@
 <div cdkDropListGroup>
-  <div class="sticky-header">
-    <div class="select-group-wrapper" [class.empty]="!groupIdControl.value">
-      <app-group-select [selectControl]="groupIdControl"></app-group-select>
-      <ng-container *ngIf="!!weekSchedule?.getSchedule()">
-        <div class="additional-wrapper">
-          <div class="info-row">
+  <div class="select-group-wrapper" [class.empty]="!isHeaderAlwaysClosed && (!groupIdControl.value || !weekSchedule)">
+    <app-group-select [selectControl]="groupIdControl"></app-group-select>
+    <ng-container *ngIf="!!weekSchedule?.getSchedule()">
+      <div class="additional-wrapper">
+        <div class="info-row">
           <span class="group-info temporary">
             Група: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.group?.name}}</span>
           </span>
-            <span class="group-info">
+          <span class="group-info">
+            Ступінь:
+            <span class="semi-bold">
+              {{degreeMap.get(weekSchedule.getSchedule()?.info?.course?.degree)?.name | titlecase}}
+            </span>
+          </span>
+          <span class="group-info">
             Курс: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.course?.name}}</span>
           </span>
-            <span class="group-info">
+          <span class="group-info">
             Семестр: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.semester?.num}}</span>
           </span>
-          </div>
-          <div class="info-row">
+        </div>
+        <div class="info-row">
           <span class="group-info">
             Університет: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.university?.short_name}}</span>
           </span>
-            <span class="group-info">
+          <span class="group-info">
             Факультет: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.faculty?.name}}</span>
           </span>
-            <span class="group-info">
+          <span class="group-info">
             Спеціальність: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.specialty?.name}}</span>
           </span>
-          </div>
         </div>
-      </ng-container>
-    </div>
+      </div>
+    </ng-container>
+  </div>
 
-    <div class="time-row days-header" *ngIf="weekSchedule?.getScheduleTimes().length; else choseGroupPlz">
-      <div class="lesson-time"></div>
-      <div class="lessons" *ngFor="let dayNames of weekSchedule?.getScheduleDays()">{{dayNames}}</div>
-    </div>
+  <div class="time-row days-header" *ngIf="weekSchedule?.getScheduleTimes().length; else choseGroupPlz">
+    <div class="lesson-time"></div>
+    <div class="lessons" *ngFor="let dayNames of weekSchedule?.getScheduleDays()">{{dayNames}}</div>
   </div>
 
   <div class="loading-wrapper" *ngIf="isLoading">
