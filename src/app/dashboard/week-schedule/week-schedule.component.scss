@@ -86,11 +86,16 @@
   .additional-wrapper {
     display: flex;
     height: 100%;
+    width: 100%;
   }
 
   .info-row {
     display: flex;
-    flex-wrap: wrap;
+    overflow: hidden;
+
+    &.limited{
+      flex: 1 0 0;
+    }
   }
 
   .group-info {
@@ -98,6 +103,14 @@
     font-size: 14px;
     font-weight: 300;
     color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 0 0 auto;
+
+    &.limited{
+      flex: unset;
+    }
   }
 
   .temporary {
@@ -125,6 +138,8 @@
 
     .info-row {
       margin: 0 10px;
+      flex-wrap: wrap;
+      overflow: unset;
     }
 
     .temporary {

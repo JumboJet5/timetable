@@ -20,14 +20,14 @@
             Семестр: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.semester?.num}}</span>
           </span>
         </div>
-        <div class="info-row">
+        <div class="info-row limited">
           <span class="group-info">
             Університет: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.university?.short_name}}</span>
           </span>
-          <span class="group-info">
+          <span class="group-info limited" [title]="'Факультет: ' + weekSchedule.getSchedule()?.info?.faculty?.name">
             Факультет: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.faculty?.name}}</span>
           </span>
-          <span class="group-info">
+          <span class="group-info limited" [title]="'Спеціальність: ' + weekSchedule.getSchedule()?.info?.specialty?.name">
             Спеціальність: <span class="semi-bold">{{weekSchedule.getSchedule()?.info?.specialty?.name}}</span>
           </span>
         </div>
