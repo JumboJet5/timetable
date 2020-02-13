@@ -1,4 +1,4 @@
-@import '../../../assets/stylesheet/constants';
+@import '../../../static/assets/stylesheet/constants';
 
 :host {
   display: block;
@@ -15,11 +15,10 @@
 
 .days-header {
   position: sticky;
-  top: 0;
+  top: 29px;
   z-index: 1;
   background-color: white;
   height: 29px;
-  padding-top: 30px;
 
   &.time-row .lesson-time {
     border-top: unset;
@@ -73,7 +72,7 @@
 }
 
 .select-group-wrapper {
-  position: fixed;
+  position: sticky;
   width: 100%;
   top: 0;
   z-index: 2;
@@ -126,7 +125,7 @@
     }
   }
 
-  &.empty, &:hover {
+  &.empty:not(.always-hidden), &:hover:not(.always-hidden) {
     app-group-select {
       display: unset;
     }

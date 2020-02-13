@@ -1,5 +1,5 @@
 <div cdkDropListGroup>
-  <div class="select-group-wrapper" [class.empty]="!isHeaderAlwaysClosed && (!groupIdControl.value || !weekSchedule)">
+  <div class="select-group-wrapper" [class.empty]="!groupIdControl.value || !weekSchedule" [class.always-hidden]="isHeaderAlwaysClosed">
     <app-group-select [selectControl]="groupIdControl"></app-group-select>
     <ng-container *ngIf="!!weekSchedule?.getSchedule()">
       <div class="additional-wrapper">
