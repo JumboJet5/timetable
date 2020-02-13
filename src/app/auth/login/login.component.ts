@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: [
-    '../../../assets/stylesheet/default-form.scss',
+    '../../../static/assets/stylesheet/default-form.scss',
     './login.component.scss',
   ],
 })

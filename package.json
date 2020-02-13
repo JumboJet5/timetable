@@ -6,7 +6,7 @@
     "start": "node server.js",
     "serve": "ng serve --proxy-config proxy.json",
     "build": "ng build --prod --configuration=dev",
-    "build:prod": "ng build --prod",
+    "build:prod": "ng build --prod --deploy-url=static/js/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -4,7 +4,7 @@ import { SelectComponent } from '../select.component';
 @Component({
   selector: 'app-select-result',
   templateUrl: './select-result.component.html',
-  styleUrls: ['./select-result.component.scss', '../../../../../assets/stylesheet/default-form.scss'],
+  styleUrls: ['./select-result.component.scss', '../../../../../static/assets/stylesheet/default-form.scss'],
 })
 export class SelectResultComponent {
   constructor(@Host() public parent: SelectComponent) {}
