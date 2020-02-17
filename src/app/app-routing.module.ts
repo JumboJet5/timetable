@@ -24,7 +24,7 @@ const routes: Routes = [
       .then(module => module.DialogModule),
   },
   ...authentication,
-  {path: '**', pathMatch: 'full', redirectTo: '/dashboard/lessons-schedule/groupSlug/groupId'},
+  {path: '**', pathMatch: 'full', redirectTo: '/dashboard/lessons-schedule/groupSlug'},
 ];
 
 @NgModule({

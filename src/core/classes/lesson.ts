@@ -1,9 +1,10 @@
+import { teacherDegreeTypesMap } from '@const/collections';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ILesson } from 'src/core/interfaces/lesson.interface';
 import { TimetableTeacherInfoInterface } from 'src/core/interfaces/timetable-teacher-info.interface';
-import { teacherDegreeTypesMap } from '@const/collections';
 
 export class Lesson implements ILesson {
+  public day: number;
   public dates: string[];
   public format: number;
   public housing: number | { id: number; name: string; short_name: string; location: null };
@@ -15,7 +16,6 @@ export class Lesson implements ILesson {
   public subgroup: number | string;
   public teachers: TimetableTeacherInfoInterface[];
   public weeks: string;
-  public day: number;
 
   constructor(lesson: ILesson) {
     Object.assign(this, lesson);
@@ -28,8 +28,8 @@ export class Lesson implements ILesson {
   }
 
   public hasLessonsInsertConflicts(that: Lesson): boolean {
-    return this._hasLessonsScheduleConflicts(that)
-      && !this._hasLessonDifferentSubgroup(that) && !this._isLessonSimilar(that);
+    return ((this._hasLessonsScheduleConflicts(that) && !this._hasLessonDifferentSubgroup(that))
+      || !this._hasLessonDifferentRooms(that)) && !this._isLessonSimilar(that);
   }
 
   public getLessonWeekSchedule(): boolean[] {
@@ -70,6 +70,14 @@ export class Lesson implements ILesson {
 
   private _hasLessonDifferentSubgroup(that: Lesson): boolean {
     return !!that && !!this.subgroup && !!that.subgroup && this.subgroup !== that.subgroup;
+  }
+
+  private _hasLessonDifferentRooms(that: Lesson): boolean {
+    const bothNumbersSame = typeof this.room === 'number' && typeof that.room === 'number' && this.room === that.room;
+    const bothObjectsSame = typeof this.room === 'object' && typeof that.room === 'object' && this.room.id === that.room.id;
+    const objectNumberSame = typeof this.room === 'object' && typeof that.room === 'number' && this.room.id === that.room;
+    const numberObjectSame = typeof this.room === 'number' && typeof that.room === 'object' && this.room === that.room.id;
+    return !bothNumbersSame && !bothObjectsSame && !objectNumberSame && !numberObjectSame;
   }
 
   private _isLessonSimilar(that: Lesson): boolean {

@@ -6,7 +6,7 @@ import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
 import { degreeMap } from '@const/collections';
-import { environment } from '@environment/environment.prod';
+import { environment } from '@environment/environment';
 import { ICreateLessonBody, ILesson } from '@interfaces';
 import { switchMap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
@@ -84,9 +84,10 @@ export class WeekScheduleComponent implements OnInit {
   }
 
   private _formatCreateLessonBody(lesson: ILesson, lesson_time: number, day: number): ICreateLessonBody {
+    const teachers = lesson.teachers.map(teacher => teacher.toString());
     return {
       ...lesson,
-      teachers: lesson.teachers.toString(),
+      teachers,
       lesson_time,
       day,
       group_semester: this._groupsemester,
