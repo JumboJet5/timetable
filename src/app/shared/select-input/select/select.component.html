@@ -1,8 +1,8 @@
 <div class="content-wrapper" [class.opened]="isOpened" appClickOutside (clickOutside)="isOpened = false">
-  <div class="select-result" (click)="toggle()">
+  <div class="select-result">
     <ng-content select="app-select-result"></ng-content>
   </div>
-  <div class="options" [class.dark]="isDark" [@accordionTransitionAnimation]="isOpened">
+  <div #optionsContent class="options" [class.dark]="isDark" [@accordionTransitionAnimation]="isOpened">
       <ng-content></ng-content>
   </div>
 </div>

@@ -1,30 +1,37 @@
 <app-select (closed)="onClose()"
+            (opened)="onOpen()"
             [abstractControl]="selectControl"
             [isMulti]="multiple"
             [isDisabled]="selectControl.disabled || disabled">
 
-  <app-select-result *ngIf="!multiple; else multipleResult">
-    {{getOptionText(selectControl.value) || simplePlaceholder}}
+  <app-select-result>
+    <label *ngIf="withSearch && !!selectComponent?.isOpened; else defaultLabel" [formGroup]="filterForm">
+      <input #searchInput class="select-input" placeholder="Пошук..." formControlName="search">
+    </label>
+    <ng-template #defaultLabel>
+      <ng-container *ngIf="!multiple; else multipleResult">
+        {{getOptionText(selectControl.value) || simplePlaceholder}}
+      </ng-container>
+      <ng-template #multipleResult>
+        <ng-container *ngFor="let item of selectControl.value; let isLast = last">
+          {{getOptionText(item)}}{{isLast ? '' : ',  '}}
+        </ng-container>
+        <ng-container *ngIf="!selectControl.value || !selectControl.value.length">{{multiplePlaceholder}}</ng-container>
+      </ng-template>
+    </ng-template>
   </app-select-result>
 
-  <ng-template #multipleResult>
-    <app-select-result>
-      <ng-container *ngFor="let item of selectControl.value; let isLast = last">
-        {{getOptionText(item)}}{{isLast ? '' : ',  '}}
-      </ng-container>
-      <ng-container *ngIf="!selectControl.value || !selectControl.value.length">{{multiplePlaceholder}}</ng-container>
-    </app-select-result>
-  </ng-template>
 
-  <div class="fixed-wrapper" [formGroup]="filterForm">
+  <div class="fixed-wrapper">
     <div class="relative-wrapper">
-      <label *ngIf="withSearch">
-        <input class="select-input" placeholder="Пошук..." formControlName="search">
-      </label>
+
       <app-option-item *ngFor="let option of options"
                        [value]="option.id"
                        [title]="getOptionText(option.id)"
                        class="tb-item">{{getOptionText(option.id)}}</app-option-item>
+      <div class="loader-wrapper" *ngIf="isLoading">
+        <mat-spinner></mat-spinner>
+      </div>
       <div *ngIf="!isLoading" class="viewport-bottom" inViewport (inViewportAction)="onViewportAction($event)"></div>
     </div>
   </div>

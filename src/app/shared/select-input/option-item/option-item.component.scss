@@ -17,6 +17,10 @@
     background-color: mix($primary-color, white, 10%);
   }
 
+  &.active {
+    background-color: mix($primary-color, white, 5%);
+  }
+
   &:hover {
     background-color: mix($primary-color, white, 5%);
   }

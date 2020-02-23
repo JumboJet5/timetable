@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatIconModule } from "@angular/material/icon";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InViewportModule } from 'ng-in-viewport';
 import { ScrollModule } from 'src/app/shared/scroll/scroll.module';
 import { SelectInputModule } from 'src/app/shared/select-input/select-input.module';
@@ -45,6 +46,7 @@ const exportComponents = [
     MatIconModule,
     MatButtonModule,
     MatCheckboxModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class MenuSelectModule {

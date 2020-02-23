@@ -7,7 +7,6 @@
     outline: none;
     font: inherit;
     color: inherit;
-    padding: 0 23px;
     min-height: 44px;
   }
 
@@ -35,5 +34,17 @@
     width: inherit;
     white-space: nowrap;
     line-height: 45px;
+  }
+
+  .loader-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+
+    mat-spinner, ::ng-deep mat-spinner svg {
+      width: 45px !important;
+      height: 45px !important;
+    }
   }
 }

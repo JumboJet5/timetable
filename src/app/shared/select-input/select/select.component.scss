@@ -1,5 +1,9 @@
 @import '../../../../static/assets/stylesheet/functions';
 
+:host {
+  outline: none;
+}
+
 .content-wrapper {
   position: relative;
   min-width: 150px;

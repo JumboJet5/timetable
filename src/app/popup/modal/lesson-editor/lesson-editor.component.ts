@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostBinding, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormatService } from '@app/service/format/format.service';
 import { GroupService } from '@app/service/group/group.service';
 import { LessonService } from '@app/service/lesson/lesson.service';
 import { ScheduleService } from '@app/service/schedule/schedule.service';
@@ -16,20 +15,22 @@ import { IGroup } from '@interfaces';
   styleUrls: ['../../../../static/assets/stylesheet/modal.scss', './lesson-editor.component.scss'],
 })
 export class LessonEditorComponent implements OnInit {
+  @HostBinding('tabindex') public tabindex = 0;
   public lessonForm: FormGroup = lessonForm();
   public group: IGroup;
   public weekSchedule: WeekSchedule;
   public lesson: Lesson;
   public isLessonLoading = false;
 
-  constructor(private router: Router,
+  constructor(private element: ElementRef,
+              private router: Router,
               private route: ActivatedRoute,
-              private formatService: FormatService,
               private scheduleService: ScheduleService,
               private groupService: GroupService,
               private lessonService: LessonService) {}
 
   public ngOnInit(): void {
+    setTimeout(() => this.element.nativeElement.focus());
     const params = this.route.snapshot.paramMap;
     this.scheduleService.getTimetable(params.get('groupSlug'));
     this.scheduleService.getActualSchedule$()

@@ -1,13 +1,13 @@
-import { Component, Host, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { SelectComponent } from '../select/select.component';
+import { SelectService } from '@app/shared/select-input/service/select.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-    selector: 'app-option-item',
-    templateUrl: './option-item.component.html',
-    styleUrls: ['./option-item.component.scss'],
+  selector: 'app-option-item',
+  templateUrl: './option-item.component.html',
+  styleUrls: ['./option-item.component.scss'],
 })
 export class OptionItemComponent implements OnInit, OnDestroy {
   @Input() public value: any;
@@ -15,21 +15,36 @@ export class OptionItemComponent implements OnInit, OnDestroy {
   @Input() public disabled = false;
   private _unsubscribe: Subject<void> = new Subject<void>();
 
-  constructor(@Host() public parent: SelectComponent) {
+  constructor(public selectService: SelectService,
+              public element: ElementRef<HTMLElement>) {}
+
+  private _active = false;
+
+  public get active(): boolean {
+    return this._active;
+  }
+
+  public set active(value: boolean) {
+    setTimeout(() => this._active = value);
   }
 
   public ngOnInit(): void {
-    this.checked = this._isValueChecked(this.parent.abstractControl.value);
-    this.parent.selectState
+    this.checked = this._isValueChecked(this.selectService.select.abstractControl.value);
+    this.selectService.select.selectState
       .subscribe((control) => this._updateItem(control));
   }
 
   @HostListener('click')
   public onClick(): boolean {
-    if (this.parent && this.parent.isMulti) this._onMultiItemClick();
+    if (this.selectService.select && this.selectService.select.isMulti) this._onMultiItemClick();
     else this._onRadioItemClick();
 
     return false;
+  }
+
+  @HostListener('mouseover')
+  public onHover() {
+    this.selectService.setActive(this);
   }
 
   @HostListener('beforeunload')
@@ -45,22 +60,23 @@ export class OptionItemComponent implements OnInit, OnDestroy {
   }
 
   private _isValueChecked(value: any[]) {
-    return this.parent && this.parent.isMulti ? value instanceof Array && value.includes(this.value) : value === this.value;
+    return this.selectService.select && this.selectService.select.isMulti
+      ? value instanceof Array && value.includes(this.value) : value === this.value;
   }
 
   private _onMultiItemClick() {
-    if (this.parent && this.parent.abstractControl) {
-      const controlValue = this.parent.abstractControl.value || [];
-      if (!this.checked) this.parent.abstractControl.patchValue([...controlValue, this.value]);
-      else this.parent.abstractControl.patchValue(controlValue.filter(item => item !== this.value));
-      this.parent.abstractControl.markAsDirty();
+    if (this.selectService.select && this.selectService.select.abstractControl) {
+      const controlValue = this.selectService.select.abstractControl.value || [];
+      if (!this.checked) this.selectService.select.abstractControl.patchValue([...controlValue, this.value]);
+      else this.selectService.select.abstractControl.patchValue(controlValue.filter(item => item !== this.value));
+      this.selectService.select.abstractControl.markAsDirty();
     }
   }
 
   private _onRadioItemClick() {
-    if (this.parent && this.parent.abstractControl) {
-      this.parent.abstractControl.patchValue(this.value);
-      this.parent.isOpened = false;
+    if (this.selectService.select && this.selectService.select.abstractControl) {
+      this.selectService.select.abstractControl.patchValue(this.value);
+      this.selectService.select.isOpened = false;
     }
   }
 }

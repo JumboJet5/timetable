@@ -14,4 +14,5 @@ export interface IFilterParams {
   specialtyId?: number;
   search?: string;
   ordering?: string;
+  visible?: boolean;
 }
