@@ -28,8 +28,8 @@ export class Lesson implements ILesson {
   }
 
   public hasLessonsInsertConflicts(that: Lesson): boolean {
-    return ((this._hasLessonsScheduleConflicts(that) && !this._hasLessonDifferentSubgroup(that))
-      || !this._hasLessonDifferentRooms(that)) && !this._isLessonSimilar(that);
+    return (this._hasLessonsScheduleConflicts(that) || !this._hasLessonDifferentRooms(that))
+      && !this._hasLessonDifferentSubgroup(that) && !this._isLessonSimilar(that);
   }
 
   public getLessonWeekSchedule(): boolean[] {

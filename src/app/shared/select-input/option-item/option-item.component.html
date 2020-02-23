@@ -1,5 +1,5 @@
-<div class="option-wrapper" [class.dark]="parent?.isDark" [class.selected]="checked">
-  <mat-checkbox *ngIf="parent?.isMulti"
+<div class="option-wrapper" [class.dark]="selectService.select?.isDark" [class.selected]="checked" [class.active]="active">
+  <mat-checkbox *ngIf="selectService.select?.isMulti"
                 [checked]="checked"
                 [disabled]="disabled"
                 color="primary"></mat-checkbox>

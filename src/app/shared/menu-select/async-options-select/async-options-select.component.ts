@@ -1,4 +1,4 @@
-import { HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
 import { IFilterParams, IOptionService, IPageable, IPaginationParams, IRequestParams, IWithId } from '@interfaces';
 import { Observable, Subject } from 'rxjs';
@@ -13,6 +13,7 @@ export function optionServiceFactory<T>(getOption: (id: number) => Observable<T>
 
 export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnInit, OnDestroy {
   @ViewChild(SelectComponent) public selectComponent: SelectComponent;
+  @ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
   @Input() public selectControl: AbstractControl;
   @Input() public multiple: boolean;
   @Input() public disabled = false;
@@ -64,10 +65,13 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     if (event && event.visible) this._loadOptions();
   }
 
+  public onOpen() {
+    setTimeout(() => this.withSearch && !!this.searchInput && this.searchInput.nativeElement.focus());
+  }
+
   public onClose(): void {
     if (this.filterForm.value.search) return this.filterForm.patchValue({search: ''});
-
-    this.options.sort((first, second) => this._comparator(first, second));
+    this._sortOptions();
   }
 
   public getOptionText(id: number) {
@@ -89,6 +93,8 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
         .pipe(takeUntil(this._pageUnsubscribe$))
         .subscribe(res => {
           res.results.forEach(item => this._addOptionToList(item));
+          this._sortOptions();
+          this.selectComponent.initActive();
           this._paginationFilters.offset += this._paginationFilters.limit;
           this._isLast = res.count === this.options.length;
         })
@@ -103,7 +109,11 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   }
 
   private _addOptionToList(option: TOption, toHead: boolean = false): void {
-    if (!this._optionIdsMap.has(option.id)) toHead ? this.options.unshift(option) : this.options.push(option);
+    if (!!option && !this.options.find(item => item.id === option.id))
+      if (toHead) {
+        this.options.unshift(option);
+        this.selectComponent.initActive();
+      } else this.options.push(option);
     this._optionIdsMap.set(option.id, option);
   }
 
@@ -124,7 +134,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
       if (this.multiple && this.selectControl.value instanceof Array) this.selectControl.value
         .forEach(option => this._optionIdsMap.has(option) ? tempMap.set(option, this._optionIdsMap.get(option)) : null);
       if (!this.multiple && this._optionIdsMap.has(this.selectControl.value))
-        tempMap.set(this.selectControl.value, this._optionIdsMap.get(this.selectControl.value))
+        tempMap.set(this.selectControl.value, this._optionIdsMap.get(this.selectControl.value));
     }
     this._optionIdsMap = tempMap;
     this._paginationFilters.offset = 0;
@@ -139,5 +149,9 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
 
   private _addToOptions(id: number) {
     if (!this._optionIdsMap.has(id)) this._loadOption(id);
+  }
+
+  private _sortOptions(): void {
+    this.options.sort((first, second) => this._comparator(first, second));
   }
 }
