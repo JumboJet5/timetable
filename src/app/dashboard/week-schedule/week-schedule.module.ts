@@ -24,5 +24,4 @@ import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
     WeekScheduleRoutingModule,
   ],
 })
-export class WeekScheduleModule {
-}
+export class WeekScheduleModule {}

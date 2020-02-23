@@ -6,7 +6,6 @@ import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
 import { degreeMap } from '@const/collections';
-import { environment } from '@environment/environment';
 import { ICreateLessonBody, ILesson } from '@interfaces';
 import { Subject } from 'rxjs';
 import { filter, switchMap, takeUntil } from 'rxjs/operators';
@@ -19,7 +18,6 @@ import { ScheduleService } from 'src/app/service/schedule/schedule.service';
   styleUrls: ['./week-schedule.component.scss'],
 })
 export class WeekScheduleComponent implements OnInit, OnDestroy {
-  public isHeaderAlwaysClosed = environment.production;
   public degreeMap = degreeMap();
   public isDragging = false;
   public draggedLesson: Lesson = undefined;
@@ -28,7 +26,7 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public weekSchedule: WeekSchedule;
   @ViewChild(GroupSelectComponent, {static: true}) private _groupSelector: GroupSelectComponent;
-  private _groupSlug = this.route.snapshot.paramMap.get('groupSlug');
+  private _groupSlug: string;
   private _groupsemester: number;
   private _unsubscribe: Subject<void> = new Subject<void>();
 
@@ -48,7 +46,7 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
     this.scheduleService.getActualSchedule$()
       .pipe(takeUntil(this._unsubscribe))
       .subscribe(res => {
-        if (res && res.getScheduleGroup() && res.getScheduleGroup().slug === this._groupSlug)  {
+        if (res && res.getScheduleGroup() && res.getScheduleGroup().slug === this._groupSlug) {
           this.weekSchedule = res;
           this._getGroupsemester();
         }
@@ -58,10 +56,8 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
     this.router.events
       .pipe(takeUntil(this._unsubscribe))
       .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe(() => {
-        this._updatePage();
-        this._groupSlug = this.route.snapshot.paramMap.get('groupSlug');
-      });
+      .pipe(filter(() => this._groupSlug !== this.route.snapshot.paramMap.get('groupSlug')))
+      .subscribe(() => this._updatePage());
   }
 
   public openLessonDetail(lesson: Lesson) {
@@ -113,16 +109,16 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
 
   private _getNextUrl(groupSlug: string): void {
     if (groupSlug !== this.route.snapshot.paramMap.get('groupSlug'))
-      this.router.navigate(['dashboard', 'lessons-schedule', groupSlug || 'groupSlug'])
-        .then(() => this._updatePage());
+      this.router.navigate(['dashboard', 'lessons-schedule', groupSlug || 'groupSlug']);
   }
 
   private _updatePage(isForce: boolean = false) {
-    if (!this.groupIdControl.value || this._groupSlug === this.groupIdControl.value) return;
+    this._groupSlug = this.route.snapshot.paramMap.get('groupSlug');
+    if (!isForce && this._groupSlug === 'groupSlug') return;
 
     this.isLoading = true;
-    this.groupIdControl.patchValue(this.route.snapshot.paramMap.get('groupSlug'));
-    this.scheduleService.getTimetable(this.route.snapshot.paramMap.get('groupSlug'), isForce);
+    this.groupIdControl.patchValue(this._groupSlug);
+    this.scheduleService.getTimetable(this._groupSlug, isForce);
   }
 
   private _getGroupsemester() {

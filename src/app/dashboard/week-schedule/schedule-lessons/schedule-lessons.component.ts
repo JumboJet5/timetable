@@ -1,4 +1,4 @@
-import { CdkDragDrop, CdkDragSortEvent, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDropList, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Host, Input, OnInit, ViewChild } from '@angular/core';
 import { Lesson } from '@classes/lesson';
 import { lessonTypesMap } from '@const/collections';
