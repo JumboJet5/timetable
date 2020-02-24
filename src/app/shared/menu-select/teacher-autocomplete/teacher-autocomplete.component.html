@@ -11,6 +11,7 @@
             (focus)="onFocus()"
             [abstractControl]="selectControl"
             [isMulti]="multiple"
+            [isCircularSelecting]="!isLoading"
             [isDisabled]="selectControl.disabled || disabled">
 
   <app-select-result>

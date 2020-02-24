@@ -22,6 +22,7 @@ export class SelectComponent implements OnDestroy {
   @Input() public isInvalid: boolean;
   @Input() public isDisabled = false;
   @Input() public isReadonly = false;
+  @Input() public isCircularSelecting = true;
   @Output() public closed: EventEmitter<void> = new EventEmitter();
   @Output() public opened: EventEmitter<void> = new EventEmitter();
   @Output() public changes: EventEmitter<any> = new EventEmitter();
@@ -100,12 +101,12 @@ export class SelectComponent implements OnDestroy {
 
   @HostListener('keydown.arrowDown')
   public onArrowDown() {
-    this._selectService.setNextOptionActive('next');
+    this._selectService.setNextOptionActive('next', this.isCircularSelecting);
   }
 
   @HostListener('keydown.arrowUp')
   public onArrowUp() {
-    this._selectService.setNextOptionActive('prev');
+    this._selectService.setNextOptionActive('prev', this.isCircularSelecting);
   }
 
   @HostListener('focus')
@@ -120,6 +121,7 @@ export class SelectComponent implements OnDestroy {
 
   @HostListener('beforeunload')
   public ngOnDestroy(): void {
+    this._selectService.unsetActive();
     this.unsubscribe.next();
     this.unsubscribe.complete();
   }

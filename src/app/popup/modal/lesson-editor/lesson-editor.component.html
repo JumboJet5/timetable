@@ -5,7 +5,7 @@
     <div class="info-row">
       <div class="select-column long">
         <div class="placeholder">Назва предмета</div>
-        <app-theme-select [filters]="{group: weekSchedule.getScheduleGroupId(), visible: true}"
+        <app-theme-select [filters]="{group: weekSchedule.getScheduleGroupId(), semester: weekSchedule.getScheduleSemesterId()}"
                           [selectControl]="lessonForm.get('theme')"></app-theme-select>
       </div>
 

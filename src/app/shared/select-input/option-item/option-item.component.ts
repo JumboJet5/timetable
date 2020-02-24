@@ -49,6 +49,7 @@ export class OptionItemComponent implements OnInit, OnDestroy {
 
   @HostListener('beforeunload')
   public ngOnDestroy(): void {
+    if (this.active) this.selectService.unsetActive();
     this._unsubscribe.next();
     this._unsubscribe.complete();
   }
