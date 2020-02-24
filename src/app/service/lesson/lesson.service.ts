@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import * as URLS from 'src/core/urls';
 import { ILesson } from 'src/core/interfaces/lesson.interface';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class LessonService {
 
   constructor(private http: HttpClient) {}

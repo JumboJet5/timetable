@@ -6,7 +6,7 @@ import { IPageable } from 'src/core/interfaces/pageable.interface';
 import { IGroup } from 'src/core/interfaces/group.interface';
 import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class GroupService {
   constructor(private http: HttpClient) {
   }

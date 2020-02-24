@@ -8,7 +8,6 @@ import { AsyncOptionsSelectComponent, optionServiceFactory } from '../async-opti
   selector: 'app-room-select',
   templateUrl: '../async-options-select/async-options-select.component.html',
   styleUrls: ['../async-options-select/async-options-select.component.scss'],
-  providers: [RoomService]
 })
 export class RoomSelectComponent extends AsyncOptionsSelectComponent<any> {
   constructor(public roomService: RoomService,

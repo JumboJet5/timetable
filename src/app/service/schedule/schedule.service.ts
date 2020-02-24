@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { FormatService } from 'src/app/service/format/format.service';
 import * as URLS from 'src/core/urls';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ScheduleService {
   private _lastTimeTableGroupSlug: string = undefined;
   private _actualSchedule: BehaviorSubject<WeekSchedule> = new BehaviorSubject<WeekSchedule>(undefined);

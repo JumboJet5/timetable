@@ -5,7 +5,7 @@ import { ICustomDialog } from '@interfaces';
 @Component({
   selector: 'app-custom-dialog',
   templateUrl: './custom-dialog.component.html',
-  styleUrls: ['../../../../static/schedule-widget/assets/stylesheet/modal.scss', './custom-dialog.component.scss'],
+  styleUrls: ['../../../../core/stylesheet/modal.scss', './custom-dialog.component.scss'],
 })
 export class CustomDialogComponent implements OnInit {
   public data: ICustomDialog;

@@ -17,13 +17,14 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   @Input() public selectControl: AbstractControl;
   @Input() public multiple: boolean;
   @Input() public disabled = false;
+  @Input() public optionIdKey: keyof IWithId = 'id';
   public options: TOption[] = [];
   public isLoading = false;
   public simplePlaceholder = 'Оберіть значення';
   public multiplePlaceholder = 'Оберіть значення';
   public withSearch = false;
   public filterForm: FormGroup = this.formBuilder.group({search: ''});
-  private _optionIdsMap: Map<number, TOption> = new Map<number, TOption>();
+  private _optionIdsMap: Map<number | string, TOption> = new Map<number, TOption>();
   private _paginationFilters: IPaginationParams = {offset: 0, limit: 20};
   private _isLast = false;
   private _destroyUnsubscribe$: Subject<void> = new Subject();
@@ -57,7 +58,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
       .subscribe(() => this._applyFilters());
   }
 
-  public getOptionById(id: number): TOption {
+  public getOptionById(id: number | string): TOption {
     return this._optionIdsMap.get(id);
   }
 
@@ -74,7 +75,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     this._sortOptions();
   }
 
-  public getOptionText(id: number) {
+  public getOptionText(id: number | string) {
     return this._optionIdsMap.has(id) ? this._optionIdsMap.get(id).name : '';
   }
 
@@ -102,25 +103,25 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     }
   }
 
-  private _loadOption(id: number): void {
+  private _loadOption(id: number | string): void {
     if (id || id === 0) this.optionService.getOption(id)
       .pipe(takeUntil(this._destroyUnsubscribe$))
       .subscribe(group => this._addOptionToList(group, true));
   }
 
   private _addOptionToList(option: TOption, toHead: boolean = false): void {
-    if (!!option && !this.options.find(item => item.id === option.id))
+    if (!!option && !this.options.find(item => item[this.optionIdKey] === option[this.optionIdKey]))
       if (toHead) {
         this.options.unshift(option);
         this.selectComponent.initActive();
       } else this.options.push(option);
-    this._optionIdsMap.set(option.id, option);
+    this._optionIdsMap.set(option[this.optionIdKey], option);
   }
 
   private _comparator(first: TOption, second: TOption): number {
     const selected = this.selectControl.value;
-    const isFirstSelected = this.multiple ? !selected.includes(first.id) : first.id !== selected;
-    const isSecondSelected = this.multiple ? !selected.includes(second.id) : second.id !== selected;
+    const isFirstSelected = this.multiple ? !selected.includes(first[this.optionIdKey]) : first[this.optionIdKey] !== selected;
+    const isSecondSelected = this.multiple ? !selected.includes(second[this.optionIdKey]) : second[this.optionIdKey] !== selected;
     const equal = isFirstSelected === isSecondSelected;
     return equal ? 0 : isFirstSelected ? 1 : -1;
   }
@@ -147,7 +148,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     else this._addToOptions(this.selectControl.value);
   }
 
-  private _addToOptions(id: number) {
+  private _addToOptions(id: number | string) {
     if (!this._optionIdsMap.has(id)) this._loadOption(id);
   }
 

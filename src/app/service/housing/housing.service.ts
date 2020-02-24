@@ -4,7 +4,7 @@ import { IRequestParams } from '@interfaces';
 import { Observable } from 'rxjs';
 import * as URLS from '../../../core/urls';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class HousingService {
   constructor(private http: HttpClient) {
   }

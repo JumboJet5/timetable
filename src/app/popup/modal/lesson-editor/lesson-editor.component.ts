@@ -14,8 +14,8 @@ import { IGroup } from '@interfaces';
   selector: 'app-lesson-editor',
   templateUrl: './lesson-editor.component.html',
   styleUrls: [
-    '../../../../static/schedule-widget/assets/stylesheet/modal.scss',
-    '../../../../static/schedule-widget/assets/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/modal.scss',
+    '../../../../core/stylesheet/default-form.scss',
     './lesson-editor.component.scss',
   ],
 })

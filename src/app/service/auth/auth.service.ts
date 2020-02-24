@@ -5,7 +5,7 @@ import { catchError, map } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import * as URLS from 'src/core/urls';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthService {
   private _authInfo: { token: string } = JSON.parse(localStorage.getItem('token')) || undefined;
 

@@ -4,7 +4,7 @@ import { ICustomDialog } from '@interfaces';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PopupService {
   private unsubscribe: Subject<void> = new Subject();
   private _dialogAnswerAccept: () => void;

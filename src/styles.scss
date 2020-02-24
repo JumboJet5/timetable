@@ -1,4 +1,5 @@
-@import 'static/schedule-widget/assets/stylesheet/theme';
+@import 'core/stylesheet/theme';
+@import 'core/stylesheet/constants';
 
 html, body {
   height: 100%;
@@ -6,8 +7,16 @@ html, body {
 
 body {
   margin: 0;
-  min-width: 1200px;
+  min-width: 1250px;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+  font-size: 32px;
+  font-weight: 500;
+  color: $gray;
+  line-height: 48px;
+  margin: 0 0 26px;
 }
 
 .semi-bold {

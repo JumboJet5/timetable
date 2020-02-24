@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 import * as URLS from 'src/core/urls';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TeacherService {
   constructor(private http: HttpClient) { }
 

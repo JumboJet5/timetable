@@ -6,7 +6,7 @@ import { environment } from '@environment/environment';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/service/auth/auth.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(private authService: AuthService,
               private router: Router) {}

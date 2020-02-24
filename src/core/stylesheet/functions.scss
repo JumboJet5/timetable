@@ -1,0 +1,15 @@
+@function customTransitions($strategy, $duration, $parameters...) {
+  $result: false;
+  @each $parameter in $parameters {
+    @if ($result) {
+      $result: $result, $parameter $duration $strategy;
+    } @else {
+      $result: $parameter $duration $strategy;
+    }
+  }
+  @return $result;
+}
+
+@function transitions($parameters...) {
+  @return customTransitions(cubic-bezier(.35, 0, .25, 1), 0.5s, $parameters);
+}

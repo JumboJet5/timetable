@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/service/auth/auth.service';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: [
-    '../../../static/schedule-widget/assets/stylesheet/default-form.scss',
+    '../../../core/stylesheet/default-form.scss',
     './login.component.scss',
   ],
 })
@@ -25,7 +25,6 @@ export class LoginComponent {
   public login() {
     this.authService.login(this.loginForm.value)
       .subscribe(result => result ? this.router.navigate([
-        'schedule-widget',
         'dashboard',
         'lessons-schedule',
         'groupSlug',

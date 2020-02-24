@@ -7,7 +7,6 @@ import { AsyncOptionsSelectComponent, optionServiceFactory } from '../async-opti
   selector: 'app-housing-select',
   templateUrl: '../async-options-select/async-options-select.component.html',
   styleUrls: ['../async-options-select/async-options-select.component.scss'],
-  providers: [HousingService],
 })
 export class HousingSelectComponent extends AsyncOptionsSelectComponent<any> {
   constructor(public housingService: HousingService,

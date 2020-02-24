@@ -1,0 +1,10 @@
+<h1>Панель адміністратора розкладу</h1>
+
+<nav class="main-nav-table">
+  <a *ngFor="let panel of navPanels"
+     [ngStyle]="{visibility: !panel.title ? 'hidden' : 'visible'}"
+     [routerLink]="panel.link"
+     [appHighlighting]="panel.hoverColor"
+     [defaultColor]="'#464646'"
+     class="nav-panel">{{panel.title}}</a>
+</nav>

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IRequestParams } from '@interfaces';
 import * as URLS from 'src/core/urls';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class RoomService {
 
   constructor(private http: HttpClient) { }

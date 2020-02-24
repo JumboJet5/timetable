@@ -1,0 +1,52 @@
+@import '../../core/stylesheet/constants';
+
+:host {
+  display: flex;
+  min-height: 800px;
+  height: 100vh;
+}
+
+.main-sideBar {
+  flex: 0 0 50px;
+  z-index: 100;
+  background: linear-gradient(to top, $primary-color 80%, mix($primary-color, white, 30%));
+  box-shadow: 7px 0 17px -3px rgba($primary-color, 0.2),
+  4px -2px 16px 0px rgba($primary-color, 0.14),
+  4px -3px 10px 0px rgba($primary-color, 0.12);
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 10px;
+
+  .mat-icon, .mat-fab, ::ng-deep.mat-button-wrapper {
+    height: 30px;
+    width: 30px;
+    display: block;
+    padding: 0;
+  }
+
+  .menu-button {
+    background-color: white;
+  }
+
+  .mat-icon {
+    font-size: 16px;
+    line-height: 30px;
+  }
+
+  .button-icon {
+    width: 20px;
+    height: auto;
+  }
+}
+
+.page-content {
+  flex: 1 0 0;
+  overflow: auto;
+
+}
+
+router-outlet ~ ::ng-deep * {
+  padding: 46px 24px;
+  display: block;
+}

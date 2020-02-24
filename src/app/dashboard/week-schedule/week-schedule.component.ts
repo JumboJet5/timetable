@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { PopupService } from '@app/service/modal/popup.service';
 import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
 import { Lesson } from '@classes/lesson';
@@ -9,8 +9,7 @@ import { degreeMap } from '@const/collections';
 import { environment } from '@environment/environment';
 import { ICreateLessonBody, ILesson } from '@interfaces';
 import { Subject } from 'rxjs';
-import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { FormatService } from 'src/app/service/format/format.service';
+import { filter, switchMap, takeUntil } from 'rxjs/operators';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';
 
@@ -19,7 +18,7 @@ import { ScheduleService } from 'src/app/service/schedule/schedule.service';
   templateUrl: './week-schedule.component.html',
   styleUrls: ['./week-schedule.component.scss'],
 })
-export class WeekScheduleComponent implements OnInit {
+export class WeekScheduleComponent implements OnInit, OnDestroy {
   public isHeaderAlwaysClosed = environment.production;
   public degreeMap = degreeMap();
   public isDragging = false;
@@ -31,27 +30,38 @@ export class WeekScheduleComponent implements OnInit {
   @ViewChild(GroupSelectComponent, {static: true}) private _groupSelector: GroupSelectComponent;
   private _groupSlug = this.route.snapshot.paramMap.get('groupSlug');
   private _groupsemester: number;
+  private _unsubscribe: Subject<void> = new Subject<void>();
 
   constructor(private scheduleService: ScheduleService,
               private lessonService: LessonService,
               private route: ActivatedRoute,
-              private formatService: FormatService,
               private popupService: PopupService,
               private router: Router) {}
 
   public ngOnInit(): void {
+    this._updatePage();
+
     this.groupIdControl.valueChanges
-      .subscribe(id => this._getNextUrl(id));
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(slug => this._getNextUrl(slug));
 
     this.scheduleService.getActualSchedule$()
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe(res => {
-        this.weekSchedule = res;
-        if (res) this.groupIdControl.patchValue(res.getScheduleGroupId());
-        this._getGroupsemester();
+        if (res && res.getScheduleGroup() && res.getScheduleGroup().slug === this._groupSlug)  {
+          this.weekSchedule = res;
+          this._getGroupsemester();
+        }
         this.isLoading = false;
       });
 
-    this._updatePage();
+    this.router.events
+      .pipe(takeUntil(this._unsubscribe))
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this._updatePage();
+        this._groupSlug = this.route.snapshot.paramMap.get('groupSlug');
+      });
   }
 
   public openLessonDetail(lesson: Lesson) {
@@ -84,6 +94,12 @@ export class WeekScheduleComponent implements OnInit {
       .subscribe(() => this._updatePage(true));
   }
 
+  @HostListener('window:beforeunload')
+  public ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
+
   private _formatCreateLessonBody(lesson: ILesson, lesson_time: number, day: number): ICreateLessonBody {
     const teachers = lesson.teachers.map(teacher => teacher.toString());
     return {
@@ -95,20 +111,18 @@ export class WeekScheduleComponent implements OnInit {
     } as ICreateLessonBody;
   }
 
-  private _getNextUrl(groupId: number): void {
-    const group = this._groupSelector.getOptionById(groupId);
-    if (!!group && (!this.weekSchedule || this.weekSchedule.getScheduleGroupId() !== groupId)) {
-      this.router.navigate(['schedule-widget', 'dashboard', 'lessons-schedule', group.slug])
+  private _getNextUrl(groupSlug: string): void {
+    if (groupSlug !== this.route.snapshot.paramMap.get('groupSlug'))
+      this.router.navigate(['dashboard', 'lessons-schedule', groupSlug || 'groupSlug'])
         .then(() => this._updatePage());
-      this._groupSlug = group.slug;
-    }
   }
 
   private _updatePage(isForce: boolean = false) {
-    if (this._groupSlug === 'groupSlug') return;
+    if (!this.groupIdControl.value || this._groupSlug === this.groupIdControl.value) return;
 
     this.isLoading = true;
-    this.scheduleService.getTimetable(this._groupSlug, isForce);
+    this.groupIdControl.patchValue(this.route.snapshot.paramMap.get('groupSlug'));
+    this.scheduleService.getTimetable(this.route.snapshot.paramMap.get('groupSlug'), isForce);
   }
 
   private _getGroupsemester() {

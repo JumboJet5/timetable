@@ -14,3 +14,5 @@ export * from 'src/core/interfaces/vacant-week-info.interface';
 export * from 'src/core/interfaces/create-lesson-body.interface';
 export * from 'src/core/interfaces/custom-dialog.interface';
 export * from 'src/core/interfaces/request-param.interface';
+export * from 'src/core/interfaces/nav-panel';
+export * from 'src/core/interfaces/university';

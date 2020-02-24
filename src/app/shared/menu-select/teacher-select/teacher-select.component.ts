@@ -8,7 +8,6 @@ import { AsyncOptionsSelectComponent, optionServiceFactory } from '../async-opti
   selector: 'app-teacher-select',
   templateUrl: '../async-options-select/async-options-select.component.html',
   styleUrls: ['../async-options-select/async-options-select.component.scss'],
-  providers: [TeacherService]
 })
 export class TeacherSelectComponent extends AsyncOptionsSelectComponent<ITeacher> {
   constructor(public teacherService: TeacherService,

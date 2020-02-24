@@ -23,6 +23,9 @@ export const TEACHER = (id: number): string => `${TEACHERS}${id}/`;
 export const LESSONS = API + '/lessons/';
 export const LESSON = (id: number): string => `${LESSONS}${id}/`;
 
+export const UNIVERSITIES = API + '/universities/';
+export const UNIVERSITY = (id: number): string => `${UNIVERSITIES}${id}/`;
+
 export const TIMETABLE = API + '/timetable/';
 
 export const GROUPSEMESTER = API + '/groupsemester/';

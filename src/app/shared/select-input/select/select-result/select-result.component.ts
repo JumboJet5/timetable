@@ -4,7 +4,7 @@ import { SelectComponent } from '../select.component';
 @Component({
   selector: 'app-select-result',
   templateUrl: './select-result.component.html',
-  styleUrls: ['./select-result.component.scss', '../../../../../static/schedule-widget/assets/stylesheet/default-form.scss'],
+  styleUrls: ['./select-result.component.scss', '../../../../../core/stylesheet/default-form.scss'],
 })
 export class SelectResultComponent {
   @Input() public toggleFunc = () => {
