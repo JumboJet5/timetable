@@ -32,7 +32,7 @@ export class SelectComponent implements OnDestroy {
   private unsubscribe: Subject<void> = new Subject<void>();
 
   constructor(private _selectService: SelectService,
-              private _element: ElementRef) {
+              private _element: ElementRef<HTMLElement>) {
     this._selectService.select = this;
   }
 
@@ -99,13 +99,17 @@ export class SelectComponent implements OnDestroy {
     this._selectService.selectActive();
   }
 
-  @HostListener('keydown.arrowDown')
-  public onArrowDown() {
+  @HostListener('keydown.arrowDown', ['$event'])
+  public onArrowDown(event: KeyboardEvent) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
     this._selectService.setNextOptionActive('next', this.isCircularSelecting);
   }
 
-  @HostListener('keydown.arrowUp')
-  public onArrowUp() {
+  @HostListener('keydown.arrowUp', ['$event'])
+  public onArrowUp(event: KeyboardEvent) {
+    event.stopImmediatePropagation();
+    event.preventDefault();
     this._selectService.setNextOptionActive('prev', this.isCircularSelecting);
   }
 
