@@ -15,7 +15,7 @@ export class GroupService {
     return this.http.get<IPageable<IGroup>>(URLS.GROUPS, {params: params as {}});
   }
 
-  public getGroup(id: number): Observable<IGroup> {
+  public getGroup(id: number | string): Observable<IGroup> {
     return this.http.get<IGroup>(URLS.GROUP(id));
   }
 }

@@ -7,3 +7,28 @@ $gray: #464646;
 $primary-color: $purple; //todo add dependency to material themes
 $accent-color: $light-orange;
 $warn-color: $pink;
+
+body {
+  --primary-color-2: #fafbfd;
+  --primary-color-5: #f3f6fb;
+  --primary-color-10: #e7edf6;
+  --primary-color-15: #dbe4f2;
+  --primary-color-20: #cfdbee;
+  --primary-color-25: #c3d2ea;
+  --primary-color-30: #b7c9e5;
+  --primary-color-35: #abc0e1;
+  --primary-color-40: #9fb7dd;
+  --primary-color-45: #93aed8;
+  --primary-color-50: #88a5d4;
+  --primary-color-55: #7c9cd0;
+  --primary-color-60: #7093cb;
+  --primary-color-65: #648ac7;
+  --primary-color-70: #5881c3;
+  --primary-color-75: #4c78bf;
+  --primary-color-80: #406fba;
+  --primary-color-85: #3466b6;
+  --primary-color-90: #285db2;
+  --primary-color-95: #1c54ad;
+  --background-color: var(--primary-color-2);
+  --filter-background: #3378E8;
+}

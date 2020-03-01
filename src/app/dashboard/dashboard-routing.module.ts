@@ -16,6 +16,10 @@ const routes: Routes = [
           .then(module => module.UniversitiesModule),
       },
       {
+        path: 'groups', loadChildren: () => import('./groups/groups.module')
+          .then(module => module.GroupsModule),
+      },
+      {
         path: 'lessons-schedule', loadChildren: () => import('./week-schedule/week-schedule.module')
           .then(module => module.WeekScheduleModule),
       },

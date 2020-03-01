@@ -28,7 +28,7 @@
 
       <app-option-item *ngFor="let option of options"
                        [value]="option[this.optionIdKey]"
-                       [title]="getOptionText(option[this.optionIdKey])"
+                       [title]="getOptionTitleText(option[this.optionIdKey])"
                        class="tb-item">{{getOptionText(option[this.optionIdKey])}}</app-option-item>
       <div class="loader-wrapper" *ngIf="isLoading">
         <mat-spinner></mat-spinner>

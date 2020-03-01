@@ -1,5 +1,10 @@
 @import '../../../core/stylesheet/constants';
 
+:host {
+  padding: 46px 24px;
+  display: block;
+}
+
 .main-nav-table {
   display: flex;
   flex-wrap: wrap;

@@ -19,6 +19,9 @@ import { RoomSelectComponent } from './room-select/room-select.component';
 import { TeacherAutocompleteComponent } from './teacher-autocomplete/teacher-autocomplete.component';
 import { TeacherSelectComponent } from './teacher-select/teacher-select.component';
 import { ThemeSelectComponent } from './theme-select/theme-select.component';
+import { UniversitySelectComponent } from './university-select/university-select.component';
+import { FacultySelectComponent } from 'src/app/shared/menu-select/faculty-select/faculty-select.component';
+import { SpecialtySelectComponent } from './specialty-select/specialty-select.component';
 import { LessonFormatSelectComponent } from './lesson-format-select/lesson-format-select.component';
 
 
@@ -37,8 +40,8 @@ const exportComponents = [
 ];
 
 @NgModule({
-  declarations: [...exportComponents, LessonWeeksSelectorComponent],
-  exports: [...exportComponents, LessonWeeksSelectorComponent],
+  declarations: [...exportComponents, LessonWeeksSelectorComponent, UniversitySelectComponent, FacultySelectComponent, SpecialtySelectComponent],
+  exports: [...exportComponents, LessonWeeksSelectorComponent, UniversitySelectComponent, FacultySelectComponent, SpecialtySelectComponent],
   imports: [
     CommonModule,
     ScrollModule,

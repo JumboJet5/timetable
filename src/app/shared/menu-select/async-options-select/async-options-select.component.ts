@@ -79,6 +79,10 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     return this._optionIdsMap.has(id) ? this._optionIdsMap.get(id).name : '';
   }
 
+  public getOptionTitleText(id: number | string) {
+    return this.getOptionText(id);
+  }
+
   @HostListener('window:beforeunload')
   public ngOnDestroy(): void {
     this._destroyUnsubscribe$.next();

@@ -1,0 +1,21 @@
+<label class="tb-input-label">
+  <input class="tb-input" [formControl]="searchControl" placeholder="Пошук...">
+</label>
+
+<div class="group-items-wrapper">
+  <div class="relative-wrapper">
+    <div class="group-item header-row">
+      <div class="group-item-details">Група</div>
+      <div class="group-item-details">Степінь</div>
+      <div class="group-item-details">Курс</div>
+      <div class="group-item-details">Кількість підгруп</div>
+    </div>
+    <a class="group-item" *ngFor="let group of groups" [routerLink]="['/dashboard', 'groups', 'details', group.slug]">
+      <div class="group-item-details">{{group.name}}</div>
+      <div class="group-item-details">{{degreeMap.get(+group.course_degree)?.name}}</div>
+      <div class="group-item-details">{{group.course_name}}</div>
+      <div class="group-item-details">{{group.subgroups}}</div>
+    </a>
+    <div *ngIf="!isLoading" class="viewport-bottom" inViewport (inViewportAction)="onViewportAction($event)"></div>
+  </div>
+</div>

@@ -9,10 +9,10 @@ export class UniversityService {
   constructor(private http: HttpClient) { }
 
   public getUniversities(params: IRequestParams): Observable<IPageable<IUniversity>> {
-    return this.http.get<IPageable<any>>(URLS.UNIVERSITIES, {params: params as {}});
+    return this.http.get<IPageable<IUniversity>>(URLS.UNIVERSITIES, {params: params as {}});
   }
 
   public getUniversity(id: number): Observable<IUniversity> {
-    return this.http.get<any>(URLS.UNIVERSITY(id));
+    return this.http.get<IUniversity>(URLS.UNIVERSITY(id));
   }
 }

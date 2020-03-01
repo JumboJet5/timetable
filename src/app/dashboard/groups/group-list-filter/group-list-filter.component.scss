@@ -1,0 +1,16 @@
+:host {
+  flex: 0 0 auto;
+  background-color: var(--filter-background);
+}
+
+.filters-wrapper {
+  padding: 32px 16px;
+  width: 250px;
+  color: white;
+  font-size: 18px;
+
+  & > * {
+    margin: 0 0 20px;
+    display: block;
+  }
+}

@@ -6,12 +6,12 @@ export interface IPaginationParams {
 }
 
 export interface IFilterParams {
-  universityId?: number;
+  univ?: number | string;
   group?: number;
   housing?: number;
-  facultyId?: number;
+  faculty?: number | string;
   degreeId?: number | string;
-  specialtyId?: number;
+  specialty?: number | string;
   search?: string;
   ordering?: string;
   visible?: boolean;

@@ -1,4 +1,4 @@
-<div cdkDropListGroup>
+<div cdkDropListGroup class="drop-list-group">
   <div class="select-group-wrapper" [class.empty]="!groupIdControl.value || !weekSchedule">
     <app-group-select [selectControl]="groupIdControl"></app-group-select>
     <ng-container *ngIf="!!weekSchedule?.getSchedule()">

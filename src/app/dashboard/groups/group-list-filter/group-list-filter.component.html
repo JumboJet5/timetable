@@ -1,0 +1,11 @@
+<div class="filters-wrapper" [formGroup]="filterForm">
+  <span>Фільтри</span>
+
+  <app-university-select [selectControl]="univControl"></app-university-select>
+
+  <app-faculty-select [filters]="{univ: univControl.value}"
+                      [selectControl]="facControl"></app-faculty-select>
+
+  <app-specialty-select [filters]="{univ: univControl.value, faculty: facControl.value}"
+                        [selectControl]="specControl"></app-specialty-select>
+</div>

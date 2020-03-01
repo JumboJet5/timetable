@@ -9,24 +9,39 @@
 .main-sideBar {
   flex: 0 0 50px;
   z-index: 100;
-  background: linear-gradient(to top, $primary-color 80%, mix($primary-color, white, 30%));
-  box-shadow: 7px 0 17px -3px rgba($primary-color, 0.2),
-  4px -2px 16px 0px rgba($primary-color, 0.14),
-  4px -3px 10px 0px rgba($primary-color, 0.12);
+  background: white;
+  box-shadow: 7px 0 17px -3px rgba($gray, 0.2),
+  4px -2px 16px 0px rgba($gray, 0.14),
+  4px -3px 10px 0px rgba($gray, 0.12);
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   padding: 16px 10px;
 
-  .mat-icon, .mat-fab, ::ng-deep.mat-button-wrapper {
+  .mat-icon, .mat-icon-button, ::ng-deep.mat-button-wrapper {
     height: 30px;
     width: 30px;
+    line-height: 30px;
     display: block;
     padding: 0;
   }
 
   .menu-button {
     background-color: white;
+    margin-bottom: 15px;
+    transition: 0.25s;
+
+    &:hover {
+      box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .main-button {
+    margin-bottom: 30px;
   }
 
   .mat-icon {
@@ -43,10 +58,5 @@
 .page-content {
   flex: 1 0 0;
   overflow: auto;
-
-}
-
-router-outlet ~ ::ng-deep * {
-  padding: 46px 24px;
-  display: block;
+  background-color: var(--background-color);
 }
