@@ -97,7 +97,7 @@ export class WeekScheduleComponent implements OnInit {
   private _getNextUrl(groupId: number): void {
     const group = this._groupSelector.getOptionById(groupId);
     if (!!group && (!this.weekSchedule || this.weekSchedule.getScheduleGroupId() !== groupId)) {
-      this.router.navigate(['dashboard', 'lessons-schedule', group.slug])
+      this.router.navigate(['schedule-widget', 'dashboard', 'lessons-schedule', group.slug])
         .then(() => this._updatePage());
       this._groupSlug = group.slug;
     }

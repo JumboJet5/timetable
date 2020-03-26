@@ -15,7 +15,7 @@ export class AuthInterceptor implements HttpInterceptor {
         return next.handle(this._getAuthorizeRequest(req))
                    .pipe(tap(
                        () => {},
-                       err => err.status === 401 ? this.router.navigate(['authentication']) : null,
+                       err => err.status === 401 ? this.router.navigate(['schedule-widget', 'authentication']) : null,
                    ));
     }
 

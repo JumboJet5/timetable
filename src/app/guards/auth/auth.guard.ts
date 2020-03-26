@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate, CanActivateChild, CanLoad {
 
   private _isAuthorized(): boolean {
     if (environment.production) return true;
-    if (!this.authService.isAuthorized()) this.router.navigate(['authentication', 'login']);
+    if (!this.authService.isAuthorized()) this.router.navigate(['schedule-widget', 'authentication', 'login']);
     return this.authService.isAuthorized();
   }
 }

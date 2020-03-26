@@ -25,7 +25,7 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/static/assets"
+              "src/static/schedule-widget/assets"
             ],
             "styles": [
               "src/styles.scss"
@@ -38,6 +38,33 @@
                 {
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ]
+            },
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
                 }
               ],
               "optimization": true,
@@ -97,6 +124,9 @@
           "configurations": {
             "production": {
               "browserTarget": "time-table-schedule:build:production"
+            },
+            "test": {
+              "browserTarget": "time-table-schedule:build:test"
             }
           }
         },

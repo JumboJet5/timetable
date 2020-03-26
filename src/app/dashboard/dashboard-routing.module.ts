@@ -6,7 +6,7 @@ import { AuthGuard } from 'src/app/guards/auth/auth.guard';
 
 const routes: Routes = [
   {path: 'lessons-schedule/:groupSlug', component: WeekScheduleComponent, canActivate: [AuthGuard]},
-  {path: '**', redirectTo: '/dashboard/lessons-schedule/groupSlug'},
+  {path: '**', redirectTo: '/schedule-widget/dashboard/lessons-schedule/groupSlug'},
 ];
 
 @NgModule({
