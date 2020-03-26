@@ -1,24 +1,24 @@
 <div class="login-wrapper">
     <div class="heading">Login to MyTimeTable</div>
-    <form name="login" class="tb-form" [formGroup]="loginForm">
-        <label class="tb-input-label">
+    <form name="login" class="tt-form" [formGroup]="loginForm">
+        <label class="tt-input-label">
             <span class="placeholder smallest-text">Enter username</span>
             <input [class.tb-invalid]="!isControlValid(loginForm, 'username')"
-                   class="tb-input"
+                   class="tt-input"
                    name="username"
                    autocomplete="username"
                    formControlName="username"/>
-            <span class="tb-error">{{getControlError(loginForm, 'username')}}</span>
+            <span class="tt-error">{{getControlError(loginForm, 'username')}}</span>
         </label>
-        <label class="tb-input-label">
+        <label class="tt-input-label">
             <span class="placeholder smallest-text">Password</span>
             <input [type]="isPasswordVisible ? 'text' : 'password'"
                    [class.tb-invalid]="!isControlValid(loginForm, 'password')"
-                   class="tb-input"
+                   class="tt-input"
                    name="password"
                    autocomplete="current-password"
                    formControlName="password"/>
-            <span class="tb-error">{{getControlError(loginForm, 'password')}}</span>
+            <span class="tt-error">{{getControlError(loginForm, 'password')}}</span>
             <mat-icon (click)="isPasswordVisible = !isPasswordVisible"
                       class="suffix-icon">visibility{{isPasswordVisible ? '' : '_off'}}</mat-icon>
         </label>

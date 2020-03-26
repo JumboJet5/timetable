@@ -2,7 +2,7 @@
 @import '../../../../../core/stylesheet/breakpoints';
 
 :host {
-  .tb-input {
+  .tt-input {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -64,7 +64,7 @@
   }
 
   @media screen and (max-width: $x-large) {
-    .tb-input {
+    .tt-input {
       padding-right: 15px;
 
       &.opened, &:focus, &:active {

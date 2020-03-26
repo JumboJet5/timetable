@@ -7,7 +7,11 @@ const app = express();
 // Serve only the static files form the dist directory
 app.use(express.static('./dist'));
 
-app.get('/*', function(req,res) {
+app.get('/dashboard/*', function(req,res) {
+  res.sendFile(path.resolve('./dist/index.html'));
+});
+
+app.get('/authentication/*', function(req,res) {
   res.sendFile(path.resolve('./dist/index.html'));
 });
 

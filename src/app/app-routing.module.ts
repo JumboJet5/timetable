@@ -12,14 +12,11 @@ const authentication = environment.production ? [] : [
 
 const routes: Routes = [
   {
-    path: 'schedule-widget', children: [
-      {
-        path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module')
-          .then(module => module.DashboardModule), canLoad: [AuthGuard],
-      },
-      ...authentication,
-    ],
+    path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module')
+      .then(module => module.DashboardModule), canLoad: [AuthGuard],
   },
+  ...authentication,
+  {path: '**', pathMatch: 'full', redirectTo: '/dashboard/lessons-schedule/groupSlug'},
   {
     path: 'dialog', outlet: 'dialog', loadChildren: () => import('src/app/popup/dialog/dialog.module')
       .then(module => module.DialogModule),
@@ -28,7 +25,6 @@ const routes: Routes = [
     path: 'modal', outlet: 'modal', loadChildren: () => import('src/app/popup/modal/modal.module')
       .then(module => module.ModalModule),
   },
-  {path: '**', pathMatch: 'full', redirectTo: '/schedule-widget/dashboard/lessons-schedule/groupSlug'},
 ];
 
 @NgModule({

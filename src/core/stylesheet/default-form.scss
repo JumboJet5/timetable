@@ -1,11 +1,11 @@
 @import 'functions';
 @import 'breakpoints';
 
-.tb-form {
+.tt-form {
   position: relative;
 }
 
-.tb-form-row {
+.tt-form-row {
   display: flex;
 
   & > .long, & > .wrapper-short, & > .wrapper-short > * {
@@ -22,18 +22,23 @@
   }
 }
 
-.tb-input-label {
+.tt-input-label {
   display: flex;
   flex-direction: column;
   position: relative;
-  margin: 19px 0 0;
+  margin: 15px 0 0;
+
+  .placeholder {
+    margin-top: 0;
+  }
 }
 
-.tb-error {
+.tt-error {
   position: absolute;
-  top: 69px;
+  transform: translateY(4px);
+  top: 100%;
   left: 0;
-  color: #F5A623;
+  color: var(--warn-color);
   font-size: 11px;
   line-height: 13px;
 }
@@ -50,21 +55,24 @@
   }
 }
 
-.tb-input {
+.tt-input {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 49px 0 19px;
+  padding: 0 19px;
   color: #3B3B3B;
   outline: unset;
   font-size: 13px;
   font-weight: 500;
   line-height: 24px;
-  margin-top: 7px;
   height: 45px;
   border: 1px solid var(--primary-color-20);
   border-radius: 4px;
   background-color: #FFFFFF;
   transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.3s, filter, opacity, background);
+
+  .with-icon {
+    padding-right: 49px;
+  }
 
   &.dark {
     color: white;
@@ -121,52 +129,15 @@
   cursor: pointer;
 }
 
-.tb-input-google-code-label {
-  margin-top: 17px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  .placeholder {
-    margin-bottom: 8px;
-    color: rgba(255, 255, 255, 0.7);
-    font-size: 12px;
-    font-weight: 300;
-    line-height: 14px;
-    text-align: center;
-    text-transform: uppercase;
-  }
-
-  .tb-input-google-code {
-    outline: none;
-    height: 45px;
-    width: 152px;
-    padding: 0 19px;
-    border: none;
-    border-radius: 22.5px;
-    background-color: rgba(255, 255, 255, 0.15);
-    text-align: center;
-    color: #DDDDDD;
-    font-family: "Lucida Grande", serif;
-    font-size: 16px;
-    letter-spacing: 11px;
-    line-height: 18px;
-  }
-}
-
 @media screen and (max-width: $x-large) {
-  .tb-form-row {
+  .tt-form-row {
     & > .long, & > .wrapper-short, & > .wrapper-short > * {
       flex: 1 0 0;
       margin-right: 20px;
     }
   }
 
-  .tb-input {
+  .tt-input {
     padding: 0 46px 0 15px;
-  }
-
-  .tb-input-google-code {
-    padding: 0 15px;
   }
 }

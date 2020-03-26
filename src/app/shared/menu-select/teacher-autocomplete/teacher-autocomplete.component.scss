@@ -47,11 +47,11 @@
     padding: 0;
   }
 
-  ::ng-deep app-select-result .tb-input img, ::ng-deep .option-wrapper mat-checkbox {
+  ::ng-deep app-select-result .tt-input img, ::ng-deep .option-wrapper mat-checkbox {
     display: none;
   }
 
-  ::ng-deep app-select-result .tb-input {
+  ::ng-deep app-select-result .tt-input {
     margin-top: 0;
   }
 }

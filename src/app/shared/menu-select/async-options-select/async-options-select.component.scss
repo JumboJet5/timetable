@@ -27,7 +27,7 @@
     z-index: -1;
   }
 
-  ::ng-deep app-select-result .tb-input .result-content, .tb-item {
+  ::ng-deep app-select-result .tt-input .result-content, .tb-item {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
