@@ -23,6 +23,9 @@ export const TEACHER = (id: number): string => `${TEACHERS}${id}/`;
 export const LESSONS = API + '/lessons/';
 export const LESSON = (id: number): string => `${LESSONS}${id}/`;
 
+export const COURSES = API + '/courses/';
+export const COURSE = (id: number): string => `${COURSES}${id}/`;
+
 export const SPECIALTIES = API + '/specialties/';
 export const SPECIALTY = (id: number): string => `${SPECIALTIES}${id}/`;
 

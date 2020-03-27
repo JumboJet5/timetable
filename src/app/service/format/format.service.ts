@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { OptionInterface } from 'src/core/interfaces/interfaces';
 
 @Injectable({providedIn: 'root'})
 export class FormatService {
@@ -11,5 +10,11 @@ export class FormatService {
       else formData.append(key, obj[key] !== null && obj[key] !== undefined ? obj[key] : '');
     });
     return formData;
+  }
+
+  public isObjectsSimilar<T>(group1: T, group2: T): boolean {
+    if (typeof group1 !== 'object' || typeof group2 !== 'object') return group1 === group2;
+    return Object.keys(group1)
+      .every(key => group1[key] === group2[key] || (typeof group1 === typeof group2 && this.isObjectsSimilar(group1[key], group2[key])));
   }
 }

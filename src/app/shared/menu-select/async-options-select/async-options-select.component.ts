@@ -17,13 +17,14 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   @Input() public selectControl: AbstractControl;
   @Input() public multiple: boolean;
   @Input() public disabled = false;
-  @Input() public optionIdKey: keyof IWithId = 'id';
+  @Input() public optionIdKey: keyof TOption = 'id';
+  @Input() public dropByFilter = false;
   public options: TOption[] = [];
   public isLoading = false;
   public simplePlaceholder = 'Оберіть значення';
   public multiplePlaceholder = 'Оберіть значення';
   public withSearch = false;
-  public filterForm: FormGroup = this.formBuilder.group({search: ''});
+  public searchForm: FormGroup = this.formBuilder.group({search: ''});
   private _optionIdsMap: Map<number | string, TOption> = new Map<number, TOption>();
   private _paginationFilters: IPaginationParams = {offset: 0, limit: 20};
   private _isLast = false;
@@ -39,6 +40,12 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   public set filters(filters: IFilterParams) {
     if (filters !== this._filters) {
       this._filters = filters;
+
+      const currOption = this.getSelectedOptions();
+      if (this.dropByFilter && !!currOption
+        && Object.entries(filters).some(([key, value]) => (!!value || value === 0) && value !== currOption[key]))
+        this.selectControl.patchValue(undefined);
+
       Object.entries(filters).forEach(([key, value]) => !value && value !== 0 && (filters[key] = ''));
       this._applyFilters();
     }
@@ -52,7 +59,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
       .pipe(takeUntil(this._destroyUnsubscribe$))
       .subscribe(() => this._applyControlChanges());
 
-    this.filterForm.valueChanges
+    this.searchForm.valueChanges
       .pipe(debounceTime(500))
       .pipe(takeUntil(this._destroyUnsubscribe$))
       .subscribe(() => this._applyFilters());
@@ -60,6 +67,13 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
 
   public getOptionById(id: number | string): TOption {
     return this._optionIdsMap.get(id);
+  }
+
+  public getSelectedOptions(): TOption | TOption[] {
+    if (!this.selectControl) return null;
+
+    return this.multiple ? (this.selectControl.value || []).map(id => this.getOptionById(id))
+      : this.getOptionById(this.selectControl.value);
   }
 
   public onViewportAction(event: { visible: boolean }) {
@@ -71,7 +85,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   }
 
   public onClose(): void {
-    if (this.filterForm.value.search) return this.filterForm.patchValue({search: ''});
+    if (this.searchForm.value.search) return this.searchForm.patchValue({search: ''});
     this._sortOptions();
   }
 
@@ -94,7 +108,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   private _loadOptions(): void {
     if (!this.isLoading && !this._isLast) {
       this.isLoading = true;
-      this.optionService.getOptions({...this.filterForm.value, ...this._paginationFilters, ...this._filters})
+      this.optionService.getOptions({...this.searchForm.value, ...this._paginationFilters, ...this._filters})
         .pipe(takeUntil(this._pageUnsubscribe$))
         .subscribe(res => {
           res.results.forEach(item => this._addOptionToList(item));

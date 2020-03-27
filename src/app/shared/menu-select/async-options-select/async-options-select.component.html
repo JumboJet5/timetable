@@ -6,7 +6,7 @@
             [isDisabled]="selectControl.disabled || disabled">
 
   <app-select-result>
-    <label *ngIf="withSearch && !!selectComponent?.isOpened; else defaultLabel" [formGroup]="filterForm">
+    <label *ngIf="withSearch && !!selectComponent?.isOpened; else defaultLabel" [formGroup]="searchForm">
       <input #searchInput class="select-input" placeholder="Пошук..." formControlName="search">
     </label>
     <ng-template #defaultLabel>

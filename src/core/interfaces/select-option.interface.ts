@@ -4,7 +4,7 @@ import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 
 export interface IWithId {
   id: number;
-  slug: string;
+  slug?: string;
   [key: string]: any;
 }
 

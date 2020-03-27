@@ -1,11 +1,15 @@
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormatService } from '@app/service/format/format.service';
+import { CourseSelectComponent } from '@app/shared/menu-select/course-select/course-select.component';
 import { FacultySelectComponent } from '@app/shared/menu-select/faculty-select/faculty-select.component';
 import { SpecialtySelectComponent } from '@app/shared/menu-select/specialty-select/specialty-select.component';
 import { UniversitySelectComponent } from '@app/shared/menu-select/university-select/university-select.component';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { IFaculty } from 'src/core/interfaces/faculty.interface';
+import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
   selector: 'app-group-list-filter',
@@ -16,20 +20,25 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
   @ViewChild(UniversitySelectComponent, {static: true}) univSelect: UniversitySelectComponent;
   @ViewChild(FacultySelectComponent, {static: true}) facSelect: FacultySelectComponent;
   @ViewChild(SpecialtySelectComponent, {static: true}) specSelect: SpecialtySelectComponent;
+  @ViewChild(CourseSelectComponent, {static: true}) courseSelect: CourseSelectComponent;
   public univControl: FormControl = new FormControl('');
   public facControl: FormControl = new FormControl('');
   public specControl: FormControl = new FormControl('');
-  public filterForm: FormGroup = new FormGroup({univ: this.univControl, faculty: this.facControl, specialty: this.specControl});
+  public courseControl: FormControl = new FormControl('');
+  public filterForm: FormGroup = new FormGroup({
+    univ: this.univControl,
+    faculty: this.facControl,
+    specialty: this.specControl,
+    course: this.courseControl,
+  });
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _router: Router,
+              private _formatService: FormatService,
               private _route: ActivatedRoute) { }
 
   public ngOnInit(): void {
     this._applyFiltersChange();
-    this._observeUniversity();
-    this._observeFaculty();
-    this._observeSpecialty();
     this._initFiltersValue();
   }
 
@@ -42,34 +51,18 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
   private _applyFiltersChange(): void {
     this.filterForm.valueChanges
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe(value => {
-        const filters = [value.univ || 'any', value.faculty || 'any', value.specialty || 'any'];
+      .pipe(distinctUntilChanged((source, previous) => this._formatService.isObjectsSimilar(source, previous)))
+      .pipe(debounceTime(100))
+      .subscribe(({specialty, univ, faculty, course}) => {
+        const specialtyOption = this.specSelect.getSelectedOptions() as ISpecialty;
+        faculty = !!specialtyOption ? specialtyOption.faculty : faculty;
+        const facultyOption = this.facSelect.getSelectedOptions() as IFaculty;
+        univ = !!facultyOption ? facultyOption.univ : univ;
+        course = specialty ? course : undefined;
+        this.filterForm.patchValue({univ, faculty, course});
+        const filters = [univ || 'any', faculty || 'any', specialty || 'any', course || 'any'];
         this._router.navigate(['dashboard', 'groups', ...filters]);
       });
-  }
-
-  private _observeUniversity(): void {
-    this.univControl.valueChanges
-      .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => {
-        this._autoResetFaculty(true);
-        this._autoResetSpecialty(true);
-      });
-  }
-
-  private _observeFaculty(): void {
-    this.facControl.valueChanges
-      .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => {
-        this._autoResetFaculty();
-        this._autoResetSpecialty(true);
-      });
-  }
-
-  private _observeSpecialty(): void {
-    this.specControl.valueChanges
-      .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => this._autoResetSpecialty());
   }
 
   private _initFiltersValue(): void {
@@ -80,22 +73,6 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
     primaryRoute.params
       .pipe(takeUntil(this._unsubscribe))
       .subscribe(value => this._patchValueFromRoute(value));
-  }
-
-  private _autoResetFaculty(dropping: boolean = false): void {
-    const fac = this.facSelect.getOptionById(this.facControl.value);
-    if (!fac || fac.univ === this.univControl.value) return;
-
-    if (dropping) this.facControl.patchValue('', {onlySelf: true});
-    else this.univControl.patchValue(fac.univ, {onlySelf: true});
-  }
-
-  private _autoResetSpecialty(dropping: boolean = false): void {
-    const spec = this.specSelect.getOptionById(this.specControl.value);
-    if (!spec || spec.faculty === this.facControl.value) return;
-
-    if (dropping) this.specControl.patchValue('', {onlySelf: true});
-    else this.facControl.patchValue(spec.faculty, {onlySelf: true});
   }
 
   private _patchValueFromRoute(value: any): void {

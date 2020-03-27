@@ -26,7 +26,6 @@
   display: flex;
   flex-direction: column;
   position: relative;
-  margin: 15px 0 0;
 
   .placeholder {
     margin-top: 0;
@@ -35,7 +34,7 @@
 
 .tt-error {
   position: absolute;
-  transform: translateY(4px);
+  transform: translateY(-12px);
   top: 100%;
   left: 0;
   color: var(--warn-color);
@@ -44,9 +43,9 @@
 }
 
 .placeholder {
-  margin-top: 15px;
-  font-size: 16px;
-  line-height: 24px;
+  margin: 0 0 5px;
+  font-size: 14px;
+  line-height: 18px;
 
   .lighter, &.lighter {
     display: flex;
@@ -59,6 +58,7 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0 19px;
+  margin-bottom: 15px;
   color: #3B3B3B;
   outline: unset;
   font-size: 13px;

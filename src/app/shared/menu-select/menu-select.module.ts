@@ -22,6 +22,7 @@ import { ThemeSelectComponent } from './theme-select/theme-select.component';
 import { UniversitySelectComponent } from './university-select/university-select.component';
 import { FacultySelectComponent } from 'src/app/shared/menu-select/faculty-select/faculty-select.component';
 import { SpecialtySelectComponent } from './specialty-select/specialty-select.component';
+import { CourseSelectComponent } from './course-select/course-select.component';
 import { LessonFormatSelectComponent } from './lesson-format-select/lesson-format-select.component';
 
 
@@ -36,12 +37,19 @@ const exportComponents = [
   DaySelectComponent,
   LessonTimeSelectComponent,
   TeacherAutocompleteComponent,
+  LessonWeeksSelectorComponent,
+  UniversitySelectComponent,
+  FacultySelectComponent,
+  SpecialtySelectComponent,
+  CourseSelectComponent,
   LessonFormatSelectComponent,
 ];
 
 @NgModule({
-  declarations: [...exportComponents, LessonWeeksSelectorComponent, UniversitySelectComponent, FacultySelectComponent, SpecialtySelectComponent],
-  exports: [...exportComponents, LessonWeeksSelectorComponent, UniversitySelectComponent, FacultySelectComponent, SpecialtySelectComponent],
+  declarations: [...exportComponents],
+  exports: [
+    ...exportComponents,
+  ],
   imports: [
     CommonModule,
     ScrollModule,

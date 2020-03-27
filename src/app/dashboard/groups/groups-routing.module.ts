@@ -15,7 +15,7 @@ const routes: Routes = [
     ],
   },
   {
-    path: ':univ/:faculty/:specialty', component: GroupsComponent, children: [
+    path: ':univ/:faculty/:specialty/:course', component: GroupsComponent, children: [
       {path: '', component: GroupsListComponent},
       {path: '', outlet: 'filter', component: GroupListFilterComponent},
     ],

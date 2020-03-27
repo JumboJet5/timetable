@@ -14,10 +14,10 @@
             [isCircularSelecting]="!isLoading"
             [isDisabled]="selectControl.disabled || disabled">
 
-  <app-select-result [toggleFunc]="null">
-    <label [formGroup]="filterForm">
+  <app-select-result>
+    <label [formGroup]="searchForm">
       <input #searchInput
-             (keydown.enter)="$event.preventDefault(); filterForm.get('search').patchValue('')"
+             (keydown.enter)="$event.preventDefault(); searchForm.get('search').patchValue('')"
              (focus)="selectComponent.isOpened = true"
              class="select-input"
              placeholder="Додати викладача"

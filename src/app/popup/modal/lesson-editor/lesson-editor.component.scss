@@ -1,9 +1,9 @@
 @import '../../../../core/stylesheet/constants';
 
 .placeholder {
-  margin-top: 15px;
-  font-size: 16px;
-  line-height: 24px;
+  margin: 0 0 5px;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 .lesson-form {
@@ -14,8 +14,9 @@
   display: flex;
 
   &.with-border {
-    padding-bottom: 20px;
+    padding-bottom: 10px;
     border-bottom: 1px solid #e4e4e4;
+    margin-bottom: 15px;
   }
 
   .select-column {
