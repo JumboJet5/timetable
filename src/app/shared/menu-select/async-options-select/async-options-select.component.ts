@@ -43,7 +43,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
 
       const currOption = this.getSelectedOptions();
       if (this.dropByFilter && !!currOption
-        && Object.entries(filters).some(([key, value]) => (!!value || value === 0) && value !== currOption[key]))
+        && Object.entries(filters).some(([key, value]) => (!!value || value === 0) && key in currOption && value !== currOption[key]))
         this.selectControl.patchValue(undefined);
 
       Object.entries(filters).forEach(([key, value]) => !value && value !== 0 && (filters[key] = ''));

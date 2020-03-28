@@ -1,5 +1,5 @@
 import { teacherDegreeTypesMap } from '@const/collections';
-import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
+import { ISimplifiedLessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ILesson } from 'src/core/interfaces/lesson.interface';
 import { TimetableTeacherInfoInterface } from 'src/core/interfaces/timetable-teacher-info.interface';
 
@@ -9,7 +9,7 @@ export class Lesson implements ILesson {
   public format: number;
   public housing: number | { id: number; name: string; short_name: string; location: null };
   public id: number;
-  public lesson_time: number | ILessonTime;
+  public lesson_time: number | ISimplifiedLessonTime;
   public name_full: string;
   public name_short: string;
   public room: number | { id: number; num: string; floor: number };

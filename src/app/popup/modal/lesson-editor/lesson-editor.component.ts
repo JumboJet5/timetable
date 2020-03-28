@@ -61,12 +61,12 @@ export class LessonEditorComponent implements OnInit {
   }
 
   public onCreate(): void {
-    if (this.lessonForm.valid) this.scheduleService.createLesson(this.lessonForm.value)
+    if (this.lessonForm.valid) this.lessonService.createLesson(this.lessonForm.value)
       .subscribe(() => this.closeModal('accept'));
   }
 
   public onUpdate(): void {
-    if (this.lessonForm.valid) this.scheduleService.updateLesson(this.lessonForm.value, this.lesson.id)
+    if (this.lessonForm.valid) this.lessonService.updateLesson(this.lessonForm.value, this.lesson.id)
       .subscribe(() => this.closeModal('accept'));
   }
 

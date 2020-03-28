@@ -1,5 +1,5 @@
 import { dayMap, weekDays } from '@const/collections';
-import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
+import { ISimplifiedLessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ILesson } from 'src/core/interfaces/lesson.interface';
 import { IPeriod } from '../interfaces/period.interface';
 import { ITimetable } from '../interfaces/timetable.interface';
@@ -26,7 +26,7 @@ export class WeekSchedule {
     return this._schedule;
   }
 
-  public getScheduleTimes(): ILessonTime[] {
+  public getScheduleTimes(): ISimplifiedLessonTime[] {
     return this._schedule && this._schedule.lesson_time || [];
   }
 

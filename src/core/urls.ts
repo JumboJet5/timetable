@@ -35,6 +35,12 @@ export const FACULTY = (id: number): string => `${FACULTIES}${id}/`;
 export const UNIVERSITIES = API + '/universities/';
 export const UNIVERSITY = (id: number): string => `${UNIVERSITIES}${id}/`;
 
+export const SEMESTERS = API + '/semesters/';
+export const SEMESTER = (id: number): string => `${SEMESTERS}${id}/`;
+
+export const LESSON_TIMES = API + '/lessontime/';
+export const LESSON_TIME = (id: number): string => `${LESSON_TIMES}${id}/`;
+
 export const TIMETABLE = API + '/timetable/';
 
 export const GROUPSEMESTER = API + '/groupsemester/';

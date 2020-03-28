@@ -1,5 +1,5 @@
 import { TimetableTeacherInfoInterface } from 'src/core/interfaces/timetable-teacher-info.interface';
-import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
+import { ISimplifiedLessonTime } from 'src/core/interfaces/lesson-time.interface';
 
 export interface ILesson {
   day?: number;
@@ -14,7 +14,7 @@ export interface ILesson {
     location: null
   };
   id: number;
-  lesson_time: number | ILessonTime;
+  lesson_time: number | ISimplifiedLessonTime;
   name_full: string;
   name_short: string;
   room: number | {

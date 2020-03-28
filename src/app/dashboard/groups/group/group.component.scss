@@ -1,4 +1,13 @@
 :host {
-  display: block;
+  display: flex;
   padding: 46px 24px;
+
+  app-group-semesters-details, app-group-entity {
+    flex: 1 0 300px;
+    margin-right: 35px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
 }

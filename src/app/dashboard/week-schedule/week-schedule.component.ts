@@ -1,6 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { GroupsemesterService } from '@app/service/groupsemester/groupsemester.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
 import { Lesson } from '@classes/lesson';
@@ -31,6 +32,7 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void> = new Subject<void>();
 
   constructor(private scheduleService: ScheduleService,
+              private groupsemesterService: GroupsemesterService,
               private lessonService: LessonService,
               private route: ActivatedRoute,
               private popupService: PopupService,
@@ -79,14 +81,14 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
   public moveLesson(lessonId: number, time: number, day: number) {
     this.isLoading = true;
     this.lessonService.getLesson(lessonId) // todo remove get lesson from server
-      .pipe(switchMap(lesson => this.scheduleService.updateLesson(this._formatCreateLessonBody(lesson, time, day), lesson.id)))
+      .pipe(switchMap(lesson => this.lessonService.updateLesson(this._formatCreateLessonBody(lesson, time, day), lesson.id)))
       .subscribe(() => this._updatePage(true));
   }
 
   public pasteLesson(time: number, day: number) {
     this.isLoading = true;
     this.lessonService.getLesson(this.clipboard.id) // todo remove get lesson from server
-      .pipe(switchMap(lesson => this.scheduleService.createLesson(this._formatCreateLessonBody(lesson, time, day))))
+      .pipe(switchMap(lesson => this.lessonService.createLesson(this._formatCreateLessonBody(lesson, time, day))))
       .subscribe(() => this._updatePage(true));
   }
 
@@ -123,7 +125,7 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
 
   private _getGroupsemester() {
     if (this.weekSchedule)
-      this.scheduleService.getGroupSemester(this.weekSchedule.getScheduleGroupId(), this.weekSchedule.getScheduleSemesterId())
+      this.groupsemesterService.getGroupSemester(this.weekSchedule.getScheduleGroupId(), this.weekSchedule.getScheduleSemesterId())
         .subscribe(res => this._groupsemester = res && res.count ? res.results[0].id : undefined);
   }
 }

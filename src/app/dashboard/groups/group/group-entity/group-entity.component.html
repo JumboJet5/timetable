@@ -1,0 +1,49 @@
+<form [formGroup]="groupEntityForm" class="tt-form">
+  <label class="tt-input-label">
+    <span class="placeholder">Ім'я</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{getControlError(groupEntityForm, 'name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Коротке ім'я</span>
+    <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
+    <span class="tt-error">{{getControlError(groupEntityForm, 'short_name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Кількість груп</span>
+    <input class="tt-input" type="number" formControlName="subgroups" placeholder="Введіть кількість груп">
+    <span class="tt-error">{{getControlError(groupEntityForm, 'subgroups')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Slug</span>
+    <input class="tt-input" formControlName="slug" placeholder="Введіть кількість груп">
+    <span class="tt-error">{{getControlError(groupEntityForm, 'slug')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Університет</span>
+    <app-university-select [selectControl]="groupEntityForm.get('univ')"></app-university-select>
+    <span class="tt-error">{{getControlError(groupEntityForm, 'univ')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Факультет</span>
+    <app-faculty-select [selectControl]="groupEntityForm.get('faculty')"
+                        [filters]="{univ: groupEntityForm.value.univ}"
+                        dropByFilter="true"></app-faculty-select>
+    <span class="tt-error">{{getControlError(groupEntityForm, 'faculty')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Спеціальність</span>
+    <app-specialty-select [selectControl]="groupEntityForm.get('specialty')"
+                          [filters]="{univ: groupEntityForm.value.univ, faculty: groupEntityForm.value.faculty}"
+                          dropByFilter="true"></app-specialty-select>
+    <span class="tt-error">{{getControlError(groupEntityForm, 'specialty')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Курс</span>
+    <app-course-select [selectControl]="groupEntityForm.get('course')"
+                       [disabled]="!groupEntityForm.value.specialty"
+                       [filters]="{specialty: groupEntityForm.value.specialty}"
+                       dropByFilter="true"></app-course-select>
+    <span class="tt-error">{{getControlError(groupEntityForm, 'course')}}</span>
+  </label>
+</form>

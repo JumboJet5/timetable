@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
+import { ISimplifiedLessonTime } from 'src/core/interfaces/lesson-time.interface';
 
 @Component({
   selector: 'app-lesson-time-select',
@@ -9,7 +9,7 @@ import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 })
 export class LessonTimeSelectComponent {
   @Input() public selectControl: AbstractControl;
-  @Input() public lessonTimes: ILessonTime[];
+  @Input() public lessonTimes: ISimplifiedLessonTime[];
   @Input() public disabled = false;
 
   public getLessonTimeById(id: number): string {

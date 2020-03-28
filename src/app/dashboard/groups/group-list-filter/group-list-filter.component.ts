@@ -54,11 +54,11 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
       .pipe(distinctUntilChanged((source, previous) => this._formatService.isObjectsSimilar(source, previous)))
       .pipe(debounceTime(100))
       .subscribe(({specialty, univ, faculty, course}) => {
+        course = specialty ? course : undefined;
         const specialtyOption = this.specSelect.getSelectedOptions() as ISpecialty;
         faculty = !!specialtyOption ? specialtyOption.faculty : faculty;
         const facultyOption = this.facSelect.getSelectedOptions() as IFaculty;
         univ = !!facultyOption ? facultyOption.univ : univ;
-        course = specialty ? course : undefined;
         this.filterForm.patchValue({univ, faculty, course});
         const filters = [univ || 'any', faculty || 'any', specialty || 'any', course || 'any'];
         this._router.navigate(['dashboard', 'groups', ...filters]);
