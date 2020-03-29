@@ -1,33 +1,18 @@
-<div *ngFor="let groupsemester of groupsemesters" class="groupsemester tt-input">
+<app-groupsemester-details *ngFor="let groupsemester of groupsemesters; let index = index"
+                           (delete)="onDelete(index)"
+                           [groupsemester]="groupsemester"
+                           [semester]="semesterMap.get(groupsemester.semester)"
+                           [groupThemes]="groupThemes"
+                           [lessonTimes]="lessonTimes"></app-groupsemester-details>
 
-  <div (click)="toggleGroupSemester(groupsemester.semester)"
-       [class.opened]="groupsemester.semester === openedId"
-       class="groupsemester-details-header">
+<div class="control-row">
+  <button mat-flat-button color="primary">
+    <mat-icon>add</mat-icon>
+    <span>Додати семестр</span>
+  </button>
 
-    <div>{{semesterMap.get(groupsemester.semester)?.num}} семестр</div>
-    <div class="period">{{semesterMap.get(groupsemester.semester)?.start | date: 'dd.MM.yyyy'}} - {{semesterMap.get(groupsemester.semester)?.end | date: 'dd.MM.yyyy'}}</div>
-    <img class="arrow" src="../../../../../static/assets/img/ic_filter_arrow.svg" alt="arrow">
-
-  </div>
-
-  <div class="groupsemester-details" [@accordionTransitionAnimation]="groupsemester.semester === openedId">
-
-    <div class="placeholder">Предмети</div>
-    <div class="theme-wrapper">
-      <div class="theme" *ngFor="let theme of groupThemes">
-        <mat-checkbox color="primary"
-                      (change)="themeChanged($event, theme, groupsemester)"
-                      [checked]="isThemeEnableForGroupsemester(theme.id, groupsemester)">{{theme.name}}</mat-checkbox>
-      </div>
-    </div>
-
-    <div class="placeholder">Розклад</div>
-    <div class="lesson-time-wrapper">
-      <div class="lesson-time" *ngFor="let lessonTime of lessonTimes">
-        <mat-checkbox [checked]="isLessonTimeEnableForGroupsemester(lessonTime.id, groupsemester)"
-                      color="primary">{{lessonTime.start}} - {{lessonTime.end}}</mat-checkbox>
-      </div>
-    </div>
-  </div>
-
+  <button mat-flat-button>
+    <mat-icon>add</mat-icon>
+    <span>Створити семестр</span>
+  </button>
 </div>

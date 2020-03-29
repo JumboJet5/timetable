@@ -125,7 +125,7 @@ export class WeekScheduleComponent implements OnInit, OnDestroy {
 
   private _getGroupsemester() {
     if (this.weekSchedule)
-      this.groupsemesterService.getGroupSemester(this.weekSchedule.getScheduleGroupId(), this.weekSchedule.getScheduleSemesterId())
+      this.groupsemesterService.getGroupsemester(this.weekSchedule.getScheduleGroupId(), this.weekSchedule.getScheduleSemesterId())
         .subscribe(res => this._groupsemester = res && res.count ? res.results[0].id : undefined);
   }
 }

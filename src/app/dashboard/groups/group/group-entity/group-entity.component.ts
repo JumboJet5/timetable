@@ -81,7 +81,7 @@ export class GroupEntityComponent implements OnInit, OnDestroy {
     this.groupEntityForm.valueChanges
       .pipe(takeUntil(this._unsubscribe))
       .pipe(distinctUntilChanged((source, previous) => this._formatService.isObjectsSimilar(source, previous)))
-      .pipe(debounceTime(100))
+      .pipe(debounceTime(0)) // for apply control value changes first
       .subscribe(({specialty, univ, faculty, course}) => {
         course = specialty ? course : undefined;
         const courseOption = this.courseSelect.getSelectedOptions() as ICourse;

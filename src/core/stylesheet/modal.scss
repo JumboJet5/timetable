@@ -8,7 +8,7 @@
   max-width: 1050px;
   max-height: calc(100vh - 60px);
   background-color: white;
-  z-index: 51;
+  z-index: 151;
   box-sizing: border-box;
   overflow: auto;
 }
@@ -29,5 +29,5 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, .3);
-  z-index: 50;
+  z-index: 150;
 }

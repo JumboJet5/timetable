@@ -42,7 +42,7 @@
     <span class="placeholder">Курс</span>
     <app-course-select [selectControl]="groupEntityForm.get('course')"
                        [disabled]="!groupEntityForm.value.specialty"
-                       [filters]="{specialty: groupEntityForm.value.specialty}"
+                       [filters]="{univ: groupEntityForm.value.univ, faculty: groupEntityForm.value.faculty, specialty: groupEntityForm.value.specialty}"
                        dropByFilter="true"></app-course-select>
     <span class="tt-error">{{getControlError(groupEntityForm, 'course')}}</span>
   </label>

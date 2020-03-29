@@ -1,13 +1,14 @@
 :host {
   display: flex;
   padding: 46px 24px;
+  max-width: 1200px;
 
-  app-group-semesters-details, app-group-entity {
+  app-group-semesters-details {
     flex: 1 0 300px;
-    margin-right: 35px;
+  }
 
-    &:last-child {
-      margin-right: 0;
-    }
+  app-group-entity {
+    flex: 0 0 360px;
+    margin-right: 35px;
   }
 }

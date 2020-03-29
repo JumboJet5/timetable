@@ -43,4 +43,5 @@ export const LESSON_TIME = (id: number): string => `${LESSON_TIMES}${id}/`;
 
 export const TIMETABLE = API + '/timetable/';
 
-export const GROUPSEMESTER = API + '/groupsemester/';
+export const GROUPSEMESTERS = API + '/groupsemester/';
+export const GROUPSEMESTER = (id: number): string => `${GROUPSEMESTERS}${id}/`;

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { InViewportModule } from 'ng-in-viewport';
 
@@ -13,6 +14,7 @@ import { GroupsListComponent } from './groups-list/groups-list.component';
 import { GroupComponent } from './group/group.component';
 import { GroupEntityComponent } from './group/group-entity/group-entity.component';
 import { GroupSemestersDetailsComponent } from './group/group-semesters-details/group-semesters-details.component';
+import { GroupsemesterDetailsComponent } from './group/group-semesters-details/groupsemester-details/groupsemester-details.component';
 
 
 @NgModule({
@@ -23,6 +25,7 @@ import { GroupSemestersDetailsComponent } from './group/group-semesters-details/
     GroupComponent,
     GroupEntityComponent,
     GroupSemestersDetailsComponent,
+    GroupsemesterDetailsComponent,
   ],
   imports: [
     CommonModule,
@@ -32,6 +35,7 @@ import { GroupSemestersDetailsComponent } from './group/group-semesters-details/
     ReactiveFormsModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatIconModule,
   ],
 })
 export class GroupsModule { }

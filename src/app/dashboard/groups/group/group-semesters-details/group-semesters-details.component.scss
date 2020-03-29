@@ -1,57 +1,17 @@
 @import '../../../../../core/stylesheet/functions';
 
-.groupsemester {
-  height: unset;
-  padding: 0 16px 0 0;
-
-  &:first-child {
-    margin-top: 23px;
-  }
+:host {
+  margin-top: 23px;
 }
 
-.groupsemester-details-header {
-  display: flex;
-  height: 43px;
-  align-items: baseline;
-  line-height: 43px;
-  padding-left: 16px;
-  cursor: pointer;
+.control-row {
+  .mat-flat-button  {
+    &:first-child {
+      margin-left: 0;
+    }
 
-  .period {
-    line-height: 16px;
-    font-size: 10px;
-    font-weight: 300;
-    margin-left: 10px;
-  }
-
-  &.opened .arrow {
-    transform: scaleY(-1);
-  }
-
-  .arrow {
-    user-select: none;
-    margin-left: auto;
-    transform: scaleY(1);
-    transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.15s, transform, opacity);
-  }
-}
-
-.groupsemester-details {
-  .placeholder {
-    border-bottom: 1px solid var(--primary-color-20);
-    margin-bottom: 6px;
-    margin-left: 19px;
-  }
-
-  .theme-wrapper, .lesson-time-wrapper {
-    margin-bottom: 6px;
-    max-height: 320px;
-    overflow: auto;
-  }
-
-  ::ng-deep.mat-checkbox-layout {
-    padding-left: 19px;
-    height: 40px;
-    align-items: center;
+    &:last-child {
+      margin-right: 0;
+    }
   }
 }
