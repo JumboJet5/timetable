@@ -6,7 +6,7 @@
                            [lessonTimes]="lessonTimes"></app-groupsemester-details>
 
 <div class="control-row">
-  <button mat-flat-button color="primary">
+  <button (click)="addSemester()" [disabled]="!group" mat-flat-button color="primary">
     <mat-icon>add</mat-icon>
     <span>Додати семестр</span>
   </button>

@@ -25,6 +25,10 @@ export class GroupsemesterService {
     return this.http.put<IGroupsemester>(URLS.GROUPSEMESTER(data.id), body);
   }
 
+  public createGroupsemester(body: { group: number, semester: number, show_lessons_number: boolean }) {
+    return this.http.post(URLS.GROUPSEMESTERS, body);
+  }
+
   public deleteGroupSemester(id: number): Observable<null> {
     return this.http.delete<null>(URLS.GROUPSEMESTER(id));
   }

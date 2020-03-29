@@ -9,9 +9,10 @@ import { SelectInputModule } from '@app/shared/select-input/select-input.module'
 import { LessonEditorComponent } from 'src/app/popup/modal/lesson-editor/lesson-editor.component';
 
 import { ModalRoutingModule } from 'src/app/popup/modal/modal-routing.module';
+import { CreateGroupsemesterComponent } from './create-groupsemester/create-groupsemester.component';
 
 @NgModule({
-  declarations: [LessonEditorComponent],
+  declarations: [LessonEditorComponent, CreateGroupsemesterComponent],
   imports: [
     CommonModule,
     ModalRoutingModule,

@@ -5,6 +5,7 @@ import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service'
 import { PopupService } from '@app/service/modal/popup.service';
 import { SemesterService } from '@app/service/semester/semester.service';
 import { ThemeService } from '@app/service/theme/theme.service';
+import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { IGroup } from 'src/core/interfaces/group.interface';
 import { IGroupsemester } from 'src/core/interfaces/groupsemester.interface';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
@@ -42,6 +43,16 @@ export class GroupSemestersDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.popupService.getChanel(PopupChanelEnum.ADD_SEMESTER_TO_GROUP)
+      .subscribe((res: IGroupsemester) => this.groupsemesters.push(res));
+  }
+
+  public onDelete(index: number) {
+    this.groupsemesters.splice(index, 1);
+  }
+
+  public addSemester(): void {
+    if (!!this.group) this.popupService.openReactiveModal(['add-semester-to-group'], {group: this.group.id});
   }
 
   private _getAllGroupSemestersAdditionalInfo(group: number) {
@@ -56,9 +67,5 @@ export class GroupSemestersDetailsComponent implements OnInit {
 
     this.lessonTimeService.getLessonTimes({group})
       .subscribe(res => this.lessonTimes = res.results);
-  }
-
-  public onDelete(index: number) {
-    this.groupsemesters.splice(index, 1);
   }
 }

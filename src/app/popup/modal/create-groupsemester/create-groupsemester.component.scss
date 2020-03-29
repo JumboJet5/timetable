@@ -1,0 +1,16 @@
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+
+  .mat-flat-button {
+    min-width: 100px;
+    margin: 0 10px;
+  }
+}
+
+.modal-wrapper {
+  min-width: 360px;
+  min-height: 260px;
+}

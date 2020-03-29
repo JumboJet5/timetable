@@ -1,0 +1,19 @@
+<div (click)="closeModal()" class="overlay-backdrop"></div>
+
+<div class="modal-wrapper" [formGroup]="addSemesterToGroupForm">
+  <app-semester-select [selectControl]="addSemesterToGroupForm.get('semester')"
+                       [filters]="{group: addSemesterToGroupForm.value.group}"
+                       dropByFilter="true"></app-semester-select>
+
+  <mat-checkbox formControlName="show_lessons_number" color="primary">Показувати номери пар</mat-checkbox>
+
+  <div class="control-row">
+    <button (click)="create()" [disabled]="addSemesterToGroupForm.invalid" mat-flat-button color="primary">
+      <span>Створити</span>
+    </button>
+
+    <button (click)="closeModal()" mat-flat-button>
+      <span>Скасувати</span>
+    </button>
+  </div>
+</div>

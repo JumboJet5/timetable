@@ -37,7 +37,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   private _filters: IFilterParams;
 
   @Input()
-  public set filters(filters: IFilterParams) {
+  public set filters(filters: IFilterParams) { // todo separate to extended class and multiple realization
     if (filters !== this._filters) {
       this._filters = filters;
 

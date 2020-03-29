@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '@app/service/group/group.service';
 import { LessonService } from '@app/service/lesson/lesson.service';
-import { PopupService } from '@app/service/modal/popup.service';
 import { ScheduleService } from '@app/service/schedule/schedule.service';
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
@@ -32,7 +31,6 @@ export class LessonEditorComponent implements OnInit {
               private route: ActivatedRoute,
               private scheduleService: ScheduleService,
               private groupService: GroupService,
-              private popupService: PopupService,
               private lessonService: LessonService) {}
 
   public ngOnInit(): void {
@@ -57,7 +55,7 @@ export class LessonEditorComponent implements OnInit {
   }
 
   public closeModal(answer: 'accept' | 'cancel' = 'cancel'): void {
-    this.popupService.closeModal(answer);
+    this.router.navigate([{outlets: {modal: null}}], {state: {answer}});
   }
 
   public onCreate(): void {
@@ -86,7 +84,7 @@ export class LessonEditorComponent implements OnInit {
       .subscribe(group => this.group = group);
   }
 
-  public onFormatChanges(value: 'online' | 'offline' | 'unknown') {
+  public onFormatChanges(value: 'online' | 'offline' | 'unknown' | string) {
     switch (value) {
       case 'offline':
         this.lessonForm.get('housing').enable();
