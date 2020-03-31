@@ -19,4 +19,12 @@ export class LessonTimeService {
   public getLessonTime(id: number): Observable<ILessonTime> {
     return this.http.get<ILessonTime>(URLS.LESSON_TIME(id));
   }
+
+  public createLessonTime(body: any): Observable<ILessonTime> {
+    return this.http.post<ILessonTime>(URLS.LESSON_TIMES, body);
+  }
+
+  public deleteLessonTime(id: number): Observable<null> {
+    return this.http.delete<null>(URLS.LESSON_TIME(id));
+  }
 }

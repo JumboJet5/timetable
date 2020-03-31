@@ -1,0 +1,81 @@
+<div class="date-picker-wrapper" appClickOutside (clickOutside)="isOpened = false">
+    <button class="tt-input date-picker-value"
+            [disabled]="isDisabled"
+            (click)="isOpened = !isOpened">
+        <span *ngIf="chosenRange.from || chosenRange.to; else placeholderLabel">{{(chosenRange.from | date: 'dd.M.y') + ' - ' + (chosenRange.to | date: 'dd.M.y')}}</span>
+        <ng-template #placeholderLabel>{{placeholder}}</ng-template>
+      <mat-icon>calendar_today</mat-icon>
+    </button>
+
+    <div class="date-picker-label" *ngIf="isOpened">
+      <div class="month-wrapper">
+
+        <div class="from-month">
+          <div class="month-row">
+            <button mat-icon-button (click)="nextMonth(-1, 'from')" [disabled]="!isPreviousMonthEnable('from')">
+              <img [ngStyle]="{transform: 'rotate(180deg)'}" src="../../../static/assets/img/ic_show_black.svg" alt>
+            </button>
+
+            <span class="month">{{currentMonth?.from | date: 'MMMM y'}}</span>
+
+            <button mat-icon-button (click)="nextMonth(1, 'from')" [disabled]="!isNextMonthEnable('from')">
+              <img src="../../../static/assets/img/ic_show_black.svg" alt>
+            </button>
+          </div>
+
+          <div class="week-row">
+            <div class="day-name" *ngFor="let day of weekDays">{{day}}</div>
+          </div>
+
+          <div class="days-table">
+            <button *ngFor="let day of currentDays.from"
+                    class="day"
+                    [class.other-month-day]="currentMonth?.from?.getMonth() !== day.getMonth()"
+                    [class.today]="isToday(day)"
+                    [class.in-range]="isInRange(day)"
+                    [class.range-start]="chosenRange?.from && chosenRange.from.getTime() === day.getTime()"
+                    [class.range-end]="chosenRange?.to && chosenRange.to.getTime() === day.getTime()"
+                    [disabled]="isUnactivated(day)"
+                    (click)="chooseDay(day)"
+                    (mouseenter)="onEnter(day)"
+                    matRipple>{{day.getDate()}}</button>
+          </div>
+        </div>
+        <div class="to-month">
+          <div class="month-row">
+            <button mat-icon-button (click)="nextMonth(-1, 'to')" [disabled]="!isPreviousMonthEnable('to')">
+              <img [ngStyle]="{transform: 'rotate(180deg)'}" src="../../../static/assets/img/ic_show_black.svg" alt>
+            </button>
+
+            <span class="month">{{currentMonth.to | date: 'MMMM y'}}</span>
+
+            <button mat-icon-button (click)="nextMonth(1, 'to')" [disabled]="!isNextMonthEnable('to')">
+              <img src="../../../static/assets/img/ic_show_black.svg" alt>
+            </button>
+          </div>
+
+          <div class="week-row">
+            <div class="day-name" *ngFor="let day of weekDays">{{day}}</div>
+          </div>
+
+          <div class="days-table">
+            <button *ngFor="let day of currentDays.to"
+                    class="day"
+                    [class.other-month-day]="currentMonth?.to?.getMonth() !== day.getMonth()"
+                    [class.today]="isToday(day)"
+                    [class.in-range]="isInRange(day)"
+                    [class.range-start]="chosenRange?.from && chosenRange.from.getTime() === day.getTime()"
+                    [class.range-end]="chosenRange?.to && chosenRange.to.getTime() === day.getTime()"
+                    [disabled]="isUnactivated(day)"
+                    (click)="chooseDay(day)"
+                    (mouseenter)="onEnter(day)"
+                    matRipple>{{day.getDate()}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="control-row">
+        <button mat-stroked-button color="primary" (click)="onReset()">Reset</button>
+        <button mat-flat-button color="primary" (click)="onApply()" [disabled]="isRangeChanging">Apply</button>
+      </div>
+    </div>
+</div>

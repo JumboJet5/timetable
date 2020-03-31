@@ -24,6 +24,7 @@ import { FacultySelectComponent } from 'src/app/shared/menu-select/faculty-selec
 import { SpecialtySelectComponent } from './specialty-select/specialty-select.component';
 import { CourseSelectComponent } from './course-select/course-select.component';
 import { SemesterSelectComponent } from './semester-select/semester-select.component';
+import { YearSelectComponent } from './year-select/year-select.component';
 import { LessonFormatSelectComponent } from './lesson-format-select/lesson-format-select.component';
 
 
@@ -47,10 +48,11 @@ const exportComponents = [
 ];
 
 @NgModule({
-  declarations: [...exportComponents, SemesterSelectComponent],
+  declarations: [...exportComponents, SemesterSelectComponent, YearSelectComponent],
   exports: [
     ...exportComponents,
     SemesterSelectComponent,
+    YearSelectComponent,
   ],
   imports: [
     CommonModule,

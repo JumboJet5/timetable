@@ -53,6 +53,10 @@
     color: rgba(119, 119, 119, 0.5);
   }
 }
+input.tt-input[type="time"]::-webkit-inner-spin-button,
+input.tt-input[type="time"]::-webkit-outer-spin-button {
+  margin: auto auto auto 8px;
+}
 
 .tt-input {
   width: 100%;
@@ -95,7 +99,7 @@
     cursor: unset;
   }
 
-  &.tb-invalid, &:invalid {
+  &.tb-invalid, &.ng-invalid:not(.ng-untouched), &:invalid {
     border: 1px solid #f8941e;
     background-color: #FBFBFB;
   }
@@ -124,7 +128,7 @@
 .suffix-icon {
   position: absolute;
   right: 17px;
-  bottom: 10px;
+  bottom: 25px;
   color: rgba(119, 119, 119, 0.5);
   cursor: pointer;
 }

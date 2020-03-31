@@ -11,7 +11,12 @@
 
   <div class="groupsemester-details" [@accordionTransitionAnimation]="isOpened">
 
-    <div class="placeholder">Предмети</div>
+    <div class="placeholder">
+      <span>Предмети</span>
+      <button mat-icon-button class="mini-button left-side">
+        <mat-icon>create</mat-icon>
+      </button>
+    </div>
     <div class="theme-wrapper">
       <div class="theme" *ngFor="let theme of groupThemes">
         <mat-checkbox (change)="themeChanged($event, theme)"
@@ -20,12 +25,24 @@
       </div>
     </div>
 
-    <div class="placeholder">Розклад</div>
+    <div class="placeholder">
+      <span>Розклад</span>
+      <mat-checkbox (change)="showLessonNumberChanged($event)"
+                    [checked]="groupsemester.show_lessons_number"
+                    color="primary">Показувати номери пар
+      </mat-checkbox>
+      <button mat-icon-button class="mini-button left-side" (click)="createLessonTime()">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
     <div class="lesson-time-wrapper">
       <div class="lesson-time" *ngFor="let lessonTime of lessonTimes">
         <mat-checkbox (change)="lessonTimeChanged($event, lessonTime)"
                       [checked]="isLessonTimeEnableForGroupsemester(lessonTime.id, groupsemester)"
                       color="primary">{{lessonTime.start}} - {{lessonTime.end}}</mat-checkbox>
+        <button mat-icon-button class="mini-button" (click)="deleteLessonTime(lessonTime.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
       </div>
     </div>
   </div>

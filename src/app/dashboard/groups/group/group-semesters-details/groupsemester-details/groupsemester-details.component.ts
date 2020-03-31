@@ -2,8 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { accordionTransitionAnimation } from '@animations/accordion.animation';
 import { GroupsemesterService } from '@app/service/groupsemester/groupsemester.service';
+import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { SemesterService } from '@app/service/semester/semester.service';
+import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { IGroupsemester } from 'src/core/interfaces/groupsemester.interface';
@@ -18,6 +20,7 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
   animations: [accordionTransitionAnimation],
 })
 export class GroupsemesterDetailsComponent implements OnInit {
+  @Output() public lessonTimesChange: EventEmitter<ILessonTime[]> = new EventEmitter<ILessonTime[]>();
   @Input() public groupThemes: ITheme[];
   @Input() public lessonTimes: ILessonTime[];
   @Input() public semester: ISemester;
@@ -30,6 +33,7 @@ export class GroupsemesterDetailsComponent implements OnInit {
 
   constructor(private groupsemesterService: GroupsemesterService,
               private semesterService: SemesterService,
+              private lessonTimeService: LessonTimeService,
               private popupService: PopupService) { }
 
   private _groupsemester: IGroupsemester;
@@ -48,6 +52,9 @@ export class GroupsemesterDetailsComponent implements OnInit {
     this._needUpdate.asObservable()
       .pipe(debounceTime(500))
       .subscribe(() => this._updateGroupsemesters());
+
+    this.popupService.getChanel(PopupChanelEnum.CREATE_LESSONTIME)
+      .subscribe((res: ILessonTime) => this.lessonTimes.push(res));
   }
 
   public isThemeEnableForGroupsemester(themeId: number, groupsemester: IGroupsemester): boolean {
@@ -82,6 +89,13 @@ export class GroupsemesterDetailsComponent implements OnInit {
     this._needUpdate.next();
   }
 
+  public showLessonNumberChanged(event: MatCheckboxChange) {
+    if (!this.groupsemester) return;
+
+    this.groupsemester.show_lessons_number = event.checked;
+    this._needUpdate.next();
+  }
+
   public deleteGroupSemester(): void {
     if (!this.groupsemester) return;
 
@@ -89,6 +103,23 @@ export class GroupsemesterDetailsComponent implements OnInit {
       () => this.groupsemesterService.deleteGroupSemester(this.groupsemester.id)
         .pipe(takeUntil(this._unsubscribeDeleting))
         .subscribe(() => this.delete.emit(this.groupsemester.id)));
+  }
+
+  public createLessonTime() {
+    this.popupService.openReactiveModal(['create-lessontime'], {});
+  }
+
+  public deleteLessonTime(id: number) {
+    const index = this.lessonTimes.findIndex(time => time.id === id);
+    if (index < 0) return;
+
+    this.popupService.openDialog({
+        header: 'Вилучити розклад пари?',
+        body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
+      },
+      () => this.lessonTimeService.deleteLessonTime(id)
+        .pipe(takeUntil(this._unsubscribeDeleting))
+        .subscribe(() => this.lessonTimes.splice(index, 1)));
   }
 
   private _updateGroupsemesters(): void {

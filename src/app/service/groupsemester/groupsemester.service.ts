@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IGroupsemester } from 'src/core/interfaces/groupsemester.interface';
 import { IPageable } from 'src/core/interfaces/pageable.interface';
-import { IWithId } from 'src/core/interfaces/select-option.interface';
 import * as URLS from 'src/core/urls';
 
 @Injectable({
@@ -17,16 +16,12 @@ export class GroupsemesterService {
     return this.http.get<IPageable<IGroupsemester>>(URLS.GROUPSEMESTERS, {params: {group, semester} as {}});
   }
 
-  public updateGroupsemester(data: IWithId): Observable<IGroupsemester> {
-    const body = new FormData();
-    body.append('semester', data.semester);
-    body.append('group', data.group);
-    data.themes.map(theme => body.append('themes', theme.id));
-    return this.http.put<IGroupsemester>(URLS.GROUPSEMESTER(data.id), body);
+  public updateGroupsemester(body: IGroupsemester): Observable<IGroupsemester> {
+    return this.http.put<IGroupsemester>(URLS.GROUPSEMESTER(body.id), body);
   }
 
-  public createGroupsemester(body: { group: number, semester: number, show_lessons_number: boolean }) {
-    return this.http.post(URLS.GROUPSEMESTERS, body);
+  public createGroupsemester(body: { group: number, semester: number, show_lessons_number: boolean }): Observable<IGroupsemester> {
+    return this.http.post<IGroupsemester>(URLS.GROUPSEMESTERS, body);
   }
 
   public deleteGroupSemester(id: number): Observable<null> {

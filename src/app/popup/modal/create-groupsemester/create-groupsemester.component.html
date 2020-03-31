@@ -1,6 +1,8 @@
 <div (click)="closeModal()" class="overlay-backdrop"></div>
 
 <div class="modal-wrapper" [formGroup]="addSemesterToGroupForm">
+  <h4>Прив'язування семестра до групи</h4>
+  <div class="placeholder">Доступні семестри</div>
   <app-semester-select [selectControl]="addSemesterToGroupForm.get('semester')"
                        [filters]="{group: addSemesterToGroupForm.value.group}"
                        dropByFilter="true"></app-semester-select>

@@ -17,4 +17,8 @@ export class SemesterService {
   public getSemester(id: number): Observable<ISemester> {
     return this.http.get<ISemester>(URLS.SEMESTER(id));
   }
+
+  public createSemester(body: any): Observable<ISemester> {
+    return this.http.post<ISemester>(URLS.SEMESTERS, body);
+  }
 }

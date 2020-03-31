@@ -30,8 +30,8 @@ export class CreateGroupsemesterComponent implements OnInit {
       .subscribe(params => this.addSemesterToGroupForm.patchValue(params));
   }
 
-  public closeModal(answer: 'accept' | 'cancel' = 'cancel'): void {
-    this.router.navigate([{outlets: {modal: null}}], {state: {answer}});
+  public closeModal(): void {
+    this.router.navigate([{outlets: {modal: null}}]);
   }
 
   public create() {

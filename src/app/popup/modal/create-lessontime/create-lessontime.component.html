@@ -1,0 +1,47 @@
+<div (click)="closeModal()" class="overlay-backdrop"></div>
+
+<div class="modal-wrapper" [formGroup]="createLessontimeForm">
+  <h4>Створення розкладу пари</h4>
+  <div class="placeholder">Факультет</div>
+  <app-faculty-select [selectControl]="createLessontimeForm.get('faculty')"></app-faculty-select>
+  <label class="tt-input-label">
+    <span class="placeholder">Номер пари</span>
+    <input class="tt-input" formControlName="num" type="number" min="1">
+  </label>
+
+  <div class="placeholder">Час проведення пари</div>
+  <div class="tt-form-row">
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="start" type="time">
+    </label>
+    <span class="time-divider"> : </span>
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="end" type="time">
+    </label>
+  </div>
+
+  <mat-checkbox (change)="synchronizeDisableBreakRangeControls($event.checked)"
+                formControlName="has_break"
+                color="primary">З прервою</mat-checkbox>
+
+  <div class="placeholder">Час перерви</div>
+  <div class="tt-form-row">
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="half_end" type="time">
+    </label>
+    <span class="time-divider"> : </span>
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="half_start" type="time">
+    </label>
+  </div>
+
+  <div class="control-row">
+    <button (click)="create()" [disabled]="createLessontimeForm.invalid" mat-flat-button color="primary">
+      <span>Створити</span>
+    </button>
+
+    <button (click)="closeModal()" mat-flat-button>
+      <span>Скасувати</span>
+    </button>
+  </div>
+</div>

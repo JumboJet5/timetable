@@ -44,7 +44,9 @@ export class GroupSemestersDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.popupService.getChanel(PopupChanelEnum.ADD_SEMESTER_TO_GROUP)
-      .subscribe((res: IGroupsemester) => this.groupsemesters.push(res));
+      .subscribe((res: IGroupsemester) => this._addGroupsemester(res));
+    this.popupService.getChanel(PopupChanelEnum.CREATE_SEMESTER)
+      .subscribe((res: ISemester) => this._addSemesterToGroup(res));
   }
 
   public onDelete(index: number) {
@@ -53,6 +55,22 @@ export class GroupSemestersDetailsComponent implements OnInit {
 
   public addSemester(): void {
     if (!!this.group) this.popupService.openReactiveModal(['add-semester-to-group'], {group: this.group.id});
+  }
+
+  public createSemester() {
+    if (!!this.group) this.popupService.openReactiveModal(['create-semester'], {year: this.group.year});
+  }
+
+  private _addSemesterToGroup(semester: ISemester): void {
+    if (!semester || !this.group) return;
+
+    this.semesterMap.set(semester.id, semester);
+    this.groupsemesterService.createGroupsemester({semester: semester.id, group: this.group.id, show_lessons_number: true})
+      .subscribe(res => this._addGroupsemester(res));
+  }
+
+  private _addGroupsemester(groupsemester: IGroupsemester): void {
+    this.groupsemesters.push(groupsemester);
   }
 
   private _getAllGroupSemestersAdditionalInfo(group: number) {

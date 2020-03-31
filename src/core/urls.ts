@@ -35,6 +35,9 @@ export const FACULTY = (id: number): string => `${FACULTIES}${id}/`;
 export const UNIVERSITIES = API + '/universities/';
 export const UNIVERSITY = (id: number): string => `${UNIVERSITIES}${id}/`;
 
+export const YEARS = API + '/years/';
+export const YEAR = (id: number): string => `${YEARS}${id}/`;
+
 export const SEMESTERS = API + '/semesters/';
 export const SEMESTER = (id: number): string => `${SEMESTERS}${id}/`;
 

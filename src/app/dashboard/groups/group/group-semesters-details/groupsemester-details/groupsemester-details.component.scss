@@ -5,6 +5,10 @@
 
   .delete-icon {
     margin-left: 5px;
+
+    &:hover {
+      background-color: var(--primary-color-10);
+    }
   }
 }
 
@@ -17,8 +21,7 @@
 .groupsemester-details-header {
   display: flex;
   height: 43px;
-  align-items: baseline;
-  line-height: 43px;
+  align-items: center;
   padding-left: 16px;
   cursor: pointer;
 
@@ -41,17 +44,60 @@
   }
 }
 
+.mini-button {
+  .mat-icon, &.mat-icon-button, ::ng-deep.mat-button-wrapper {
+    height: 32px;
+    width: 32px;
+    display: block;
+  }
+
+  &.mat-icon-button:hover {
+    background-color: var(--primary-color-10);
+  }
+
+  .mat-icon {
+    font-size: 16px;
+    line-height: 32px;
+  }
+}
+
 .groupsemester-details {
   .placeholder {
     border-bottom: 1px solid var(--primary-color-20);
     margin-bottom: 6px;
     margin-left: 19px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+
+    :not(.left-side) + .left-side {
+      margin-left: auto;
+    }
+
+    .mat-checkbox {
+      font-size: 12px;
+      font-weight: 400;
+    }
   }
 
   .theme-wrapper, .lesson-time-wrapper {
     margin-bottom: 6px;
     max-height: 320px;
     overflow: auto;
+  }
+
+  .theme, .lesson-time {
+    display: flex;
+    align-items: center;
+
+    &:hover .mini-button {
+      opacity: 1;
+    }
+
+    .mini-button {
+      margin-left: 8px;
+      opacity: 0;
+    }
   }
 
   ::ng-deep.mat-checkbox-layout {

@@ -1,0 +1,32 @@
+<div (click)="closeModal()" class="overlay-backdrop"></div>
+
+<div class="modal-wrapper" [formGroup]="createSemesterForm">
+  <h4>Створення семестру</h4>
+  <label class="tt-input-label">
+    <span class="placeholder">Рік</span>
+    <app-year-select #yearSelect [selectControl]="createSemesterForm.get('year')"></app-year-select>
+  </label>
+
+  <label class="tt-input-label">
+    <span class="placeholder">Номер семестру</span>
+    <input class="tt-input" formControlName="num" type="number" min="1">
+  </label>
+
+  <div class="tt-input-label">
+    <span class="placeholder">Семестр</span>
+    <app-date-picker [dateControl]="createSemesterForm"
+                     [min]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.start)"
+                     [max]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.end)"
+                     placeholder="Оберіть диапазон дат"></app-date-picker>
+  </div>
+
+  <div class="control-row">
+    <button (click)="create()" [disabled]="createSemesterForm.invalid" mat-flat-button color="primary">
+      <span>Створити</span>
+    </button>
+
+    <button (click)="closeModal()" mat-flat-button>
+      <span>Скасувати</span>
+    </button>
+  </div>
+</div>
