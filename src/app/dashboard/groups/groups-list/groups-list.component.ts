@@ -30,10 +30,10 @@ export class GroupsListComponent implements OnInit, OnDestroy {
               private _route: ActivatedRoute) { }
 
   public ngOnInit(): void {
-    this._route.paramMap
+    this._route.queryParams
       .pipe(takeUntil(this._unsubscribeComponent))
       .subscribe((value: Params) => {
-        Object.keys(value.params).forEach(key => this.filters[key] = value.params[key] === 'any' ? '' : +value.params[key]);
+        this.filters = value || {};
         this._resetData();
       });
 

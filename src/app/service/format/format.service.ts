@@ -17,4 +17,14 @@ export class FormatService {
     return Object.keys(group1)
       .every(key => group1[key] === group2[key] || (typeof group1 === typeof group2 && this.isObjectsSimilar(group1[key], group2[key])));
   }
+
+  public getObjectsKeyWithDifference<T>(group1: T, group2: T): string[] {
+    if (typeof group1 !== 'object' || typeof group2 !== 'object') return [];
+    const difference1 = Object.keys(group1)
+      .filter(key => group1[key] !== group2[key] && (typeof group1 !== typeof group2 || !this.isObjectsSimilar(group1[key], group2[key])));
+    const difference2 = Object.keys(group2)
+      .filter(key => !difference1.includes(key) && group1[key] !== group2[key]
+          && (typeof group1 !== typeof group2 || !this.isObjectsSimilar(group1[key], group2[key])));
+    return [...difference1, ...difference2];
+  }
 }

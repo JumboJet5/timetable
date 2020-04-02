@@ -1,6 +1,6 @@
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormatService } from '@app/service/format/format.service';
 import { CourseSelectComponent } from '@app/shared/menu-select/course-select/course-select.component';
 import { FacultySelectComponent } from '@app/shared/menu-select/faculty-select/faculty-select.component';
@@ -8,6 +8,7 @@ import { SpecialtySelectComponent } from '@app/shared/menu-select/specialty-sele
 import { UniversitySelectComponent } from '@app/shared/menu-select/university-select/university-select.component';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
@@ -21,10 +22,10 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
   @ViewChild(FacultySelectComponent, {static: true}) facSelect: FacultySelectComponent;
   @ViewChild(SpecialtySelectComponent, {static: true}) specSelect: SpecialtySelectComponent;
   @ViewChild(CourseSelectComponent, {static: true}) courseSelect: CourseSelectComponent;
-  public univControl: FormControl = new FormControl('');
-  public facControl: FormControl = new FormControl('');
-  public specControl: FormControl = new FormControl('');
-  public courseControl: FormControl = new FormControl('');
+  public univControl: FormControl = new FormControl();
+  public facControl: FormControl = new FormControl();
+  public specControl: FormControl = new FormControl();
+  public courseControl: FormControl = new FormControl();
   public filterForm: FormGroup = new FormGroup({
     univ: this.univControl,
     faculty: this.facControl,
@@ -48,20 +49,32 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
+  public onLoadFaculty(faculty: IFaculty) {
+    if (!!faculty && faculty.id === this.facControl.value && faculty.univ !== this.univControl.value)
+      this.univControl.patchValue(faculty.univ, {onlySelf: true});
+  }
+
+  public onLoadSpecialty(specialty: ISpecialty) {
+    if (!!specialty && specialty.id === this.specControl.value && specialty.faculty !== this.facControl.value)
+      this.facControl.patchValue(specialty.faculty, {onlySelf: true});
+  }
+
+  public onLoadCourse(course: ICourse) {
+    if (!!course && course.id === this.courseControl.value && course.specialty !== this.specControl.value)
+      this.specControl.patchValue(course.specialty, {onlySelf: true});
+  }
+
   private _applyFiltersChange(): void {
     this.filterForm.valueChanges
       .pipe(takeUntil(this._unsubscribe))
       .pipe(distinctUntilChanged((source, previous) => this._formatService.isObjectsSimilar(source, previous)))
       .pipe(debounceTime(100))
-      .subscribe(({specialty, univ, faculty, course}) => {
-        course = specialty ? course : undefined;
-        const specialtyOption = this.specSelect.getSelectedOptions() as ISpecialty;
-        faculty = !!specialtyOption ? specialtyOption.faculty : faculty;
-        const facultyOption = this.facSelect.getSelectedOptions() as IFaculty;
-        univ = !!facultyOption ? facultyOption.univ : univ;
-        this.filterForm.patchValue({univ, faculty, course});
-        const filters = [univ || 'any', faculty || 'any', specialty || 'any', course || 'any'];
-        this._router.navigate(['dashboard', 'groups', ...filters]);
+      .subscribe(({univ, faculty, specialty, course}) => {
+        if (!!course) return this._router.navigate(['dashboard', 'groups'], {queryParams: {course}});
+        if (!!specialty) return this._router.navigate(['dashboard', 'groups'], {queryParams: {specialty}});
+        if (!!faculty) return this._router.navigate(['dashboard', 'groups'], {queryParams: {faculty}});
+        if (!!univ) return this._router.navigate(['dashboard', 'groups'], {queryParams: {univ}});
+        return this._router.navigate(['dashboard', 'groups']);
       });
   }
 
@@ -69,17 +82,15 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
     const primaryRoute = this._route.parent.children.find(child => child.outlet === 'primary');
     if (!primaryRoute) return;
 
-    this._patchValueFromRoute(primaryRoute.snapshot.params);
-    primaryRoute.params
+    this._patchValueFromRoute(primaryRoute.snapshot.queryParams);
+    primaryRoute.queryParams
       .pipe(takeUntil(this._unsubscribe))
       .subscribe(value => this._patchValueFromRoute(value));
   }
 
-  private _patchValueFromRoute(value: any): void {
-    Object.keys(value).forEach(key => {
-      const patchValue = value[key] === 'any' ? '' : +value[key];
-      if (this.filterForm.get(key) && this.filterForm.get(key).value !== patchValue)
-        this.filterForm.get(key).patchValue(patchValue, {onlySelf: true});
-    });
+  private _patchValueFromRoute(params: Params): void {
+    const patchValue = {};
+    Object.keys(params).forEach(key => patchValue[key] = +params[key]);
+    this.filterForm.reset(patchValue);
   }
 }

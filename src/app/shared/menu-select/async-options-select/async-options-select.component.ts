@@ -1,6 +1,6 @@
-import { ElementRef, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ElementRef, EventEmitter, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup } from '@angular/forms';
-import { IFilterParams, IOptionService, IPageable, IPaginationParams, IRequestParams, IWithId } from '@interfaces';
+import { IOptionService, IPageable, IPaginationParams, IRequestParams, IWithId } from '@interfaces';
 import { Observable, Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { SelectComponent } from '../../select-input/select/select.component';
@@ -14,45 +14,28 @@ export function optionServiceFactory<T>(getOption: (id: number) => Observable<T>
 export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnInit, OnDestroy {
   @ViewChild(SelectComponent) public selectComponent: SelectComponent;
   @ViewChild('searchInput') public searchInput: ElementRef<HTMLInputElement>;
+  @Output() public selectedOptionLoad: EventEmitter<TOption> = new EventEmitter();
   @Input() public selectControl: AbstractControl;
-  @Input() public multiple: boolean;
+  @Input() public multiple = false;
   @Input() public disabled = false;
   @Input() public optionIdKey: keyof TOption = 'id';
-  @Input() public dropByFilter = false;
   public options: TOption[] = [];
   public isLoading = false;
   public simplePlaceholder = 'Оберіть значення';
   public multiplePlaceholder = 'Оберіть значення';
   public withSearch = false;
   public searchForm: FormGroup = this.formBuilder.group({search: ''});
-  private _optionIdsMap: Map<number | string, TOption> = new Map<number, TOption>();
-  private _paginationFilters: IPaginationParams = {offset: 0, limit: 20};
-  private _isLast = false;
-  private _destroyUnsubscribe$: Subject<void> = new Subject();
-  private _pageUnsubscribe$: Subject<void> = new Subject();
+  protected _optionIdsMap: Map<number | string, TOption> = new Map<number, TOption>();
+  protected _paginationFilters: IPaginationParams = {offset: 0, limit: 20};
+  protected _isLast = false;
+  protected _destroyUnsubscribe$: Subject<void> = new Subject();
+  protected _pageUnsubscribe$: Subject<void> = new Subject();
 
   constructor(public optionService: IOptionService<TOption>,
               protected formBuilder: FormBuilder) {}
 
-  private _filters: IFilterParams;
-
-  @Input()
-  public set filters(filters: IFilterParams) { // todo separate to extended class and multiple realization
-    if (filters !== this._filters) {
-      this._filters = filters;
-
-      const currOption = this.getSelectedOptions();
-      if (this.dropByFilter && !!currOption
-        && Object.entries(filters).some(([key, value]) => (!!value || value === 0) && value !== currOption[key]))
-        this.selectControl.patchValue(undefined);
-
-      Object.entries(filters).forEach(([key, value]) => !value && value !== 0 && (filters[key] = ''));
-      this._applyFilters();
-    }
-  }
-
   public ngOnInit() {
-    if (!this._filters) this._applyFilters();
+    this._applyFilters();
     this._applyControlChanges();
 
     this.selectControl.valueChanges
@@ -69,11 +52,20 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     return this._optionIdsMap.get(id);
   }
 
-  public getSelectedOptions(): TOption | TOption[] {
+  public getSelectedOption(): TOption {
     if (!this.selectControl) return null;
 
-    return this.multiple ? (this.selectControl.value || []).map(id => this.getOptionById(id))
-      : this.getOptionById(this.selectControl.value);
+    if (this.multiple) throw new Error('AsyncSelector is multiple');
+
+    return this.getOptionById(this.selectControl.value);
+  }
+
+  public getSelectedOptions(): TOption[] {
+    if (!this.selectControl) return null;
+
+    if (!this.multiple) throw new Error('AsyncSelector is not multiple');
+
+    return (this.selectControl.value || []).map(id => this.getOptionById(id));
   }
 
   public onViewportAction(event: { visible: boolean }) {
@@ -105,10 +97,36 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     this._pageUnsubscribe$.complete();
   }
 
+  protected _applyFilters(): void {
+    this.options = [];
+    this.isLoading = false;
+    this._isLast = false;
+    const tempMap = new Map<number, TOption>();
+    if (this.selectControl && (this.selectControl.value || this.selectControl.value === 0)) {
+      if (this.multiple && this.selectControl.value instanceof Array) this.selectControl.value
+        .forEach(option => this._optionIdsMap.has(option) ? tempMap.set(option, this._optionIdsMap.get(option)) : null);
+      if (!this.multiple && this._optionIdsMap.has(this.selectControl.value))
+        tempMap.set(this.selectControl.value, this._optionIdsMap.get(this.selectControl.value));
+    }
+    this._optionIdsMap = tempMap;
+    this._paginationFilters.offset = 0;
+    this._pageUnsubscribe$.next();
+    this._loadOptions();
+  }
+
+  protected _getPageParams(): IRequestParams {
+    return {...this.searchForm.value, ...this._paginationFilters};
+  }
+
+  protected _applyControlChanges() {
+    if (this.multiple) (this.selectControl.value || []).forEach(id => this._addToOptions(id));
+    else this._addToOptions(this.selectControl.value);
+  }
+
   private _loadOptions(): void {
     if (!this.isLoading && !this._isLast) {
       this.isLoading = true;
-      this.optionService.getOptions({...this.searchForm.value, ...this._paginationFilters, ...this._filters})
+      this.optionService.getOptions(this._getPageParams())
         .pipe(takeUntil(this._pageUnsubscribe$))
         .subscribe(res => {
           res.results.forEach(item => this._addOptionToList(item));
@@ -124,7 +142,10 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   private _loadOption(id: number | string): void {
     if (id || id === 0) this.optionService.getOption(id)
       .pipe(takeUntil(this._destroyUnsubscribe$))
-      .subscribe(group => this._addOptionToList(group, true));
+      .subscribe(option => {
+        this._addOptionToList(option, true);
+        this.selectedOptionLoad.emit(option);
+      });
   }
 
   private _addOptionToList(option: TOption, toHead: boolean = false): void {
@@ -144,30 +165,9 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
     return equal ? 0 : isFirstSelected ? 1 : -1;
   }
 
-  private _applyFilters(): void {
-    this.options = [];
-    this.isLoading = false;
-    this._isLast = false;
-    const tempMap = new Map<number, TOption>();
-    if (this.selectControl && (this.selectControl.value || this.selectControl.value === 0)) {
-      if (this.multiple && this.selectControl.value instanceof Array) this.selectControl.value
-        .forEach(option => this._optionIdsMap.has(option) ? tempMap.set(option, this._optionIdsMap.get(option)) : null);
-      if (!this.multiple && this._optionIdsMap.has(this.selectControl.value))
-        tempMap.set(this.selectControl.value, this._optionIdsMap.get(this.selectControl.value));
-    }
-    this._optionIdsMap = tempMap;
-    this._paginationFilters.offset = 0;
-    this._pageUnsubscribe$.next();
-    this._loadOptions();
-  }
-
-  private _applyControlChanges() {
-    if (this.multiple) (this.selectControl.value || []).forEach(id => this._addToOptions(id));
-    else this._addToOptions(this.selectControl.value);
-  }
-
   private _addToOptions(id: number | string) {
     if (!this._optionIdsMap.has(id)) this._loadOption(id);
+    else this.selectedOptionLoad.emit(this.getOptionById(id));
   }
 
   private _sortOptions(): void {

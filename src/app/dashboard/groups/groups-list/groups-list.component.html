@@ -10,7 +10,7 @@
       <div class="group-item-details">Курс</div>
       <div class="group-item-details">Кількість підгруп</div>
     </div>
-    <a class="group-item" *ngFor="let group of groups" [routerLink]="['/dashboard', 'groups', 'details', group.slug]">
+    <a class="group-item" *ngFor="let group of groups" [routerLink]="['/dashboard', 'groups', group.slug]">
       <div class="group-item-details">{{group.name}}</div>
       <div class="group-item-details">{{degreeMap.get(+group.course_degree)?.name}}</div>
       <div class="group-item-details">{{group.course_name}}</div>

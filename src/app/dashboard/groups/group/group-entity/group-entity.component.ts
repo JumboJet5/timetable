@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormatService } from '@app/service/format/format.service';
@@ -8,7 +8,6 @@ import { FacultySelectComponent } from '@app/shared/menu-select/faculty-select/f
 import { SpecialtySelectComponent } from '@app/shared/menu-select/specialty-select/specialty-select.component';
 import { UniversitySelectComponent } from '@app/shared/menu-select/university-select/university-select.component';
 import { Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
 import { IGroup } from 'src/core/interfaces/group.interface';
@@ -19,20 +18,24 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
   templateUrl: './group-entity.component.html',
   styleUrls: ['../../../../../core/stylesheet/default-form.scss', './group-entity.component.scss'],
 })
-export class GroupEntityComponent implements OnInit, OnDestroy {
+export class GroupEntityComponent implements OnDestroy {
   @ViewChild(UniversitySelectComponent, {static: true}) univSelect: UniversitySelectComponent;
   @ViewChild(FacultySelectComponent, {static: true}) facSelect: FacultySelectComponent;
   @ViewChild(SpecialtySelectComponent, {static: true}) specSelect: SpecialtySelectComponent;
   @ViewChild(CourseSelectComponent, {static: true}) courseSelect: CourseSelectComponent;
+  public univControl: FormControl = new FormControl();
+  public facControl: FormControl = new FormControl();
+  public specControl: FormControl = new FormControl();
+  public courseControl: FormControl = new FormControl();
   public groupEntityForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     short_name: new FormControl('', Validators.required),
     subgroups: new FormControl('', Validators.min(0)),
     slug: new FormControl('', Validators.pattern(/^[^{., }]+$/)),
-    univ: new FormControl(''),
-    faculty: new FormControl(''),
-    specialty: new FormControl(''),
-    course: new FormControl(''),
+    univ: this.univControl,
+    faculty: this.facControl,
+    specialty: this.specControl,
+    course: this.courseControl,
   });
   private _unsubscribe: Subject<void> = new Subject();
 
@@ -53,8 +56,19 @@ export class GroupEntityComponent implements OnInit, OnDestroy {
     this.groupEntityForm.reset(value);
   }
 
-  public ngOnInit(): void {
-    this._applyFormChanges();
+  public onLoadFaculty(faculty: IFaculty) {
+    if (!!faculty && faculty.id === this.facControl.value && faculty.univ !== this.univControl.value)
+      this.univControl.patchValue(faculty.univ, {onlySelf: true});
+  }
+
+  public onLoadSpecialty(specialty: ISpecialty) {
+    if (!!specialty && specialty.id === this.specControl.value && specialty.faculty !== this.facControl.value)
+      this.facControl.patchValue(specialty.faculty, {onlySelf: true});
+  }
+
+  public onLoadCourse(course: ICourse) {
+    if (!!course && course.id === this.courseControl.value && course.specialty !== this.specControl.value)
+      this.specControl.patchValue(course.specialty, {onlySelf: true});
   }
 
   public isControlValid(formGroup: FormGroup, controlName: string, control?: AbstractControl): boolean {
@@ -75,22 +89,5 @@ export class GroupEntityComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this._unsubscribe.next();
     this._unsubscribe.complete();
-  }
-
-  private _applyFormChanges(): void {
-    this.groupEntityForm.valueChanges
-      .pipe(takeUntil(this._unsubscribe))
-      .pipe(distinctUntilChanged((source, previous) => this._formatService.isObjectsSimilar(source, previous)))
-      .pipe(debounceTime(0)) // for apply control value changes first
-      .subscribe(({specialty, univ, faculty, course}) => {
-        course = specialty ? course : undefined;
-        const courseOption = this.courseSelect.getSelectedOptions() as ICourse;
-        specialty = !!courseOption ? courseOption.specialty : specialty;
-        const specialtyOption = this.specSelect.getSelectedOptions() as ISpecialty;
-        faculty = !!specialtyOption ? specialtyOption.faculty : faculty;
-        const facultyOption = this.facSelect.getSelectedOptions() as IFaculty;
-        univ = !!facultyOption ? facultyOption.univ : univ;
-        this.groupEntityForm.patchValue({univ, faculty, specialty, course});
-      });
   }
 }

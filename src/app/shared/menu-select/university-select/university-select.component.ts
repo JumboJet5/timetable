@@ -1,21 +1,22 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { FormatService } from '@app/service/format/format.service';
 import { UniversityService } from '@app/service/universitiy/university.service';
-import {
-  AsyncOptionsSelectComponent, optionServiceFactory,
-} from '@app/shared/menu-select/async-options-select/async-options-select.component';
 import { IUniversity } from 'src/core/interfaces/university';
+import { optionServiceFactory } from '../async-options-select/async-options-select.component';
+import { AsyncSelectorWithFiltersComponent } from '../async-selector-with-filters/async-selector-with-filters.component';
 
 @Component({
   selector: 'app-university-select',
   templateUrl: '../async-options-select/async-options-select.component.html',
   styleUrls: ['../async-options-select/async-options-select.component.scss'],
 })
-export class UniversitySelectComponent extends AsyncOptionsSelectComponent<IUniversity> {
+export class UniversitySelectComponent extends AsyncSelectorWithFiltersComponent<IUniversity> {
   constructor(public universityService: UniversityService,
-              protected formBuilder: FormBuilder) {
+              protected formBuilder: FormBuilder,
+              protected formatService: FormatService) {
     super(optionServiceFactory<any>(id => universityService.getUniversity(id),
-      params => universityService.getUniversities(params)), formBuilder);
+      params => universityService.getUniversities(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть університет';
     this.multiplePlaceholder = 'Оберіть університети';
   }

@@ -7,15 +7,9 @@ import { GroupsComponent } from '@app/dashboard/groups/groups.component';
 
 
 const routes: Routes = [
-  {path: 'details/:groupSlug', component: GroupComponent},
+  {path: ':groupSlug', component: GroupComponent},
   {
     path: '', component: GroupsComponent, children: [
-      {path: '', component: GroupsListComponent},
-      {path: '', outlet: 'filter', component: GroupListFilterComponent},
-    ],
-  },
-  {
-    path: ':univ/:faculty/:specialty/:course', component: GroupsComponent, children: [
       {path: '', component: GroupsListComponent},
       {path: '', outlet: 'filter', component: GroupListFilterComponent},
     ],
