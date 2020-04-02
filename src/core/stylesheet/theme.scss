@@ -238,3 +238,11 @@ button.mat-raised-button, button.mat-stroked-button, button.mat-flat-button {
 .mat-checkbox-inner-container .mat-checkbox-frame {
   border-width: 1px;
 }
+
+.mat-flat-button, .mat-raised-button, .mat-fab, .mat-mini-fab {
+  background-color: inherit;
+}
+
+.mat-icon-button:not(:disabled):hover {
+  background-color: var(--primary-color-10);
+}

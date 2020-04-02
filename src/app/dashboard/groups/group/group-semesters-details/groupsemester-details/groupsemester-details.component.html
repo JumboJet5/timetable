@@ -5,8 +5,14 @@
 
     <div>{{semester?.num}} семестр</div>
     <div class="period">{{semester?.start | date: 'dd.MM.yyyy'}} - {{semester?.end | date: 'dd.MM.yyyy'}}</div>
+    <mat-spinner *ngIf="isLoading" class="update-spinner update-status"></mat-spinner>
+    <svg *ngIf="isUpdateSuccess" class="update-status" focusable="false" viewBox="0 0 24 24" xml:space="preserve">
+      <path class="checkmark-path" fill="none" d="M4.1,12.7 9,17.6 20.3,6.3"></path>
+    </svg>
+    <svg *ngIf="isUpdateFailed" class="update-status" focusable="false" viewBox="0 0 24 24" xml:space="preserve">
+      <path class="cross" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+    </svg>
     <img class="arrow" src="../../../../../../static/assets/img/ic_filter_arrow.svg" alt="arrow">
-
   </div>
 
   <div class="groupsemester-details" [@accordionTransitionAnimation]="isOpened">

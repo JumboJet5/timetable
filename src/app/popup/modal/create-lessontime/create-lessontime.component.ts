@@ -28,6 +28,7 @@ export class CreateLessontimeComponent implements OnInit {
     minMaxPair('start', 'end', [Validators.required], [Validators.required]),
     minMaxPair('half_end', 'half_start', [Validators.required], [Validators.required]),
   ]));
+  public isLoading = false;
   private _chanelId: number = PopupChanelEnum.CREATE_LESSONTIME;
 
   constructor(private router: Router,
@@ -64,9 +65,11 @@ export class CreateLessontimeComponent implements OnInit {
   public create() {
     if (this.createLessontimeForm.invalid) return;
 
+    this.isLoading = true;
     this.createLessontimeForm.get('faculty').enable();
     this.lessonTimeService.createLessonTime(this.createLessontimeForm.value)
-      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal());
+      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
+      .add(() => this.isLoading = false);
 
     this._applyQueryParams();
   }

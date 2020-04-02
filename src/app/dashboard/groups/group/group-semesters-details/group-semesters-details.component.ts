@@ -47,6 +47,8 @@ export class GroupSemestersDetailsComponent implements OnInit {
       .subscribe((res: IGroupsemester) => this._addGroupsemester(res));
     this.popupService.getChanel(PopupChanelEnum.CREATE_SEMESTER)
       .subscribe((res: ISemester) => this._addSemesterToGroup(res));
+    this.popupService.getChanel(PopupChanelEnum.CREATE_LESSONTIME)
+      .subscribe((res: ILessonTime) => this.lessonTimes.push(res));
   }
 
   public onDelete(index: number) {
@@ -54,7 +56,8 @@ export class GroupSemestersDetailsComponent implements OnInit {
   }
 
   public addSemester(): void {
-    if (!!this.group) this.popupService.openReactiveModal(['add-semester-to-group'], {group: this.group.id});
+    if (!!this.group) this.popupService.openReactiveModal(['add-semester-to-group'],
+      {group: this.group.id, group_slug: this.group.slug});
   }
 
   public createSemester() {

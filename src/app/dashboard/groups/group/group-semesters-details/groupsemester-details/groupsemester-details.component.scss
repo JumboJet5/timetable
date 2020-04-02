@@ -5,10 +5,6 @@
 
   .delete-icon {
     margin-left: 5px;
-
-    &:hover {
-      background-color: var(--primary-color-10);
-    }
   }
 }
 
@@ -49,10 +45,6 @@
     height: 32px;
     width: 32px;
     display: block;
-  }
-
-  &.mat-icon-button:hover {
-    background-color: var(--primary-color-10);
   }
 
   .mat-icon {
@@ -104,5 +96,63 @@
     padding-left: 19px;
     height: 40px;
     align-items: center;
+  }
+}
+
+.update-status {
+  width: 18px;
+  height: 12px;
+  margin-left: 8px;
+
+  .checkmark-path {
+    stroke: var(--light-green);
+    stroke-dashoffset: 0;
+    stroke-dasharray: 22.910259;
+    stroke-width: 2.1333333333px;
+    animation: 180ms linear 0ms unchecked-checked-checkmark-path;
+  }
+
+  .cross {
+    fill: var(--pink);
+    transform-origin: 50% 50%;
+    animation: 270ms linear 0ms rotate-cross;
+  }
+}
+
+.update-spinner, ::ng-deep.update-spinner svg {
+  width: 18px !important;
+  height: 18px !important;
+}
+
+@keyframes unchecked-checked-checkmark-path {
+  0%, 25% {
+    stroke-dashoffset: 22.910259;
+  }
+
+  25% {
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 0.1);
+  }
+
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes rotate-cross {
+  0% {
+    opacity: 0;
+  }
+
+  25% {
+    transform: rotate(0);
+    animation-timing-function: cubic-bezier(0, 0, 0.2, 0.1);
+  }
+
+  75% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: rotate(180deg);
   }
 }

@@ -138,8 +138,8 @@
     }
 
     &.today {
-      border: 1px solid #227FEB;
-      color: #227FEB;
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
     }
 
     &.other-month-day {
@@ -147,7 +147,7 @@
     }
 
     &.range-start, &.range-end {
-      background-color: #227FEB;
+      background-color: var(--primary-color);
       color: white;
     }
 

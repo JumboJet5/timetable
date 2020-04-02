@@ -5,8 +5,7 @@ import { GroupsemesterService } from '@app/service/groupsemester/groupsemester.s
 import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { SemesterService } from '@app/service/semester/semester.service';
-import { PopupChanelEnum } from '@const/popup-chanel-enum';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { IGroupsemester } from 'src/core/interfaces/groupsemester.interface';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
@@ -26,15 +25,42 @@ export class GroupsemesterDetailsComponent implements OnInit {
   @Input() public semester: ISemester;
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
   public isOpened = false;
+  public isLoading = false;
   private _initialGroupsemester: IGroupsemester;
-  private _needUpdate: BehaviorSubject<void> = new BehaviorSubject<void>(undefined);
+  private _needUpdate: Subject<void> = new Subject<void>();
   private _unsubscribeUpdating: Subject<void> = new Subject<void>();
   private _unsubscribeDeleting: Subject<void> = new Subject<void>();
+  private _updateSuccessTimeoutId;
+  private _updateFailedTimeoutId;
 
   constructor(private groupsemesterService: GroupsemesterService,
               private semesterService: SemesterService,
               private lessonTimeService: LessonTimeService,
               private popupService: PopupService) { }
+
+  private _isUpdateSuccess = false;
+
+  public get isUpdateSuccess(): boolean {
+    return this._isUpdateSuccess;
+  }
+
+  public set isUpdateSuccess(value: boolean) {
+    this._isUpdateSuccess = value;
+    clearTimeout(this._updateSuccessTimeoutId);
+    if (value) this._updateSuccessTimeoutId = setTimeout(() => this._isUpdateSuccess = false, 1180);
+  }
+
+  private _isUpdateFailed = false;
+
+  public get isUpdateFailed(): boolean {
+    return this._isUpdateFailed;
+  }
+
+  public set isUpdateFailed(value: boolean) {
+    this._isUpdateFailed = value;
+    clearTimeout(this._updateFailedTimeoutId);
+    if (value) this._updateFailedTimeoutId = setTimeout(() => this._isUpdateFailed = false, 1270);
+  }
 
   private _groupsemester: IGroupsemester;
 
@@ -52,9 +78,6 @@ export class GroupsemesterDetailsComponent implements OnInit {
     this._needUpdate.asObservable()
       .pipe(debounceTime(500))
       .subscribe(() => this._updateGroupsemesters());
-
-    this.popupService.getChanel(PopupChanelEnum.CREATE_LESSONTIME)
-      .subscribe((res: ILessonTime) => this.lessonTimes.push(res));
   }
 
   public isThemeEnableForGroupsemester(themeId: number, groupsemester: IGroupsemester): boolean {
@@ -99,10 +122,13 @@ export class GroupsemesterDetailsComponent implements OnInit {
   public deleteGroupSemester(): void {
     if (!this.groupsemester) return;
 
-    this.popupService.openDialog({header: 'Вилучити семестр?'},
+    this.popupService.openDialog({
+        header: 'Вилучити семестр?',
+        body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
+      },
       () => this.groupsemesterService.deleteGroupSemester(this.groupsemester.id)
         .pipe(takeUntil(this._unsubscribeDeleting))
-        .subscribe(() => this.delete.emit(this.groupsemester.id)));
+        .subscribe(() => this.delete.emit(this.groupsemester.id)) && (this.isLoading = true));
   }
 
   public createLessonTime() {
@@ -113,21 +139,38 @@ export class GroupsemesterDetailsComponent implements OnInit {
     const index = this.lessonTimes.findIndex(time => time.id === id);
     if (index < 0) return;
 
+    this.isUpdateSuccess = false;
+    this.isUpdateFailed = false;
     this.popupService.openDialog({
         header: 'Вилучити розклад пари?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
       () => this.lessonTimeService.deleteLessonTime(id)
         .pipe(takeUntil(this._unsubscribeDeleting))
-        .subscribe(() => this.lessonTimes.splice(index, 1)));
+        .subscribe(() => this.lessonTimes.splice(index, 1) && (this.isUpdateSuccess = true), () => this.isUpdateFailed = true)
+        .add(() => this.isLoading = false) && (this.isLoading = true));
   }
 
   private _updateGroupsemesters(): void {
     if (!this.groupsemester) return;
 
+    this.isUpdateSuccess = false;
+    this.isUpdateFailed = false;
+    this.isLoading = true;
     this._unsubscribeUpdating.next();
     this.groupsemesterService.updateGroupsemester(this.groupsemester)
       .pipe(takeUntil(this._unsubscribeUpdating))
-      .subscribe(updated => this.groupsemester = updated, () => this.groupsemester = this._initialGroupsemester);
+      .subscribe(updated => this._onGroupsemesterSuccessUpdate(updated), () => this._onGroupsemesterFailedUpdate())
+      .add(() => this.isLoading = false);
+  }
+
+  private _onGroupsemesterSuccessUpdate(groupsemester: IGroupsemester): void {
+    this.groupsemester = groupsemester;
+    this.isUpdateSuccess = true;
+  }
+
+  private _onGroupsemesterFailedUpdate(): void {
+    this.groupsemester = this._initialGroupsemester;
+    this.isUpdateFailed = true;
   }
 }

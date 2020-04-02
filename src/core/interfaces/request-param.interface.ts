@@ -8,6 +8,7 @@ export interface IPaginationParams {
 export interface IFilterParams {
   univ?: number | string;
   group?: number;
+  group_slug?: string;
   housing?: number;
   faculty?: number | string;
   degreeId?: number | string;

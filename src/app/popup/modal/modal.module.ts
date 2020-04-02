@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePickerModule } from '@app/shared/date-picker/date-picker.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
@@ -26,6 +27,7 @@ import { CreateLessontimeComponent } from './create-lessontime/create-lessontime
     MatCheckboxModule,
     MatProgressSpinnerModule,
     DatePickerModule,
+    MatIconModule,
   ],
 })
 export class ModalModule {}

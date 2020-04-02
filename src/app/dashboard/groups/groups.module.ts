@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { InViewportModule } from 'ng-in-viewport';
 
@@ -36,6 +37,7 @@ import { GroupsemesterDetailsComponent } from './group/group-semesters-details/g
     MatCheckboxModule,
     MatButtonModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class GroupsModule { }

@@ -24,6 +24,7 @@ export class CreateSemesterComponent implements OnInit {
     from: new FormControl(''),
     to: new FormControl(''),
   });
+  public isLoading = false;
   private _chanelId: number = PopupChanelEnum.CREATE_SEMESTER;
 
   constructor(private router: Router,
@@ -49,9 +50,11 @@ export class CreateSemesterComponent implements OnInit {
   public create() {
     if (this.createSemesterForm.invalid) return;
 
+    this.isLoading = true;
     this.createSemesterForm.get('year').enable();
     this.semesterService.createSemester(this.createSemesterForm.value)
-      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal());
+      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
+      .add(() => this.isLoading = false);
 
     this._applyQueryParams();
   }

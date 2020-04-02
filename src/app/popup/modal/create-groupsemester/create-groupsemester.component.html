@@ -2,10 +2,22 @@
 
 <div class="modal-wrapper" [formGroup]="addSemesterToGroupForm">
   <h4>Прив'язування семестра до групи</h4>
+
+  <div class="placeholder">Група</div>
+  <app-group-select [selectControl]="addSemesterToGroupForm.get('group_slug')"></app-group-select>
+
   <div class="placeholder">Доступні семестри</div>
-  <app-semester-select [selectControl]="addSemesterToGroupForm.get('semester')"
-                       [filters]="{group: addSemesterToGroupForm.value.group}"
-                       dropByFilter="true"></app-semester-select>
+  <div class="semester-row">
+    <app-semester-select [selectControl]="addSemesterToGroupForm.get('semester')"
+                         [filters]="{group: addSemesterToGroupForm.value.group}"
+                         dropByFilter="true"></app-semester-select>
+    <button (click)="createSemester()"
+            [disabled]="!addSemesterToGroupForm.value.group"
+            title="Створити новий"
+            mat-icon-button>
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
 
   <mat-checkbox formControlName="show_lessons_number" color="primary">Показувати номери пар</mat-checkbox>
 
@@ -17,5 +29,9 @@
     <button (click)="closeModal()" mat-flat-button>
       <span>Скасувати</span>
     </button>
+  </div>
+
+  <div class="loader-wrapper" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
   </div>
 </div>
