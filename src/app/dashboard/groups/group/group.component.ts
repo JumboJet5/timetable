@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { GroupService } from '@app/service/group/group.service';
 import { Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { IGroup } from 'src/core/interfaces/group.interface';
+import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
 
 @Component({
   selector: 'app-group',
@@ -12,6 +12,7 @@ import { IGroup } from 'src/core/interfaces/group.interface';
 })
 export class GroupComponent implements OnInit, OnDestroy {
   public group: IGroup;
+  public isLoading = false;
   private _groupSlug: string;
   private _unsubscribe: Subject<void> = new Subject();
 
@@ -20,6 +21,13 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this._getGroupByRoute();
+  }
+
+  public saveGroupEntity(updateGroup: IUpdateGroup) {
+    this.isLoading = true;
+    this._groupService.updateGroup(this.group.id, updateGroup)
+      .subscribe(group => this.group = group)
+      .add(() => this.isLoading = false);
   }
 
   @HostListener('window:beforeunload')
@@ -33,7 +41,15 @@ export class GroupComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe))
       .pipe(filter(params => params.groupSlug !== this._groupSlug))
       .pipe(tap(params => this._groupSlug = params.groupSlug))
+      .pipe(tap(() => this.isLoading = true))
       .pipe(switchMap(() => this._groupService.getGroup(this._groupSlug)))
-      .subscribe(res => this.group = res);
+      .subscribe(res => {
+        this.group = res;
+        this.isLoading = false;
+      });
+  }
+
+  public log() {
+    console.log('here');
   }
 }

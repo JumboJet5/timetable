@@ -1,13 +1,26 @@
 :host {
   flex: 1 0 0;
   overflow: auto;
-  padding: 46px 24px;
+  padding: 46px 24px 24px;
   display: flex;
   flex-direction: column;
 }
 
 .tt-input-label {
   margin-bottom: 20px;
+}
+
+.group-search {
+  flex-direction: row;
+  align-items: center;
+
+  .tt-input {
+    margin-bottom: 0;
+  }
+
+  .mat-icon-button {
+    margin-left: 8px;
+  }
 }
 
 .group-item {
@@ -39,7 +52,20 @@
   &-details {
     font-size: 16px;
     line-height: 24px;
-    flex: 1 0 0;
+    flex: 0 0 100px;
+    margin-left: 8px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &.long {
+      flex: 1 0 0;
+    }
+
+    &.short {
+      flex: 0 0 60px;
+    }
   }
 }
 

@@ -1,13 +1,32 @@
 :host {
   flex: 0 0 auto;
+  position: relative;
+  padding: 32px 16px;
   background-color: var(--filter-background);
 }
 
 .filters-wrapper {
-  padding: 32px 16px;
-  width: 250px;
   color: white;
   font-size: 18px;
+
+  .filter-mini-button {
+    position: absolute;
+    top: 56px;
+    right: -12.5px;
+    background-color: white;
+    color: #2c2c2c;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    .mat-icon {
+      transform: scale(0.6);
+    }
+  }
+
+  .animated-container {
+    width: 250px;
+  }
 
   .description {
     margin-bottom: 20px;

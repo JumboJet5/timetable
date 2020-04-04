@@ -1,6 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { appearAnimation } from '@animations/appear.animation';
 import { FormatService } from '@app/service/format/format.service';
 import { CourseSelectComponent } from '@app/shared/menu-select/course-select/course-select.component';
 import { FacultySelectComponent } from '@app/shared/menu-select/faculty-select/faculty-select.component';
@@ -16,6 +17,7 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
   selector: 'app-group-list-filter',
   templateUrl: './group-list-filter.component.html',
   styleUrls: ['./group-list-filter.component.scss'],
+  animations: [appearAnimation],
 })
 export class GroupListFilterComponent implements OnInit, OnDestroy {
   @ViewChild(UniversitySelectComponent, {static: true}) univSelect: UniversitySelectComponent;
@@ -32,6 +34,7 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
     specialty: this.specControl,
     course: this.courseControl,
   });
+  public isOpened = true;
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _router: Router,

@@ -1,6 +1,29 @@
 :host {
+  padding: 32px 24px 32px 39px;
+  display: block;
+}
+
+.heading {
   display: flex;
-  padding: 46px 24px;
+  align-items: center;
+
+  &:hover {
+    .mat-icon-button {
+      opacity: 1;
+    }
+  }
+
+  .mat-icon-button {
+    margin-left: 8px;
+    opacity: 0;
+
+    &:focus, &:active {
+      opacity: 1;
+    }
+  }
+}
+.details {
+  display: flex;
   max-width: 1200px;
 
   app-group-semesters-details {
@@ -10,5 +33,21 @@
   app-group-entity {
     flex: 0 0 360px;
     margin-right: 35px;
+  }
+}
+
+.loader-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--overlay-background-color);
+
+  .mat-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
   }
 }

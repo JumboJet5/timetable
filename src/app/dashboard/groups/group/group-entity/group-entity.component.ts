@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnDestroy, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormatService } from '@app/service/format/format.service';
@@ -10,7 +10,7 @@ import { UniversitySelectComponent } from '@app/shared/menu-select/university-se
 import { Subject } from 'rxjs';
 import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
-import { IGroup } from 'src/core/interfaces/group.interface';
+import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
@@ -23,19 +23,19 @@ export class GroupEntityComponent implements OnDestroy {
   @ViewChild(FacultySelectComponent, {static: true}) facSelect: FacultySelectComponent;
   @ViewChild(SpecialtySelectComponent, {static: true}) specSelect: SpecialtySelectComponent;
   @ViewChild(CourseSelectComponent, {static: true}) courseSelect: CourseSelectComponent;
+  @Output() save: EventEmitter<IUpdateGroup> = new EventEmitter<IUpdateGroup>();
   public univControl: FormControl = new FormControl();
   public facControl: FormControl = new FormControl();
   public specControl: FormControl = new FormControl();
-  public courseControl: FormControl = new FormControl();
+  public courseControl: FormControl = new FormControl(undefined, Validators.required);
+  public yearControl: FormControl = new FormControl(undefined, Validators.required);
   public groupEntityForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
     short_name: new FormControl('', Validators.required),
     subgroups: new FormControl('', Validators.min(0)),
     slug: new FormControl('', Validators.pattern(/^[^{., }]+$/)),
-    univ: this.univControl,
-    faculty: this.facControl,
-    specialty: this.specControl,
-    course: this.courseControl,
+    // course: this.courseControl,
+    // year: new FormControl('', Validators.required),
   });
   private _unsubscribe: Subject<void> = new Subject();
 
@@ -53,7 +53,12 @@ export class GroupEntityComponent implements OnDestroy {
   @Input()
   public set group(value: IGroup) {
     this._group = value;
-    this.groupEntityForm.reset(value);
+    this.resetForm();
+  }
+
+  public resetForm(): void {
+    this.groupEntityForm.reset(this.group);
+    this.yearControl.patchValue(this.group.year);
   }
 
   public onLoadFaculty(faculty: IFaculty) {

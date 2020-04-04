@@ -10,3 +10,12 @@ export interface IGroup {
   slug: string;
   url: string;
 }
+
+export interface IUpdateGroup {
+  subgroups: number;
+  year: number;
+  course: number;
+  name: string;
+  short_name: string;
+  slug: string;
+}

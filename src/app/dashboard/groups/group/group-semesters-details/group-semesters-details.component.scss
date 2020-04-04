@@ -5,7 +5,7 @@
 }
 
 .control-row {
-  .mat-flat-button  {
+  .mat-flat-button, .mat-stroked-button  {
     &:first-child {
       margin-left: 0;
     }

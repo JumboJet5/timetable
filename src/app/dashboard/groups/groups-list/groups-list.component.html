@@ -1,20 +1,23 @@
-<label class="tt-input-label">
+<label class="tt-input-label group-search">
   <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
+  <button mat-icon-button>
+    <mat-icon>add</mat-icon>
+  </button>
 </label>
 
 <div class="group-items-wrapper">
   <div class="relative-wrapper">
     <div class="group-item header-row">
-      <div class="group-item-details">Група</div>
+      <div class="group-item-details long">Група</div>
       <div class="group-item-details">Степінь</div>
-      <div class="group-item-details">Курс</div>
-      <div class="group-item-details">Кількість підгруп</div>
+      <div class="group-item-details short">Курс</div>
+      <div class="group-item-details short">Підгруп</div>
     </div>
     <a class="group-item" *ngFor="let group of groups" [routerLink]="['/dashboard', 'groups', group.slug]">
-      <div class="group-item-details">{{group.name}}</div>
+      <div class="group-item-details long">{{group.name}}</div>
       <div class="group-item-details">{{degreeMap.get(+group.course_degree)?.name}}</div>
-      <div class="group-item-details">{{group.course_name}}</div>
-      <div class="group-item-details">{{group.subgroups}}</div>
+      <div class="group-item-details short">{{group.course_name}}</div>
+      <div class="group-item-details short">{{group.subgroups}}</div>
     </a>
     <div *ngIf="!isLoading" class="viewport-bottom" inViewport (inViewportAction)="onViewportAction($event)"></div>
   </div>

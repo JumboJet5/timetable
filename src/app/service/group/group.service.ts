@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as URLS from '../../../core/urls';
 import { IPageable } from 'src/core/interfaces/pageable.interface';
-import { IGroup } from 'src/core/interfaces/group.interface';
+import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
 import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 
 @Injectable({providedIn: 'root'})
@@ -17,5 +17,9 @@ export class GroupService {
 
   public getGroup(id: number | string): Observable<IGroup> {
     return this.http.get<IGroup>(URLS.GROUP(id));
+  }
+
+  public updateGroup(id: number, group: IUpdateGroup): Observable<IGroup> {
+    return this.http.patch<IGroup>(URLS.GROUP(id), group);
   }
 }
