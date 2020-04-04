@@ -2,17 +2,21 @@
 @import '../../../../../core/stylesheet/breakpoints';
 
 :host {
+  .mat-icon-button:not(:disabled):hover {
+    background-color: inherit;
+  }
+
   .tt-input {
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-right: 19px;
+    padding-right: 5.5px;
 
     &.opened, &:focus, &:active {
       &:not(.disabled):not(:disabled):not(.readonly) {
         border-width: 0;
-        padding: 0 20px;
+        padding: 0 6.5px 0 20px;
       }
     }
 
@@ -28,7 +32,7 @@
       &.opened, &:focus, &:active {
         &:not(.disabled):not(:disabled):not(.readonly) {
           border-width: 0;
-          padding: 0 20px;
+          padding: 0 6.5px 0 20px;
         }
       }
     }
@@ -52,7 +56,6 @@
 
 
   img {
-    margin-left: 5px;
     opacity: .5;
     transform: scaleY(-1);
     transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.15s, transform, opacity);
@@ -65,18 +68,18 @@
 
   @media screen and (max-width: $x-large) {
     .tt-input {
-      padding-right: 15px;
+      padding-right: 2.5px;
 
       &.opened, &:focus, &:active {
         &:not(.disabled):not(:disabled):not(.readonly) {
-          padding: 0 16px;
+          padding: 0 2.5px 0 16px;
         }
       }
 
       &.dark {
         &.opened, &:focus, &:active {
           &:not(.disabled):not(:disabled):not(.readonly) {
-            padding: 0 16px;
+            padding: 0 2.5px 0 16px;
           }
         }
       }

@@ -1,8 +1,8 @@
-<div class="content-wrapper" [class.opened]="isOpened" appClickOutside (clickOutside)="onBlur()">
+<div class="content-wrapper" [class.opened]="isOpened">
   <div class="select-result">
     <ng-content select="app-select-result"></ng-content>
   </div>
   <div #optionsContent class="options" [class.dark]="isDark" [@accordionTransitionAnimation]="isOpened">
-      <ng-content></ng-content>
+    <ng-content></ng-content>
   </div>
 </div>

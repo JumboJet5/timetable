@@ -7,5 +7,8 @@
   <div class="result-content">
     <ng-content></ng-content>
   </div>
-  <img *ngIf="!parent?.isReadonly && !parent?.isDisabled" src="../../../../../static/schedule-widget/assets/img/ic_filter_arrow.svg" alt="arrow">
+  <div *ngIf="!parent?.isReadonly && !parent?.isDisabled"
+       class="arrow mat-icon-button">
+    <img src="../../../../../static/assets/img/ic_filter_arrow.svg" alt="arrow">
+  </div>
 </div>
