@@ -1,15 +1,18 @@
-import { animate, animateChild, group, query, style, transition, trigger } from '@angular/animations';
+import { animate, group, query, state, style, transition, trigger } from '@angular/animations';
 
-export const appearAnimation = trigger('appearAnimation', [
-  transition('* <=> *', [
+export const filterAppearAnimation = trigger('filterAppearAnimation', [
+  state('true', style({width: '*', opacity: 1})),
+  state('false', style({width: 0, opacity: 0, overflow: 'hidden'})),
+  state('*', style({width: 0, overflow: 'hidden'})),
+  transition('true => false', [
     group([
-      query(':leave', [style({position: 'relative', opacity: 1, width: '*', height: '*'})], {optional: true}),
-      query(':leave', [animate('0.5s ease', style({opacity: 0, width: 0, height: 0}))], {optional: true}),
+      style({overflow: 'hidden'}),
+      animate('.2s', style({width: 0, opacity: 0})),
     ]),
+  ]),
+  transition('false => true', [
     group([
-      query(':enter', [style({position: 'relative', opacity: 0, width: 0, height: 0})], {optional: true}),
-      query(':enter', [animate('0.5s ease', style({opacity: 1, width: '*', height: '*'}))], {optional: true}),
-      query('@modalGrowthTransitionAnimation', animateChild(), {optional: true}),
+      animate('.2s', style({width: '*', opacity: 1, overflow: 'hidden'})),
     ]),
   ]),
 ]);

@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GroupsListComponent } from './groups-list.component';
+import { GroupsListComponent } from 'src/app/dashboard/groups/groups-info/groups-list/groups-list.component';
 
-describe('GroupsListComponent', () => {
+describe('GroupsInfoComponent', () => {
   let component: GroupsListComponent;
   let fixture: ComponentFixture<GroupsListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GroupsListComponent ]
+      declarations: [GroupsListComponent ]
     })
     .compileComponents();
   }));

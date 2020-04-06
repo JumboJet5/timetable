@@ -3,11 +3,6 @@
   position: relative;
   padding: 32px 16px;
   background-color: var(--filter-background);
-}
-
-.filters-wrapper {
-  color: white;
-  font-size: 18px;
 
   .filter-mini-button {
     position: absolute;
@@ -23,10 +18,12 @@
       transform: scale(0.6);
     }
   }
+}
 
-  .animated-container {
-    width: 250px;
-  }
+.filters-wrapper {
+  color: white;
+  font-size: 18px;
+  width: 250px;
 
   .description {
     margin-bottom: 20px;

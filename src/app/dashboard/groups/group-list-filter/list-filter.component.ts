@@ -1,29 +1,24 @@
-import { Component, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { appearAnimation } from '@animations/appear.animation';
+import { filterAppearAnimation } from '@animations/appear.animation';
 import { FormatService } from '@app/service/format/format.service';
-import { CourseSelectComponent } from '@app/shared/menu-select/course-select/course-select.component';
-import { FacultySelectComponent } from '@app/shared/menu-select/faculty-select/faculty-select.component';
-import { SpecialtySelectComponent } from '@app/shared/menu-select/specialty-select/specialty-select.component';
-import { UniversitySelectComponent } from '@app/shared/menu-select/university-select/university-select.component';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
+import { FILTER_CONFIG } from 'src/core/injections/filter-config.injection-token';
 import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
+import { IFilterConfig } from 'src/core/interfaces/filter-config.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
-  selector: 'app-group-list-filter',
-  templateUrl: './group-list-filter.component.html',
-  styleUrls: ['./group-list-filter.component.scss'],
-  animations: [appearAnimation],
+  selector: 'app-list-filter',
+  templateUrl: './list-filter.component.html',
+  styleUrls: ['./list-filter.component.scss'],
+  animations: [filterAppearAnimation],
 })
-export class GroupListFilterComponent implements OnInit, OnDestroy {
-  @ViewChild(UniversitySelectComponent, {static: true}) univSelect: UniversitySelectComponent;
-  @ViewChild(FacultySelectComponent, {static: true}) facSelect: FacultySelectComponent;
-  @ViewChild(SpecialtySelectComponent, {static: true}) specSelect: SpecialtySelectComponent;
-  @ViewChild(CourseSelectComponent, {static: true}) courseSelect: CourseSelectComponent;
+export class ListFilterComponent implements OnInit, OnDestroy {
+  @Input() public withFaculty = false;
   public univControl: FormControl = new FormControl();
   public facControl: FormControl = new FormControl();
   public specControl: FormControl = new FormControl();
@@ -39,7 +34,32 @@ export class GroupListFilterComponent implements OnInit, OnDestroy {
 
   constructor(private _router: Router,
               private _formatService: FormatService,
+              @Inject(FILTER_CONFIG)  public filterConfig: IFilterConfig,
               private _route: ActivatedRoute) { }
+
+  private _withCourse = false;
+
+  public get withCourse(): boolean {
+    return this._withCourse;
+  }
+
+  @Input()
+  public set withCourse(value: boolean) {
+    this._withCourse = value;
+    if (value) this.withSpecialty = true;
+  }
+
+  private _withSpecialty = false;
+
+  public get withSpecialty(): boolean {
+    return this._withSpecialty;
+  }
+
+  @Input()
+  public set withSpecialty(value: boolean) {
+    this._withSpecialty = value;
+    if (value) this.withFaculty = true;
+  }
 
   public ngOnInit(): void {
     this._applyFiltersChange();

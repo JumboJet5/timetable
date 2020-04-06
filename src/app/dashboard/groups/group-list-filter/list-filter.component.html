@@ -1,27 +1,30 @@
-<div class="filters-wrapper" [formGroup]="filterForm" [@appearAnimation]="isOpened">
-  <button class="filter-mini-button" mat-icon-button (click)="isOpened = !isOpened">
-    <mat-icon>keyboard_arrow_{{isOpened ? 'left' : 'right'}}</mat-icon>
-  </button>
-  <div class="animated-container" *ngIf="isOpened">
-    <div class="description">Фільтри</div>
+<div class="filters-wrapper" [formGroup]="filterForm" [@filterAppearAnimation]="isOpened">
+  <div class="description">Фільтри</div>
 
-    <div class="placeholder">Університет</div>
-    <app-university-select [selectControl]="univControl"></app-university-select>
+  <div class="placeholder">Університет</div>
+  <app-university-select [selectControl]="univControl"></app-university-select>
 
+  <ng-container *ngIf="filterConfig.withFaculty">
     <div class="placeholder">Факультет</div>
     <app-faculty-select [filters]="{univ: univControl.value}"
                         [selectControl]="facControl"
                         [dropByFilterKeys]="['univ']"
                         [dropByFilterDefinition]="false"
                         (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
+  </ng-container>
 
+
+  <ng-container *ngIf="filterConfig.withSpecialty">
     <div class="placeholder">Спеціальність</div>
     <app-specialty-select [filters]="{univ: univControl.value, faculty: facControl.value}"
                           [selectControl]="specControl"
                           [dropByFilterKeys]="['univ', 'faculty']"
                           [dropByFilterDefinition]="false"
                           (selectedOptionLoad)="onLoadSpecialty($event)"></app-specialty-select>
+  </ng-container>
 
+
+  <ng-container *ngIf="filterConfig.withCourse">
     <div class="placeholder">Курс</div>
     <app-course-select [selectControl]="courseControl"
                        [disabled]="!specControl.value"
@@ -29,5 +32,10 @@
                        [dropByFilterKeys]="['univ', 'faculty', 'specialty']"
                        [dropByFilterDefinition]="false"
                        (selectedOptionLoad)="onLoadCourse($event)"></app-course-select>
-  </div>
+  </ng-container>
+
 </div>
+
+<button class="filter-mini-button" mat-icon-button (click)="isOpened = !isOpened">
+  <mat-icon>keyboard_arrow_{{isOpened ? 'left' : 'right'}}</mat-icon>
+</button>

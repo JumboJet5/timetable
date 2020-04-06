@@ -2,18 +2,17 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { GroupService } from '@app/service/group/group.service';
-import { degreeMap } from '@const/collections';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
 import { IGroup } from 'src/core/interfaces/group.interface';
 import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 
 @Component({
-  selector: 'app-groups-list',
-  templateUrl: './groups-list.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './groups-list.component.scss'],
+  selector: 'app-groups-info',
+  templateUrl: './groups-info.component.html',
+  styleUrls: ['../../../../core/stylesheet/default-form.scss', './groups-info.component.scss'],
 })
-export class GroupsListComponent implements OnInit, OnDestroy {
+export class GroupsInfoComponent implements OnInit, OnDestroy {
   public searchControl: FormControl = new FormControl('');
   public groups: IGroup[] = [];
   public pageOffset = 0;
@@ -22,7 +21,6 @@ export class GroupsListComponent implements OnInit, OnDestroy {
   public isLast = false;
   public ordering = 'name';
   public filters: IRequestParams = {};
-  public degreeMap = degreeMap();
   private _unsubscribe: Subject<void> = new Subject();
   private _unsubscribeComponent: Subject<void> = new Subject();
 
@@ -43,19 +41,7 @@ export class GroupsListComponent implements OnInit, OnDestroy {
       .subscribe(() => this._resetData());
   }
 
-  public onViewportAction(event: any) {
-    if (event && event.visible) this._loadNextPage();
-  }
-
-  @HostListener('window:beforeunload')
-  public ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
-    this._unsubscribeComponent.next();
-    this._unsubscribeComponent.complete();
-  }
-
-  private _loadNextPage(): void {
+  public loadNextPage(): void {
     if (this.isLoading || this.isLast) return;
 
     this.isLoading = true;
@@ -75,12 +61,20 @@ export class GroupsListComponent implements OnInit, OnDestroy {
       .add(() => this.isLoading = false);
   }
 
+  @HostListener('window:beforeunload')
+  public ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+    this._unsubscribeComponent.next();
+    this._unsubscribeComponent.complete();
+  }
+
   private _resetData(): void {
     this.pageOffset = 0;
     this.groups = [];
     this.isLast = false;
     this.isLoading = false;
     this._unsubscribe.next();
-    this._loadNextPage();
+    this.loadNextPage();
   }
 }
