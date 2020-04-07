@@ -1,0 +1,9 @@
+<label class="tt-input-label group-search">
+  <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
+  <button mat-icon-button>
+    <mat-icon>add</mat-icon>
+  </button>
+</label>
+
+<app-specialties-list (onScrollToBottom)="loadNextPage()" [isLoading]="isLoading"
+                      [specialties]="specialties"></app-specialties-list>

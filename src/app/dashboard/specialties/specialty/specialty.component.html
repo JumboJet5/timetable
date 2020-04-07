@@ -1,0 +1,14 @@
+<h2 class="heading">
+  <span>Спеціальність "{{specialty?.name}}"</span>
+  <button mat-icon-button (click)="log()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</h2>
+
+<div class="details" *ngIf="specialty">
+  <app-specialty-entity [specialty]="specialty" (save)="saveSpecialty($event)"></app-specialty-entity>
+</div>
+
+<div class="loader-wrapper" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

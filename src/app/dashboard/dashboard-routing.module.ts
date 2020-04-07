@@ -20,6 +20,10 @@ const routes: Routes = [
           .then(module => module.GroupsModule),
       },
       {
+        path: 'specialties', loadChildren: () => import('./specialties/specialties.module')
+          .then(module => module.SpecialtiesModule),
+      },
+      {
         path: 'lessons-schedule', loadChildren: () => import('./week-schedule/week-schedule.module')
           .then(module => module.WeekScheduleModule),
       },

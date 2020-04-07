@@ -53,12 +53,13 @@
     color: rgba(119, 119, 119, 0.5);
   }
 }
+
 input.tt-input[type="time"]::-webkit-inner-spin-button,
 input.tt-input[type="time"]::-webkit-outer-spin-button {
   margin: auto auto auto 8px;
 }
 
-.tt-input {
+.tt-input, .tt-textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 0 19px;
@@ -66,7 +67,6 @@ input.tt-input[type="time"]::-webkit-outer-spin-button {
   color: #3B3B3B;
   outline: unset;
   font-size: 13px;
-  font-weight: 500;
   line-height: 24px;
   height: 45px;
   border: 1px solid var(--primary-color-20);
@@ -123,6 +123,15 @@ input.tt-input[type="time"]::-webkit-outer-spin-button {
     font-size: 13px;
     line-height: 24px;
   }
+}
+
+.tt-textarea {
+  padding: 9.5px 19px;
+  resize: vertical;
+  height: 100px;
+  max-height: 250px;
+  min-height: 45px;
+  font-family: inherit;
 }
 
 .suffix-icon {

@@ -70,13 +70,13 @@ export class OptionItemComponent implements OnInit, OnDestroy {
       const controlValue = this.selectService.select.abstractControl.value || [];
       if (!this.checked) this.selectService.select.abstractControl.patchValue([...controlValue, this.value]);
       else this.selectService.select.abstractControl.patchValue(controlValue.filter(item => item !== this.value));
-      this.selectService.select.abstractControl.markAsDirty();
     }
   }
 
   private _onRadioItemClick() {
     if (this.selectService.select && this.selectService.select.abstractControl) {
       this.selectService.select.abstractControl.patchValue(this.value);
+      this.selectService.select.abstractControl.markAsDirty();
       this.selectService.select.isOpened = false;
     }
   }

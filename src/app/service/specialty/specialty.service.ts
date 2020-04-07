@@ -7,7 +7,7 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 import * as URLS from 'src/core/urls';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SpecialtyService {
   constructor(private http: HttpClient) { }
@@ -18,5 +18,9 @@ export class SpecialtyService {
 
   public getSpecialty(id: number): Observable<ISpecialty> {
     return this.http.get<any>(URLS.SPECIALTY(id));
+  }
+
+  public updateSpecialty(id: number, specialty: ISpecialty): Observable<ISpecialty> {
+    return this.http.patch<ISpecialty>(URLS.SPECIALTY(id), specialty);
   }
 }

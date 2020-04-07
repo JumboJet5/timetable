@@ -12,12 +12,12 @@ import { IFilterConfig } from 'src/core/interfaces/filter-config.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
-  selector: 'app-list-filter',
-  templateUrl: './list-filter.component.html',
-  styleUrls: ['./list-filter.component.scss'],
+  selector: 'app-structure-filter',
+  templateUrl: './structure-filters.component.html',
+  styleUrls: ['./structure-filters.component.scss'],
   animations: [filterAppearAnimation],
 })
-export class ListFilterComponent implements OnInit, OnDestroy {
+export class StructureFiltersComponent implements OnInit, OnDestroy {
   @Input() public withFaculty = false;
   public univControl: FormControl = new FormControl();
   public facControl: FormControl = new FormControl();
@@ -93,11 +93,11 @@ export class ListFilterComponent implements OnInit, OnDestroy {
       .pipe(distinctUntilChanged((source, previous) => this._formatService.isObjectsSimilar(source, previous)))
       .pipe(debounceTime(100))
       .subscribe(({univ, faculty, specialty, course}) => {
-        if (!!course) return this._router.navigate(['dashboard', 'groups'], {queryParams: {course}});
-        if (!!specialty) return this._router.navigate(['dashboard', 'groups'], {queryParams: {specialty}});
-        if (!!faculty) return this._router.navigate(['dashboard', 'groups'], {queryParams: {faculty}});
-        if (!!univ) return this._router.navigate(['dashboard', 'groups'], {queryParams: {univ}});
-        return this._router.navigate(['dashboard', 'groups']);
+        if (!!course) return this._router.navigate([], {queryParams: {course}});
+        if (!!specialty) return this._router.navigate([], {queryParams: {specialty}});
+        if (!!faculty) return this._router.navigate([], {queryParams: {faculty}});
+        if (!!univ) return this._router.navigate([], {queryParams: {univ}});
+        return this._router.navigate([]);
       });
   }
 

@@ -25,6 +25,7 @@ import { TeacherSelectComponent } from './teacher-select/teacher-select.componen
 import { ThemeSelectComponent } from './theme-select/theme-select.component';
 import { UniversitySelectComponent } from './university-select/university-select.component';
 import { YearSelectComponent } from './year-select/year-select.component';
+import { SpecialtyInterfaceTypeSelectComponent } from './specialty-interface-type-select/specialty-interface-type-select.component';
 import { LessonFormatSelectComponent } from './lesson-format-select/lesson-format-select.component';
 
 
@@ -50,8 +51,8 @@ const exportComponents = [
 ];
 
 @NgModule({
-  declarations: [...exportComponents],
-  exports: [...exportComponents],
+  declarations: [...exportComponents, SpecialtyInterfaceTypeSelectComponent],
+  exports: [...exportComponents, SpecialtyInterfaceTypeSelectComponent],
   imports: [
     CommonModule,
     ScrollModule,
