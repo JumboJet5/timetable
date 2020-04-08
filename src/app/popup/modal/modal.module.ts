@@ -6,17 +6,25 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DatePickerModule } from '@app/shared/date-picker/date-picker.module';
+import { LoadImageModule } from '@app/shared/load-image/load-image.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { SelectInputModule } from '@app/shared/select-input/select-input.module';
 import { LessonEditorComponent } from 'src/app/popup/modal/lesson-editor/lesson-editor.component';
 
 import { ModalRoutingModule } from 'src/app/popup/modal/modal-routing.module';
 import { CreateGroupsemesterComponent } from './create-groupsemester/create-groupsemester.component';
-import { CreateSemesterComponent } from './create-semester/create-semester.component';
 import { CreateLessontimeComponent } from './create-lessontime/create-lessontime.component';
+import { CreateSemesterComponent } from './create-semester/create-semester.component';
+import { CreateSpecialtyComponent } from './create-specialty/create-specialty.component';
 
 @NgModule({
-  declarations: [LessonEditorComponent, CreateGroupsemesterComponent, CreateSemesterComponent, CreateLessontimeComponent],
+  declarations: [
+    LessonEditorComponent,
+    CreateGroupsemesterComponent,
+    CreateSemesterComponent,
+    CreateLessontimeComponent,
+    CreateSpecialtyComponent,
+  ],
   imports: [
     CommonModule,
     ModalRoutingModule,
@@ -28,6 +36,7 @@ import { CreateLessontimeComponent } from './create-lessontime/create-lessontime
     MatProgressSpinnerModule,
     DatePickerModule,
     MatIconModule,
+    LoadImageModule,
   ],
 })
 export class ModalModule {}

@@ -6,8 +6,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GroupsInfoComponent } from '@app/dashboard/groups/groups-info/groups-info.component';
-import { GroupsListComponent } from '@app/dashboard/groups/groups-info/groups-list/groups-list.component';
 import { FiltersModule } from '@app/shared/filters/filters.module';
+import { ListModule } from '@app/shared/list/list.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { GROUPS_FILTER_CONFIG } from '@const/filters';
 import { InViewportModule } from 'ng-in-viewport';
@@ -28,7 +28,6 @@ import { GroupsComponent } from './groups.component';
     GroupEntityComponent,
     GroupSemestersDetailsComponent,
     GroupsemesterDetailsComponent,
-    GroupsListComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +40,7 @@ import { GroupsComponent } from './groups.component';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    ListModule,
   ],
   providers: [
     {provide: FILTER_CONFIG, useValue: GROUPS_FILTER_CONFIG},

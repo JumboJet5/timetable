@@ -1,0 +1,77 @@
+:host {
+  display: block;
+  height: 130px;
+  position: relative;
+  margin: auto auto 15px;
+  width: fit-content;
+}
+
+.hidden {
+  display: none;
+}
+
+.image {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.change-hint {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 32px;
+  background-color: var(--overlay-background-color);
+  color: white;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  cursor: pointer;
+
+  :host:hover & {
+    opacity: 1;
+  }
+
+  mat-icon {
+    line-height: 32px;
+  }
+}
+
+.delete-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  color: black;
+  font-size: 14px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 12px;
+  cursor: pointer;
+
+  &:hover {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}
+
+.loading-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: var(--overlay-background-color);
+
+  .loader-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    .mat-spinner, ::ng-deep.mat-spinner svg {
+      width: 24px !important;
+      height: 24px !important;
+    }
+  }
+}

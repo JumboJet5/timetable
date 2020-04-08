@@ -25,7 +25,7 @@ export class AsyncSelectorWithFiltersComponent<TOption extends IWithId> extends 
     if (!this.formatService.isObjectsSimilar(this._filters, filters)) {
       Object.entries(filters).forEach(([key, value]) => !value && value !== 0 && (filters[key] = ''));
 
-      if (!!this.selectControl && (this.dropByFilter || this._needDropValueByNewFilters(filters))) this.selectControl.patchValue(undefined);
+      this._needDropValueByNewFilters(filters);
 
       this._filters = filters;
       this._applyFilters();
@@ -50,9 +50,23 @@ export class AsyncSelectorWithFiltersComponent<TOption extends IWithId> extends 
     return {...this.searchForm.value, ...this._paginationFilters, ...this._filters};
   }
 
-  private _needDropValueByNewFilters(newFilters: IFilterParams): boolean {
+  private _needDropValueByNewFilters(newFilters: IFilterParams): void {
+    if (!!this.selectControl && this.dropByFilter) this.selectControl.patchValue(undefined);
+
+    if (this.multiple) {
+      const newValue = (this.getSelectedOptions() || [])
+        .filter(value => this._isObjectPassFilters(value, newFilters));
+
+      this.selectControl.patchValue(newValue);
+    } else if (this._isObjectPassFilters(this.getSelectedOption(), newFilters))
+      this.selectControl.patchValue(undefined);
+  }
+
+  private _isObjectPassFilters(option: TOption, newFilters: IFilterParams): boolean {
     const difference = this.formatService.getObjectsKeyWithDifference(this._filters, newFilters);
-    return !!this.dropByFilterKeys && this.dropByFilterKeys
-      .some(key => difference.includes(key) && (this.dropByFilterDefinition || !!this._filters[key]));
+
+    return !!option && !!this.dropByFilterKeys && (this.dropByFilterKeys || [])
+      .some(key => difference.includes(key) && (this.dropByFilterDefinition || !!this._filters[key])
+        && (!option[key] || option[key] !== newFilters[key]));
   }
 }

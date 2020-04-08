@@ -7,6 +7,7 @@ export class FormatService {
     Object.keys(obj).forEach(key => {
       if (obj[key] instanceof Array) obj[key].forEach(
         item => formData.append(key, item !== null && item !== undefined ? item : ''));
+      else if (obj[key] instanceof File) formData.append(key, obj[key], obj[key].name);
       else formData.append(key, obj[key] !== null && obj[key] !== undefined ? obj[key] : '');
     });
     return formData;

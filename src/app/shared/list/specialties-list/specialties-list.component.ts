@@ -17,5 +17,4 @@ export class SpecialtiesListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

@@ -1,18 +1,24 @@
-import { Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FormatService } from '@app/service/format/format.service';
+import { PopupService } from '@app/service/modal/popup.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
-import { Subject } from 'rxjs';
+import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
-  selector: 'app-specialty-entity',
-  templateUrl: './specialty-entity.component.html',
-  styleUrls: ['../../../../../core/stylesheet/default-form.scss', './specialty-entity.component.scss'],
+  selector: 'app-create-specialty',
+  templateUrl: './create-specialty.component.html',
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/modal.scss',
+    './create-specialty.component.scss',
+  ],
 })
-export class SpecialtyEntityComponent implements OnDestroy {
+export class CreateSpecialtyComponent implements OnInit {
   @Output() public save: EventEmitter<ISpecialty> = new EventEmitter<ISpecialty>();
   @Output() public onLogoChange: EventEmitter<File> = new EventEmitter<File>();
   @Input() public isLogoUpdating = false;
@@ -25,29 +31,33 @@ export class SpecialtyEntityComponent implements OnDestroy {
     desc: new FormControl(''),
     slug: new FormControl('', Validators.pattern(/^[^{., }]+$/)),
     faculty: this.facControl,
-    univ: this.univControl, // trigger reactForm dirty property
+    img: new FormControl(null),
   });
-  private _unsubscribe: Subject<void> = new Subject();
+  public imageSrc: SafeUrl;
+  public isLoading = false;
+  private _chanelId: number = PopupChanelEnum.CREATE_SPECIALTY;
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _formatService: FormatService,
+              private _popupService: PopupService,
+              private _domSanitizer: DomSanitizer,
               private _specialtyService: SpecialtyService) { }
 
-  private _specialty: ISpecialty;
-
-  public get specialty(): ISpecialty {
-    return this._specialty;
+  public ngOnInit(): void {
+    this._popupService.createChanel(this._chanelId);
+    this._applyParamsChange(this._route.snapshot.queryParams);
+    this._route.queryParams
+      .subscribe(params => this._applyParamsChange(params));
   }
 
-  @Input()
-  public set specialty(value: ISpecialty) {
-    this._specialty = value;
-    this.resetForm();
+  public closeModal(): void {
+    this._router.navigate([{outlets: {modal: null}}]);
   }
 
-  public resetForm(): void {
-    this.specialtyEntityForm.reset({...this.specialty, univ: this.univControl.value});
+  public getImagePath(img: File): void {
+    this.imageSrc = this._domSanitizer.bypassSecurityTrustUrl(!!img && !!URL ? URL.createObjectURL(img) : '');
+    this.specialtyEntityForm.patchValue({img});
   }
 
   public onLoadFaculty(faculty: IFaculty) {
@@ -69,9 +79,12 @@ export class SpecialtyEntityComponent implements OnDestroy {
     return 'Не валідне поле';
   }
 
-  @HostListener('window:beforeunload')
-  public ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
+  public createSpecialty() {
+    this._popupService.sendMessage(this._chanelId, this.specialtyEntityForm.value);
+    this.closeModal();
+  }
+
+  private _applyParamsChange(params: Params): void {
+    this.specialtyEntityForm.reset({univ: +params.univ, faculty: +params.faculty});
   }
 }

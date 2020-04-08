@@ -1,4 +1,7 @@
 <form [formGroup]="specialtyEntityForm" class="tt-form">
+  <app-load-image (onImageChange)="onLogoChange.emit($event)"
+                  [imageSrc]="specialty.img"
+                  [isLoading]="isLogoUpdating"></app-load-image>
   <label class="tt-input-label">
     <span class="placeholder">Ім'я</span>
     <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">

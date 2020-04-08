@@ -1,6 +1,7 @@
 :host {
   padding: 32px 24px 32px 39px;
   display: block;
+  max-width: 1200px;
 }
 
 .heading {
@@ -22,18 +23,45 @@
     }
   }
 }
+
 .details {
   display: flex;
-  max-width: 1200px;
+  height: 925px;
+  margin-bottom: 20px;
 
-  app-group-semesters-details {
+  .courses-and-theme {
     flex: 1 0 300px;
+    padding-left: 19px;
+
+    app-courses-list {
+      display: block;
+      height: 288px;
+    }
   }
 
   app-specialty-entity {
     flex: 0 0 360px;
     margin-right: 35px;
   }
+}
+
+.subheading {
+  display: flex;
+  align-items: center;
+
+  &:hover .mat-icon-button {
+    opacity: 1;
+  }
+
+  .mat-icon-button {
+    opacity: 0;
+    margin-left: 8px;
+  }
+}
+
+app-groups-list {
+  display: block;
+  max-height: 383px;
 }
 
 .loader-wrapper {

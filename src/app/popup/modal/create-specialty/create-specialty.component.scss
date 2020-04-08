@@ -1,0 +1,57 @@
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+
+  .mat-flat-button, .mat-stroked-button {
+    min-width: 100px;
+    margin: 0 10px;
+  }
+}
+
+.modal-wrapper {
+  overflow: unset;
+}
+
+.loading-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .loader-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  mat-spinner, ::ng-deep mat-spinner svg {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+.tt-form {
+  display: flex;
+  flex-direction: row;
+}
+
+.column {
+  flex: 1 0 250px;
+  margin-left: 25px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  app-load-image {
+    height: 151px;
+  }
+
+  .tt-textarea {
+    height: 128px;
+  }
+}

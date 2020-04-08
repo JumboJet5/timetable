@@ -1,9 +1,11 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
+import { PopupService } from '@app/service/modal/popup.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
+import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
 import { IRequestParams } from 'src/core/interfaces/request-param.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
@@ -25,6 +27,7 @@ export class SpecialtiesInfoComponent implements OnInit, OnDestroy {
   private _unsubscribeComponent: Subject<void> = new Subject();
 
   constructor(private _specialtyService: SpecialtyService,
+              private _popupService: PopupService,
               private _route: ActivatedRoute) { }
 
   public ngOnInit(): void {
@@ -39,6 +42,11 @@ export class SpecialtiesInfoComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribeComponent))
       .pipe(debounceTime(500))
       .subscribe(() => this._resetData());
+
+    this._popupService.getChanel(PopupChanelEnum.CREATE_SPECIALTY)
+      .pipe(takeUntil(this._unsubscribeComponent))
+      .pipe(switchMap(value => this._specialtyService.createSpecialty(value)))
+      .subscribe();
   }
 
   public loadNextPage(): void {
@@ -59,6 +67,10 @@ export class SpecialtiesInfoComponent implements OnInit, OnDestroy {
         this.pageOffset = this.specialties.length;
       })
       .add(() => this.isLoading = false);
+  }
+
+  public createSpecialty() {
+    this._popupService.openReactiveModal(['create-specialty'], {...this.filters});
   }
 
   @HostListener('window:beforeunload')

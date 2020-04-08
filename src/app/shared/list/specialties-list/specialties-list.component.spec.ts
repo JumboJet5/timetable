@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SpecialtiesListComponent } from './specialties-list.component';
+import { SpecialtiesListComponent } from 'src/app/shared/list/specialties-list/specialties-list.component';
 
 describe('SpecialtiesListComponent', () => {
   let component: SpecialtiesListComponent;
