@@ -21,6 +21,10 @@
     background-color: var(--primary-color-2);
   }
 
+  &:hover .icon {
+    opacity: 1;
+  }
+
   &s-wrapper {
     overflow: auto;
     max-height: inherit;
@@ -48,6 +52,11 @@
 
     &.short {
       flex: 0 0 60px;
+    }
+
+    &.icon {
+      flex: 0 0 40px;
+      opacity: 0;
     }
   }
 }

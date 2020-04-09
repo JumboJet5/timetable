@@ -1,4 +1,7 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component } from '@angular/core';
+import { CourseService } from '@app/service/course/course.service';
+import { PopupService } from '@app/service/modal/popup.service';
+import { itemServiceFactory, ItemsListComponent } from '@app/shared/list/items-list/items-list.component';
 import { degreeMap } from '@const/collections';
 import { ICourse } from 'src/core/interfaces/course.interface';
 
@@ -7,15 +10,12 @@ import { ICourse } from 'src/core/interfaces/course.interface';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.scss'],
 })
-export class CoursesListComponent implements OnInit {
-  @Input() public courses: ICourse[] = [];
-  @Input() public isLoading = false;
-  @Output() public onScrollToBottom: EventEmitter<void> = new EventEmitter<void>();
+export class CoursesListComponent extends ItemsListComponent<ICourse> {
   public degreeMap = degreeMap();
 
-  constructor() { }
-
-  ngOnInit(): void {
+  constructor(private _courseService: CourseService,
+              protected _popupService: PopupService) {
+    super(itemServiceFactory<ICourse>(params => this._courseService.getCourses(params),
+        id => this._courseService.deleteCourse(id)), _popupService);
   }
-
 }

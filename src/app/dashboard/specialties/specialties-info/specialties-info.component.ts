@@ -6,8 +6,7 @@ import { SpecialtyService } from '@app/service/specialty/specialty.service';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { Subject } from 'rxjs';
 import { debounceTime, switchMap, takeUntil } from 'rxjs/operators';
-import { IRequestParams } from 'src/core/interfaces/request-param.interface';
-import { ISpecialty } from 'src/core/interfaces/specialty.interface';
+import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 
 @Component({
   selector: 'app-specialties-info',
@@ -16,15 +15,10 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 })
 export class SpecialtiesInfoComponent implements OnInit, OnDestroy {
   public searchControl: FormControl = new FormControl('');
-  public specialties: ISpecialty[] = [];
-  public pageOffset = 0;
-  public pageSize = 20;
-  public isLoading = false;
-  public isLast = false;
   public ordering = 'name';
-  public filters: IRequestParams = {};
+  public filters: IFilterParams = {};
+  private _searchValue = '';
   private _unsubscribe: Subject<void> = new Subject();
-  private _unsubscribeComponent: Subject<void> = new Subject();
 
   constructor(private _specialtyService: SpecialtyService,
               private _popupService: PopupService,
@@ -32,41 +26,21 @@ export class SpecialtiesInfoComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this._route.queryParams
-      .pipe(takeUntil(this._unsubscribeComponent))
-      .subscribe((value: Params) => {
-        this.filters = value || {};
-        this._resetData();
-      });
-
-    this.searchControl.valueChanges
-      .pipe(takeUntil(this._unsubscribeComponent))
-      .pipe(debounceTime(500))
-      .subscribe(() => this._resetData());
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe((value: Params) => this.filters = {ordering: this.ordering, search: this._searchValue, ...(value || {})});
 
     this._popupService.getChanel(PopupChanelEnum.CREATE_SPECIALTY)
-      .pipe(takeUntil(this._unsubscribeComponent))
-      .pipe(switchMap(value => this._specialtyService.createSpecialty(value)))
-      .subscribe();
-  }
-
-  public loadNextPage(): void {
-    if (this.isLoading || this.isLast) return;
-
-    this.isLoading = true;
-    const params: IRequestParams = {
-      offset: this.pageOffset,
-      limit: this.pageSize, ...this.filters,
-      ordering: this.ordering,
-      search: this.searchControl.value,
-    };
-    this._specialtyService.getSpecialties(params)
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe(res => {
-        this.specialties.push(...res.results);
-        this.isLast = !res.next;
-        this.pageOffset = this.specialties.length;
-      })
-      .add(() => this.isLoading = false);
+      .pipe(switchMap(value => this._specialtyService.createSpecialty(value)))
+      .subscribe(() => this.filters = {...this.filters});
+
+    this.searchControl.valueChanges
+      .pipe(takeUntil(this._unsubscribe))
+      .pipe(debounceTime(500))
+      .subscribe(value => {
+        this._searchValue = value;
+        this.filters = {ordering: this.ordering, search: this._searchValue, ...(value || {})};
+      });
   }
 
   public createSpecialty() {
@@ -77,16 +51,5 @@ export class SpecialtiesInfoComponent implements OnInit, OnDestroy {
   public ngOnDestroy(): void {
     this._unsubscribe.next();
     this._unsubscribe.complete();
-    this._unsubscribeComponent.next();
-    this._unsubscribeComponent.complete();
-  }
-
-  private _resetData(): void {
-    this.pageOffset = 0;
-    this.specialties = [];
-    this.isLast = false;
-    this.isLoading = false;
-    this._unsubscribe.next();
-    this.loadNextPage();
   }
 }

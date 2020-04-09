@@ -6,9 +6,7 @@ import { PopupService } from '@app/service/modal/popup.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
 import { ThemeService } from '@app/service/theme/theme.service';
 import { Subject } from 'rxjs';
-import { filter, takeUntil, tap } from 'rxjs/operators';
-import { ICourse } from 'src/core/interfaces/course.interface';
-import { IGroup } from 'src/core/interfaces/group.interface';
+import { filter, takeUntil } from 'rxjs/operators';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 import { ITheme } from 'src/core/interfaces/theme.interface';
 
@@ -21,17 +19,8 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
   public isEntityLoading = false;
   public isThemeLoading = false;
   public isLogoUpdating = false;
-  public isCoursesLoading = false;
-  public isGroupsLoading = false;
   public specialty: ISpecialty;
   public themes: ITheme[];
-  public courses: ICourse[] = [];
-  public groups: IGroup[] = [];
-  private _pageLimit = 20;
-  private _coursesOffset = 0;
-  private _groupsOffset = 0;
-  private _isLastCourseLoaded = false;
-  private _isLastGroupLoaded = false;
   private _unsubscribe: Subject<void> = new Subject();
   private _specialtyId: number;
 
@@ -59,30 +48,6 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
     this._specialtyService.updateLogo(this.specialty.id, file)
       .subscribe(imgPath => this.specialty.img = imgPath)
       .add(() => this.isLogoUpdating = false);
-  }
-
-  public loadCourses(): void {
-    if (this._isLastCourseLoaded || this.isCoursesLoading) return;
-
-    this.isCoursesLoading = true;
-    this._courseService.getCourses({specialty: this._specialtyId, limit: this._pageLimit, offset: this._coursesOffset})
-      .pipe(tap(res => this._isLastCourseLoaded = !res.next))
-      .subscribe(res => this.courses.push(...res.results))
-      .add(() => this.isCoursesLoading = false);
-
-    this._coursesOffset += this._pageLimit;
-  }
-
-  public loadGroups(): void {
-    if (this._isLastGroupLoaded || this.isGroupsLoading) return;
-
-    this.isGroupsLoading = true;
-    this._groupService.getGroups({specialty: this._specialtyId, limit: this._pageLimit, offset: this._groupsOffset})
-      .pipe(tap(res => this._isLastGroupLoaded = !res.next))
-      .subscribe(res => this.groups.push(...res.results))
-      .add(() => this.isGroupsLoading = false);
-
-    this._groupsOffset += this._pageLimit;
   }
 
   public delete() {
@@ -127,13 +92,5 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
     this._specialtyId = specialtyId;
     this._loadSpecialtyThemes();
     this._getCurrentSpecialty();
-    this._isLastCourseLoaded = false;
-    this._isLastGroupLoaded = false;
-    this._coursesOffset = 0;
-    this._groupsOffset = 0;
-    this.courses = [];
-    this.groups = [];
-    this.loadCourses();
-    this.loadGroups();
   }
 }

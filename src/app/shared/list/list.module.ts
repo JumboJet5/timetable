@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { RouterModule } from '@angular/router';
 import { GroupsListComponent } from '@app/shared/list/groups-list/groups-list.component';
@@ -24,6 +26,8 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
     InViewportModule,
     MatProgressSpinnerModule,
     RouterModule,
+    MatButtonModule,
+    MatIconModule,
   ],
 })
 export class ListModule {}

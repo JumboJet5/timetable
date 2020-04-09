@@ -20,4 +20,8 @@ export class CourseService {
   public getCourse(id: number): Observable<ICourse> {
     return this.http.get<ICourse>(URLS.COURSE(id));
   }
+
+  public deleteCourse(id: number): Observable<null> {
+    return this.http.delete<null>(URLS.COURSE(id));
+  }
 }

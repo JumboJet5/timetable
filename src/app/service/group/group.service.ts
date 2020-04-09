@@ -22,4 +22,8 @@ export class GroupService {
   public updateGroup(id: number, group: IUpdateGroup): Observable<IGroup> {
     return this.http.patch<IGroup>(URLS.GROUP(id), group);
   }
+
+  public deleteGroup(id: number): Observable<null> {
+    return this.http.delete<null>(URLS.GROUP(id));
+  }
 }

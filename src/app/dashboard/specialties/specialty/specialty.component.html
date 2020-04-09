@@ -18,9 +18,7 @@
         <mat-icon>add</mat-icon>
       </button>
     </h3>
-    <app-courses-list (onScrollToBottom)="loadCourses()"
-                      [courses]="courses"
-                      [isLoading]="isCoursesLoading"></app-courses-list>
+    <app-courses-list [filters]="{specialty: specialty.id}"></app-courses-list>
   </div>
 </div>
 
@@ -30,9 +28,8 @@
     <mat-icon>add</mat-icon>
   </button>
 </h3>
-<app-groups-list (onScrollToBottom)="loadGroups()"
-                 [groups]="groups"
-                 [isLoading]="isGroupsLoading"></app-groups-list>
+
+<app-groups-list [filters]="{specialty: specialty?.id}"></app-groups-list>
 
 <div class="loader-wrapper" *ngIf="isEntityLoading">
   <mat-spinner></mat-spinner>

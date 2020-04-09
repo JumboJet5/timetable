@@ -5,6 +5,4 @@
   </button>
 </label>
 
-<app-specialties-list (onScrollToBottom)="loadNextPage()"
-                      [isLoading]="isLoading"
-                      [specialties]="specialties"></app-specialties-list>
+<app-specialties-list [withDeleting]="false" [filters]="filters"></app-specialties-list>
