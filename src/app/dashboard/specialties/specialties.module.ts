@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AccordionModule } from '@app/shared/accordion/accordion.module';
 import { FiltersModule } from '@app/shared/filters/filters.module';
 import { ListModule } from '@app/shared/list/list.module';
 import { LoadImageModule } from '@app/shared/load-image/load-image.module';
@@ -39,6 +40,7 @@ import { SpecialtyComponent } from './specialty/specialty.component';
     MenuSelectModule,
     LoadImageModule,
     ListModule,
+    AccordionModule,
   ],
   providers: [
     {provide: FILTER_CONFIG, useValue: SPECIALTIES_FILTER_CONFIG},

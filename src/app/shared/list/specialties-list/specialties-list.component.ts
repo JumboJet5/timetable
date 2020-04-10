@@ -7,7 +7,7 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 @Component({
   selector: 'app-specialties-list',
   templateUrl: './specialties-list.component.html',
-  styleUrls: ['./specialties-list.component.scss'],
+  styleUrls: ['../../../../core/stylesheet/items-list.scss', './specialties-list.component.scss'],
 })
 export class SpecialtiesListComponent extends ItemsListComponent<ISpecialty> {
   constructor(private _specialtyService: SpecialtyService,

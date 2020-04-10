@@ -1,0 +1,7 @@
+<div class="accordion-wrapper tt-input">
+  <ng-content select="app-accordion-header"></ng-content>
+
+  <div class="accordion-content" [@accordionTransitionAnimation]="isOpened">
+    <ng-content></ng-content>
+  </div>
+</div>

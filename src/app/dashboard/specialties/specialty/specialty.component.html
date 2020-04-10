@@ -8,28 +8,32 @@
 <div class="details" *ngIf="specialty">
   <app-specialty-entity [specialty]="specialty"
                         [isLogoUpdating]="isLogoUpdating"
-                        (save)="saveSpecialty($event)"
-                        (onLogoChange)="saveImage($event)"></app-specialty-entity>
-  <div class="courses-and-theme">
+                        (save)="saveSpecialty($event)"></app-specialty-entity>
+  <div class="additional">
     <app-specialty-themes [themes]="themes" [isLoading]="isThemeLoading"></app-specialty-themes>
-    <h3 class="subheading">
-      <span>Зв'язані курси</span>
-      <button mat-icon-button>
-        <mat-icon>add</mat-icon>
-      </button>
-    </h3>
-    <app-courses-list [filters]="{specialty: specialty.id}"></app-courses-list>
+
+    <app-accordion>
+      <app-accordion-header>
+        <h4>Курси прив'язані до спеціальності</h4>
+        <button mat-icon-button class="mini-button" (click)="$event.stopPropagation()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </app-accordion-header>
+      <app-courses-list [filters]="{specialty: specialtyId}"></app-courses-list>
+    </app-accordion>
+
+    <app-accordion>
+      <app-accordion-header>
+        <h4>Групи прив'язані до спеціальності</h4>
+        <button mat-icon-button class="mini-button" (click)="$event.stopPropagation()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </app-accordion-header>
+      <app-groups-list [filters]="{specialty: specialtyId}"></app-groups-list>
+    </app-accordion>
+
   </div>
 </div>
-
-<h3 class="subheading">
-  <span>Зв'язані групи</span>
-  <button mat-icon-button>
-    <mat-icon>add</mat-icon>
-  </button>
-</h3>
-
-<app-groups-list [filters]="{specialty: specialty?.id}"></app-groups-list>
 
 <div class="loader-wrapper" *ngIf="isEntityLoading">
   <mat-spinner></mat-spinner>

@@ -8,7 +8,7 @@ import { ICourse } from 'src/core/interfaces/course.interface';
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.scss'],
+  styleUrls: ['../../../../core/stylesheet/items-list.scss', './courses-list.component.scss'],
 })
 export class CoursesListComponent extends ItemsListComponent<ICourse> {
   public degreeMap = degreeMap();

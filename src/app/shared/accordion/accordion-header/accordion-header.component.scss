@@ -1,0 +1,34 @@
+@import '../../../../core/stylesheet/functions';
+
+:host {
+  display: flex;
+  height: 43px;
+  align-items: center;
+  padding: 0 16px;
+  cursor: pointer;
+
+  &:hover ::ng-deep.mini-button {
+    opacity: 1;
+  }
+
+  .arrow {
+    user-select: none;
+    margin-left: auto;
+    transform: scaleY(1);
+    transition: customTransitions(cubic-bezier(.35, 0, .25, 1), 0.15s, transform, opacity);
+
+    &.opened {
+      transform: scaleY(-1);
+    }
+  }
+
+  ::ng-deep h4 {
+    font-size: 16px;
+    font-weight: 500;
+  }
+
+  ::ng-deep .mini-button {
+    margin-left: 8px;
+    opacity: 0;
+  }
+}

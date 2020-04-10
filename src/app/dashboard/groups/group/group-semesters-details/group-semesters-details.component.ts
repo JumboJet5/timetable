@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { accordionTransitionAnimation } from '@animations/accordion.animation';
 import { GroupsemesterService } from '@app/service/groupsemester/groupsemester.service';
 import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service';
 import { PopupService } from '@app/service/modal/popup.service';
@@ -16,7 +15,6 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
   selector: 'app-group-semesters-details',
   templateUrl: './group-semesters-details.component.html',
   styleUrls: ['./group-semesters-details.component.scss'],
-  animations: [accordionTransitionAnimation],
 })
 export class GroupSemestersDetailsComponent implements OnInit {
   public groupsemesters: IGroupsemester[];

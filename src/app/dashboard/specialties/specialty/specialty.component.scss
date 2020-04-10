@@ -1,5 +1,5 @@
 :host {
-  padding: 32px 24px 32px 39px;
+  padding: 0 24px 16px 39px;
   display: block;
   max-width: 1200px;
 }
@@ -26,42 +26,30 @@
 
 .details {
   display: flex;
-  height: 925px;
-  margin-bottom: 20px;
-
-  .courses-and-theme {
-    flex: 1 0 300px;
-    padding-left: 19px;
-
-    app-courses-list {
-      display: block;
-      height: 288px;
-    }
-  }
 
   app-specialty-entity {
     flex: 0 0 360px;
-    margin-right: 35px;
-  }
-}
-
-.subheading {
-  display: flex;
-  align-items: center;
-
-  &:hover .mat-icon-button {
-    opacity: 1;
+    margin-right: 25px;
   }
 
-  .mat-icon-button {
-    opacity: 0;
-    margin-left: 8px;
-  }
-}
+  .additional {
+    flex: 1 0 300px;
 
-app-groups-list {
-  display: block;
-  max-height: 383px;
+    app-courses-list {
+      display: block;
+      max-height: 288px;
+    }
+
+    app-groups-list {
+      display: block;
+      max-height: 383px;
+    }
+
+    app-accordion {
+      margin-bottom: 15px;
+      display: block;
+    }
+  }
 }
 
 .loader-wrapper {

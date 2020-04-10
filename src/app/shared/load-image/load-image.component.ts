@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-load-image',
@@ -9,7 +10,7 @@ export class LoadImageComponent implements OnInit {
   @ViewChild('hidden') public hiddenInput: ElementRef<HTMLInputElement>;
   @Output() public onImageChange: EventEmitter<File> = new EventEmitter<File>();
   @Input() public disabled = false;
-  @Input() public imageSrc: string;
+  @Input() public imageSrc: SafeUrl | string;
   @Input() public defaultSrc = '/static/assets/img/no-image-found.png';
   @Input() public isLoading = false;
 

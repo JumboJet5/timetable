@@ -1,25 +1,23 @@
-<div class="group-items-wrapper">
-  <div class="relative-wrapper">
-    <div class="group-item header-row">
-      <div class="group-item-details long">Спеціальність</div>
-      <div class="group-item-details middle">Коротка назва</div>
-      <div class="group-item-details icon" *ngIf="withDeleting"></div>
-    </div>
-    <a *ngFor="let specialty of items; let index = index"
-       [routerLink]="['/dashboard', 'specialties', specialty.id]"
-       class="group-item">
-      <div class="group-item-details long">{{specialty.name}}</div>
-      <div class="group-item-details middle">{{specialty.short_name}}</div>
-      <div class="group-item-details icon" *ngIf="withDeleting">
-        <button mat-icon-button (click)="deleteItem(index); $event.stopPropagation(); $event.preventDefault();">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </a>
-    <div class="loader-wrapper" *ngIf="isLoading">
-      <mat-spinner></mat-spinner>
-    </div>
-    <div *ngIf="!isLoading" class="viewport-bottom" inViewport
-         (inViewportAction)="!!$event && $event.visible && loadItems()"></div>
-  </div>
+<div class="item header-row">
+  <div class="item-details long">Спеціальність</div>
+  <div class="item-details middle">Коротка назва</div>
+  <div class="item-details icon" *ngIf="withDeleting"></div>
 </div>
+<a *ngFor="let specialty of items; let index = index"
+   [routerLink]="['/dashboard', 'specialties', specialty.id]"
+   class="item">
+  <div class="item-details long">{{specialty.name}}</div>
+  <div class="item-details middle">{{specialty.short_name}}</div>
+  <div class="item-details icon" *ngIf="withDeleting">
+    <button (click)="deleteItem(index); $event.stopPropagation(); $event.preventDefault();"
+            class="mini-button"
+            mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</a>
+<div class="loader-wrapper" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!isLoading" class="viewport-bottom" inViewport
+     (inViewportAction)="!!$event && $event.visible && loadItems()"></div>

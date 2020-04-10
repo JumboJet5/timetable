@@ -33,7 +33,7 @@ export class CreateSpecialtyComponent implements OnInit {
     faculty: this.facControl,
     img: new FormControl(null),
   });
-  public imageSrc: SafeUrl;
+  public imageSrc: SafeUrl | string;
   public isLoading = false;
   private _chanelId: number = PopupChanelEnum.CREATE_SPECIALTY;
 

@@ -1,5 +1,5 @@
 <input #hidden class="hidden" type="file" (change)="onChange()"/>
-<mat-icon class="delete-icon" (click)="onImageChange.emit(null)">close</mat-icon>
+<mat-icon *ngIf="imageSrc" class="delete-icon" (click)="onImageChange.emit(null)">close</mat-icon>
 <img class="image" [src]="imageSrc || defaultSrc" alt>
 <div class="change-hint" *ngIf="!disabled && !isLoading" (click)="onClick()">
   <mat-icon>image_search</mat-icon>

@@ -246,3 +246,16 @@ button.mat-raised-button, button.mat-stroked-button, button.mat-flat-button {
 .mat-icon-button:not(:disabled):hover {
   background-color: var(--primary-color-10);
 }
+
+button.mini-button {
+  .mat-icon, &.mat-icon-button, .mat-button-wrapper {
+    height: 32px;
+    width: 32px;
+    display: block;
+  }
+
+  .mat-icon {
+    font-size: 16px;
+    line-height: 32px;
+  }
+}

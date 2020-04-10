@@ -1,5 +1,6 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormatService } from '@app/service/format/format.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
@@ -14,7 +15,6 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 })
 export class SpecialtyEntityComponent implements OnDestroy {
   @Output() public save: EventEmitter<ISpecialty> = new EventEmitter<ISpecialty>();
-  @Output() public onLogoChange: EventEmitter<File> = new EventEmitter<File>();
   @Input() public isLogoUpdating = false;
   public univControl: FormControl = new FormControl();
   public facControl: FormControl = new FormControl('', Validators.required);
@@ -26,12 +26,15 @@ export class SpecialtyEntityComponent implements OnDestroy {
     slug: new FormControl('', Validators.pattern(/^[^{., }]+$/)),
     faculty: this.facControl,
     univ: this.univControl, // trigger reactForm dirty property
+    img: new FormControl(null),
   });
+  public imageSrc: SafeUrl | string;
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _formatService: FormatService,
+              private _domSanitizer: DomSanitizer,
               private _specialtyService: SpecialtyService) { }
 
   private _specialty: ISpecialty;
@@ -45,9 +48,15 @@ export class SpecialtyEntityComponent implements OnDestroy {
     this._specialty = value;
     this.resetForm();
   }
+  public getImagePath(img: File): void {
+    this.imageSrc = img ? this._domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(img)) : '';
+    this.specialtyEntityForm.get('img').patchValue(img);
+    this.specialtyEntityForm.get('img').markAsDirty();
+  }
 
   public resetForm(): void {
     this.specialtyEntityForm.reset({...this.specialty, univ: this.univControl.value});
+    this.imageSrc = this.specialtyEntityForm.value.img;
   }
 
   public onLoadFaculty(faculty: IFaculty) {

@@ -21,8 +21,8 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
   public isLogoUpdating = false;
   public specialty: ISpecialty;
   public themes: ITheme[];
+  public specialtyId: number;
   private _unsubscribe: Subject<void> = new Subject();
-  private _specialtyId: number;
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
@@ -38,16 +38,9 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   public saveSpecialty(specialty: ISpecialty): void {
     this.isEntityLoading = true;
-    this._specialtyService.updateSpecialty(this._specialtyId, specialty)
+    this._specialtyService.updateSpecialty(this.specialtyId, specialty)
       .subscribe(res => this.specialty = res)
       .add(() => this.isEntityLoading = false);
-  }
-
-  public saveImage(file: File) {
-    this.isLogoUpdating = true;
-    this._specialtyService.updateLogo(this.specialty.id, file)
-      .subscribe(imgPath => this.specialty.img = imgPath)
-      .add(() => this.isLogoUpdating = false);
   }
 
   public delete() {
@@ -55,7 +48,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
         header: 'Вилучити спеціальність?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._specialtyService.deleteSpecialty(this._specialtyId)
+      () => this._specialtyService.deleteSpecialty(this.specialtyId)
         .subscribe(() => this._router.navigate(['dashboard', 'specialties'])));
   }
 
@@ -67,14 +60,14 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   private _getCurrentSpecialty(): void {
     this.isEntityLoading = true;
-    this._specialtyService.getSpecialty(this._specialtyId)
+    this._specialtyService.getSpecialty(this.specialtyId)
       .subscribe(specialty => this.specialty = specialty)
       .add(() => this.isEntityLoading = false);
   }
 
   private _loadSpecialtyThemes(): void {
     this.isThemeLoading = false;
-    this._themeService.getThemes({specialty: this._specialtyId})
+    this._themeService.getThemes({specialty: this.specialtyId})
       .subscribe(res => this.themes = res.results)
       .add(() => this.isThemeLoading = false);
   }
@@ -83,13 +76,13 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
     this._route.params
       .pipe(
         takeUntil(this._unsubscribe),
-        filter(params => +params.id !== this._specialtyId),
+        filter(params => +params.id !== this.specialtyId),
       )
       .subscribe(params => this._updateContent(+params.id));
   }
 
   private _updateContent(specialtyId: number): void {
-    this._specialtyId = specialtyId;
+    this.specialtyId = specialtyId;
     this._loadSpecialtyThemes();
     this._getCurrentSpecialty();
   }

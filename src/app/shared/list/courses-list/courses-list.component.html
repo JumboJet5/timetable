@@ -1,22 +1,21 @@
-<div class="group-items-wrapper">
-  <div class="relative-wrapper">
-    <div class="group-item header-row">
-      <div class="group-item-details long">Курс</div>
-      <div class="group-item-details">Степінь</div>
-      <div class="group-item-details icon" *ngIf="withDeleting"></div>
-    </div>
-    <a class="group-item" *ngFor="let course of items; let index = index" [routerLink]="['/dashboard', 'courses', course.id]">
-      <div class="group-item-details long">{{course.name}}</div>
-      <div class="group-item-details">{{degreeMap.get(+course.degree)?.name}}</div>
-      <div class="group-item-details icon" *ngIf="withDeleting">
-        <button mat-icon-button (click)="deleteItem(index); $event.stopPropagation(); $event.preventDefault();">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </a>
-    <div class="loader-wrapper" *ngIf="isLoading">
-      <mat-spinner></mat-spinner>
-    </div>
-    <div *ngIf="!isLoading" class="viewport-bottom" inViewport (inViewportAction)="!!$event && $event.visible && loadItems()"></div>
-  </div>
+<div class="item header-row">
+  <div class="item-details long">Курс</div>
+  <div class="item-details">ОКР</div>
+  <div class="item-details icon" *ngIf="withDeleting"></div>
 </div>
+<a class="item" *ngFor="let course of items; let index = index" [routerLink]="['/dashboard', 'courses', course.id]">
+  <div class="item-details long">{{course.name}}</div>
+  <div class="item-details">{{degreeMap.get(+course.degree)?.name}}</div>
+  <div class="item-details icon" *ngIf="withDeleting">
+    <button (click)="deleteItem(index); $event.stopPropagation(); $event.preventDefault();"
+            class="mini-button"
+            mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</a>
+<div class="loader-wrapper" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>
+<div *ngIf="!isLoading" class="viewport-bottom" inViewport
+     (inViewportAction)="!!$event && $event.visible && loadItems()"></div>

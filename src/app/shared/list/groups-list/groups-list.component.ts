@@ -8,7 +8,7 @@ import { IGroup } from 'src/core/interfaces/group.interface';
 @Component({
   selector: 'app-groups-list',
   templateUrl: './groups-list.component.html',
-  styleUrls: ['./groups-list.component.scss'],
+  styleUrls: ['../../../../core/stylesheet/items-list.scss', './groups-list.component.scss'],
 })
 export class GroupsListComponent extends ItemsListComponent<IGroup> {
   public degreeMap = degreeMap();
