@@ -11,3 +11,14 @@ export interface IGroupsemester {
   lessons_time: IOverSimplifiedLessonTime[];
   last_modified: string;
 }
+
+export interface IGroupsemesterSimplified {
+  id: number;
+  url: string;
+  group: number;
+  semester: number;
+  themes: number[];
+  show_lessons_number: boolean;
+  lessons_time: number[];
+  last_modified: string;
+}

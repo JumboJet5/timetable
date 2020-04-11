@@ -10,7 +10,7 @@
                         [isLogoUpdating]="isLogoUpdating"
                         (save)="saveSpecialty($event)"></app-specialty-entity>
   <div class="additional">
-    <app-specialty-themes [themes]="themes" [isLoading]="isThemeLoading"></app-specialty-themes>
+    <app-specialty-themes [specialtyId]="specialtyId"></app-specialty-themes>
 
     <app-accordion>
       <app-accordion-header>

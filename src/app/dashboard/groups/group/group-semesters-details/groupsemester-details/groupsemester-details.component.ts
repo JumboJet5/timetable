@@ -7,7 +7,7 @@ import { PopupService } from '@app/service/modal/popup.service';
 import { SemesterService } from '@app/service/semester/semester.service';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
-import { IGroupsemester } from 'src/core/interfaces/groupsemester.interface';
+import { IGroupsemester, IGroupsemesterSimplified } from 'src/core/interfaces/groupsemester.interface';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ISemester } from 'src/core/interfaces/semester.interface';
 import { ITheme } from 'src/core/interfaces/theme.interface';
@@ -164,8 +164,10 @@ export class GroupsemesterDetailsComponent implements OnInit {
       .add(() => this.isLoading = false);
   }
 
-  private _onGroupsemesterSuccessUpdate(groupsemester: IGroupsemester): void {
-    this.groupsemester = groupsemester;
+  private _onGroupsemesterSuccessUpdate(groupsemester: IGroupsemesterSimplified): void {
+    const themes = groupsemester.themes.map(themeId => this.groupThemes.find(theme => theme.id === themeId));
+    const lessons_time = groupsemester.lessons_time.map(timeId => this.lessonTimes.find(time => time.id === timeId));
+    this.groupsemester = {...groupsemester, themes, lessons_time};
     this.isUpdateSuccess = true;
   }
 

@@ -4,11 +4,9 @@ import { CourseService } from '@app/service/course/course.service';
 import { GroupService } from '@app/service/group/group.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
-import { ThemeService } from '@app/service/theme/theme.service';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
-import { ITheme } from 'src/core/interfaces/theme.interface';
 
 @Component({
   selector: 'app-specialty',
@@ -17,16 +15,13 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
 })
 export class SpecialtyComponent implements OnInit, OnDestroy {
   public isEntityLoading = false;
-  public isThemeLoading = false;
   public isLogoUpdating = false;
   public specialty: ISpecialty;
-  public themes: ITheme[];
   public specialtyId: number;
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
-              private _themeService: ThemeService,
               private _courseService: CourseService,
               private _groupService: GroupService,
               private _popupService: PopupService,
@@ -65,13 +60,6 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
       .add(() => this.isEntityLoading = false);
   }
 
-  private _loadSpecialtyThemes(): void {
-    this.isThemeLoading = false;
-    this._themeService.getThemes({specialty: this.specialtyId})
-      .subscribe(res => this.themes = res.results)
-      .add(() => this.isThemeLoading = false);
-  }
-
   private _getSpecialtyByRoute(): void {
     this._route.params
       .pipe(
@@ -83,7 +71,6 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   private _updateContent(specialtyId: number): void {
     this.specialtyId = specialtyId;
-    this._loadSpecialtyThemes();
     this._getCurrentSpecialty();
   }
 }

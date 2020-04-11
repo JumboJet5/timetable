@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IGroupsemester } from 'src/core/interfaces/groupsemester.interface';
+import { IGroupsemester, IGroupsemesterSimplified } from 'src/core/interfaces/groupsemester.interface';
 import { IPageable } from 'src/core/interfaces/pageable.interface';
 import * as URLS from 'src/core/urls';
 
@@ -16,8 +16,11 @@ export class GroupsemesterService {
     return this.http.get<IPageable<IGroupsemester>>(URLS.GROUPSEMESTERS, {params: {group, semester} as {}});
   }
 
-  public updateGroupsemester(body: IGroupsemester): Observable<IGroupsemester> {
-    return this.http.put<IGroupsemester>(URLS.GROUPSEMESTER(body.id), body);
+  public updateGroupsemester(groupsemester: IGroupsemester): Observable<IGroupsemesterSimplified> {
+    const themes = groupsemester.themes.map(theme => theme.id);
+    const lessons_time = groupsemester.lessons_time.map(time => time.id);
+    const body: IGroupsemesterSimplified = {...groupsemester, themes, lessons_time};
+    return this.http.put<IGroupsemesterSimplified>(URLS.GROUPSEMESTER(body.id), body);
   }
 
   public createGroupsemester(body: { group: number, semester: number, show_lessons_number: boolean }): Observable<IGroupsemester> {

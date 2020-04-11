@@ -1,8 +1,4 @@
 <form [formGroup]="specialtyEntityForm" class="tt-form">
-  <span class="placeholder">Логотип</span>
-  <app-load-image (onImageChange)="getImagePath($event)"
-                  [imageSrc]="imageSrc"
-                  [isLoading]="isLogoUpdating"></app-load-image>
   <label class="tt-input-label">
     <span class="placeholder">Назва *</span>
     <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
@@ -19,17 +15,6 @@
     <span class="tt-error">{{getControlError(specialtyEntityForm, 'slug')}}</span>
   </label>
   <label class="tt-input-label">
-    <span class="placeholder">Додаткові відомості</span>
-    <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис спеціальності"></textarea>
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'slug')}}</span>
-  </label>
-  <label class="tt-input-label">
-    <span class="placeholder">Тип користувацького інтерфейсу *</span>
-    <app-specialty-interface-type-select
-      [selectControl]="specialtyEntityForm.get('interface_type')"></app-specialty-interface-type-select>
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'univ')}}</span>
-  </label>
-  <label class="tt-input-label">
     <span class="placeholder">Університет</span>
     <app-university-select [selectControl]="univControl"></app-university-select>
     <span class="tt-error">{{getControlError(specialtyEntityForm, 'univ')}}</span>
@@ -42,6 +27,23 @@
                         [dropByFilterDefinition]="false"
                         (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
     <span class="tt-error">{{getControlError(specialtyEntityForm, 'faculty')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Тип користувацького інтерфейсу *</span>
+    <app-specialty-interface-type-select
+      [selectControl]="specialtyEntityForm.get('interface_type')"></app-specialty-interface-type-select>
+    <span class="tt-error">{{getControlError(specialtyEntityForm, 'univ')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Логотип</span>
+    <app-load-image (onImageChange)="getImagePath($event)"
+                    [imageSrc]="imageSrc"
+                    [isLoading]="isLogoUpdating"></app-load-image>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Додаткові відомості</span>
+    <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис спеціальності"></textarea>
+    <span class="tt-error">{{getControlError(specialtyEntityForm, 'slug')}}</span>
   </label>
 
   <div class="control-row" *ngIf="specialtyEntityForm.dirty">

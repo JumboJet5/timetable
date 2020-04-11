@@ -26,8 +26,11 @@ export class GroupEntityComponent implements OnDestroy {
     short_name: new FormControl('', Validators.required),
     subgroups: new FormControl('', Validators.min(0)),
     slug: new FormControl('', Validators.pattern(/^[^{., }]+$/)),
-    // course: this.courseControl,
-    // year: new FormControl('', Validators.required),
+    univ: this.univControl,
+    faculty: this.facControl,
+    specialty: this.specControl,
+    course: this.courseControl,
+    year: this.yearControl,
   });
   private _unsubscribe: Subject<void> = new Subject();
 
@@ -50,7 +53,6 @@ export class GroupEntityComponent implements OnDestroy {
 
   public resetForm(): void {
     this.groupEntityForm.reset(this.group);
-    this.yearControl.patchValue(this.group.year);
   }
 
   public onLoadFaculty(faculty: IFaculty) {

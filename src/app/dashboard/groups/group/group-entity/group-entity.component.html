@@ -1,23 +1,23 @@
 <form [formGroup]="groupEntityForm" class="tt-form">
   <label class="tt-input-label">
-    <span class="placeholder">Ім'я</span>
+    <span class="placeholder">Назва *</span>
     <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
     <span class="tt-error">{{getControlError(groupEntityForm, 'name')}}</span>
   </label>
   <label class="tt-input-label">
-    <span class="placeholder">Коротке ім'я</span>
+    <span class="placeholder">Коротка назва *</span>
     <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
     <span class="tt-error">{{getControlError(groupEntityForm, 'short_name')}}</span>
   </label>
   <label class="tt-input-label">
-    <span class="placeholder">Кількість підгруп</span>
-    <input class="tt-input" type="number" formControlName="subgroups" placeholder="Введіть кількість підгруп">
-    <span class="tt-error">{{getControlError(groupEntityForm, 'subgroups')}}</span>
-  </label>
-  <label class="tt-input-label">
-    <span class="placeholder">Slug</span>
+    <span class="placeholder">Транслітерація назви *</span>
     <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
     <span class="tt-error">{{getControlError(groupEntityForm, 'slug')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Кількість підгруп *</span>
+    <input class="tt-input" type="number" formControlName="subgroups" placeholder="Введіть кількість підгруп">
+    <span class="tt-error">{{getControlError(groupEntityForm, 'subgroups')}}</span>
   </label>
   <label class="tt-input-label">
     <span class="placeholder">Університет</span>
@@ -43,7 +43,7 @@
     <span class="tt-error">{{getControlError(groupEntityForm, 'specialty')}}</span>
   </label>
   <label class="tt-input-label">
-    <span class="placeholder">Курс</span>
+    <span class="placeholder">Курс *</span>
     <app-course-select [selectControl]="courseControl"
                        [disabled]="!specControl.value"
                        [filters]="{univ: univControl.value, faculty: facControl.value, specialty: specControl.value}"
@@ -53,7 +53,7 @@
     <span class="tt-error">{{getControlError(groupEntityForm, 'course')}}</span>
   </label>
   <label class="tt-input-label">
-    <span class="placeholder">Рік</span>
+    <span class="placeholder">Рік *</span>
     <app-year-select [selectControl]="yearControl"
                      [filters]="{univ: univControl.value}"
                      [dropByFilterKeys]="['univ']"
