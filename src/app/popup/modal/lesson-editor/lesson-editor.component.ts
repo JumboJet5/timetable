@@ -12,7 +12,11 @@ import { IGroup } from '@interfaces';
 @Component({
   selector: 'app-lesson-editor',
   templateUrl: './lesson-editor.component.html',
-  styleUrls: ['../../../../static/schedule-widget/assets/stylesheet/modal.scss', './lesson-editor.component.scss'],
+  styleUrls: [
+    '../../../../static/schedule-widget/assets/stylesheet/modal.scss',
+    '../../../../static/schedule-widget/assets/stylesheet/default-form.scss',
+    './lesson-editor.component.scss',
+  ],
 })
 export class LessonEditorComponent implements OnInit {
   @HostBinding('tabindex') public tabindex = 0;

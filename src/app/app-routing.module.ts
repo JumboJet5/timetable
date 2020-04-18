@@ -18,7 +18,6 @@ const routes: Routes = [
           .then(module => module.DashboardModule), canLoad: [AuthGuard],
       },
       ...authentication,
-      {path: '**', pathMatch: 'full', redirectTo: '/schedule-widget/dashboard/lessons-schedule/groupSlug'},
     ],
   },
   {
@@ -29,6 +28,7 @@ const routes: Routes = [
     path: 'modal', outlet: 'modal', loadChildren: () => import('src/app/popup/modal/modal.module')
       .then(module => module.ModalModule),
   },
+  {path: '**', pathMatch: 'full', redirectTo: '/schedule-widget/dashboard/lessons-schedule/groupSlug'},
 ];
 
 @NgModule({

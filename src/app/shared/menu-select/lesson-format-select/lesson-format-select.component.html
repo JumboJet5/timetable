@@ -1,0 +1,5 @@
+<app-select [abstractControl]="selectControl">
+  <app-select-result>{{formatMap.get(selectControl.value) || 'Оберіть формат'}}</app-select-result>
+  <app-option-item *ngFor="let option of formatMap | keyvalue"
+                   [value]="option.key">{{option.value}}</app-option-item>
+</app-select>

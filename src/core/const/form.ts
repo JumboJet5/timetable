@@ -11,5 +11,7 @@ export const lessonForm = () => new FormGroup({
     day: new FormControl(null, Validators.required),
     lesson_time: new FormControl(null, Validators.required),
     group_semester: new FormControl(null, Validators.required),
+    conduct_type: new FormControl(null, Validators.required),
+    link: new FormControl(null),
 });
 

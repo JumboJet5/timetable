@@ -5,6 +5,8 @@ export interface ILesson {
   day?: number;
   dates: string[];
   format: number;
+  link?: null | string;
+  conduct_type?: string;
   housing: number | {
     id: number;
     name: string;

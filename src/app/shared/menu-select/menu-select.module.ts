@@ -19,6 +19,7 @@ import { RoomSelectComponent } from './room-select/room-select.component';
 import { TeacherAutocompleteComponent } from './teacher-autocomplete/teacher-autocomplete.component';
 import { TeacherSelectComponent } from './teacher-select/teacher-select.component';
 import { ThemeSelectComponent } from './theme-select/theme-select.component';
+import { LessonFormatSelectComponent } from './lesson-format-select/lesson-format-select.component';
 
 
 const exportComponents = [
@@ -32,6 +33,7 @@ const exportComponents = [
   DaySelectComponent,
   LessonTimeSelectComponent,
   TeacherAutocompleteComponent,
+  LessonFormatSelectComponent,
 ];
 
 @NgModule({
