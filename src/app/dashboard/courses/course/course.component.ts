@@ -1,37 +1,39 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CourseService } from '@app/service/course/course.service';
 import { GroupService } from '@app/service/group/group.service';
 import { PopupService } from '@app/service/modal/popup.service';
-import { SpecialtyService } from '@app/service/specialty/specialty.service';
+import { degreeMap } from '@const/collections';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
-import { ISpecialty } from 'src/core/interfaces/specialty.interface';
+import { ICourse } from 'src/core/interfaces/course.interface';
 
 @Component({
-  selector: 'app-specialty',
-  templateUrl: './specialty.component.html',
-  styleUrls: ['./specialty.component.scss'],
+  selector: 'app-course',
+  templateUrl: './course.component.html',
+  styleUrls: ['./course.component.scss'],
 })
-export class SpecialtyComponent implements OnInit, OnDestroy {
+export class CourseComponent implements OnInit, OnDestroy {
   public isEntityLoading = false;
-  public specialty: ISpecialty;
-  public specialtyId: number;
+  public course: ICourse;
+  public courseId: number;
+  public degreeMap = degreeMap();
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
+              private _courseService: CourseService,
               private _groupService: GroupService,
-              private _popupService: PopupService,
-              private _specialtyService: SpecialtyService) { }
+              private _popupService: PopupService) { }
 
   ngOnInit(): void {
     this._getSpecialtyByRoute();
   }
 
-  public saveSpecialty(specialty: ISpecialty): void {
+  public saveCourse(course: ICourse): void {
     this.isEntityLoading = true;
-    this._specialtyService.updateSpecialty(this.specialtyId, specialty)
-      .subscribe(res => this.specialty = res)
+    this._courseService.updateCourse(this.courseId, course)
+      .subscribe(res => this.course = res)
       .add(() => this.isEntityLoading = false);
   }
 
@@ -40,8 +42,8 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
         header: 'Вилучити спеціальність?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._specialtyService.deleteSpecialty(this.specialtyId)
-        .subscribe(() => this._router.navigate(['dashboard', 'specialties'])));
+      () => this._courseService.deleteCourse(this.courseId)
+        .subscribe(() => this._router.navigate(['dashboard', 'specialties', this.course.specialty])));
   }
 
   @HostListener('window:beforeunload')
@@ -52,8 +54,8 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   private _getCurrentSpecialty(): void {
     this.isEntityLoading = true;
-    this._specialtyService.getSpecialty(this.specialtyId)
-      .subscribe(specialty => this.specialty = specialty)
+    this._courseService.getCourse(this.courseId)
+      .subscribe(course => this.course = course)
       .add(() => this.isEntityLoading = false);
   }
 
@@ -61,13 +63,13 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
     this._route.params
       .pipe(
         takeUntil(this._unsubscribe),
-        filter(params => +params.id !== this.specialtyId),
+        filter(params => +params.id !== this.courseId),
       )
       .subscribe(params => this._updateContent(+params.id));
   }
 
-  private _updateContent(specialtyId: number): void {
-    this.specialtyId = specialtyId;
+  private _updateContent(courseId: number): void {
+    this.courseId = courseId;
     this._getCurrentSpecialty();
   }
 }

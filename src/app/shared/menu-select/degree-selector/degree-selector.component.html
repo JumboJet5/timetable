@@ -1,0 +1,5 @@
+<app-select [abstractControl]="selectControl">
+  <app-select-result>{{degreeMap.get(selectControl.value)?.name || 'Оберіть ОКР'}}</app-select-result>
+  <app-option-item *ngFor="let option of degreeMap | keyvalue"
+                   [value]="option.key">{{option.value?.name}}</app-option-item>
+</app-select>

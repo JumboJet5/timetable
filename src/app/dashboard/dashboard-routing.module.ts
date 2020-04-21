@@ -24,6 +24,10 @@ const routes: Routes = [
           .then(module => module.SpecialtiesModule),
       },
       {
+        path: 'courses', loadChildren: () => import('./courses/courses.module')
+          .then(module => module.CoursesModule),
+      },
+      {
         path: 'lessons-schedule', loadChildren: () => import('./week-schedule/week-schedule.module')
           .then(module => module.WeekScheduleModule),
       },

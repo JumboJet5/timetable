@@ -1,66 +1,61 @@
 import { Component, EventEmitter, HostListener, Input, OnDestroy, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
-import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormatService } from '@app/service/format/format.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
 import { Subject } from 'rxjs';
+import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
-  selector: 'app-specialty-entity',
-  templateUrl: './specialty-entity.component.html',
-  styleUrls: ['../../../../../core/stylesheet/default-form.scss', './specialty-entity.component.scss'],
+  selector: 'app-course-entity',
+  templateUrl: './course-entity.component.html',
+  styleUrls: ['../../../../../core/stylesheet/default-form.scss', './course-entity.component.scss'],
 })
-export class SpecialtyEntityComponent implements OnDestroy {
-  @Output() public save: EventEmitter<ISpecialty> = new EventEmitter<ISpecialty>();
+export class CourseEntityComponent implements OnDestroy {
+  @Output() public save: EventEmitter<ICourse> = new EventEmitter<ICourse>();
   public univControl: FormControl = new FormControl();
-  public facControl: FormControl = new FormControl('', Validators.required);
-  public specialtyEntityForm: FormGroup = new FormGroup({
+  public facControl: FormControl = new FormControl();
+  public specControl: FormControl = new FormControl('', Validators.required);
+  public courseEntityForm: FormGroup = new FormGroup({
     name: new FormControl('', Validators.required),
-    short_name: new FormControl('', Validators.required),
-    interface_type: new FormControl('', Validators.required),
-    desc: new FormControl(''),
-    slug: new FormControl('', Validators.pattern(/^[^{., }]+$/)),
+    degree: new FormControl(''),
+    specialty: this.specControl,
     faculty: this.facControl,
     univ: this.univControl, // trigger reactForm dirty property
-    img: new FormControl(null),
   });
-  public imageSrc: SafeUrl | string;
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
               private _formatService: FormatService,
-              private _domSanitizer: DomSanitizer,
               private _specialtyService: SpecialtyService) { }
 
-  private _specialty: ISpecialty;
+  private _course: ICourse;
 
-  public get specialty(): ISpecialty {
-    return this._specialty;
+  public get course(): ICourse {
+    return this._course;
   }
 
   @Input()
-  public set specialty(value: ISpecialty) {
-    this._specialty = value;
+  public set course(value: ICourse) {
+    this._course = value;
     this.resetForm();
-  }
-  public getImagePath(img: File): void {
-    this.imageSrc = img ? this._domSanitizer.bypassSecurityTrustUrl(URL.createObjectURL(img)) : '';
-    this.specialtyEntityForm.get('img').patchValue(img);
-    this.specialtyEntityForm.get('img').markAsDirty();
   }
 
   public resetForm(): void {
-    this.specialtyEntityForm.reset({...this.specialty, univ: this.univControl.value});
-    this.imageSrc = this.specialtyEntityForm.value.img;
+    this.courseEntityForm.reset({...this.course, univ: this.univControl.value, faculty: this.facControl.value});
   }
 
   public onLoadFaculty(faculty: IFaculty) {
     if (!!faculty && faculty.id === this.facControl.value && faculty.univ !== this.univControl.value)
       this.univControl.patchValue(faculty.univ, {onlySelf: true});
+  }
+
+  public onLoadSpecialty(specialty: ISpecialty) {
+    if (!!specialty && specialty.id === this.specControl.value && specialty.faculty !== this.facControl.value)
+      this.facControl.patchValue(specialty.faculty, {onlySelf: true});
   }
 
   public isControlValid(formGroup: FormGroup, controlName: string, control?: AbstractControl): boolean {

@@ -1,0 +1,44 @@
+<form [formGroup]="courseEntityForm" class="tt-form">
+  <label class="tt-input-label">
+    <span class="placeholder">Університет</span>
+    <app-university-select [selectControl]="univControl"></app-university-select>
+    <span class="tt-error">{{getControlError(courseEntityForm, 'univ')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Факультет</span>
+    <app-faculty-select [filters]="{univ: univControl.value}"
+                        [selectControl]="facControl"
+                        [dropByFilterKeys]="['univ']"
+                        [dropByFilterDefinition]="false"
+                        (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
+    <span class="tt-error">{{getControlError(courseEntityForm, 'faculty')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Спеціальність *</span>
+    <app-specialty-select [filters]="{univ: univControl.value, faculty: facControl.value}"
+                          [selectControl]="specControl"
+                          [dropByFilterKeys]="['univ', 'faculty']"
+                          [dropByFilterDefinition]="false"
+                          (selectedOptionLoad)="onLoadSpecialty($event)"></app-specialty-select>
+    <span class="tt-error">{{getControlError(courseEntityForm, 'specialty')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Назва *</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{getControlError(courseEntityForm, 'name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">ОКР *</span>
+    <app-degree-selector [selectControl]="courseEntityForm.get('degree')"></app-degree-selector>
+    <span class="tt-error">{{getControlError(courseEntityForm, 'degree')}}</span>
+  </label>
+
+  <div class="control-row" *ngIf="courseEntityForm.dirty">
+    <button (click)="save.emit(courseEntityForm.value)"
+            [disabled]="courseEntityForm.invalid"
+            color="primary"
+            mat-flat-button>Зберегти
+    </button>
+    <button mat-stroked-button (click)="resetForm()">Скинути</button>
+  </div>
+</form>
