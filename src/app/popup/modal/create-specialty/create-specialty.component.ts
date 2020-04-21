@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Params, Router } from '@angular/router';
@@ -7,7 +7,6 @@ import { PopupService } from '@app/service/modal/popup.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
-import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
   selector: 'app-create-specialty',
@@ -19,8 +18,6 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
   ],
 })
 export class CreateSpecialtyComponent implements OnInit {
-  @Output() public save: EventEmitter<ISpecialty> = new EventEmitter<ISpecialty>();
-  @Output() public onLogoChange: EventEmitter<File> = new EventEmitter<File>();
   @Input() public isLogoUpdating = false;
   public univControl: FormControl = new FormControl();
   public facControl: FormControl = new FormControl('', Validators.required);
@@ -80,8 +77,10 @@ export class CreateSpecialtyComponent implements OnInit {
   }
 
   public createSpecialty() {
-    this._popupService.sendMessage(this._chanelId, this.specialtyEntityForm.value);
-    this.closeModal();
+    this.isLoading = true;
+    this._specialtyService.createSpecialty(this.specialtyEntityForm.value)
+      .subscribe(specialty => this._popupService.sendMessage(this._chanelId, specialty))
+      .add(() => this.closeModal());
   }
 
   private _applyParamsChange(params: Params): void {

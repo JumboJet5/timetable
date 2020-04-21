@@ -27,7 +27,7 @@ export class CourseComponent implements OnInit, OnDestroy {
               private _popupService: PopupService) { }
 
   ngOnInit(): void {
-    this._getSpecialtyByRoute();
+    this._getCourseByRoute();
   }
 
   public saveCourse(course: ICourse): void {
@@ -39,7 +39,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   public delete() {
     this._popupService.openDialog({
-        header: 'Вилучити спеціальність?',
+        header: 'Вилучити курс?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
       () => this._courseService.deleteCourse(this.courseId)
@@ -52,14 +52,14 @@ export class CourseComponent implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-  private _getCurrentSpecialty(): void {
+  private _getCurrentCourse(): void {
     this.isEntityLoading = true;
     this._courseService.getCourse(this.courseId)
       .subscribe(course => this.course = course)
       .add(() => this.isEntityLoading = false);
   }
 
-  private _getSpecialtyByRoute(): void {
+  private _getCourseByRoute(): void {
     this._route.params
       .pipe(
         takeUntil(this._unsubscribe),
@@ -70,6 +70,6 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   private _updateContent(courseId: number): void {
     this.courseId = courseId;
-    this._getCurrentSpecialty();
+    this._getCurrentCourse();
   }
 }

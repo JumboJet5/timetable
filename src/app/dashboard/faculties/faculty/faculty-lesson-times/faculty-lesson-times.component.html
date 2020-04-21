@@ -1,0 +1,26 @@
+<app-accordion>
+  <app-accordion-header>
+    <h4>Розлад пар на факультету</h4>
+    <button mat-icon-button class="mini-button left-side" (click)="createLessonTime(); $event.stopPropagation()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </app-accordion-header>
+
+  <div class="lesson-times-wrapper">
+    <div class="lesson-time" *ngFor="let lessonTime of lessonTimes">
+      <span>{{lessonTime.start}} - {{lessonTime.end}}</span>
+      <button mat-icon-button class="mini-button" (click)="editLessonTime(lessonTime.id)">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-icon-button class="mini-button" (click)="deleteLessonTime(lessonTime.id)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="loading-wrapper" *ngIf="isLoading">
+    <div class="loader-wrapper">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</app-accordion>

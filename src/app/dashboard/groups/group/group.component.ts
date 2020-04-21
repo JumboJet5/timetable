@@ -12,6 +12,7 @@ import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
 })
 export class GroupComponent implements OnInit, OnDestroy {
   public group: IGroup;
+  public facultyId: number;
   public isLoading = false;
   private _groupSlug: string;
   private _unsubscribe: Subject<void> = new Subject();

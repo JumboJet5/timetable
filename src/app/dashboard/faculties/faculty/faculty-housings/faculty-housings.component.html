@@ -1,0 +1,22 @@
+<app-accordion>
+  <app-accordion-header>
+    <h4>Корпуси прив'язані до факультету</h4>
+    <button mat-icon-button class="mini-button left-side" (click)="createHousing(); $event.stopPropagation()">
+      <mat-icon>add</mat-icon>
+    </button>
+  </app-accordion-header>
+
+  <div class="housings-wrapper">
+    <div class="housing" *ngFor="let housing of univHousings">
+      <mat-checkbox (change)="housingStatusChanged($event, housing)"
+                    [checked]="isHousingEnabledForFaculty(housing.id)"
+                    color="primary">{{housing.name}}</mat-checkbox>
+    </div>
+  </div>
+
+  <div class="loading-wrapper" *ngIf="isLoading">
+    <div class="loader-wrapper">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+</app-accordion>

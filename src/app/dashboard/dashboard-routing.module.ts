@@ -12,20 +12,24 @@ const routes: Routes = [
           .then(module => module.HomeModule),
       },
       {
-        path: 'universities', loadChildren: () => import('./universities/universities.module')
-          .then(module => module.UniversitiesModule),
-      },
-      {
         path: 'groups', loadChildren: () => import('./groups/groups.module')
           .then(module => module.GroupsModule),
+      },
+      {
+        path: 'courses', loadChildren: () => import('./courses/courses.module')
+          .then(module => module.CoursesModule),
       },
       {
         path: 'specialties', loadChildren: () => import('./specialties/specialties.module')
           .then(module => module.SpecialtiesModule),
       },
       {
-        path: 'courses', loadChildren: () => import('./courses/courses.module')
-          .then(module => module.CoursesModule),
+        path: 'faculties', loadChildren: () => import('./faculties/faculties.module')
+          .then(module => module.FacultiesModule),
+      },
+      {
+        path: 'universities', loadChildren: () => import('./universities/universities.module')
+          .then(module => module.UniversitiesModule),
       },
       {
         path: 'lessons-schedule', loadChildren: () => import('./week-schedule/week-schedule.module')

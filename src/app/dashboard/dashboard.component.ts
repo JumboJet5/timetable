@@ -11,6 +11,7 @@ export class DashboardComponent implements OnInit {
     {title: 'Розклад', link: '/dashboard/lessons-schedule', image: 'calendar_today'},
     {title: 'Групи', link: '/dashboard/groups', image: 'people_alt'},
     {title: 'Спеціальності', link: '/dashboard/specialties', image: 'work'},
+    {title: 'Факультети', link: '/dashboard/faculties', image: 'business'},
     {title: 'Університети', link: '/dashboard/universities', image: 'account_balance'},
   ];
 

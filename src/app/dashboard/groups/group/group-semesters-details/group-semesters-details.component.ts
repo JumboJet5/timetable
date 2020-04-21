@@ -17,6 +17,7 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
   styleUrls: ['./group-semesters-details.component.scss'],
 })
 export class GroupSemestersDetailsComponent implements OnInit {
+  @Input() facultyId: number;
   public groupsemesters: IGroupsemester[];
   public groupThemes: ITheme[];
   public lessonTimes: ILessonTime[];

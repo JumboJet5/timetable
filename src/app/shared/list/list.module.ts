@@ -8,6 +8,7 @@ import { GroupsListComponent } from '@app/shared/list/groups-list/groups-list.co
 import { SpecialtiesListComponent } from '@app/shared/list/specialties-list/specialties-list.component';
 import { InViewportModule } from 'ng-in-viewport';
 import { CoursesListComponent } from './courses-list/courses-list.component';
+import { FacultiesListComponent } from './faculties-list/faculties-list.component';
 
 
 @NgModule({
@@ -15,11 +16,13 @@ import { CoursesListComponent } from './courses-list/courses-list.component';
     GroupsListComponent,
     SpecialtiesListComponent,
     CoursesListComponent,
+    FacultiesListComponent,
   ],
   exports: [
     GroupsListComponent,
     SpecialtiesListComponent,
     CoursesListComponent,
+    FacultiesListComponent,
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,8 @@
+<label class="tt-input-label group-search">
+  <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
+  <button mat-icon-button (click)="createFaculty()">
+    <mat-icon>add</mat-icon>
+  </button>
+</label>
+
+<app-faculties-list [withDeleting]="false" [filters]="filters"></app-faculties-list>

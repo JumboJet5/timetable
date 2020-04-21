@@ -1,5 +1,6 @@
 export interface IGroup {
   subgroups: number;
+  course?: number;
   course_degree: string;
   course_name: string;
   year: number;

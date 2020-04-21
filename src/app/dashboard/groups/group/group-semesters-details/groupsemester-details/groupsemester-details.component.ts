@@ -23,6 +23,7 @@ export class GroupsemesterDetailsComponent implements OnInit {
   @Input() public groupThemes: ITheme[];
   @Input() public lessonTimes: ILessonTime[];
   @Input() public semester: ISemester;
+  @Input() facultyId: number;
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
   public isOpened = false;
   public isLoading = false;
@@ -132,7 +133,7 @@ export class GroupsemesterDetailsComponent implements OnInit {
   }
 
   public createLessonTime() {
-    this.popupService.openReactiveModal(['create-lessontime'], {});
+    this.popupService.openReactiveModal(['create-lessontime'], this.facultyId ? {faculty: this.facultyId} : {});
   }
 
   public deleteLessonTime(id: number) {

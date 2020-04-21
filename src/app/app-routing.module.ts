@@ -1,21 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { environment } from '@environment/environment';
 import { AuthGuard } from 'src/app/guards/auth/auth.guard';
 
-const authentication = environment.production ? [] : [
+const routes: Routes = [
   {
     path: 'authentication', loadChildren: () => import('./auth/auth.module')
       .then(module => module.AuthModule),
   },
-];
-
-const routes: Routes = [
   {
     path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module')
       .then(module => module.DashboardModule), canLoad: [AuthGuard],
   },
-  ...authentication,
   {path: '**', pathMatch: 'full', redirectTo: '/dashboard/lessons-schedule/groupSlug'},
   {
     path: 'dialog', outlet: 'dialog', loadChildren: () => import('src/app/popup/dialog/dialog.module')

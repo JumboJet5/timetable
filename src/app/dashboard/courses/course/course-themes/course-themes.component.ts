@@ -18,10 +18,10 @@ export class CourseThemesComponent {
   @Input()
   public set courseId(value: number) {
     this._courseId = value;
-    this._loadSpecialtyThemes();
+    this._loadCourseThemes();
   }
 
-  private _loadSpecialtyThemes(): void {
+  private _loadCourseThemes(): void {
     this.isLoading = false;
     this._themeService.getThemes({specialty: this._courseId})
       .subscribe(res => this.themes = res.results)

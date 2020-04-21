@@ -1,6 +1,7 @@
 <app-groupsemester-details *ngFor="let groupsemester of groupsemesters; let index = index"
                            (delete)="onDelete(index)"
                            [groupsemester]="groupsemester"
+                           [facultyId]="facultyId"
                            [semester]="semesterMap.get(groupsemester.semester)"
                            [groupThemes]="groupThemes"
                            [lessonTimes]="lessonTimes"></app-groupsemester-details>

@@ -16,6 +16,7 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 })
 export class GroupEntityComponent implements OnDestroy {
   @Output() save: EventEmitter<IUpdateGroup> = new EventEmitter<IUpdateGroup>();
+  @Output() facultyChanged: EventEmitter<number> = new EventEmitter<number>();
   public univControl: FormControl = new FormControl();
   public facControl: FormControl = new FormControl();
   public specControl: FormControl = new FormControl();
@@ -58,6 +59,9 @@ export class GroupEntityComponent implements OnDestroy {
   public onLoadFaculty(faculty: IFaculty) {
     if (!!faculty && faculty.id === this.facControl.value && faculty.univ !== this.univControl.value)
       this.univControl.patchValue(faculty.univ, {onlySelf: true});
+    setTimeout(() => { // todo change sharing group faculty
+      if (this.group.course === this.groupEntityForm.value.course) this.facultyChanged.emit(faculty.id);
+    });
   }
 
   public onLoadSpecialty(specialty: ISpecialty) {

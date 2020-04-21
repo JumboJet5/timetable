@@ -24,6 +24,10 @@ export class LessonTimeService {
     return this.http.post<ILessonTime>(URLS.LESSON_TIMES, body);
   }
 
+  public updateLessonTime(id: number, body: any): Observable<ILessonTime> {
+    return this.http.put<ILessonTime>(URLS.LESSON_TIME(id), body);
+  }
+
   public deleteLessonTime(id: number): Observable<null> {
     return this.http.delete<null>(URLS.LESSON_TIME(id));
   }

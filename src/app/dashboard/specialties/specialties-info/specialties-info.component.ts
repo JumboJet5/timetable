@@ -31,7 +31,6 @@ export class SpecialtiesInfoComponent implements OnInit, OnDestroy {
 
     this._popupService.getChanel(PopupChanelEnum.CREATE_SPECIALTY)
       .pipe(takeUntil(this._unsubscribe))
-      .pipe(switchMap(value => this._specialtyService.createSpecialty(value)))
       .subscribe(() => this.filters = {...this.filters});
 
     this.searchControl.valueChanges

@@ -1,0 +1,38 @@
+:host {
+  display: block;
+  margin-bottom: 15px;
+
+  .housings-wrapper {
+    margin-bottom: 6px;
+    max-height: 440px;
+    overflow: auto;
+  }
+
+  .housing {
+    display: flex;
+    align-items: center;
+    line-height: 24px;
+    height: 40px;
+    font-size: 13px;
+    padding-left: 16px;
+  }
+
+  ::ng-deep.accordion-content {
+    padding-right: 16px;
+  }
+}
+
+.loading-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .loader-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

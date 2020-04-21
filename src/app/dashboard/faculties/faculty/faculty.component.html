@@ -1,0 +1,30 @@
+<h2 class="heading">
+  <span>Спеціальність "{{faculty?.name}}"</span>
+  <button mat-icon-button (click)="delete()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</h2>
+
+<div class="details" *ngIf="faculty">
+  <app-faculty-entity [faculty]="faculty"
+                      (save)="saveFaculty($event)"></app-faculty-entity>
+  <div class="additional">
+    <app-faculty-themes [facultyId]="facultyId"></app-faculty-themes>
+    <app-faculty-lesson-times [facultyId]="facultyId"></app-faculty-lesson-times>
+    <app-faculty-housings [facultyId]="facultyId" [univId]="faculty?.univ"></app-faculty-housings>
+
+    <app-accordion>
+      <app-accordion-header>
+        <h4>Спеціальності прив'язані до факультету</h4>
+        <button mat-icon-button class="mini-button" (click)="createSpecialty(); $event.stopPropagation()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </app-accordion-header>
+      <app-specialties-list [filters]="{faculty: facultyId}"></app-specialties-list>
+    </app-accordion>
+  </div>
+</div>
+
+<div class="loader-wrapper" *ngIf="isEntityLoading">
+  <mat-spinner></mat-spinner>
+</div>

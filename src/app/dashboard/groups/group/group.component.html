@@ -6,8 +6,10 @@
 </h2>
 
 <div class="details" *ngIf="group">
-  <app-group-entity [group]="group" (save)="saveGroupEntity($event)"></app-group-entity>
-  <app-group-semesters-details [group]="group"></app-group-semesters-details>
+  <app-group-entity (save)="saveGroupEntity($event)"
+                    (facultyChanged)="facultyId = $event"
+                    [group]="group"></app-group-entity>
+  <app-group-semesters-details [group]="group" [facultyId]="facultyId"></app-group-semesters-details>
 </div>
 
 <div class="loader-wrapper" *ngIf="isLoading">

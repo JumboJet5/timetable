@@ -52,6 +52,7 @@ export class AsyncSelectorWithFiltersComponent<TOption extends IWithId> extends 
 
   private _needDropValueByNewFilters(newFilters: IFilterParams): void {
     if (!!this.selectControl && this.dropByFilter) this.selectControl.patchValue(undefined);
+    if (!this.selectControl) return;
 
     if (this.multiple) {
       const newValue = (this.getSelectedOptions() || [])

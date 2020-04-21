@@ -35,7 +35,7 @@ export class PopupService {
         .add(() => history.state.answer === 'accept' ? onAccept && onAccept() : onCancel && onCancel()));
   }
 
-  public openReactiveModal(restUrl: (string | number)[], queryParams: IRequestParams) {
+  public openReactiveModal(restUrl: (string | number)[], queryParams: IRequestParams = {}) {
     this.router.navigate([{outlets: {modal: ['modal', ...restUrl]}}], {queryParams});
   }
 
