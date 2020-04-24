@@ -23,7 +23,9 @@ export class SpecialtyService {
   }
 
   public updateSpecialty(id: number, specialty: ISpecialty): Observable<ISpecialty> {
-    return this.http.patch<ISpecialty>(URLS.SPECIALTY(id), this.formatService.getFormDataFromObject(specialty));
+    const body = this.formatService.getFormDataFromObject(specialty);
+    if (typeof specialty.img === 'string') body.delete('img');
+    return this.http.patch<ISpecialty>(URLS.SPECIALTY(id), body);
   }
 
   public createSpecialty(body): Observable<ISpecialty> {

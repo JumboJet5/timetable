@@ -4,10 +4,6 @@
   <h4>Створення факультета</h4>
   <form [formGroup]="facultyEntityForm" class="tt-form">
     <div class="column">
-      <span class="placeholder">Логотип</span>
-      <app-load-image (onImageChange)="getImagePath($event)"
-                      [imageSrc]="imageSrc"
-                      [isLoading]="isLogoUpdating"></app-load-image>
       <label class="tt-input-label">
         <span class="placeholder">Назва *</span>
         <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
@@ -18,6 +14,10 @@
         <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
         <span class="tt-error">{{getControlError(facultyEntityForm, 'short_name')}}</span>
       </label>
+      <span class="placeholder">Логотип</span>
+      <app-load-image (onImageChange)="getImagePath($event)"
+                      [imageSrc]="imageSrc"
+                      [isLoading]="isLogoUpdating"></app-load-image>
     </div>
 
     <div class="column">
@@ -27,7 +27,7 @@
         <span class="tt-error">{{getControlError(facultyEntityForm, 'univ')}}</span>
       </label>
       <label class="tt-input-label">
-        <span class="placeholder">Транслітерація назви *</span>
+        <span class="placeholder">Транслітерація назви</span>
         <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
         <span class="tt-error">{{getControlError(facultyEntityForm, 'slug')}}</span>
       </label>

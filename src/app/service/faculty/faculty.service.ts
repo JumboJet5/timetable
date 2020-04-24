@@ -27,7 +27,9 @@ export class FacultyService {
   }
 
   public updateFaculty(id: number, faculty: IFaculty): Observable<IFaculty> {
-    return this.http.put<IFaculty>(URLS.FACULTY(id), this.formatService.getFormDataFromObject(faculty));
+    const body = this.formatService.getFormDataFromObject(faculty);
+    if (typeof faculty.img === 'string') body.delete('img');
+    return this.http.put<IFaculty>(URLS.FACULTY(id), body);
   }
 
   public deleteFaculty(id: number): Observable<null> {

@@ -1,8 +1,9 @@
-<label class="tt-input-label group-search">
-  <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
-  <button mat-icon-button>
+<label class="tt-input-label item-search">
+  <button (click)="createNewInstance()" color="primary" mat-flat-button>
     <mat-icon>add</mat-icon>
+    <span>Створити групу</span>
   </button>
+  <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
 </label>
 
 <app-groups-list [filters]="filters" [withDeleting]="false"></app-groups-list>

@@ -2,6 +2,11 @@
 @import '../../../../../core/stylesheet/breakpoints';
 
 :host {
+  .arrow {
+    width: 33px;
+    height: 33px;
+    line-height: 33px;
+  }
   .mat-icon-button:not(:disabled):hover {
     background-color: inherit;
   }

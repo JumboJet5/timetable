@@ -1,4 +1,10 @@
-<div class="university-info" *ngFor="let university of universities">
-  <img class="univ-logo" [src]="university.img" alt>
-  <span>{{university.name}}</span>
-</div>
+<label class="tt-input-label item-search">
+  <button (click)="createNewInstance()" color="primary" mat-flat-button>
+    <mat-icon>add</mat-icon>
+    <span>Створити університет</span>
+  </button>
+  <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
+</label>
+
+
+<app-universities-list [filters]="filters"></app-universities-list>

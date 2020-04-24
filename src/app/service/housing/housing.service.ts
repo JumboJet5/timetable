@@ -21,4 +21,8 @@ export class HousingService {
   public createHousing(housing: IHousing): Observable<IHousing> {
     return this.http.post<IHousing>(URLS.HOUSINGS, housing);
   }
+
+  public deleteHousing(id: number): Observable<null> {
+    return this.http.delete<null>(URLS.HOUSING(id));
+  }
 }

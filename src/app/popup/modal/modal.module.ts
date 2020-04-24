@@ -19,6 +19,9 @@ import { CreateSpecialtyComponent } from './create-specialty/create-specialty.co
 import { CreateFacultyComponent } from './create-faculty/create-faculty.component';
 import { UpdateLessontimeComponent } from './update-lessontime/update-lessontime.component';
 import { CreateHousingComponent } from 'src/app/popup/modal/create-housing/create-housing.component';
+import { CreateUniversityComponent } from './create-university/create-university.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
+import { CreateCourseComponent } from './create-course/create-course.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,9 @@ import { CreateHousingComponent } from 'src/app/popup/modal/create-housing/creat
     CreateFacultyComponent,
     UpdateLessontimeComponent,
     CreateHousingComponent,
+    CreateUniversityComponent,
+    CreateGroupComponent,
+    CreateCourseComponent,
   ],
   imports: [
     CommonModule,

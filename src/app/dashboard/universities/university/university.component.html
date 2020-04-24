@@ -1,0 +1,28 @@
+<h2 class="heading">
+  <span>Спеціальність "{{university?.name}}"</span>
+  <button mat-icon-button (click)="delete()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</h2>
+
+<div class="details" *ngIf="university">
+  <app-university-entity [university]="university"
+                         (save)="saveUniversity($event)"></app-university-entity>
+    <div class="additional">
+      <app-university-housings [univId]="univId"></app-university-housings>
+
+      <app-accordion>
+        <app-accordion-header>
+          <h4>Факультети прив'язані до університету</h4>
+          <button mat-icon-button class="mini-button" (click)="createFaculty(); $event.stopPropagation()">
+            <mat-icon>add</mat-icon>
+          </button>
+        </app-accordion-header>
+        <app-faculties-list [filters]="{univ: univId}"></app-faculties-list>
+      </app-accordion>
+    </div>
+</div>
+
+<div class="loader-wrapper" *ngIf="isEntityLoading">
+  <mat-spinner></mat-spinner>
+</div>

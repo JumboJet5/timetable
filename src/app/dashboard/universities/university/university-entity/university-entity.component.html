@@ -1,0 +1,36 @@
+<form [formGroup]="universityEntityForm" class="tt-form">
+  <label class="tt-input-label">
+    <span class="placeholder">Назва *</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{getControlError(universityEntityForm, 'name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Коротка назва *</span>
+    <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
+    <span class="tt-error">{{getControlError(universityEntityForm, 'short_name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Транслітерація назви *</span>
+    <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
+    <span class="tt-error">{{getControlError(universityEntityForm, 'slug')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Логотип</span>
+    <app-load-image (onImageChange)="getImagePath($event)"
+                    [imageSrc]="imageSrc"></app-load-image>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Додаткові відомості</span>
+    <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис факультета"></textarea>
+    <span class="tt-error">{{getControlError(universityEntityForm, 'slug')}}</span>
+  </label>
+
+  <div class="control-row" *ngIf="universityEntityForm.dirty">
+    <button (click)="save.emit(universityEntityForm.value)"
+            [disabled]="universityEntityForm.invalid"
+            color="primary"
+            mat-flat-button>Зберегти
+    </button>
+    <button mat-stroked-button (click)="resetForm()">Скинути</button>
+  </div>
+</form>

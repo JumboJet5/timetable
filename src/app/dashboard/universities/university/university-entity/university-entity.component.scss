@@ -1,0 +1,28 @@
+.breakable-change {
+  background-color: var(--primary-color);
+  margin: 0 -15px 15px;
+  padding: 15px;
+  border-radius: 15px;
+  color: white;
+
+  .description {
+    line-height: 18px;
+    font-size: 12px;
+    font-weight: 300;
+  };
+}
+
+.control-row {
+  .mat-flat-button, .mat-stroked-button {
+    min-width: 100px;
+    margin: 0 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

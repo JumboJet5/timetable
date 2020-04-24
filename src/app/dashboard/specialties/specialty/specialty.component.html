@@ -14,21 +14,21 @@
     <app-accordion>
       <app-accordion-header>
         <h4>Курси прив'язані до спеціальності</h4>
-        <button mat-icon-button class="mini-button" (click)="$event.stopPropagation()">
+        <button mat-icon-button class="mini-button" (click)="createCourse(); $event.stopPropagation()">
           <mat-icon>add</mat-icon>
         </button>
       </app-accordion-header>
-      <app-courses-list [filters]="{specialty: specialtyId}"></app-courses-list>
+      <app-courses-list [filters]="coursesFilters"></app-courses-list>
     </app-accordion>
 
     <app-accordion>
       <app-accordion-header>
         <h4>Групи прив'язані до спеціальності</h4>
-        <button mat-icon-button class="mini-button" (click)="$event.stopPropagation()">
+        <button mat-icon-button class="mini-button" (click)="createGroup(); $event.stopPropagation()">
           <mat-icon>add</mat-icon>
         </button>
       </app-accordion-header>
-      <app-groups-list [filters]="{specialty: specialtyId}"></app-groups-list>
+      <app-groups-list [filters]="groupsFilters"></app-groups-list>
     </app-accordion>
 
   </div>

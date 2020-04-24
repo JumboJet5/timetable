@@ -4,27 +4,39 @@
   max-height: inherit;
   height: 100%;
   position: relative;
+  background-color: inherit;
+}
+
+.relative-wrapper {
+  background-color: inherit;
 }
 
 .item {
   display: flex;
   align-items: center;
   padding: 0 16px;
-  background-color: var(--primary-color-5);
   cursor: pointer;
   text-decoration: none;
   color: inherit;
-  transition: background-color 0.25s ease, color 0.25s ease;
+  transition: box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
   line-height: 24px;
   height: 40px;
   font-size: 13px;
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-image: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0),
+      var(--primary-color-20) 10%,
+      var(--primary-color-20) 90%,
+      rgba(0, 0, 0, 0)) 1;
 
   &:not(.header-row):nth-child(odd) {
-    background-color: var(--primary-color-10);
   }
 
   &:not(.header-row):hover {
-    background-color: white;
+    box-shadow: 0 -4px 20px -10px rgba(0, 0, 0, 0.3), 0 8px 20px -10px rgba(0, 0, 0, 0.3);
   }
 
   &:hover .icon {
@@ -56,16 +68,20 @@
     &.icon {
       flex: 0 0 32px;
       opacity: 0;
+      transition: opacity 0.25s ease, background-color 0.25s ease, color 0.25s ease;
     }
   }
 }
 
 .header-row {
+  z-index: 10;
   position: sticky;
   top: 0;
-  background-color: var(--filter-background);
-  color: white;
   cursor: auto;
+  font-weight: 600;
+  border: none;
+  border-bottom: 1px solid var(--primary-color-40);
+  background-color: inherit;
 
   ::selection {
     background-color: white;

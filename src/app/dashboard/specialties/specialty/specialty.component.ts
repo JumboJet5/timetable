@@ -3,8 +3,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '@app/service/group/group.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
+import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
@@ -17,6 +19,8 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
   public specialty: ISpecialty;
   public specialtyId: number;
   private _unsubscribe: Subject<void> = new Subject();
+  public coursesFilters: IFilterParams;
+  public groupsFilters: IFilterParams;
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
@@ -26,6 +30,15 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._getSpecialtyByRoute();
+
+    this._popupService.getChanel(PopupChanelEnum.CREATE_GROUP)
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(() => this.groupsFilters = {...this.groupsFilters});
+
+    this._popupService.getChanel(PopupChanelEnum.CREATE_COURSE)
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(() => this.coursesFilters = {...this.coursesFilters});
+
   }
 
   public saveSpecialty(specialty: ISpecialty): void {
@@ -68,6 +81,16 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   private _updateContent(specialtyId: number): void {
     this.specialtyId = specialtyId;
+    this.groupsFilters = {specialty: this.specialtyId};
+    this.coursesFilters = {specialty: this.specialtyId};
     this._getCurrentSpecialty();
+  }
+
+  public createGroup() {
+    this._popupService.openReactiveModal(['create-group'], {specialty: this.specialtyId});
+  }
+
+  public createCourse() {
+    this._popupService.openReactiveModal(['create-course'], {specialty: this.specialtyId});
   }
 }

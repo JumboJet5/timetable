@@ -22,6 +22,10 @@ export class CourseService {
     return this.http.get<ICourse>(URLS.COURSE(id));
   }
 
+  public createCourse(course: ICourse): Observable<ICourse> {
+    return this.http.post<ICourse>(URLS.COURSES, this.formatService.getFormDataFromObject(course));
+  }
+
   public updateCourse(id: number, course: ICourse): Observable<ICourse> {
     return this.http.put<ICourse>(URLS.COURSE(id), this.formatService.getFormDataFromObject(course));
   }

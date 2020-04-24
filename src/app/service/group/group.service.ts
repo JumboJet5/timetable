@@ -23,6 +23,10 @@ export class GroupService {
     return this.http.patch<IGroup>(URLS.GROUP(id), group);
   }
 
+  public createGroup(group: IUpdateGroup): Observable<IGroup> {
+    return this.http.post<IGroup>(URLS.GROUPS, group);
+  }
+
   public deleteGroup(id: number): Observable<null> {
     return this.http.delete<null>(URLS.GROUP(id));
   }

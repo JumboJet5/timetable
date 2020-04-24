@@ -1,0 +1,13 @@
+<div class="relative-wrapper">
+  <a *ngFor="let university of items; let index = index"
+     [routerLink]="['/dashboard', 'universities', university.id]"
+     class="item">
+    <img class="item-details short" [src]="university.img" alt>
+    <div class="item-details long">{{university.name}}</div>
+  </a>
+  <div class="loader-wrapper" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="!isLoading" class="viewport-bottom" inViewport
+       (inViewportAction)="!!$event && $event.visible && loadItems()"></div>
+</div>

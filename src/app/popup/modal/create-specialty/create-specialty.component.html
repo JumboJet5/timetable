@@ -4,10 +4,6 @@
   <h4>Створення спеціальності</h4>
   <form [formGroup]="specialtyEntityForm" class="tt-form">
     <div class="column">
-      <span class="placeholder">Логотип</span>
-      <app-load-image (onImageChange)="getImagePath($event)"
-                      [imageSrc]="imageSrc"
-                      [isLoading]="isLogoUpdating"></app-load-image>
       <label class="tt-input-label">
         <span class="placeholder">Тип користувацького інтерфейсу *</span>
         <app-specialty-interface-type-select
@@ -24,6 +20,10 @@
         <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
         <span class="tt-error">{{getControlError(specialtyEntityForm, 'short_name')}}</span>
       </label>
+      <span class="placeholder">Логотип</span>
+      <app-load-image (onImageChange)="getImagePath($event)"
+                      [imageSrc]="imageSrc"
+                      [isLoading]="isLogoUpdating"></app-load-image>
     </div>
 
     <div class="column">
@@ -42,7 +42,7 @@
         <span class="tt-error">{{getControlError(specialtyEntityForm, 'faculty')}}</span>
       </label>
       <label class="tt-input-label">
-        <span class="placeholder">Транслітерація назви *</span>
+        <span class="placeholder">Транслітерація назви</span>
         <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
         <span class="tt-error">{{getControlError(specialtyEntityForm, 'slug')}}</span>
       </label>
