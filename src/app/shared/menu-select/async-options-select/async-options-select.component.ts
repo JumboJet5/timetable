@@ -18,6 +18,7 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
   @Input() public selectControl: AbstractControl;
   @Input() public multiple = false;
   @Input() public disabled = false;
+  @Input() public readonly = false;
   @Input() public optionIdKey: keyof TOption = 'id';
   public options: TOption[] = [];
   public isLoading = false;

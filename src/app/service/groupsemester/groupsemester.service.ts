@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { IGroupsemester, IGroupsemesterSimplified } from 'src/core/interfaces/groupsemester.interface';
+import { ICreateInfoGroupsemester, IGroupsemester, IGroupsemesterSimplified } from 'src/core/interfaces/groupsemester.interface';
 import { IPageable } from 'src/core/interfaces/pageable.interface';
 import * as URLS from 'src/core/urls';
 
@@ -23,7 +23,7 @@ export class GroupsemesterService {
     return this.http.put<IGroupsemesterSimplified>(URLS.GROUPSEMESTER(body.id), body);
   }
 
-  public createGroupsemester(body: { group: number, semester: number, show_lessons_number: boolean }): Observable<IGroupsemester> {
+  public createGroupsemester(body: ICreateInfoGroupsemester): Observable<IGroupsemester> {
     return this.http.post<IGroupsemester>(URLS.GROUPSEMESTERS, body);
   }
 

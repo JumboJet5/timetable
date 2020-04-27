@@ -22,6 +22,10 @@ export class HousingService {
     return this.http.post<IHousing>(URLS.HOUSINGS, housing);
   }
 
+  public updateHousing(id: number, housing: IHousing): Observable<IHousing> {
+    return this.http.put<IHousing>(URLS.HOUSING(id), housing);
+  }
+
   public deleteHousing(id: number): Observable<null> {
     return this.http.delete<null>(URLS.HOUSING(id));
   }

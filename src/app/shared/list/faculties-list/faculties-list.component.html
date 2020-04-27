@@ -2,13 +2,20 @@
   <div class="item header-row">
     <div class="item-details long">Факультет</div>
     <div class="item-details middle">Коротка назва</div>
+    <div class="item-details icon" *ngIf="withDetails"></div>
     <div class="item-details icon" *ngIf="withDeleting"></div>
   </div>
-  <a *ngFor="let faculty of items; let index = index"
-     [routerLink]="['/dashboard', 'faculties', faculty.id]"
-     class="item">
+  <a class="item" *ngFor="let faculty of items; let index = index"
+     [routerLink]="['/dashboard', 'faculties', faculty.id]">
     <div class="item-details long">{{faculty.name}}</div>
     <div class="item-details middle">{{faculty.short_name}}</div>
+    <div class="item-details icon" *ngIf="withDetails">
+      <button (click)="getItemDetailsEntity(faculty); $event.stopPropagation(); $event.preventDefault();"
+              class="mini-button"
+              mat-icon-button>
+        <mat-icon>input</mat-icon>
+      </button>
+    </div>
     <div class="item-details icon" *ngIf="withDeleting">
       <button (click)="deleteItem(index); $event.stopPropagation(); $event.preventDefault();"
               class="mini-button"

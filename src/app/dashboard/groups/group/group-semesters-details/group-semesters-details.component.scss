@@ -1,11 +1,7 @@
-@import '../../../../../core/stylesheet/functions';
-
-:host {
-  margin-top: 23px;
-}
-
 .control-row {
-  .mat-flat-button, .mat-stroked-button  {
+  margin-bottom: 15px;
+
+  .mat-flat-button, .mat-stroked-button {
     &:first-child {
       margin-left: 0;
     }

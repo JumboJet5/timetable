@@ -1,79 +1,77 @@
-<div (click)="closeModal()" class="overlay-backdrop"></div>
-
-<div class="modal-wrapper">
+<app-modal-wrapper [isLoading]="isLoading">
   <h4>Створення групи</h4>
-  <form [formGroup]="groupEntityForm" class="tt-form">
+  <form [formGroup]="groupEntityService.form" class="tt-form">
     <div class="column">
 
       <label class="tt-input-label">
         <span class="placeholder">Назва *</span>
         <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
-        <span class="tt-error">{{getControlError(groupEntityForm, 'name')}}</span>
+        <span class="tt-error">{{groupEntityService.getControlError( 'name')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Коротка назва *</span>
         <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
-        <span class="tt-error">{{getControlError(groupEntityForm, 'short_name')}}</span>
+        <span class="tt-error">{{groupEntityService.getControlError( 'short_name')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Транслітерація назви</span>
         <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
-        <span class="tt-error">{{getControlError(groupEntityForm, 'slug')}}</span>
+        <span class="tt-error">{{groupEntityService.getControlError('slug')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Кількість підгруп *</span>
         <input class="tt-input" type="number" formControlName="subgroups" placeholder="Введіть кількість підгруп">
-        <span class="tt-error">{{getControlError(groupEntityForm, 'subgroups')}}</span>
+        <span class="tt-error">{{groupEntityService.getControlError('subgroups')}}</span>
       </label>
     </div>
 
     <div class="column">
       <label class="tt-input-label">
         <span class="placeholder">Університет</span>
-        <app-university-select [selectControl]="univControl"></app-university-select>
-        <span class="tt-error">{{getControlError(groupEntityForm, 'univ')}}</span>
+        <app-university-select [selectControl]="groupEntityService.univControl"></app-university-select>
+        <span class="tt-error">{{groupEntityService.getControlError('univ')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Факультет</span>
-        <app-faculty-select [filters]="{univ: univControl.value}"
-                            [selectControl]="facControl"
-                            [dropByFilterKeys]="['univ']"
+        <app-faculty-select (selectedOptionLoad)="groupEntityService.onLoadFaculty($event)"
                             [dropByFilterDefinition]="false"
-                            (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
-        <span class="tt-error">{{getControlError(groupEntityForm, 'faculty')}}</span>
+                            [dropByFilterKeys]="groupEntityService.univDrop"
+                            [filters]="groupEntityService.univFilters"
+                            [selectControl]="groupEntityService.facControl"></app-faculty-select>
+        <span class="tt-error">{{groupEntityService.getControlError('faculty')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Спеціальність</span>
-        <app-specialty-select [filters]="{univ: univControl.value, faculty: facControl.value}"
-                              [selectControl]="specControl"
-                              [dropByFilterKeys]="['univ', 'faculty']"
+        <app-specialty-select (selectedOptionLoad)="groupEntityService.onLoadSpecialty($event)"
                               [dropByFilterDefinition]="false"
-                              (selectedOptionLoad)="onLoadSpecialty($event)"></app-specialty-select>
-        <span class="tt-error">{{getControlError(groupEntityForm, 'specialty')}}</span>
+                              [dropByFilterKeys]="groupEntityService.facultyDrop"
+                              [filters]="groupEntityService.facultyFilters"
+                              [selectControl]="groupEntityService.specControl"></app-specialty-select>
+        <span class="tt-error">{{groupEntityService.getControlError('specialty')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Курс *</span>
-        <app-course-select [selectControl]="courseControl"
-                           [disabled]="!specControl.value"
-                           [filters]="{univ: univControl.value, faculty: facControl.value, specialty: specControl.value}"
-                           [dropByFilterKeys]="['univ', 'faculty', 'specialty']"
+        <app-course-select (selectedOptionLoad)="groupEntityService.onLoadCourse($event)"
+                           [disabled]="!groupEntityService.specControl.value"
                            [dropByFilterDefinition]="false"
-                           (selectedOptionLoad)="onLoadCourse($event)"></app-course-select>
-        <span class="tt-error">{{getControlError(groupEntityForm, 'course')}}</span>
+                           [dropByFilterKeys]="groupEntityService.specialtyDrop"
+                           [filters]="groupEntityService.specialtyFilters"
+                           [selectControl]="groupEntityService.courseControl"></app-course-select>
+        <span class="tt-error">{{groupEntityService.getControlError('course')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Рік *</span>
-        <app-year-select [selectControl]="yearControl"
-                         [filters]="{univ: univControl.value}"
-                         [dropByFilterKeys]="['univ']"
+        <app-year-select [selectControl]="groupEntityService.yearControl"
+                         [filters]="groupEntityService.univFilters"
+                         [dropByFilterKeys]="groupEntityService.univDrop"
                          [dropByFilterDefinition]="false"></app-year-select>
-        <span class="tt-error">{{getControlError(groupEntityForm, 'course')}}</span>
+        <span class="tt-error">{{groupEntityService.getControlError('course')}}</span>
       </label>
     </div>
   </form>
   <div class="control-row">
     <button (click)="createFaculty()"
-            [disabled]="groupEntityForm.invalid"
+            [disabled]="groupEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти
     </button>
@@ -84,4 +82,4 @@
       <mat-spinner></mat-spinner>
     </div>
   </div>
-</div>
+</app-modal-wrapper>

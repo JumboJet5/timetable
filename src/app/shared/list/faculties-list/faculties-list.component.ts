@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { FacultyService } from '@app/service/faculty/faculty.service';
 import { PopupService } from '@app/service/modal/popup.service';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { itemServiceFactory, ItemsListComponent } from '@app/shared/list/items-list/items-list.component';
+import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
 
 @Component({
@@ -11,8 +13,13 @@ import { IFaculty } from 'src/core/interfaces/faculty.interface';
 })
 export class FacultiesListComponent extends ItemsListComponent<IFaculty> {
   constructor(private _facultyService: FacultyService,
-              protected _popupService: PopupService) {
+              protected _popupService: PopupService,
+              @Optional() public smartDetailsService: SmartDetailsService) {
     super(itemServiceFactory<IFaculty>(params => this._facultyService.getFaculties(params),
-      id => this._facultyService.deleteFaculty(id)), _popupService);
+      id => this._facultyService.deleteFaculty(id)), _popupService, smartDetailsService);
+  }
+
+  public getItemDetailsEntity(entity: IFaculty): void {
+    if (!!this.smartDetailsService) this.smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.FACULTY};
   }
 }

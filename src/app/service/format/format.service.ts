@@ -1,4 +1,10 @@
 import { Injectable } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { ICourse } from 'src/core/interfaces/course.interface';
+import { IFaculty } from 'src/core/interfaces/faculty.interface';
+import { IFilterParams } from 'src/core/interfaces/request-param.interface';
+import { IWithId } from 'src/core/interfaces/select-option.interface';
+import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Injectable({providedIn: 'root'})
 export class FormatService {
@@ -27,5 +33,44 @@ export class FormatService {
       .filter(key => !difference1.includes(key) && group1[key] !== group2[key]
           && (typeof group1 !== typeof group2 || !this.isObjectsSimilar(group1[key], group2[key])));
     return [...difference1, ...difference2];
+  }
+
+
+  public isControlValid(formGroup: FormGroup, controlName: string, control?: AbstractControl): boolean {
+    control = control || (formGroup ? formGroup.get(controlName) : undefined);
+    return control && (control.valid || control.untouched);
+  }
+
+  public getControlError(formGroup: FormGroup, controlName: string): string {
+    const control = formGroup ? formGroup.get(controlName) : undefined;
+    if (!control || this.isControlValid(formGroup, controlName, control)) return '';
+    if (control.errors.required) return 'Обов`язкове поле';
+    if (control.errors.pattern) return 'Поле не відповідає патерну';
+    if (control.errors.min) return 'Недостатньо велике число';
+    return 'Не валідне поле';
+  }
+
+  public onLoadFaculty(faculty: IFaculty, facControl: FormControl, univControl: FormControl): void {
+    this.autoPatchAddictedControl(faculty, 'univ', facControl, univControl);
+  }
+
+  public onLoadSpecialty(specialty: ISpecialty, specControl: FormControl, facControl: FormControl): void {
+    this.autoPatchAddictedControl(specialty, 'faculty', specControl, facControl);
+  }
+
+  public onLoadCourse(course: ICourse, courseControl: FormControl, specControl: FormControl): void {
+    this.autoPatchAddictedControl(course, 'specialty', courseControl, specControl);
+  }
+
+  public autoPatchAddictedControl<T extends IWithId>(entity: T, key: keyof T, srcControl: FormControl, dstControl: FormControl): void {
+    if (!!srcControl && !!dstControl && !!entity && entity.id === srcControl.value && entity[key] !== dstControl.value)
+      dstControl.patchValue(entity[key]);
+  }
+
+  public getParamsCut(keys: (keyof IFilterParams)[], params: IFilterParams): IFilterParams {
+    return keys.reduce((result, key) => {
+      result[key] = params[key];
+      return result;
+    }, {});
   }
 }

@@ -11,7 +11,7 @@ const routes: Routes = [
     path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module')
       .then(module => module.DashboardModule), canLoad: [AuthGuard],
   },
-  {path: '**', pathMatch: 'full', redirectTo: '/dashboard/lessons-schedule/groupSlug'},
+  {path: '**', pathMatch: 'full', redirectTo: '/authentication/login'},
   {
     path: 'dialog', outlet: 'dialog', loadChildren: () => import('src/app/popup/dialog/dialog.module')
       .then(module => module.DialogModule),

@@ -9,8 +9,8 @@
   <div class="lesson-times-wrapper">
     <div class="lesson-time" *ngFor="let lessonTime of lessonTimes">
       <span>{{lessonTime.start}} - {{lessonTime.end}}</span>
-      <button mat-icon-button class="mini-button" (click)="editLessonTime(lessonTime.id)">
-        <mat-icon>edit</mat-icon>
+      <button mat-icon-button class="mini-button" (click)="openDetails(lessonTime)">
+        <mat-icon>input</mat-icon>
       </button>
       <button mat-icon-button class="mini-button" (click)="deleteLessonTime(lessonTime.id)">
         <mat-icon>delete</mat-icon>

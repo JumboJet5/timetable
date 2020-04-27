@@ -6,32 +6,32 @@
 
   <ng-container *ngIf="filterConfig.withFaculty">
     <div class="placeholder">Факультет</div>
-    <app-faculty-select [filters]="{univ: univControl.value}"
-                        [selectControl]="facControl"
-                        [dropByFilterKeys]="['univ']"
+    <app-faculty-select (selectedOptionLoad)="formatService.onLoadFaculty($event, facControl, univControl)"
                         [dropByFilterDefinition]="false"
-                        (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
+                        [dropByFilterKeys]="['univ']"
+                        [filters]="{univ: univControl.value}"
+                        [selectControl]="facControl"></app-faculty-select>
   </ng-container>
 
 
   <ng-container *ngIf="filterConfig.withSpecialty">
     <div class="placeholder">Спеціальність</div>
-    <app-specialty-select [filters]="{univ: univControl.value, faculty: facControl.value}"
-                          [selectControl]="specControl"
-                          [dropByFilterKeys]="['univ', 'faculty']"
+    <app-specialty-select (selectedOptionLoad)="formatService.onLoadSpecialty($event, specControl, facControl)"
                           [dropByFilterDefinition]="false"
-                          (selectedOptionLoad)="onLoadSpecialty($event)"></app-specialty-select>
+                          [dropByFilterKeys]="['univ', 'faculty']"
+                          [filters]="{univ: univControl.value, faculty: facControl.value}"
+                          [selectControl]="specControl"></app-specialty-select>
   </ng-container>
 
 
   <ng-container *ngIf="filterConfig.withCourse">
     <div class="placeholder">Курс</div>
-    <app-course-select [selectControl]="courseControl"
+    <app-course-select (selectedOptionLoad)="formatService.onLoadCourse($event, courseControl, specControl)"
                        [disabled]="!specControl.value"
-                       [filters]="{univ: univControl.value, faculty: facControl.value, specialty: specControl.value}"
-                       [dropByFilterKeys]="['univ', 'faculty', 'specialty']"
                        [dropByFilterDefinition]="false"
-                       (selectedOptionLoad)="onLoadCourse($event)"></app-course-select>
+                       [dropByFilterKeys]="['univ', 'faculty', 'specialty']"
+                       [filters]="{univ: univControl.value, faculty: facControl.value, specialty: specControl.value}"
+                       [selectControl]="courseControl"></app-course-select>
   </ng-container>
 
 </div>

@@ -1,0 +1,29 @@
+<h3 class="support-header grid-last-column">Деталі зв'язаних сутностей</h3>
+<div class="support-entity-settings grid-last-column" [ngSwitch]="smartDetailsService.currentEntity?.type">
+  <app-smart-faculty-entity *ngSwitchCase="'FACULTY'"
+                            [faculty]="smartDetailsService.currentEntity.entity"></app-smart-faculty-entity>
+
+  <app-smart-specialty-entity *ngSwitchCase="'SPECIALTY'"
+                              [specialty]="smartDetailsService.currentEntity.entity"></app-smart-specialty-entity>
+
+  <app-smart-course-entity *ngSwitchCase="'COURSE'"
+                           [course]="smartDetailsService.currentEntity.entity"></app-smart-course-entity>
+
+  <app-smart-group-entity *ngSwitchCase="'GROUP'"
+                          [isCourseReadonly]="isCourseInGroupReadonly"
+                          [group]="smartDetailsService.currentEntity.entity"></app-smart-group-entity>
+
+  <app-smart-theme-entity *ngSwitchCase="'THEME'"
+                          [theme]="smartDetailsService.currentEntity.entity"></app-smart-theme-entity>
+
+  <app-smart-lessontime-entity *ngSwitchCase="'LESSONTIME'"
+                               [lessontime]="smartDetailsService.currentEntity.entity"></app-smart-lessontime-entity>
+
+  <app-smart-semester-entity *ngSwitchCase="'SEMESTER'"
+                             [semester]="smartDetailsService.currentEntity.entity"></app-smart-semester-entity>
+
+  <app-smart-housing-entity *ngSwitchCase="'HOUSING'"
+                            [housing]="smartDetailsService.currentEntity.entity"></app-smart-housing-entity>
+
+  <div *ngSwitchDefault>Оберіть сутність для подробиць</div>
+</div>

@@ -1,0 +1,79 @@
+<form [formGroup]="groupEntityService.form" class="tt-form">
+  <label class="tt-input-label name">
+    <span class="placeholder">Назва *</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{groupEntityService.getControlError('name')}}</span>
+  </label>
+  <label class="tt-input-label short-name">
+    <span class="placeholder">Коротка назва *</span>
+    <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
+    <span class="tt-error">{{groupEntityService.getControlError( 'short_name')}}</span>
+  </label>
+  <label class="tt-input-label slug">
+    <span class="placeholder">Транслітерація назви *</span>
+    <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
+    <span class="tt-error">{{groupEntityService.getControlError('slug')}}</span>
+  </label>
+  <label class="tt-input-label subgroups">
+    <span class="placeholder">Кількість підгруп *</span>
+    <input class="tt-input" type="number" formControlName="subgroups" placeholder="Введіть кількість підгруп">
+    <span class="tt-error">{{groupEntityService.getControlError( 'subgroups')}}</span>
+  </label>
+  <label class="tt-input-label univ hidden">
+    <span class="placeholder">Університет</span>
+    <app-university-select [selectControl]="groupEntityService.univControl"></app-university-select>
+    <span class="tt-error">{{groupEntityService.getControlError( 'univ')}}</span>
+  </label>
+  <label class="tt-input-label faculty hidden">
+    <span class="placeholder">Факультет</span>
+    <app-faculty-select (selectedOptionLoad)="groupEntityService.onLoadFaculty($event)"
+                        [dropByFilterDefinition]="false"
+                        [dropByFilterKeys]="groupEntityService.univDrop"
+                        [filters]="groupEntityService.univFilters"
+                        [selectControl]="groupEntityService.facControl"></app-faculty-select>
+    <span class="tt-error">{{groupEntityService.getControlError('faculty')}}</span>
+  </label>
+  <label class="tt-input-label specialty hidden">
+    <span class="placeholder">Спеціальність</span>
+    <app-specialty-select (selectedOptionLoad)="groupEntityService.onLoadSpecialty($event)"
+                          [dropByFilterDefinition]="false"
+                          [dropByFilterKeys]="groupEntityService.facultyDrop"
+                          [filters]="groupEntityService.facultyFilters"
+                          [selectControl]="groupEntityService.specControl"></app-specialty-select>
+    <span class="tt-error">{{groupEntityService.getControlError( 'specialty')}}</span>
+  </label>
+  <label class="tt-input-label course">
+    <span class="placeholder">Курс *</span>
+    <app-course-select (selectedOptionLoad)="groupEntityService.onLoadCourse($event)"
+                       [readonly]="isCourseReadonly"
+                       [disabled]="!groupEntityService.specControl.value"
+                       [dropByFilterDefinition]="false"
+                       [dropByFilterKeys]="groupEntityService.specialtyDrop"
+                       [filters]="groupEntityService.specialtyFilters"
+                       [selectControl]="groupEntityService.courseControl"></app-course-select>
+    <span class="tt-error">{{groupEntityService.getControlError('course')}}</span>
+  </label>
+  <label class="tt-input-label year">
+    <span class="placeholder">Рік *</span>
+    <app-year-select [selectControl]="groupEntityService.yearControl"
+                     [filters]="groupEntityService.univFilters"
+                     [dropByFilterKeys]="groupEntityService.univDrop"
+                     [dropByFilterDefinition]="false"></app-year-select>
+    <span class="tt-error">{{groupEntityService.getControlError('course')}}</span>
+  </label>
+
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="groupEntityService.form.invalid || groupEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>Зберегти
+    </button>
+    <button mat-stroked-button (click)="reset()">Скинути</button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

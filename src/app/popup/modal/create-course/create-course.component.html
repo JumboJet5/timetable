@@ -1,53 +1,46 @@
-<div (click)="closeModal()" class="overlay-backdrop"></div>
-
-<div class="modal-wrapper">
+<app-modal-wrapper [isLoading]="isLoading">
   <h4>Створення факультета</h4>
-  <form [formGroup]="courseEntityForm" class="tt-form">
+  <form [formGroup]="courseEntityService.form" class="tt-form">
     <label class="tt-input-label">
       <span class="placeholder">Університет</span>
-      <app-university-select [selectControl]="univControl"></app-university-select>
-      <span class="tt-error">{{getControlError(courseEntityForm, 'univ')}}</span>
+      <app-university-select [selectControl]="courseEntityService.univControl"></app-university-select>
+      <span class="tt-error">{{courseEntityService.getControlError('univ')}}</span>
     </label>
     <label class="tt-input-label">
       <span class="placeholder">Факультет</span>
-      <app-faculty-select [filters]="{univ: univControl.value}"
-                          [selectControl]="facControl"
-                          [dropByFilterKeys]="['univ']"
+      <app-faculty-select (selectedOptionLoad)="courseEntityService.onLoadFaculty($event)"
                           [dropByFilterDefinition]="false"
-                          (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
-      <span class="tt-error">{{getControlError(courseEntityForm, 'faculty')}}</span>
+                          [dropByFilterKeys]="courseEntityService.univDrop"
+                          [filters]="courseEntityService.univFilters"
+                          [selectControl]="courseEntityService.facControl"></app-faculty-select>
+      <span class="tt-error">{{courseEntityService.getControlError( 'faculty')}}</span>
     </label>
     <label class="tt-input-label">
       <span class="placeholder">Спеціальність *</span>
-      <app-specialty-select [filters]="{univ: univControl.value, faculty: facControl.value}"
-                            [selectControl]="specControl"
-                            [dropByFilterKeys]="['univ', 'faculty']"
+      <app-specialty-select (selectedOptionLoad)="courseEntityService.onLoadSpecialty($event)"
                             [dropByFilterDefinition]="false"
-                            (selectedOptionLoad)="onLoadSpecialty($event)"></app-specialty-select>
-      <span class="tt-error">{{getControlError(courseEntityForm, 'specialty')}}</span>
+                            [dropByFilterKeys]="courseEntityService.facultyDrop"
+                            [filters]="courseEntityService.facultyFilters"
+                            [selectControl]="courseEntityService.specControl"></app-specialty-select>
+      <span class="tt-error">{{courseEntityService.getControlError('specialty')}}</span>
     </label>
     <label class="tt-input-label">
       <span class="placeholder">Назва *</span>
       <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
-      <span class="tt-error">{{getControlError(courseEntityForm, 'name')}}</span>
+      <span class="tt-error">{{courseEntityService.getControlError('name')}}</span>
     </label>
     <label class="tt-input-label">
       <span class="placeholder">ОКР *</span>
-      <app-degree-selector [selectControl]="courseEntityForm.get('degree')"></app-degree-selector>
-      <span class="tt-error">{{getControlError(courseEntityForm, 'degree')}}</span>
+      <app-degree-selector [selectControl]="courseEntityService.form.get('degree')"></app-degree-selector>
+      <span class="tt-error">{{courseEntityService.getControlError( 'degree')}}</span>
     </label>
   </form>
   <div class="control-row">
     <button (click)="createFaculty()"
-            [disabled]="courseEntityForm.invalid"
+            [disabled]="courseEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти
     </button>
     <button mat-stroked-button (click)="closeModal()">Скинути</button>
   </div>
-  <div class="loading-wrapper" *ngIf="isLoading">
-    <div class="loader-wrapper">
-      <mat-spinner></mat-spinner>
-    </div>
-  </div>
-</div>
+</app-modal-wrapper>

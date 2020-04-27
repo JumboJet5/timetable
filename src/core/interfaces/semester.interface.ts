@@ -4,6 +4,6 @@ export interface ISemester {
   __unicode__: string;
   num: number;
   year: number;
-  start: number;
-  end: number;
+  start: string;
+  end: string;
 }

@@ -1,41 +1,41 @@
-<form [formGroup]="courseEntityForm" class="tt-form">
-  <label class="tt-input-label">
+<form [formGroup]="courseEntityService.form" class="tt-form">
+  <label class="tt-input-label univ">
     <span class="placeholder">Університет</span>
-    <app-university-select [selectControl]="univControl"></app-university-select>
-    <span class="tt-error">{{getControlError(courseEntityForm, 'univ')}}</span>
+    <app-university-select [selectControl]="courseEntityService.univControl"></app-university-select>
+    <span class="tt-error">{{courseEntityService.getControlError('univ')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label faculty">
     <span class="placeholder">Факультет</span>
-    <app-faculty-select [filters]="{univ: univControl.value}"
-                        [selectControl]="facControl"
-                        [dropByFilterKeys]="['univ']"
+    <app-faculty-select (selectedOptionLoad)="courseEntityService.onLoadFaculty($event)"
                         [dropByFilterDefinition]="false"
-                        (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
-    <span class="tt-error">{{getControlError(courseEntityForm, 'faculty')}}</span>
+                        [dropByFilterKeys]="courseEntityService.univDrop"
+                        [filters]="courseEntityService.univFilters"
+                        [selectControl]="courseEntityService.facControl"></app-faculty-select>
+    <span class="tt-error">{{courseEntityService.getControlError('faculty')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label specialty">
     <span class="placeholder">Спеціальність *</span>
-    <app-specialty-select [filters]="{univ: univControl.value, faculty: facControl.value}"
-                          [selectControl]="specControl"
-                          [dropByFilterKeys]="['univ', 'faculty']"
+    <app-specialty-select (selectedOptionLoad)="courseEntityService.onLoadSpecialty($event)"
                           [dropByFilterDefinition]="false"
-                          (selectedOptionLoad)="onLoadSpecialty($event)"></app-specialty-select>
-    <span class="tt-error">{{getControlError(courseEntityForm, 'specialty')}}</span>
+                          [dropByFilterKeys]="courseEntityService.facultyDrop"
+                          [filters]="courseEntityService.facultyFilters"
+                          [selectControl]="courseEntityService.specControl"></app-specialty-select>
+    <span class="tt-error">{{courseEntityService.getControlError('specialty')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label name">
     <span class="placeholder">Назва *</span>
     <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
-    <span class="tt-error">{{getControlError(courseEntityForm, 'name')}}</span>
+    <span class="tt-error">{{courseEntityService.getControlError('name')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label degree">
     <span class="placeholder">ОКР *</span>
-    <app-degree-selector [selectControl]="courseEntityForm.get('degree')"></app-degree-selector>
-    <span class="tt-error">{{getControlError(courseEntityForm, 'degree')}}</span>
+    <app-degree-selector [selectControl]="courseEntityService.form.get('degree')"></app-degree-selector>
+    <span class="tt-error">{{courseEntityService.getControlError('degree')}}</span>
   </label>
 
-  <div class="control-row" *ngIf="courseEntityForm.dirty">
-    <button (click)="save.emit(courseEntityForm.value)"
-            [disabled]="courseEntityForm.invalid"
+  <div class="control-row" *ngIf="courseEntityService.form.dirty">
+    <button (click)="save.emit(courseEntityService.form.value)"
+            [disabled]="courseEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти
     </button>

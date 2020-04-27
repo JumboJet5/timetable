@@ -33,7 +33,7 @@ export class DateFormatService {
   public getDateString(date: Date): string {
     if (!date) return '';
 
-    const [year, month, day] = [date.getFullYear(), date.getMonth(), date.getDate()];
+    const [year, month, day] = [date.getFullYear(), date.getMonth() + 1, date.getDate()];
     return `${year}-${month > 9 ? month : '0' + month}-${day > 9 ? day : '0' + day}`;
   }
 

@@ -22,3 +22,11 @@ export interface IGroupsemesterSimplified {
   lessons_time: number[];
   last_modified: string;
 }
+
+export interface ICreateInfoGroupsemester {
+  group: number;
+  semester: number;
+  show_lessons_number: boolean;
+  lessons_time: number[];
+  themes: number[];
+}

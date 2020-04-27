@@ -14,6 +14,18 @@
     line-height: 24px;
     height: 40px;
     font-size: 13px;
+
+    &:hover .mini-button {
+      opacity: 1;
+    }
+
+    .mini-button:first-of-type {
+      margin-left: 8px;
+    }
+
+    .mini-button {
+      opacity: 0;
+    }
   }
 
   ::ng-deep.accordion-content {

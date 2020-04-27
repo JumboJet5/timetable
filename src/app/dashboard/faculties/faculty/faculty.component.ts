@@ -3,9 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FacultyService } from '@app/service/faculty/faculty.service';
 import { GroupService } from '@app/service/group/group.service';
 import { PopupService } from '@app/service/modal/popup.service';
+import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
+import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 
 @Component({
   selector: 'app-faculty',
@@ -13,9 +15,10 @@ import { IFaculty } from 'src/core/interfaces/faculty.interface';
   styleUrls: ['./faculty.component.scss'],
 })
 export class FacultyComponent implements OnInit, OnDestroy {
-  public isEntityLoading = false;
+  public isLoading = false;
   public faculty: IFaculty;
   public facultyId: number;
+  public specialtyFilters: IFilterParams;
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
@@ -26,13 +29,17 @@ export class FacultyComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._getFacultyByRoute();
+
+    this._popupService.getChanel(PopupChanelEnum.CREATE_SPECIALTY)
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(() => this.specialtyFilters = {...this.specialtyFilters});
   }
 
   public saveFaculty(faculty: IFaculty): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._facultyService.updateFaculty(this.facultyId, faculty)
       .subscribe(res => this.faculty = res)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   public delete() {
@@ -55,10 +62,10 @@ export class FacultyComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentFaculty(): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._facultyService.getFaculty(this.facultyId)
       .subscribe(specialty => this.faculty = specialty)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   private _getFacultyByRoute(): void {
@@ -70,8 +77,9 @@ export class FacultyComponent implements OnInit, OnDestroy {
       .subscribe(params => this._updateContent(+params.id));
   }
 
-  private _updateContent(specialtyId: number): void {
-    this.facultyId = specialtyId;
+  private _updateContent(facultyId: number): void {
+    this.facultyId = facultyId;
+    this.specialtyFilters = {faculty: this.facultyId};
     this._getCurrentFaculty();
   }
 }

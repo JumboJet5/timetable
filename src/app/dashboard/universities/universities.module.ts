@@ -7,6 +7,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AccordionModule } from '@app/shared/accordion/accordion.module';
 import { ListModule } from '@app/shared/list/list.module';
 import { LoadImageModule } from '@app/shared/load-image/load-image.module';
+import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
 import { UniversitiesRoutingModule } from './universities-routing.module';
 import { UniversitiesComponent } from './universities.component';
 import { UniversityComponent } from './university/university.component';
@@ -26,6 +27,7 @@ import { UniversityHousingsComponent } from 'src/app/dashboard/universities/univ
     MatProgressSpinnerModule,
     LoadImageModule,
     AccordionModule,
+    SmartEntitiesModule,
   ],
 })
 export class UniversitiesModule {}

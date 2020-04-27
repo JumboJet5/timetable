@@ -10,6 +10,7 @@ import { FiltersModule } from '@app/shared/filters/filters.module';
 import { ListModule } from '@app/shared/list/list.module';
 import { LoadImageModule } from '@app/shared/load-image/load-image.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
+import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
 import { FACULTIES_FILTER_CONFIG } from '@const/filters';
 import { FILTER_CONFIG } from 'src/core/injections/filter-config.injection-token';
 import { FacultiesInfoComponent } from './faculties-info/faculties-info.component';
@@ -37,6 +38,7 @@ import { FacultyLessonTimesComponent } from 'src/app/dashboard/faculties/faculty
     MenuSelectModule,
     LoadImageModule,
     MatCheckboxModule,
+    SmartEntitiesModule,
   ],
   providers: [
     {provide: FILTER_CONFIG, useValue: FACULTIES_FILTER_CONFIG},

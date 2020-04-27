@@ -1,0 +1,48 @@
+<form [formGroup]="specialtyEntityService.form" class="tt-form">
+  <label class="tt-input-label name">
+    <span class="placeholder">Назва *</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{specialtyEntityService.getControlError('name')}}</span>
+  </label>
+  <label class="tt-input-label short-name">
+    <span class="placeholder">Коротка назва *</span>
+    <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
+    <span class="tt-error">{{specialtyEntityService.getControlError('short_name')}}</span>
+  </label>
+  <label class="tt-input-label slug">
+    <span class="placeholder">Транслітерація назви *</span>
+    <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
+    <span class="tt-error">{{specialtyEntityService.getControlError('slug')}}</span>
+  </label>
+  <label class="tt-input-label interface-type">
+    <span class="placeholder">Тип користувацького інтерфейсу *</span>
+    <app-specialty-interface-type-select
+      [selectControl]="specialtyEntityService.form.get('interface_type')"></app-specialty-interface-type-select>
+    <span class="tt-error">{{specialtyEntityService.getControlError('univ')}}</span>
+  </label>
+  <label class="tt-input-label logo">
+    <span class="placeholder">Логотип</span>
+    <app-load-image (onImageChange)="specialtyEntityService.getImagePath($event)"
+                    [imageSrc]="specialtyEntityService.imageSrc"></app-load-image>
+  </label>
+  <label class="tt-input-label description">
+    <span class="placeholder">Додаткові відомості</span>
+    <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис спеціальності"></textarea>
+    <span class="tt-error">{{specialtyEntityService.getControlError('slug')}}</span>
+  </label>
+
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="specialtyEntityService.form.invalid || specialtyEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>Зберегти
+    </button>
+    <button mat-stroked-button (click)="reset()">Скинути</button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

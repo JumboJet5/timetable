@@ -1,0 +1,52 @@
+<form [formGroup]="lessontimeEntityService.form">
+  <label class="tt-input-label">
+    <span class="placeholder">Номер пари</span>
+    <input class="tt-input" formControlName="num" type="number" min="1">
+  </label>
+
+  <div class="placeholder">Час проведення пари</div>
+  <div class="tt-form-row">
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="start" type="time">
+    </label>
+    <span class="time-divider"> : </span>
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="end" type="time">
+    </label>
+  </div>
+
+  <mat-checkbox (change)="lessontimeEntityService.synchronizeDisableBreakRangeControls()"
+                formControlName="has_break"
+                color="primary">З прервою
+  </mat-checkbox>
+
+  <div class="placeholder">Час перерви</div>
+  <div class="tt-form-row">
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="half_end" type="time">
+    </label>
+    <span class="time-divider"> : </span>
+    <label class="tt-input-label long">
+      <input class="tt-input" formControlName="half_start" type="time">
+    </label>
+  </div>
+
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="lessontimeEntityService.form.invalid || lessontimeEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>
+      <span>Змінити</span>
+    </button>
+
+    <button (click)="reset()" mat-flat-button>
+      <span>Скасувати</span>
+    </button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

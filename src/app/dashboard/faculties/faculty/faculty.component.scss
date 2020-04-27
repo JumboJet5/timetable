@@ -1,50 +1,41 @@
 :host {
   padding: 0 24px 16px 39px;
-  display: block;
   max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 25px;
+}
+
+.grid-all-columns {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.grid-two-first-columns {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.grid-last-column {
+  grid-column-start: 3;
+  grid-column-end: 4;
 }
 
 .heading {
   display: flex;
   align-items: center;
-
-  &:hover {
-    .mat-icon-button {
-      opacity: 1;
-    }
-  }
-
-  .mat-icon-button {
-    margin-left: 8px;
-    opacity: 0;
-
-    &:focus, &:active {
-      opacity: 1;
-    }
-  }
 }
 
-.details {
-  display: flex;
 
-  app-faculty-entity {
-    flex: 0 0 360px;
-    margin-right: 25px;
+.additional {
+  app-specialties-list {
+    display: block;
+    max-height: 383px;
   }
 
-  .additional {
-    flex: 1 0 300px;
-    margin-top: 23px;
-
-    app-specialties-list {
-      display: block;
-      max-height: 383px;
-    }
-
-    app-accordion {
-      margin-bottom: 15px;
-      display: block;
-    }
+  app-accordion {
+    margin-bottom: 15px;
+    display: block;
   }
 }
 

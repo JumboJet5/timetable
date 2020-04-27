@@ -1,6 +1,6 @@
 export interface IGroup {
   subgroups: number;
-  course?: number;
+  course: number;
   course_degree: string;
   course_name: string;
   year: number;
@@ -18,5 +18,17 @@ export interface IUpdateGroup {
   course: number;
   name: string;
   short_name: string;
+  slug?: string;
+}
+
+export interface IGroupEntity {
+  subgroups: number;
+  year: number;
+  course: number;
+  name: string;
+  short_name: string;
+  univ: number;
+  faculty: number;
+  specialty: number;
   slug: string;
 }

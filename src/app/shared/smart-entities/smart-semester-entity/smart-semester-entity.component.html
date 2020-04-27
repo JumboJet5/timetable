@@ -1,0 +1,38 @@
+<form [formGroup]="semesterEntityService.form">
+  <label class="tt-input-label year-select">
+    <span class="placeholder">Рік</span>
+    <app-year-select #yearSelect [selectControl]="semesterEntityService.form.get('year')"></app-year-select>
+  </label>
+
+  <label class="tt-input-label">
+    <span class="placeholder">Номер семестру</span>
+    <input class="tt-input" formControlName="num" type="number" min="1">
+  </label>
+
+  <div class="tt-input-label">
+    <span class="placeholder">Семестр</span>
+    <app-date-picker [dateControl]="semesterEntityService.form"
+                     [min]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.start)"
+                     [max]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.end)"
+                     placeholder="Оберіть діапазон дат"></app-date-picker>
+  </div>
+
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="semesterEntityService.form.invalid || semesterEntityService.form.pristine"
+            mat-flat-button
+            color="primary">
+      <span>Створити</span>
+    </button>
+
+    <button (click)="reset()" mat-flat-button>
+      <span>Скасувати</span>
+    </button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

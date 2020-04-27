@@ -9,8 +9,8 @@
   <div class="housings-wrapper">
     <div class="housing" *ngFor="let housing of housings">
       <span>{{housing.name}}</span>
-      <button mat-icon-button class="mini-button" (click)="editHousing(housing.id)">
-        <mat-icon>edit</mat-icon>
+      <button mat-icon-button class="mini-button" (click)="openDetails(housing)">
+        <mat-icon>input</mat-icon>
       </button>
       <button mat-icon-button class="mini-button" (click)="deleteHousing(housing.id)">
         <mat-icon>delete</mat-icon>

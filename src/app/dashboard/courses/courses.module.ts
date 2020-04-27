@@ -5,7 +5,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AccordionModule } from '@app/shared/accordion/accordion.module';
+import { ListModule } from '@app/shared/list/list.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
+import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
 
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CourseComponent } from './course/course.component';
@@ -24,6 +26,8 @@ import { CourseThemesComponent } from './course/course-themes/course-themes.comp
     MatProgressSpinnerModule,
     ReactiveFormsModule,
     MenuSelectModule,
+    ListModule,
+    SmartEntitiesModule,
   ],
 })
 export class CoursesModule { }

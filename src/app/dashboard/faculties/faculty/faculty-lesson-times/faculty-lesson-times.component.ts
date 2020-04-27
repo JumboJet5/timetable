@@ -1,7 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service';
 import { PopupService } from '@app/service/modal/popup.service';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
+import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 
 @Component({
@@ -14,6 +16,7 @@ export class FacultyLessonTimesComponent implements OnInit {
   public isLoading = false;
 
   constructor(private _lessonTimeService: LessonTimeService,
+              private _smartDetailsService: SmartDetailsService,
               private _popupService: PopupService) { }
 
 
@@ -26,11 +29,6 @@ export class FacultyLessonTimesComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this._popupService.getChanel(PopupChanelEnum.UPDATE_LESSONTIME)
-      .subscribe((lessonTime: ILessonTime) => {
-        const item = this.lessonTimes.find(time => time.id === lessonTime.id);
-        if (!!item) Object.assign(item, lessonTime);
-      });
     this._popupService.getChanel(PopupChanelEnum.CREATE_LESSONTIME)
       .subscribe((lessonTime: ILessonTime) => this.lessonTimes.push(lessonTime));
   }
@@ -52,8 +50,8 @@ export class FacultyLessonTimesComponent implements OnInit {
         .add(() => this.isLoading = false));
   }
 
-  public editLessonTime(id: number) {
-    this._popupService.openReactiveModal(['update-lessontime', id]);
+  public openDetails(entity: ILessonTime) {
+    this._smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.LESSONTIME};
   }
 
   private _loadLessonTimes(): void {

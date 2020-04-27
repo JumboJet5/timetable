@@ -1,5 +1,6 @@
-import { Input, OnInit } from '@angular/core';
+import { Input, OnInit, Optional } from '@angular/core';
 import { PopupService } from '@app/service/modal/popup.service';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { IPageable } from 'src/core/interfaces/pageable.interface';
@@ -12,8 +13,9 @@ export function itemServiceFactory<T>(getItems: (params: IRequestParams) => Obse
   return {getItems, deleteItem};
 }
 
-export class ItemsListComponent<IItem extends IWithId> implements OnInit {
+export abstract class ItemsListComponent<IItem extends IWithId> implements OnInit {
   @Input() withDeleting = true;
+  @Input() withDetails = false;
   @Input() deleteDialogHeader = 'Вилучити елемент?';
   @Input() deleteDialogBody = 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?';
   public isLoading = false;
@@ -21,8 +23,9 @@ export class ItemsListComponent<IItem extends IWithId> implements OnInit {
   private _paginationParams: IPaginationParams = {offset: 0, limit: 20};
   private _isLastLoaded = false;
 
-  constructor(private _itemsService: IItemsService<IItem>,
-              protected _popupService: PopupService) { }
+  protected constructor(private _itemsService: IItemsService<IItem>,
+                        protected _popupService: PopupService,
+                        @Optional() public smartDetailsService: SmartDetailsService) { }
 
   private _filters: IFilterParams;
 
@@ -65,4 +68,6 @@ export class ItemsListComponent<IItem extends IWithId> implements OnInit {
       () => this._itemsService.deleteItem(this.items[index].id)
         .subscribe(() => this.filters = {...this.filters}));
   }
+
+  public abstract getItemDetailsEntity(entity: IItem): void;
 }

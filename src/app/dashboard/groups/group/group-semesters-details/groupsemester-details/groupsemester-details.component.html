@@ -5,52 +5,29 @@
 
     <div>{{semester?.num}} семестр</div>
     <div class="period">{{semester?.start | date: 'dd.MM.yyyy'}} - {{semester?.end | date: 'dd.MM.yyyy'}}</div>
+    <button (click)="openDetails(semester); $event.stopPropagation()" mat-icon-button class="mini-button">
+      <mat-icon>input</mat-icon>
+    </button>
     <mat-spinner *ngIf="isLoading" class="update-spinner update-status"></mat-spinner>
     <svg *ngIf="isUpdateSuccess" class="update-status" focusable="false" viewBox="0 0 24 24" xml:space="preserve">
       <path class="checkmark-path" fill="none" d="M4.1,12.7 9,17.6 20.3,6.3"></path>
     </svg>
     <svg *ngIf="isUpdateFailed" class="update-status" focusable="false" viewBox="0 0 24 24" xml:space="preserve">
-      <path class="cross" d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+      <path class="cross"
+            d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
     </svg>
     <img class="arrow" src="../../../../../../static/assets/img/ic_filter_arrow.svg" alt="arrow">
   </div>
 
   <div class="groupsemester-details" [@accordionTransitionAnimation]="isOpened">
+    <app-groupsemester-themes (needUpdateThemes)="needUpdate.next()"
+                              [groupsemester]="groupsemester"
+                              [groupThemes]="groupThemes"></app-groupsemester-themes>
 
-    <div class="placeholder">
-      <span>Предмети</span>
-      <button mat-icon-button class="mini-button left-side">
-        <mat-icon>create</mat-icon>
-      </button>
-    </div>
-    <div class="theme-wrapper">
-      <div class="theme" *ngFor="let theme of groupThemes">
-        <mat-checkbox (change)="themeChanged($event, theme)"
-                      [checked]="isThemeEnableForGroupsemester(theme.id, groupsemester)"
-                      color="primary">{{theme.name}}</mat-checkbox>
-      </div>
-    </div>
-
-    <div class="placeholder">
-      <span>Розклад</span>
-      <mat-checkbox (change)="showLessonNumberChanged($event)"
-                    [checked]="groupsemester.show_lessons_number"
-                    color="primary">Показувати номери пар
-      </mat-checkbox>
-      <button mat-icon-button class="mini-button left-side" (click)="createLessonTime()">
-        <mat-icon>add</mat-icon>
-      </button>
-    </div>
-    <div class="lesson-time-wrapper">
-      <div class="lesson-time" *ngFor="let lessonTime of lessonTimes">
-        <mat-checkbox (change)="lessonTimeChanged($event, lessonTime)"
-                      [checked]="isLessonTimeEnableForGroupsemester(lessonTime.id, groupsemester)"
-                      color="primary">{{lessonTime.start}} - {{lessonTime.end}}</mat-checkbox>
-        <button mat-icon-button class="mini-button" (click)="deleteLessonTime(lessonTime.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </div>
-    </div>
+    <app-groupsemester-lesson-times (deleteLessonTime)="deleteLessonTime($event)"
+                                    [groupsemester]="groupsemester"
+                                    [facultyId]="facultyId"
+                                    [lessonTimes]="lessonTimes"></app-groupsemester-lesson-times>
   </div>
 
 </div>

@@ -1,0 +1,16 @@
+<div class="placeholder">
+  <span>Предмети</span>
+  <button mat-icon-button class="mini-button left-side">
+    <mat-icon>create</mat-icon>
+  </button>
+</div>
+<div class="theme-wrapper">
+  <div class="theme" *ngFor="let theme of groupThemes">
+    <mat-checkbox (change)="themeChanged($event, theme)"
+                  [checked]="isThemeEnableForGroupsemester(theme.id, groupsemester)"
+                  color="primary">{{theme.name}}</mat-checkbox>
+    <button (click)="openDetails(theme); $event.stopPropagation()" mat-icon-button class="mini-button">
+      <mat-icon>input</mat-icon>
+    </button>
+  </div>
+</div>

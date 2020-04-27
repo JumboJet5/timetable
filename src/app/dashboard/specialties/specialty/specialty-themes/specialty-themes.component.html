@@ -7,7 +7,12 @@
   </app-accordion-header>
 
   <div class="theme-wrapper">
-    <div class="theme" *ngFor="let theme of themes">{{theme.name}}</div>
+    <div class="theme" *ngFor="let theme of themes">
+      <span>{{theme.name}}</span>
+      <button (click)="openDetails(theme)" mat-icon-button class="mini-button">
+        <mat-icon>input</mat-icon>
+      </button>
+    </div>
   </div>
 
   <div class="loading-wrapper" *ngIf="isLoading">

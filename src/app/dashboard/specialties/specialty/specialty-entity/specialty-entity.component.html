@@ -1,53 +1,53 @@
-<form [formGroup]="specialtyEntityForm" class="tt-form">
-  <label class="tt-input-label">
+<form [formGroup]="specialtyEntityService.form" class="tt-form">
+  <label class="tt-input-label name">
     <span class="placeholder">Назва *</span>
     <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'name')}}</span>
+    <span class="tt-error">{{specialtyEntityService.getControlError('name')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label short-name">
     <span class="placeholder">Коротка назва *</span>
     <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'short_name')}}</span>
+    <span class="tt-error">{{specialtyEntityService.getControlError('short_name')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label slug">
     <span class="placeholder">Транслітерація назви *</span>
     <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'slug')}}</span>
+    <span class="tt-error">{{specialtyEntityService.getControlError('slug')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label univ">
     <span class="placeholder">Університет</span>
-    <app-university-select [selectControl]="univControl"></app-university-select>
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'univ')}}</span>
+    <app-university-select [selectControl]="specialtyEntityService.univControl"></app-university-select>
+    <span class="tt-error">{{specialtyEntityService.getControlError('univ')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label faculty">
     <span class="placeholder">Факультет *</span>
-    <app-faculty-select [filters]="{univ: univControl.value}"
-                        [selectControl]="facControl"
-                        [dropByFilterKeys]="['univ']"
+    <app-faculty-select (selectedOptionLoad)="specialtyEntityService.onLoadFaculty($event)"
                         [dropByFilterDefinition]="false"
-                        (selectedOptionLoad)="onLoadFaculty($event)"></app-faculty-select>
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'faculty')}}</span>
+                        [dropByFilterKeys]="specialtyEntityService.univDrop"
+                        [filters]="specialtyEntityService.univFilters"
+                        [selectControl]="specialtyEntityService.facControl"></app-faculty-select>
+    <span class="tt-error">{{specialtyEntityService.getControlError('faculty')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label interface-type">
     <span class="placeholder">Тип користувацького інтерфейсу *</span>
     <app-specialty-interface-type-select
-      [selectControl]="specialtyEntityForm.get('interface_type')"></app-specialty-interface-type-select>
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'univ')}}</span>
+      [selectControl]="specialtyEntityService.form.get('interface_type')"></app-specialty-interface-type-select>
+    <span class="tt-error">{{specialtyEntityService.getControlError('univ')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label logo">
     <span class="placeholder">Логотип</span>
-    <app-load-image (onImageChange)="getImagePath($event)"
-                    [imageSrc]="imageSrc"></app-load-image>
+    <app-load-image (onImageChange)="specialtyEntityService.getImagePath($event)"
+                    [imageSrc]="specialtyEntityService.imageSrc"></app-load-image>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label description">
     <span class="placeholder">Додаткові відомості</span>
     <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис спеціальності"></textarea>
-    <span class="tt-error">{{getControlError(specialtyEntityForm, 'slug')}}</span>
+    <span class="tt-error">{{specialtyEntityService.getControlError('slug')}}</span>
   </label>
 
-  <div class="control-row" *ngIf="specialtyEntityForm.dirty">
-    <button (click)="save.emit(specialtyEntityForm.value)"
-            [disabled]="specialtyEntityForm.invalid"
+  <div class="control-row" *ngIf="specialtyEntityService.form.dirty">
+    <button (click)="save.emit(specialtyEntityService.form.value)"
+            [disabled]="specialtyEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти
     </button>

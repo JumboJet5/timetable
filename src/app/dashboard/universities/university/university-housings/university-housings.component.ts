@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HousingService } from '@app/service/housing/housing.service';
 import { PopupService } from '@app/service/modal/popup.service';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
-import { takeUntil } from 'rxjs/operators';
+import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
 import { IHousing } from 'src/core/interfaces/housing.interface';
 
 @Component({
@@ -15,6 +16,7 @@ export class UniversityHousingsComponent implements OnInit {
   public isLoading = false;
 
   constructor(private _housingService: HousingService,
+              private _smartDetailsService: SmartDetailsService,
               private _popupService: PopupService) {}
 
   private _univId: number;
@@ -34,8 +36,8 @@ export class UniversityHousingsComponent implements OnInit {
     this._popupService.openReactiveModal(['create-housing'], {univ: this._univId});
   }
 
-  public editHousing(id: number) {
-
+  public openDetails(entity: IHousing) {
+    this._smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.HOUSING};
   }
 
   public deleteHousing(id: number) {

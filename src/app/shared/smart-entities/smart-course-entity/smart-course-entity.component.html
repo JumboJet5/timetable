@@ -1,0 +1,27 @@
+<form [formGroup]="courseEntityService.form" class="tt-form">
+  <label class="tt-input-label name">
+    <span class="placeholder">Назва *</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{courseEntityService.getControlError('name')}}</span>
+  </label>
+  <label class="tt-input-label degree">
+    <span class="placeholder">ОКР *</span>
+    <app-degree-selector [selectControl]="courseEntityService.form.get('degree')"></app-degree-selector>
+    <span class="tt-error">{{courseEntityService.getControlError('degree')}}</span>
+  </label>
+
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="courseEntityService.form.invalid || courseEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>Зберегти
+    </button>
+    <button mat-stroked-button (click)="reset()">Скинути</button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

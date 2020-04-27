@@ -1,14 +1,17 @@
-<h2 class="heading">
+<h2 class="heading grid-all-columns">
   <span>Спеціальність "{{specialty?.name}}"</span>
   <button mat-icon-button (click)="delete()">
     <mat-icon>delete</mat-icon>
   </button>
 </h2>
 
-<div class="details" *ngIf="specialty">
-  <app-specialty-entity [specialty]="specialty"
+<ng-container *ngIf="specialty">
+  <h3 class="grid-all-columns">Параметри спеціальності</h3>
+  <app-specialty-entity class="grid-all-columns"
+                        [specialty]="specialty"
                         (save)="saveSpecialty($event)"></app-specialty-entity>
-  <div class="additional">
+  <div class="additional grid-two-first-columns">
+    <h3>Додаткові налаштування</h3>
     <app-specialty-themes [specialtyId]="specialtyId"></app-specialty-themes>
 
     <app-accordion>
@@ -18,7 +21,7 @@
           <mat-icon>add</mat-icon>
         </button>
       </app-accordion-header>
-      <app-courses-list [filters]="coursesFilters"></app-courses-list>
+      <app-courses-list [filters]="courseFilters" [withDetails]="true"></app-courses-list>
     </app-accordion>
 
     <app-accordion>
@@ -28,12 +31,13 @@
           <mat-icon>add</mat-icon>
         </button>
       </app-accordion-header>
-      <app-groups-list [filters]="groupsFilters"></app-groups-list>
+      <app-groups-list [filters]="groupFilters" [withDetails]="true"></app-groups-list>
     </app-accordion>
-
   </div>
-</div>
 
-<div class="loader-wrapper" *ngIf="isEntityLoading">
+  <app-smart-details class="grid-last-column" [isCourseInGroupReadonly]="false"></app-smart-details>
+</ng-container>
+
+<div class="loader-wrapper" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
 </div>

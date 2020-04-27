@@ -1,7 +1,34 @@
 :host {
   padding: 0 24px 16px 39px;
-  display: block;
   max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 25px;
+}
+
+.grid-all-columns {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.grid-two-first-columns {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.grid-last-column {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.support-header {
+  grid-row-start: 4;
+  grid-row-end: 5;
+}
+
+.support-entity-settings {
+  grid-row-start: 5;
+  grid-row-end: 6;
 }
 
 .heading {
@@ -11,21 +38,16 @@
   span::first-letter {
     text-transform: capitalize;
   }
+}
 
-  &:hover {
-    .mat-icon-button {
-      opacity: 1;
-    }
-  }
+app-groups-list {
+  display: block;
+  max-height: 383px;
+}
 
-  .mat-icon-button {
-    margin-left: 8px;
-    opacity: 0;
-
-    &:focus, &:active {
-      opacity: 1;
-    }
-  }
+app-accordion {
+  margin-bottom: 15px;
+  display: block;
 }
 
 .details {
@@ -39,21 +61,6 @@
   .additional {
     flex: 1 0 300px;
     margin-top: 23px;
-
-    app-courses-list {
-      display: block;
-      max-height: 288px;
-    }
-
-    app-groups-list {
-      display: block;
-      max-height: 383px;
-    }
-
-    app-accordion {
-      margin-bottom: 15px;
-      display: block;
-    }
   }
 }
 

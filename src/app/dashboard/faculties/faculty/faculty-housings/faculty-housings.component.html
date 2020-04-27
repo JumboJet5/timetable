@@ -11,6 +11,9 @@
       <mat-checkbox (change)="housingStatusChanged($event, housing)"
                     [checked]="isHousingEnabledForFaculty(housing.id)"
                     color="primary">{{housing.name}}</mat-checkbox>
+      <button (click)="openDetails(housing); $event.stopPropagation()" class="mini-button" mat-icon-button>
+        <mat-icon>input</mat-icon>
+      </button>
     </div>
   </div>
 

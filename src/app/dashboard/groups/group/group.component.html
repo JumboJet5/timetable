@@ -1,17 +1,26 @@
-<h2 class="heading">
+<h2 class="heading grid-all-columns">
   <span>Група {{group?.name}}</span>
-  <button mat-icon-button (click)="log()">
+  <button mat-icon-button (click)="delete()">
     <mat-icon>delete</mat-icon>
   </button>
 </h2>
 
-<div class="details" *ngIf="group">
-  <app-group-entity (save)="saveGroupEntity($event)"
+<ng-container *ngIf="group">
+  <h3 class="grid-all-columns">Параметри групи</h3>
+  <app-group-entity class="grid-all-columns"
+                    (save)="saveGroupEntity($event)"
                     (facultyChanged)="facultyId = $event"
                     [group]="group"></app-group-entity>
-  <app-group-semesters-details [group]="group" [facultyId]="facultyId"></app-group-semesters-details>
-</div>
+  <div class="grid-two-first-columns">
+    <h3>Додаткові налаштування</h3>
+    <app-group-semesters-details [facultyId]="facultyId" [group]="group"></app-group-semesters-details>
+  </div>
+
+  <app-smart-details class="grid-last-column"></app-smart-details>
+
+</ng-container>
 
 <div class="loader-wrapper" *ngIf="isLoading">
   <mat-spinner></mat-spinner>
 </div>
+

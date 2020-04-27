@@ -13,6 +13,7 @@ export interface IFilterParams {
   faculty?: number | string;
   degreeId?: number | string;
   specialty?: number | string;
+  course?: number | string;
   search?: string;
   ordering?: string;
   visible?: boolean;

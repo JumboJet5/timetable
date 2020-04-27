@@ -1,9 +1,22 @@
 <div class="relative-wrapper">
-  <a *ngFor="let university of items; let index = index"
-     [routerLink]="['/dashboard', 'universities', university.id]"
-     class="item">
+  <a class="item" *ngFor="let university of items; let index = index"
+     [routerLink]="['/dashboard', 'universities', university.id]">
     <img class="item-details short" [src]="university.img" alt>
     <div class="item-details long">{{university.name}}</div>
+    <div class="item-details icon" *ngIf="withDetails">
+      <button (click)="$event.stopPropagation(); $event.preventDefault();"
+              class="mini-button"
+              mat-icon-button>
+        <mat-icon>input</mat-icon>
+      </button>
+    </div>
+    <div class="item-details icon" *ngIf="withDeleting">
+      <button (click)="deleteItem(index); $event.stopPropagation(); $event.preventDefault();"
+              class="mini-button"
+              mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </a>
   <div class="loader-wrapper" *ngIf="isLoading">
     <mat-spinner></mat-spinner>

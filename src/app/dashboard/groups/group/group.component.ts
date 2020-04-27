@@ -1,6 +1,7 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '@app/service/group/group.service';
+import { PopupService } from '@app/service/modal/popup.service';
 import { Subject } from 'rxjs';
 import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
@@ -18,6 +19,8 @@ export class GroupComponent implements OnInit, OnDestroy {
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
+              private _router: Router,
+              private _popupService: PopupService,
               private _groupService: GroupService) { }
 
   public ngOnInit(): void {
@@ -29,6 +32,15 @@ export class GroupComponent implements OnInit, OnDestroy {
     this._groupService.updateGroup(this.group.id, updateGroup)
       .subscribe(group => this.group = group)
       .add(() => this.isLoading = false);
+  }
+
+  public delete() {
+    this._popupService.openDialog({
+        header: 'Вилучити групу?',
+        body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
+      },
+      () => this._groupService.deleteGroup(this.group.id)
+        .subscribe(() => this._router.navigate(['dashboard', 'groups'])));
   }
 
   @HostListener('window:beforeunload')
@@ -48,9 +60,5 @@ export class GroupComponent implements OnInit, OnDestroy {
         this.group = res;
         this.isLoading = false;
       });
-  }
-
-  public log() {
-    console.log('here');
   }
 }

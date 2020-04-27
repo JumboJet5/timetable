@@ -1,50 +1,41 @@
-<div (click)="closeModal()" class="overlay-backdrop"></div>
-
-<div class="modal-wrapper">
+<app-modal-wrapper [isLoading]="isLoading">
   <h4>Створення університету</h4>
-  <form [formGroup]="universityEntityForm" class="tt-form">
+  <form [formGroup]="universityEntityService.form" class="tt-form">
     <div class="column">
       <label class="tt-input-label">
         <span class="placeholder">Назва *</span>
         <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
-        <span class="tt-error">{{getControlError(universityEntityForm, 'name')}}</span>
+        <span class="tt-error">{{universityEntityService.getControlError('name')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Коротка назва *</span>
         <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
-        <span class="tt-error">{{getControlError(universityEntityForm, 'short_name')}}</span>
+        <span class="tt-error">{{universityEntityService.getControlError('short_name')}}</span>
       </label>
       <span class="placeholder">Логотип</span>
-      <app-load-image (onImageChange)="getImagePath($event)"
-                      [imageSrc]="imageSrc"
-                      [isLoading]="isLogoUpdating"></app-load-image>
+      <app-load-image (onImageChange)="universityEntityService.getImagePath($event)"
+                      [imageSrc]="universityEntityService.imageSrc"></app-load-image>
     </div>
 
     <div class="column">
       <label class="tt-input-label">
         <span class="placeholder">Транслітерація назви</span>
         <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
-        <span class="tt-error">{{getControlError(universityEntityForm, 'slug')}}</span>
+        <span class="tt-error">{{universityEntityService.getControlError('slug')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Додаткові відомості</span>
         <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис факультета"></textarea>
-        <span class="tt-error">{{getControlError(universityEntityForm, 'slug')}}</span>
+        <span class="tt-error">{{universityEntityService.getControlError('slug')}}</span>
       </label>
     </div>
   </form>
   <div class="control-row">
     <button (click)="createUniversity()"
-            [disabled]="universityEntityForm.invalid"
+            [disabled]="universityEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти
     </button>
     <button mat-stroked-button (click)="closeModal()">Скинути</button>
   </div>
-  <div class="loading-wrapper" *ngIf="isLoading">
-    <div class="loader-wrapper">
-      <mat-spinner></mat-spinner>
-    </div>
-  </div>
-</div>
-<p>create-university works!</p>
+</app-modal-wrapper>

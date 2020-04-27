@@ -22,6 +22,7 @@ import { CreateHousingComponent } from 'src/app/popup/modal/create-housing/creat
 import { CreateUniversityComponent } from './create-university/create-university.component';
 import { CreateGroupComponent } from './create-group/create-group.component';
 import { CreateCourseComponent } from './create-course/create-course.component';
+import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { CreateCourseComponent } from './create-course/create-course.component';
     CreateUniversityComponent,
     CreateGroupComponent,
     CreateCourseComponent,
+    ModalWrapperComponent,
   ],
   imports: [
     CommonModule,

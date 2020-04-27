@@ -1,33 +1,33 @@
-<form [formGroup]="universityEntityForm" class="tt-form">
-  <label class="tt-input-label">
+<form [formGroup]="universityEntityService.form" class="tt-form">
+  <label class="tt-input-label name">
     <span class="placeholder">Назва *</span>
     <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
-    <span class="tt-error">{{getControlError(universityEntityForm, 'name')}}</span>
+    <span class="tt-error">{{universityEntityService.getControlError('name')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label short-name">
     <span class="placeholder">Коротка назва *</span>
     <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
-    <span class="tt-error">{{getControlError(universityEntityForm, 'short_name')}}</span>
+    <span class="tt-error">{{universityEntityService.getControlError('short_name')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label slug">
     <span class="placeholder">Транслітерація назви *</span>
     <input class="tt-input" formControlName="slug" placeholder="Введіть slug">
-    <span class="tt-error">{{getControlError(universityEntityForm, 'slug')}}</span>
+    <span class="tt-error">{{universityEntityService.getControlError('slug')}}</span>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label logo">
     <span class="placeholder">Логотип</span>
-    <app-load-image (onImageChange)="getImagePath($event)"
-                    [imageSrc]="imageSrc"></app-load-image>
+    <app-load-image (onImageChange)="universityEntityService.getImagePath($event)"
+                    [imageSrc]="universityEntityService.imageSrc"></app-load-image>
   </label>
-  <label class="tt-input-label">
+  <label class="tt-input-label description">
     <span class="placeholder">Додаткові відомості</span>
-    <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис факультета"></textarea>
-    <span class="tt-error">{{getControlError(universityEntityForm, 'slug')}}</span>
+    <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис університету"></textarea>
+    <span class="tt-error">{{universityEntityService.getControlError('slug')}}</span>
   </label>
 
-  <div class="control-row" *ngIf="universityEntityForm.dirty">
-    <button (click)="save.emit(universityEntityForm.value)"
-            [disabled]="universityEntityForm.invalid"
+  <div class="control-row" *ngIf="universityEntityService.form.dirty">
+    <button (click)="save.emit(universityEntityService.form.value)"
+            [disabled]="universityEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти
     </button>

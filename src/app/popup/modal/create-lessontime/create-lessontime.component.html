@@ -1,9 +1,7 @@
-<div (click)="closeModal()" class="overlay-backdrop"></div>
-
-<div class="modal-wrapper" [formGroup]="createLessontimeForm">
+<app-modal-wrapper [isLoading]="isLoading" [formGroup]="lessontimeEntityService.form">
   <h4>Створення розкладу пари</h4>
   <div class="placeholder">Факультет</div>
-  <app-faculty-select [selectControl]="createLessontimeForm.get('faculty')"></app-faculty-select>
+  <app-faculty-select [selectControl]="lessontimeEntityService.form.get('faculty')"></app-faculty-select>
   <label class="tt-input-label">
     <span class="placeholder">Номер пари</span>
     <input class="tt-input" formControlName="num" type="number" min="1">
@@ -20,7 +18,7 @@
     </label>
   </div>
 
-  <mat-checkbox (change)="synchronizeDisableBreakRangeControls($event.checked)"
+  <mat-checkbox (change)="lessontimeEntityService.synchronizeDisableBreakRangeControls()"
                 formControlName="has_break"
                 color="primary">З прервою</mat-checkbox>
 
@@ -36,7 +34,7 @@
   </div>
 
   <div class="control-row">
-    <button (click)="create()" [disabled]="createLessontimeForm.invalid" mat-flat-button color="primary">
+    <button (click)="create()" [disabled]="lessontimeEntityService.form.invalid" mat-flat-button color="primary">
       <span>Створити</span>
     </button>
 
@@ -44,8 +42,4 @@
       <span>Скасувати</span>
     </button>
   </div>
-
-  <div class="loader-wrapper" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
-</div>
+</app-modal-wrapper>

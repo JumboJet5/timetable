@@ -1,0 +1,42 @@
+<form [formGroup]="housingEntityService.form" class="tt-form">
+  <label class="tt-input-label">
+    <span class="placeholder">Назва *</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{housingEntityService.getControlError('name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Коротка назва *</span>
+    <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
+    <span class="tt-error">{{housingEntityService.getControlError('short_name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Адреса</span>
+    <input class="tt-input" formControlName="address" placeholder="Введіть адресу">
+    <span class="tt-error">{{housingEntityService.getControlError('address')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Локація</span>
+    <input class="tt-input" formControlName="location" placeholder="Введіть місце розташуваня">
+    <span class="tt-error">{{housingEntityService.getControlError('location')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Кількість поверхів</span>
+    <input class="tt-input" formControlName="floors" type="number" placeholder="Введіть кількість поверхів">
+    <span class="tt-error">{{housingEntityService.getControlError('floors')}}</span>
+  </label>
+
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="housingEntityService.form.invalid || housingEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>Зберегти
+    </button>
+    <button mat-stroked-button (click)="reset()">Скинути</button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

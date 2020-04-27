@@ -56,7 +56,7 @@ export class GroupSemestersDetailsComponent implements OnInit {
 
   public addSemester(): void {
     if (!!this.group) this.popupService.openReactiveModal(['add-semester-to-group'],
-      {group: this.group.id, group_slug: this.group.slug});
+      {group: this.group.id});
   }
 
   public createSemester() {
@@ -67,7 +67,13 @@ export class GroupSemestersDetailsComponent implements OnInit {
     if (!semester || !this.group) return;
 
     this.semesterMap.set(semester.id, semester);
-    this.groupsemesterService.createGroupsemester({semester: semester.id, group: this.group.id, show_lessons_number: true})
+    this.groupsemesterService.createGroupsemester({
+      semester: semester.id,
+      group: this.group.id,
+      show_lessons_number: true,
+      lessons_time: [],
+      themes: [],
+    })
       .subscribe(res => this._addGroupsemester(res));
   }
 

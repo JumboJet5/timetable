@@ -17,4 +17,8 @@ export class ThemeService {
   public getTheme(id: number): Observable<ITheme> {
     return this.http.get<ITheme>(URLS.THEME(id));
   }
+
+  public updateTheme(id: number, theme: ITheme): Observable<ITheme> {
+    return this.http.put<ITheme>(URLS.THEME(id), theme);
+  }
 }

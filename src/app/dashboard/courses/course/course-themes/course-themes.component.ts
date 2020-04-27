@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { ThemeService } from '@app/service/theme/theme.service';
+import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
 import { ITheme } from 'src/core/interfaces/theme.interface';
 
 @Component({
@@ -11,7 +13,8 @@ export class CourseThemesComponent {
   public themes: ITheme[] = [];
   public isLoading = false;
 
-  constructor(private _themeService: ThemeService) {}
+  constructor(private _themeService: ThemeService,
+              private _smartDetailsService: SmartDetailsService) {}
 
   private _courseId: number;
 
@@ -26,5 +29,9 @@ export class CourseThemesComponent {
     this._themeService.getThemes({specialty: this._courseId})
       .subscribe(res => this.themes = res.results)
       .add(() => this.isLoading = false);
+  }
+
+  public openDetails(entity: ITheme) {
+    this._smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.THEME};
   }
 }

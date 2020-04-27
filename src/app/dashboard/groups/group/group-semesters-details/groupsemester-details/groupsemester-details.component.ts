@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MatCheckboxChange } from '@angular/material/checkbox';
 import { accordionTransitionAnimation } from '@animations/accordion.animation';
 import { GroupsemesterService } from '@app/service/groupsemester/groupsemester.service';
 import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service';
 import { PopupService } from '@app/service/modal/popup.service';
-import { SemesterService } from '@app/service/semester/semester.service';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { Subject } from 'rxjs';
 import { debounceTime, takeUntil } from 'rxjs/operators';
+import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
 import { IGroupsemester, IGroupsemesterSimplified } from 'src/core/interfaces/groupsemester.interface';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { ISemester } from 'src/core/interfaces/semester.interface';
@@ -27,16 +27,16 @@ export class GroupsemesterDetailsComponent implements OnInit {
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
   public isOpened = false;
   public isLoading = false;
+  public needUpdate: Subject<void> = new Subject<void>();
   private _initialGroupsemester: IGroupsemester;
-  private _needUpdate: Subject<void> = new Subject<void>();
   private _unsubscribeUpdating: Subject<void> = new Subject<void>();
   private _unsubscribeDeleting: Subject<void> = new Subject<void>();
   private _updateSuccessTimeoutId;
   private _updateFailedTimeoutId;
 
   constructor(private groupsemesterService: GroupsemesterService,
-              private semesterService: SemesterService,
               private lessonTimeService: LessonTimeService,
+              private smartDetailsService: SmartDetailsService,
               private popupService: PopupService) { }
 
   private _isUpdateSuccess = false;
@@ -76,48 +76,9 @@ export class GroupsemesterDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._needUpdate.asObservable()
+    this.needUpdate.asObservable()
       .pipe(debounceTime(500))
       .subscribe(() => this._updateGroupsemesters());
-  }
-
-  public isThemeEnableForGroupsemester(themeId: number, groupsemester: IGroupsemester): boolean {
-    return !!groupsemester && !!groupsemester.themes && groupsemester.themes.some(theme => theme.id === themeId);
-  }
-
-  public isLessonTimeEnableForGroupsemester(lessonTimeId: number, groupsemester: IGroupsemester): boolean {
-    return !!groupsemester && !!groupsemester.lessons_time && groupsemester.lessons_time.some(lessonTime => lessonTime.id === lessonTimeId);
-  }
-
-  public themeChanged(event: MatCheckboxChange, theme: ITheme) {
-    if (!this.groupsemester || !theme) return;
-
-    const {id, name, short_name} = theme;
-    if (event.checked && !this.groupsemester.themes.find(item => item.id === id))
-      this.groupsemester.themes.push({id, name, short_name});
-    if (!event.checked && !!this.groupsemester.themes.find(item => item.id === id))
-      this.groupsemester.themes = this.groupsemester.themes.filter(item => item.id !== id);
-
-    this._needUpdate.next();
-  }
-
-  public lessonTimeChanged(event: MatCheckboxChange, lessonTime: ILessonTime) {
-    if (!this.groupsemester || !lessonTime) return;
-
-    const {id, end, num, start} = lessonTime;
-    if (event.checked && !this.groupsemester.lessons_time.find(item => item.id === id))
-      this.groupsemester.lessons_time.push({id, end, num, start});
-    if (!event.checked && !!this.groupsemester.lessons_time.find(item => item.id === id))
-      this.groupsemester.lessons_time = this.groupsemester.lessons_time.filter(item => item.id !== id);
-
-    this._needUpdate.next();
-  }
-
-  public showLessonNumberChanged(event: MatCheckboxChange) {
-    if (!this.groupsemester) return;
-
-    this.groupsemester.show_lessons_number = event.checked;
-    this._needUpdate.next();
   }
 
   public deleteGroupSemester(): void {
@@ -130,10 +91,6 @@ export class GroupsemesterDetailsComponent implements OnInit {
       () => this.groupsemesterService.deleteGroupSemester(this.groupsemester.id)
         .pipe(takeUntil(this._unsubscribeDeleting))
         .subscribe(() => this.delete.emit(this.groupsemester.id)) && (this.isLoading = true));
-  }
-
-  public createLessonTime() {
-    this.popupService.openReactiveModal(['create-lessontime'], this.facultyId ? {faculty: this.facultyId} : {});
   }
 
   public deleteLessonTime(id: number) {
@@ -175,5 +132,9 @@ export class GroupsemesterDetailsComponent implements OnInit {
   private _onGroupsemesterFailedUpdate(): void {
     this.groupsemester = this._initialGroupsemester;
     this.isUpdateFailed = true;
+  }
+
+  public openDetails(entity: ISemester) {
+    this.smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.SEMESTER};
   }
 }

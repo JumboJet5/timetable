@@ -6,6 +6,7 @@ import { SpecialtyService } from '@app/service/specialty/specialty.service';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
+import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
@@ -15,12 +16,12 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
   styleUrls: ['./specialty.component.scss'],
 })
 export class SpecialtyComponent implements OnInit, OnDestroy {
-  public isEntityLoading = false;
+  public isLoading = false;
   public specialty: ISpecialty;
   public specialtyId: number;
   private _unsubscribe: Subject<void> = new Subject();
-  public coursesFilters: IFilterParams;
-  public groupsFilters: IFilterParams;
+  public courseFilters: IFilterParams;
+  public groupFilters: IFilterParams;
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
@@ -33,19 +34,19 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
     this._popupService.getChanel(PopupChanelEnum.CREATE_GROUP)
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => this.groupsFilters = {...this.groupsFilters});
+      .subscribe(() => this.groupFilters = {...this.groupFilters});
 
     this._popupService.getChanel(PopupChanelEnum.CREATE_COURSE)
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => this.coursesFilters = {...this.coursesFilters});
+      .subscribe(() => this.courseFilters = {...this.courseFilters});
 
   }
 
   public saveSpecialty(specialty: ISpecialty): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._specialtyService.updateSpecialty(this.specialtyId, specialty)
       .subscribe(res => this.specialty = res)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   public delete() {
@@ -64,10 +65,10 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentSpecialty(): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._specialtyService.getSpecialty(this.specialtyId)
       .subscribe(specialty => this.specialty = specialty)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   private _getSpecialtyByRoute(): void {
@@ -81,8 +82,8 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   private _updateContent(specialtyId: number): void {
     this.specialtyId = specialtyId;
-    this.groupsFilters = {specialty: this.specialtyId};
-    this.coursesFilters = {specialty: this.specialtyId};
+    this.groupFilters = {specialty: this.specialtyId};
+    this.courseFilters = {specialty: this.specialtyId};
     this._getCurrentSpecialty();
   }
 
@@ -92,5 +93,9 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   public createCourse() {
     this._popupService.openReactiveModal(['create-course'], {specialty: this.specialtyId});
+  }
+
+  public onCourseClick(course: ICourse) {
+    console.log(course);
   }
 }

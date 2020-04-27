@@ -1,23 +1,21 @@
-<div (click)="closeModal()" class="overlay-backdrop"></div>
-
-<div class="modal-wrapper">
+<app-modal-wrapper [isLoading]="isLoading">
   <h4>Створення корпуса</h4>
-  <form class="tt-form" [formGroup]="createBuildingForm">
+  <form class="tt-form" [formGroup]="housingEntityService.form">
     <div class="column">
       <label class="tt-input-label">
         <span class="placeholder">Університет *</span>
-        <app-university-select [selectControl]="univControl"></app-university-select>
-        <span class="tt-error">{{getControlError(createBuildingForm, 'univ')}}</span>
+        <app-university-select [selectControl]="housingEntityService.univControl"></app-university-select>
+        <span class="tt-error">{{housingEntityService.getControlError('univ')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Назва *</span>
         <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
-        <span class="tt-error">{{getControlError(createBuildingForm, 'name')}}</span>
+        <span class="tt-error">{{housingEntityService.getControlError('name')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Коротка назва *</span>
         <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
-        <span class="tt-error">{{getControlError(createBuildingForm, 'short_name')}}</span>
+        <span class="tt-error">{{housingEntityService.getControlError('short_name')}}</span>
       </label>
     </div>
 
@@ -25,23 +23,23 @@
       <label class="tt-input-label">
         <span class="placeholder">Адреса</span>
         <input class="tt-input" formControlName="address" placeholder="Введіть адресу">
-        <span class="tt-error">{{getControlError(createBuildingForm, 'address')}}</span>
+        <span class="tt-error">{{housingEntityService.getControlError('address')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Локація</span>
         <input class="tt-input" formControlName="location" placeholder="Введіть місце розташуваня">
-        <span class="tt-error">{{getControlError(createBuildingForm, 'location')}}</span>
+        <span class="tt-error">{{housingEntityService.getControlError('location')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Кількість поверхів</span>
-        <input class="tt-input" formControlName="floor" type="number" placeholder="Введіть кількість поверхів">
-        <span class="tt-error">{{getControlError(createBuildingForm, 'floor')}}</span>
+        <input class="tt-input" formControlName="floors" type="number" placeholder="Введіть кількість поверхів">
+        <span class="tt-error">{{housingEntityService.getControlError('floors')}}</span>
       </label>
     </div>
   </form>
 
   <div class="control-row">
-    <button (click)="create()" [disabled]="createBuildingForm.invalid" mat-flat-button color="primary">
+    <button (click)="create()" [disabled]="housingEntityService.form.invalid" mat-flat-button color="primary">
       <span>Створити</span>
     </button>
 
@@ -49,8 +47,4 @@
       <span>Скасувати</span>
     </button>
   </div>
-
-  <div class="loader-wrapper" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
-</div>
+</app-modal-wrapper>

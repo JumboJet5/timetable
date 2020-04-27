@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, Optional } from '@angular/core';
 import { PopupService } from '@app/service/modal/popup.service';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { SpecialtyService } from '@app/service/specialty/specialty.service';
 import { itemServiceFactory, ItemsListComponent } from '@app/shared/list/items-list/items-list.component';
+import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 
 @Component({
@@ -11,8 +13,13 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 })
 export class SpecialtiesListComponent extends ItemsListComponent<ISpecialty> {
   constructor(private _specialtyService: SpecialtyService,
-              protected _popupService: PopupService) {
+              protected _popupService: PopupService,
+              @Optional() public smartDetailsService: SmartDetailsService) {
     super(itemServiceFactory<ISpecialty>(params => this._specialtyService.getSpecialties(params),
-      id => this._specialtyService.deleteSpecialty(id)), _popupService);
+      id => this._specialtyService.deleteSpecialty(id)), _popupService, smartDetailsService);
+  }
+
+  public getItemDetailsEntity(entity: ISpecialty): void {
+    if (!!this.smartDetailsService) this.smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.SPECIALTY};
   }
 }

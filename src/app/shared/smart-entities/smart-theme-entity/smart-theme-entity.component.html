@@ -1,0 +1,25 @@
+<form [formGroup]="themeEntityService.form" class="tt-form">
+  <label class="tt-input-label">
+    <span class="placeholder">Назва *</span>
+    <input class="tt-input" formControlName="name" placeholder="Введіть ім'я">
+    <span class="tt-error">{{themeEntityService.getControlError('name')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Коротка назва *</span>
+    <input class="tt-input" formControlName="short_name" placeholder="Введіть коротке ім'я">
+    <span class="tt-error">{{themeEntityService.getControlError('short_name')}}</span>
+  </label>
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="themeEntityService.form.invalid || themeEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>Зберегти</button>
+    <button mat-stroked-button (click)="reset()">Скинути</button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

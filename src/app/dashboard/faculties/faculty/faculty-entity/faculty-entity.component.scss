@@ -1,18 +1,58 @@
-.breakable-change {
-  background-color: var(--primary-color);
-  margin: 0 -15px 15px;
-  padding: 15px;
-  border-radius: 15px;
-  color: white;
+.tt-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 0fr) 36px;
+  grid-column-gap: 25px;
+}
 
-  .description {
-    line-height: 18px;
-    font-size: 12px;
-    font-weight: 300;
-  };
+.name {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.short-name {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.slug {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 3;
+  grid-row-end: 4;
+}
+
+.univ {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+}
+
+.logo {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.description {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 2;
+  grid-row-end: 4;
 }
 
 .control-row {
+  grid-column-start: 1;
+  grid-column-end: 4;
+  grid-row-start: 5;
+  grid-row-end: 6;
+
   .mat-flat-button, .mat-stroked-button {
     min-width: 100px;
     margin: 0 10px;

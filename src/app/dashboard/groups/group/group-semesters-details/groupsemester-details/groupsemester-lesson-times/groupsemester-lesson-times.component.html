@@ -1,0 +1,23 @@
+<div class="placeholder">
+  <span>Розклад</span>
+  <mat-checkbox (change)="showLessonNumberChanged($event)"
+                [checked]="groupsemester.show_lessons_number"
+                color="primary">Показувати номери пар
+  </mat-checkbox>
+  <button mat-icon-button class="mini-button left-side" (click)="createLessonTime()">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+<div class="lesson-time-wrapper">
+  <div class="lesson-time" *ngFor="let lessonTime of lessonTimes">
+    <mat-checkbox (change)="lessonTimeChanged($event, lessonTime)"
+                  [checked]="isLessonTimeEnableForGroupsemester(lessonTime.id, groupsemester)"
+                  color="primary">{{lessonTime.start}} - {{lessonTime.end}}</mat-checkbox>
+    <button (click)="openDetails(lessonTime); $event.stopPropagation()" class="mini-button" mat-icon-button>
+      <mat-icon>input</mat-icon>
+    </button>
+    <button (click)="deleteLessonTime.emit(lessonTime.id)" class="mini-button" mat-icon-button>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

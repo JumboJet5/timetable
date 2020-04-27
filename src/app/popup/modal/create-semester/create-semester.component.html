@@ -1,10 +1,8 @@
-<div (click)="closeModal()" class="overlay-backdrop"></div>
-
-<div class="modal-wrapper" [formGroup]="createSemesterForm">
+<app-modal-wrapper [isLoading]="isLoading" [formGroup]="semesterEntityService.form">
   <h4>Створення семестру</h4>
   <label class="tt-input-label">
     <span class="placeholder">Рік</span>
-    <app-year-select #yearSelect [selectControl]="createSemesterForm.get('year')"></app-year-select>
+    <app-year-select #yearSelect [selectControl]="semesterEntityService.form.get('year')"></app-year-select>
   </label>
 
   <label class="tt-input-label">
@@ -14,14 +12,14 @@
 
   <div class="tt-input-label">
     <span class="placeholder">Семестр</span>
-    <app-date-picker [dateControl]="createSemesterForm"
+    <app-date-picker [dateControl]="semesterEntityService.form"
                      [min]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.start)"
                      [max]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.end)"
                      placeholder="Оберіть діапазон дат"></app-date-picker>
   </div>
 
   <div class="control-row">
-    <button (click)="create()" [disabled]="createSemesterForm.invalid" mat-flat-button color="primary">
+    <button (click)="create()" [disabled]="semesterEntityService.form.invalid" mat-flat-button color="primary">
       <span>Створити</span>
     </button>
 
@@ -29,7 +27,4 @@
       <span>Скасувати</span>
     </button>
   </div>
-  <div class="loader-wrapper" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
-</div>
+</app-modal-wrapper>

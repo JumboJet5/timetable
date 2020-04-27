@@ -3,17 +3,8 @@
   margin-bottom: 15px;
   align-items: baseline;
 
-  &:hover .delete-icon {
-    opacity: 1;
-  }
-
   .delete-icon {
-    opacity: 0;
     margin-left: 5px;
-
-    &:focus, &:active {
-      opacity: 1;
-    }
   }
 }
 
@@ -41,6 +32,10 @@
     transform: scaleY(-1);
   }
 
+  .mini-button {
+    margin-left: 8px;
+  }
+
   .arrow {
     user-select: none;
     margin-left: auto;
@@ -49,57 +44,9 @@
   }
 }
 
-.groupsemester-details {
-
-  .placeholder {
-    border-bottom: 1px solid var(--primary-color-20);
-    margin: 0 19px 6px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-
-    :not(.left-side) + .left-side {
-      margin-left: auto;
-    }
-
-    .mat-checkbox {
-      font-size: 12px;
-      font-weight: 400;
-    }
-  }
-
-  .theme-wrapper, .lesson-time-wrapper {
-    margin-right: 19px;
-    margin-bottom: 6px;
-    max-height: 320px;
-    overflow: auto;
-  }
-
-  .theme, .lesson-time {
-    display: flex;
-    align-items: center;
-
-    &:hover .mini-button {
-      opacity: 1;
-    }
-
-    .mini-button {
-      margin-left: 8px;
-      opacity: 0;
-    }
-  }
-
-  ::ng-deep.mat-checkbox-layout {
-    padding-left: 19px;
-    height: 40px;
-    align-items: center;
-  }
-}
-
 .update-status {
   width: 18px;
   height: 12px;
-  margin-left: 8px;
 
   .checkmark-path {
     stroke: var(--light-green);

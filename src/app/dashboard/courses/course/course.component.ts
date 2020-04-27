@@ -4,9 +4,11 @@ import { CourseService } from '@app/service/course/course.service';
 import { GroupService } from '@app/service/group/group.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { degreeMap } from '@const/collections';
+import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
 import { ICourse } from 'src/core/interfaces/course.interface';
+import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 
 @Component({
   selector: 'app-course',
@@ -18,6 +20,7 @@ export class CourseComponent implements OnInit, OnDestroy {
   public course: ICourse;
   public courseId: number;
   public degreeMap = degreeMap();
+  public groupsFilters: IFilterParams;
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
@@ -28,6 +31,10 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this._getCourseByRoute();
+
+    this._popupService.getChanel(PopupChanelEnum.CREATE_GROUP)
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(() => this.groupsFilters = {...this.groupsFilters});
   }
 
   public saveCourse(course: ICourse): void {
@@ -44,6 +51,10 @@ export class CourseComponent implements OnInit, OnDestroy {
       },
       () => this._courseService.deleteCourse(this.courseId)
         .subscribe(() => this._router.navigate(['dashboard', 'specialties', this.course.specialty])));
+  }
+
+  public createGroup() {
+    this._popupService.openReactiveModal(['create-group'], {course: this.courseId});
   }
 
   @HostListener('window:beforeunload')
@@ -70,6 +81,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   private _updateContent(courseId: number): void {
     this.courseId = courseId;
+    this.groupsFilters = {course: this.courseId};
     this._getCurrentCourse();
   }
 }
