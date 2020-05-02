@@ -17,15 +17,27 @@ export class HousingEntityService {
 
   constructor(public formatService: FormatService) { }
 
+  private _defaultUnivDisabling = true;
+
+  public get defaultUnivDisabling(): boolean {
+    return this._defaultUnivDisabling;
+  }
+
+  public set defaultUnivDisabling(value: boolean) {
+    this._defaultUnivDisabling = value;
+    if (value && this.univControl.enabled) this.univControl.disable({onlySelf: true});
+    else if (!value && this.univControl.disabled) this.univControl.enable({onlySelf: true});
+  }
+
   public resetForm(housing: Partial<IHousing>): void {
     this.form.patchValue(housing);
-    if (housing.univ) this.form.get('univ').disable({onlySelf: true});
+    if (this.defaultUnivDisabling && housing.univ) this.form.get('univ').disable({onlySelf: true});
   }
 
   public getFormValue(): IHousing {
     this.form.get('univ').enable();
     const result = this.form.value;
-    if (this.form.value.univ) this.form.get('univ').disable({onlySelf: true});
+    if (this.defaultUnivDisabling && this.form.value.univ) this.form.get('univ').disable({onlySelf: true});
     return result;
   }
 

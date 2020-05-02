@@ -1,0 +1,56 @@
+:host {
+  padding: 0 24px 16px 39px;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 25px;
+}
+
+.grid-all-columns {
+  grid-column-start: 1;
+  grid-column-end: 4;
+}
+
+.grid-two-first-columns {
+  grid-column-start: 1;
+  grid-column-end: 3;
+}
+
+.grid-last-column {
+  grid-column-start: 3;
+  grid-column-end: 4;
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+}
+
+
+.additional {
+  app-rooms-list {
+    display: block;
+    max-height: 383px;
+  }
+
+  app-accordion {
+    margin-bottom: 15px;
+    display: block;
+  }
+}
+
+.loader-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: var(--overlay-background-color);
+
+  .mat-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

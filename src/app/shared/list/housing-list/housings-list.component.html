@@ -1,0 +1,35 @@
+<div class="relative-wrapper">
+  <div class="item header-row">
+    <div class="item-details long">Корпус</div>
+    <div class="item-details middle">Коротка назва</div>
+    <div class="item-details middle">Кількість поверхів</div>
+    <div class="item-details long">Адреса</div>
+    <div class="item-details icon" *ngIf="withDetails"></div>
+    <div class="item-details icon" *ngIf="withDeleting"></div>
+  </div>
+  <a class="item" *ngFor="let housing of items; let index = index" [routerLink]="['/dashboard', 'housings', housing.id]">
+    <div class="item-details long">{{housing.name}}</div>
+    <div class="item-details middle">{{housing.short_name}}</div>
+    <div class="item-details middle">{{housing.floors}}</div>
+    <div class="item-details long">{{housing.address}}</div>
+    <div class="item-details icon" *ngIf="withDetails">
+      <button (click)="getItemDetailsEntity(housing); $event.stopPropagation(); $event.preventDefault();"
+              class="mini-button"
+              mat-icon-button>
+        <mat-icon>input</mat-icon>
+      </button>
+    </div>
+    <div class="item-details icon" *ngIf="withDeleting">
+      <button (click)="deleteItem(index); $event.stopPropagation(); $event.preventDefault();"
+              class="mini-button"
+              mat-icon-button>
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </a>
+  <div class="loader-wrapper" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="!isLoading" class="viewport-bottom" inViewport
+       (inViewportAction)="!!$event && $event.visible && loadItems()"></div>
+</div>

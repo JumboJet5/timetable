@@ -12,19 +12,27 @@ import { LoadImageModule } from '@app/shared/load-image/load-image.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
 import { FACULTIES_FILTER_CONFIG } from '@const/filters';
+import { FacultyLessonTimesComponent } from 'src/app/dashboard/faculties/faculty/faculty-lesson-times/faculty-lesson-times.component';
 import { FILTER_CONFIG } from 'src/core/injections/filter-config.injection-token';
 import { FacultiesInfoComponent } from './faculties-info/faculties-info.component';
 import { FacultiesRoutingModule } from './faculties-routing.module';
 import { FacultiesComponent } from './faculties.component';
-import { FacultyComponent } from './faculty/faculty.component';
 import { FacultyEntityComponent } from './faculty/faculty-entity/faculty-entity.component';
-import { FacultyThemesComponent } from './faculty/faculty-themes/faculty-themes.component';
 import { FacultyHousingsComponent } from './faculty/faculty-housings/faculty-housings.component';
-import { FacultyLessonTimesComponent } from 'src/app/dashboard/faculties/faculty/faculty-lesson-times/faculty-lesson-times.component';
+import { FacultyThemesComponent } from './faculty/faculty-themes/faculty-themes.component';
+import { FacultyComponent } from './faculty/faculty.component';
 
 
 @NgModule({
-  declarations: [FacultiesComponent, FacultyComponent, FacultiesInfoComponent, FacultyEntityComponent, FacultyThemesComponent, FacultyHousingsComponent, FacultyLessonTimesComponent],
+  declarations: [
+    FacultiesComponent,
+    FacultyComponent,
+    FacultiesInfoComponent,
+    FacultyEntityComponent,
+    FacultyThemesComponent,
+    FacultyHousingsComponent,
+    FacultyLessonTimesComponent,
+  ],
   imports: [
     CommonModule,
     FiltersModule,

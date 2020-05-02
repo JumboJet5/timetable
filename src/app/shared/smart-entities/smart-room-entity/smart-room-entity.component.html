@@ -1,0 +1,25 @@
+<form [formGroup]="roomEntityService.form" class="tt-form">
+  <label class="tt-input-label">
+    <span class="placeholder">Кімната *</span>
+    <input class="tt-input" formControlName="num" placeholder="Введіть кімнату">
+    <span class="tt-error">{{roomEntityService.getControlError('num')}}</span>
+  </label>
+  <label class="tt-input-label">
+    <span class="placeholder">Поверх *</span>
+    <input class="tt-input" formControlName="floor" placeholder="Введіть поверх" type="number">
+    <span class="tt-error">{{roomEntityService.getControlError('floor')}}</span>
+  </label>
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="roomEntityService.form.invalid || roomEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>Зберегти</button>
+    <button mat-stroked-button (click)="reset()">Скинути</button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

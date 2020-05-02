@@ -1,0 +1,35 @@
+<h2 class="heading grid-all-columns">
+  <span>Корпус "{{housing?.name}}"</span>
+  <button mat-icon-button (click)="delete()">
+    <mat-icon>delete</mat-icon>
+  </button>
+</h2>
+
+<ng-container *ngIf="housing">
+  <h3 class="grid-all-columns">Параметри корпусу</h3>
+  <app-housing-entity class="grid-all-columns"
+                      [housing]="housing"
+                      (save)="saveHousing($event)"></app-housing-entity>
+
+  <div class="additional grid-two-first-columns">
+    <h3>Додаткові налаштування</h3>
+    <!--    <app-faculty-themes [facultyId]="facultyId"></app-faculty-themes>-->
+    <!--    <app-faculty-lesson-times [facultyId]="facultyId"></app-faculty-lesson-times>-->
+    <!--    <app-faculty-housings [facultyId]="facultyId" [univId]="faculty?.univ"></app-faculty-housings>-->
+
+    <app-accordion>
+      <app-accordion-header>
+        <h4>Кімнати прив'язані до корпусу</h4>
+        <button mat-icon-button class="mini-button" (click)="createRoom(); $event.stopPropagation()">
+          <mat-icon>add</mat-icon>
+        </button>
+      </app-accordion-header>
+      <app-rooms-list [filters]="roomFilters" [withDetails]="true"></app-rooms-list>
+    </app-accordion>
+  </div>
+  <app-smart-details class="grid-last-column"></app-smart-details>
+</ng-container>
+
+<div class="loader-wrapper" *ngIf="isLoading">
+  <mat-spinner></mat-spinner>
+</div>

@@ -10,6 +10,8 @@ import { InViewportModule } from 'ng-in-viewport';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { FacultiesListComponent } from './faculties-list/faculties-list.component';
 import { UniversitiesListComponent } from 'src/app/shared/list/univs-list/universities-list.component';
+import { HousingsListComponent } from 'src/app/shared/list/housing-list/housings-list.component';
+import { RoomsListComponent } from './rooms-list/rooms-list.component';
 
 
 @NgModule({
@@ -19,6 +21,8 @@ import { UniversitiesListComponent } from 'src/app/shared/list/univs-list/univer
     CoursesListComponent,
     FacultiesListComponent,
     UniversitiesListComponent,
+    HousingsListComponent,
+    RoomsListComponent,
   ],
   exports: [
     GroupsListComponent,
@@ -26,6 +30,8 @@ import { UniversitiesListComponent } from 'src/app/shared/list/univs-list/univer
     CoursesListComponent,
     FacultiesListComponent,
     UniversitiesListComponent,
+    HousingsListComponent,
+    RoomsListComponent,
   ],
   imports: [
     CommonModule,

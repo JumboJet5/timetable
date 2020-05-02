@@ -1,0 +1,9 @@
+<label class="tt-input-label item-search">
+  <button (click)="createNewInstance()" color="primary" mat-flat-button>
+    <mat-icon>add</mat-icon>
+    <span>Створити корпус</span>
+  </button>
+  <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
+</label>
+
+<app-housings-list [withDeleting]="false" [filters]="filters"></app-housings-list>

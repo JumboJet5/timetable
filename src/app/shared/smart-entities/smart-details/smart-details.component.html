@@ -25,5 +25,8 @@
   <app-smart-housing-entity *ngSwitchCase="'HOUSING'"
                             [housing]="smartDetailsService.currentEntity.entity"></app-smart-housing-entity>
 
+  <app-smart-room-entity *ngSwitchCase="'ROOM'"
+                         [room]="smartDetailsService.currentEntity.entity"></app-smart-room-entity>
+
   <div *ngSwitchDefault>Оберіть сутність для подробиць</div>
 </div>

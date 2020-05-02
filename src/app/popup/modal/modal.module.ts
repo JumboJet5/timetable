@@ -9,20 +9,20 @@ import { DatePickerModule } from '@app/shared/date-picker/date-picker.module';
 import { LoadImageModule } from '@app/shared/load-image/load-image.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { SelectInputModule } from '@app/shared/select-input/select-input.module';
+import { CreateHousingComponent } from 'src/app/popup/modal/create-housing/create-housing.component';
 import { LessonEditorComponent } from 'src/app/popup/modal/lesson-editor/lesson-editor.component';
 
 import { ModalRoutingModule } from 'src/app/popup/modal/modal-routing.module';
+import { CreateCourseComponent } from './create-course/create-course.component';
+import { CreateFacultyComponent } from './create-faculty/create-faculty.component';
+import { CreateGroupComponent } from './create-group/create-group.component';
 import { CreateGroupsemesterComponent } from './create-groupsemester/create-groupsemester.component';
 import { CreateLessontimeComponent } from './create-lessontime/create-lessontime.component';
 import { CreateSemesterComponent } from './create-semester/create-semester.component';
 import { CreateSpecialtyComponent } from './create-specialty/create-specialty.component';
-import { CreateFacultyComponent } from './create-faculty/create-faculty.component';
-import { UpdateLessontimeComponent } from './update-lessontime/update-lessontime.component';
-import { CreateHousingComponent } from 'src/app/popup/modal/create-housing/create-housing.component';
 import { CreateUniversityComponent } from './create-university/create-university.component';
-import { CreateGroupComponent } from './create-group/create-group.component';
-import { CreateCourseComponent } from './create-course/create-course.component';
 import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
+import { CreateRoomComponent } from './create-room/create-room.component';
 
 @NgModule({
   declarations: [
@@ -32,12 +32,12 @@ import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
     CreateLessontimeComponent,
     CreateSpecialtyComponent,
     CreateFacultyComponent,
-    UpdateLessontimeComponent,
     CreateHousingComponent,
     CreateUniversityComponent,
     CreateGroupComponent,
     CreateCourseComponent,
     ModalWrapperComponent,
+    CreateRoomComponent,
   ],
   imports: [
     CommonModule,
