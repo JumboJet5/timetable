@@ -32,7 +32,7 @@ export class SmartHousingEntityComponent {
 
     this.isLoading = true;
     this.housingService.updateHousing(this.housing.id, this.housingEntityService.getFormValue())
-      .subscribe(res => Object.assign(this.housing, res))
+      .subscribe(res => Object.assign(this.housing, res) && this.reset())
       .add(() => this.isLoading = false);
   }
 

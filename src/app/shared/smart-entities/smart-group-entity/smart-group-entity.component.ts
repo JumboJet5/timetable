@@ -33,7 +33,7 @@ export class SmartGroupEntityComponent {
 
     this.isLoading = true;
     this.groupService.updateGroup(this.group.id, this.groupEntityService.form.value)
-      .subscribe(res => Object.assign(this.group, res))
+      .subscribe(res => Object.assign(this.group, res) && this.reset())
       .add(() => this.isLoading = false);
   }
 

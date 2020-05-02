@@ -1,4 +1,4 @@
-<app-accordion>
+<app-accordion (isOpenedChange)="!$event && sortHousing()">
   <app-accordion-header>
     <h4>Корпуси прив'язані до факультету</h4>
     <button mat-icon-button class="mini-button left-side" (click)="createHousing(); $event.stopPropagation()">

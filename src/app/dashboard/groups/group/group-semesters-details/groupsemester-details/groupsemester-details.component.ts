@@ -25,7 +25,6 @@ export class GroupsemesterDetailsComponent implements OnInit {
   @Input() public semester: ISemester;
   @Input() facultyId: number;
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
-  public isOpened = false;
   public isLoading = false;
   public needUpdate: Subject<void> = new Subject<void>();
   private _initialGroupsemester: IGroupsemester;
@@ -38,6 +37,17 @@ export class GroupsemesterDetailsComponent implements OnInit {
               private lessonTimeService: LessonTimeService,
               private smartDetailsService: SmartDetailsService,
               private popupService: PopupService) { }
+
+  private _isOpened = false;
+
+  public get isOpened(): boolean {
+    return this._isOpened;
+  }
+
+  public set isOpened(value: boolean) {
+    this._isOpened = value;
+    if (!this.isOpened) this.groupThemes = [...this.groupThemes];
+  }
 
   private _isUpdateSuccess = false;
 
@@ -109,6 +119,10 @@ export class GroupsemesterDetailsComponent implements OnInit {
         .add(() => this.isLoading = false) && (this.isLoading = true));
   }
 
+  public openDetails(entity: ISemester) {
+    this.smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.SEMESTER};
+  }
+
   private _updateGroupsemesters(): void {
     if (!this.groupsemester) return;
 
@@ -132,9 +146,5 @@ export class GroupsemesterDetailsComponent implements OnInit {
   private _onGroupsemesterFailedUpdate(): void {
     this.groupsemester = this._initialGroupsemester;
     this.isUpdateFailed = true;
-  }
-
-  public openDetails(entity: ISemester) {
-    this.smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.SEMESTER};
   }
 }

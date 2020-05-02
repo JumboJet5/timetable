@@ -32,7 +32,7 @@ export class SmartFacultyEntityComponent {
 
     this.isLoading = true;
     this.facultyService.updateFaculty(this.faculty.id, this.facultyEntityService.form.value)
-      .subscribe(res => Object.assign(this.faculty, res))
+      .subscribe(res => Object.assign(this.faculty, res) && this.reset())
       .add(() => this.isLoading = false);
   }
 

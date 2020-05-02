@@ -9,9 +9,20 @@ import { accordionTransitionAnimation } from '@animations/accordion.animation';
 })
 export class AccordionComponent implements OnInit {
   @Output() public isOpenedChange: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @Input() public isOpened = false;
 
   constructor() { }
+
+  private _isOpened = false;
+
+  public get isOpened(): boolean {
+    return this._isOpened;
+  }
+
+  @Input()
+  public set isOpened(value: boolean) {
+    this._isOpened = value;
+    this.isOpenedChange.emit(value);
+  }
 
   ngOnInit(): void {
   }

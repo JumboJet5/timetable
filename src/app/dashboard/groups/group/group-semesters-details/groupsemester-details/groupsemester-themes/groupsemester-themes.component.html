@@ -7,7 +7,7 @@
 <div class="theme-wrapper">
   <div class="theme" *ngFor="let theme of groupThemes">
     <mat-checkbox (change)="themeChanged($event, theme)"
-                  [checked]="isThemeEnableForGroupsemester(theme.id, groupsemester)"
+                  [checked]="isThemeEnableForGroupsemester(theme.id)"
                   color="primary">{{theme.name}}</mat-checkbox>
     <button (click)="openDetails(theme); $event.stopPropagation()" mat-icon-button class="mini-button">
       <mat-icon>input</mat-icon>
