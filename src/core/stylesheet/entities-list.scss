@@ -25,3 +25,21 @@
     margin-right: 16px;
   }
 }
+
+.entities-details {
+  display: flex;
+  overflow: auto;
+  max-height: inherit;
+  height: 100%;
+  position: relative;
+  background-color: inherit;
+
+  :first-child {
+    flex: 1 0 0;
+  }
+
+  app-smart-details {
+    flex: 0 0 320px;
+    margin-left: 25px;
+  }
+}

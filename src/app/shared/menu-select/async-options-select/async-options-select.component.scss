@@ -29,10 +29,10 @@
 
   ::ng-deep app-select-result .tt-input .result-content, .tb-item {
     display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    //overflow: hidden;
+    //text-overflow: ellipsis;
     width: inherit;
-    white-space: nowrap;
+    //white-space: nowrap;
     line-height: 37px;
   }
 

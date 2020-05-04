@@ -6,4 +6,7 @@
   <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
 </label>
 
-<app-specialties-list [withDeleting]="false" [filters]="filters"></app-specialties-list>
+<div class="entities-details">
+  <app-specialties-list [withDeleting]="false" [filters]="filters"></app-specialties-list>
+  <app-smart-details title="Деталі спеціальності"></app-smart-details>
+</div>

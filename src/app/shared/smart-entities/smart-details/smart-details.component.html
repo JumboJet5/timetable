@@ -1,4 +1,4 @@
-<h3 class="support-header grid-last-column">Деталі зв'язаних сутностей</h3>
+<h3 class="support-header grid-last-column">{{title}}</h3>
 <div class="support-entity-settings grid-last-column" [ngSwitch]="smartDetailsService.currentEntity?.type">
   <app-smart-faculty-entity *ngSwitchCase="'FACULTY'"
                             [faculty]="smartDetailsService.currentEntity.entity"></app-smart-faculty-entity>

@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { UnauthorizedGuard } from '@app/guards/unauthorized/unauthorized.guard';
 import { AuthGuard } from 'src/app/guards/auth/auth.guard';
 
 const routes: Routes = [
   {
     path: 'authentication', loadChildren: () => import('./auth/auth.module')
-      .then(module => module.AuthModule),
+      .then(module => module.AuthModule), canLoad: [UnauthorizedGuard],
   },
   {
     path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module')

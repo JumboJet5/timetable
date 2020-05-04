@@ -14,13 +14,14 @@
 .item {
   display: flex;
   align-items: center;
-  padding: 0 16px;
+  padding: 4px 16px;
+  box-sizing: border-box;
   cursor: pointer;
   text-decoration: none;
   color: inherit;
   transition: box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
   line-height: 24px;
-  height: 40px;
+  min-height: 40px;
   font-size: 13px;
   border-width: 0;
   border-bottom-width: 1px;

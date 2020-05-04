@@ -15,7 +15,7 @@ export function itemServiceFactory<T>(getItems: (params: IRequestParams) => Obse
 
 export abstract class ItemsListComponent<IItem extends IWithId> implements OnInit {
   @Input() withDeleting = true;
-  @Input() withDetails = false;
+  @Input() withDetails = true;
   @Input() deleteDialogHeader = 'Вилучити елемент?';
   @Input() deleteDialogBody = 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?';
   public isLoading = false;
