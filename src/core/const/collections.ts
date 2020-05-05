@@ -30,3 +30,12 @@ export const teacherDegreeTypesMap = new Map([
   [4, 'ас.'],
   [5, ''],
 ]);
+
+export const teacherDegreesMap = () => new Map([
+  [0, 'викладач'],
+  [1, 'старший викладач'],
+  [2, 'доцент'],
+  [3, 'професор'],
+  [4, 'асистент'],
+  [5, 'інше'],
+]);

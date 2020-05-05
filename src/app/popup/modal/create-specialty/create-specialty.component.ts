@@ -24,7 +24,6 @@ export class CreateSpecialtyComponent implements OnInit {
 
   public ngOnInit(): void {
     this._popupService.createChanel(this._chanelId);
-    this._applyParamsChange(this._route.snapshot.queryParams);
     this._route.queryParams
       .subscribe(params => this._applyParamsChange(params));
   }

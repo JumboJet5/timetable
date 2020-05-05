@@ -36,6 +36,10 @@ const routes: Routes = [
           .then(module => module.HousingsModule),
       },
       {
+        path: 'teachers', loadChildren: () => import('./teachers/teachers.module')
+          .then(module => module.TeachersModule),
+      },
+      {
         path: 'lessons-schedule', loadChildren: () => import('./week-schedule/week-schedule.module')
           .then(module => module.WeekScheduleModule),
       },

@@ -69,6 +69,9 @@
   .result-content {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   @media screen and (max-width: $x-large) {

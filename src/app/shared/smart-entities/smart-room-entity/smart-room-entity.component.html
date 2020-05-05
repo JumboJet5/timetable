@@ -14,7 +14,7 @@
             [disabled]="roomEntityService.form.invalid || roomEntityService.form.pristine"
             color="primary"
             mat-flat-button>Зберегти</button>
-    <button mat-stroked-button (click)="reset()">Скинути</button>
+    <button mat-stroked-button (click)="reset()" [disabled]="roomEntityService.form.pristine">Скинути</button>
   </div>
 </form>
 

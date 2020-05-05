@@ -10,7 +10,7 @@ import { ListModule } from '@app/shared/list/list.module';
 import { LoadImageModule } from '@app/shared/load-image/load-image.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
-import { SPECIALTIES_FILTER_CONFIG } from '@const/filters';
+import { FACULTIES_FILTER_CONFIG } from '@const/filters';
 import { InViewportModule } from 'ng-in-viewport';
 import { SpecialtiesRoutingModule } from 'src/app/dashboard/specialties/specialties-routing.module';
 import { SpecialtiesComponent } from 'src/app/dashboard/specialties/specialties.component';
@@ -45,7 +45,7 @@ import { SpecialtyComponent } from './specialty/specialty.component';
     SmartEntitiesModule,
   ],
   providers: [
-    {provide: FILTER_CONFIG, useValue: SPECIALTIES_FILTER_CONFIG},
+    {provide: FILTER_CONFIG, useValue: FACULTIES_FILTER_CONFIG},
   ],
 })
 export class SpecialtiesModule {}

@@ -1,0 +1,12 @@
+<label class="tt-input-label item-search">
+  <button (click)="createNewInstance()" color="primary" mat-flat-button>
+    <mat-icon>add</mat-icon>
+    <span>Створити викладача</span>
+  </button>
+  <input class="tt-input" [formControl]="searchControl" placeholder="Пошук...">
+</label>
+
+<div class="entities-details">
+  <app-teachers-list [withDeleting]="false" [filters]="filters"></app-teachers-list>
+  <app-smart-details title="Деталі викладача"></app-smart-details>
+</div>

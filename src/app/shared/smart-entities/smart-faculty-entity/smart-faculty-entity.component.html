@@ -22,7 +22,7 @@
   <label class="tt-input-label description">
     <span class="placeholder">Додаткові відомості</span>
     <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис факультета"></textarea>
-    <span class="tt-error">{{facultyEntityService.getControlError('slug')}}</span>
+    <span class="tt-error">{{facultyEntityService.getControlError('desc')}}</span>
   </label>
 
   <div class="control-row">
@@ -31,7 +31,7 @@
             color="primary"
             mat-flat-button>Зберегти
     </button>
-    <button mat-stroked-button (click)="reset()">Скинути</button>
+    <button mat-stroked-button (click)="reset()" [disabled]="facultyEntityService.form.pristine">Скинути</button>
   </div>
 </form>
 

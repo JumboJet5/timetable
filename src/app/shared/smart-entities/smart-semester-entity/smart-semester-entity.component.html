@@ -21,13 +21,10 @@
     <button (click)="save()"
             [disabled]="semesterEntityService.form.invalid || semesterEntityService.form.pristine"
             mat-flat-button
-            color="primary">
-      <span>Створити</span>
-    </button>
+            color="primary">Створити</button>
 
-    <button (click)="reset()" mat-flat-button>
-      <span>Скасувати</span>
-    </button>
+
+    <button mat-stroked-button (click)="reset()" [disabled]="semesterEntityService.form.pristine">Скинути</button>
   </div>
 </form>
 

@@ -10,7 +10,7 @@ import { FiltersModule } from '@app/shared/filters/filters.module';
 import { ListModule } from '@app/shared/list/list.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
-import { FACULTIES_FILTER_CONFIG } from '@const/filters';
+import { UNIVERSITIES_FILTER_CONFIG } from '@const/filters';
 import { FILTER_CONFIG } from 'src/core/injections/filter-config.injection-token';
 
 import { HousingsRoutingModule } from './housings-routing.module';
@@ -40,7 +40,7 @@ import { HousingEntityComponent } from './housing/housing-entity/housing-entity.
     MenuSelectModule,
   ],
   providers: [
-    {provide: FILTER_CONFIG, useValue: FACULTIES_FILTER_CONFIG},
+    {provide: FILTER_CONFIG, useValue: UNIVERSITIES_FILTER_CONFIG},
   ],
 })
 export class HousingsModule {}

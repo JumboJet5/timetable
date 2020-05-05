@@ -16,7 +16,7 @@
             color="primary"
             mat-flat-button>Зберегти
     </button>
-    <button mat-stroked-button (click)="reset()">Скинути</button>
+    <button mat-stroked-button (click)="reset()" [disabled]="courseEntityService.form.pristine">Скинути</button>
   </div>
 </form>
 

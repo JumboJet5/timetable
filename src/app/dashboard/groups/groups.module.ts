@@ -11,7 +11,7 @@ import { FiltersModule } from '@app/shared/filters/filters.module';
 import { ListModule } from '@app/shared/list/list.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
-import { GROUPS_FILTER_CONFIG } from '@const/filters';
+import { SPECIALTIES_FILTER_CONFIG } from '@const/filters';
 import { InViewportModule } from 'ng-in-viewport';
 import { FILTER_CONFIG } from 'src/core/injections/filter-config.injection-token';
 import { GroupEntityComponent } from './group/group-entity/group-entity.component';
@@ -55,7 +55,7 @@ import { GroupsComponent } from './groups.component';
     SmartEntitiesModule,
   ],
   providers: [
-    {provide: FILTER_CONFIG, useValue: GROUPS_FILTER_CONFIG},
+    {provide: FILTER_CONFIG, useValue: SPECIALTIES_FILTER_CONFIG},
   ],
 })
 export class GroupsModule {}

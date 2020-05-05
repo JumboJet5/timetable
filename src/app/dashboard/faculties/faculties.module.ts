@@ -11,7 +11,7 @@ import { ListModule } from '@app/shared/list/list.module';
 import { LoadImageModule } from '@app/shared/load-image/load-image.module';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
 import { SmartEntitiesModule } from '@app/shared/smart-entities/smart-entities.module';
-import { FACULTIES_FILTER_CONFIG } from '@const/filters';
+import { UNIVERSITIES_FILTER_CONFIG } from '@const/filters';
 import { FacultyLessonTimesComponent } from 'src/app/dashboard/faculties/faculty/faculty-lesson-times/faculty-lesson-times.component';
 import { FILTER_CONFIG } from 'src/core/injections/filter-config.injection-token';
 import { FacultiesInfoComponent } from './faculties-info/faculties-info.component';
@@ -49,7 +49,7 @@ import { FacultyComponent } from './faculty/faculty.component';
     SmartEntitiesModule,
   ],
   providers: [
-    {provide: FILTER_CONFIG, useValue: FACULTIES_FILTER_CONFIG},
+    {provide: FILTER_CONFIG, useValue: UNIVERSITIES_FILTER_CONFIG},
   ],
 })
 export class FacultiesModule {}

@@ -14,6 +14,7 @@ export class DashboardComponent implements OnInit {
     {title: 'Факультети', link: '/dashboard/faculties', image: 'business'},
     {title: 'Університети', link: '/dashboard/universities', image: 'account_balance'},
     {title: 'Корпуси', link: '/dashboard/housings', image: 'apartment'},
+    {title: 'Викладачі', link: '/dashboard/teachers', image: 'school'},
   ];
 
   constructor() { }

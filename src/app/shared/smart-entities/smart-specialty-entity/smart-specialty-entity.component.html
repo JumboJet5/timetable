@@ -28,7 +28,7 @@
   <label class="tt-input-label description">
     <span class="placeholder">Додаткові відомості</span>
     <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис спеціальності"></textarea>
-    <span class="tt-error">{{specialtyEntityService.getControlError('slug')}}</span>
+    <span class="tt-error">{{specialtyEntityService.getControlError('desc')}}</span>
   </label>
 
   <div class="control-row">
@@ -37,7 +37,7 @@
             color="primary"
             mat-flat-button>Зберегти
     </button>
-    <button mat-stroked-button (click)="reset()">Скинути</button>
+    <button mat-stroked-button (click)="reset()" [disabled]="specialtyEntityService.form.pristine">Скинути</button>
   </div>
 </form>
 

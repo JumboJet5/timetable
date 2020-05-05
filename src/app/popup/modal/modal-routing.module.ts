@@ -9,6 +9,7 @@ import { CreateLessontimeComponent } from '@app/popup/modal/create-lessontime/cr
 import { CreateRoomComponent } from '@app/popup/modal/create-room/create-room.component';
 import { CreateSemesterComponent } from '@app/popup/modal/create-semester/create-semester.component';
 import { CreateSpecialtyComponent } from '@app/popup/modal/create-specialty/create-specialty.component';
+import { CreateTeacherComponent } from '@app/popup/modal/create-teacher/create-teacher.component';
 import { CreateUniversityComponent } from '@app/popup/modal/create-university/create-university.component';
 import { LessonEditorComponent } from '@app/popup/modal/lesson-editor/lesson-editor.component';
 
@@ -26,6 +27,7 @@ const routes: Routes = [
   {path: 'create-university', component: CreateUniversityComponent},
   {path: 'create-housing', component: CreateHousingComponent},
   {path: 'create-room', component: CreateRoomComponent},
+  {path: 'create-teacher', component: CreateTeacherComponent},
 ];
 
 @NgModule({

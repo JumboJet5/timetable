@@ -14,7 +14,7 @@
             [disabled]="themeEntityService.form.invalid || themeEntityService.form.pristine"
             color="primary"
             mat-flat-button>Зберегти</button>
-    <button mat-stroked-button (click)="reset()">Скинути</button>
+    <button mat-stroked-button (click)="reset()" [disabled]="themeEntityService.form.pristine">Скинути</button>
   </div>
 </form>
 

@@ -6,11 +6,12 @@ import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 import { IRoom } from 'src/core/interfaces/room.interface';
 import { ISemester } from 'src/core/interfaces/semester.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
+import { ITeacher } from 'src/core/interfaces/teacher.interface';
 import { ITheme } from 'src/core/interfaces/theme.interface';
 
 export interface IEntityInfo {
   type: EntityTypesEnum;
-  entity: IFaculty | ISpecialty | ICourse | IGroup | ILessonTime | ITheme | ISemester | IHousing | IRoom;
+  entity: IFaculty | ISpecialty | ICourse | IGroup | ILessonTime | ITheme | ISemester | IHousing | IRoom | ITeacher;
 }
 
 export enum EntityTypesEnum {
@@ -23,4 +24,5 @@ export enum EntityTypesEnum {
   SEMESTER = 'SEMESTER',
   HOUSING = 'HOUSING',
   ROOM = 'ROOM',
+  TEACHER = 'TEACHER',
 }

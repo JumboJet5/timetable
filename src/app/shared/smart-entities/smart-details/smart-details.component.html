@@ -28,5 +28,8 @@
   <app-smart-room-entity *ngSwitchCase="'ROOM'"
                          [room]="smartDetailsService.currentEntity.entity"></app-smart-room-entity>
 
+  <app-smart-teacher-entity *ngSwitchCase="'TEACHER'"
+                            [teacher]="smartDetailsService.currentEntity.entity"></app-smart-teacher-entity>
+
   <div *ngSwitchDefault>Оберіть сутність для подробиць</div>
 </div>

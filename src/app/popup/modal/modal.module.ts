@@ -23,6 +23,7 @@ import { CreateSpecialtyComponent } from './create-specialty/create-specialty.co
 import { CreateUniversityComponent } from './create-university/create-university.component';
 import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
 import { CreateRoomComponent } from './create-room/create-room.component';
+import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { CreateRoomComponent } from './create-room/create-room.component';
     CreateCourseComponent,
     ModalWrapperComponent,
     CreateRoomComponent,
+    CreateTeacherComponent,
   ],
   imports: [
     CommonModule,

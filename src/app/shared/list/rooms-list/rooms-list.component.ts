@@ -4,6 +4,7 @@ import { RoomService } from '@app/service/room/room.service';
 import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { itemServiceFactory, ItemsListComponent } from '@app/shared/list/items-list/items-list.component';
 import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
+import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 import { IRoom } from 'src/core/interfaces/room.interface';
 
 @Component({
@@ -12,6 +13,8 @@ import { IRoom } from 'src/core/interfaces/room.interface';
   styleUrls: ['../../../../core/stylesheet/items-list.scss', './rooms-list.component.scss'],
 })
 export class RoomsListComponent extends ItemsListComponent<IRoom> {
+  protected _filters: IFilterParams = {ordering: 'num'};
+
   constructor(private _roomService: RoomService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {

@@ -27,7 +27,7 @@ export abstract class ItemsListComponent<IItem extends IWithId> implements OnIni
                         protected _popupService: PopupService,
                         @Optional() public smartDetailsService: SmartDetailsService) { }
 
-  private _filters: IFilterParams;
+  protected _filters: IFilterParams;
 
   public get filters(): IFilterParams {
     return this._filters;

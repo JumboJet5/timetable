@@ -35,13 +35,9 @@
     <button (click)="save()"
             [disabled]="lessontimeEntityService.form.invalid || lessontimeEntityService.form.pristine"
             color="primary"
-            mat-flat-button>
-      <span>Змінити</span>
-    </button>
+            mat-flat-button>Змінити</button>
 
-    <button (click)="reset()" mat-flat-button>
-      <span>Скасувати</span>
-    </button>
+    <button mat-stroked-button (click)="reset()" [disabled]="lessontimeEntityService.form.pristine">Скинути</button>
   </div>
 </form>
 
