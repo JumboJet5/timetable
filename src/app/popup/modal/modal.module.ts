@@ -24,6 +24,7 @@ import { CreateUniversityComponent } from './create-university/create-university
 import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
 import { CreateRoomComponent } from './create-room/create-room.component';
 import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
+import { CreateControlComponent } from './create-control/create-control.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { CreateTeacherComponent } from './create-teacher/create-teacher.componen
     ModalWrapperComponent,
     CreateRoomComponent,
     CreateTeacherComponent,
+    CreateControlComponent,
   ],
   imports: [
     CommonModule,

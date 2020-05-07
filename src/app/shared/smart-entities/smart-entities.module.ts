@@ -19,6 +19,7 @@ import { SmartFacultyEntityComponent } from './smart-faculty-entity/smart-facult
 import { SmartHousingEntityComponent } from './smart-housing-entity/smart-housing-entity.component';
 import { SmartRoomEntityComponent } from './smart-room-entity/smart-room-entity.component';
 import { SmartTeacherEntityComponent } from './smart-teacher-entity/smart-teacher-entity.component';
+import { SmartControlEntityComponent } from './smart-control-entity/smart-control-entity.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { SmartTeacherEntityComponent } from './smart-teacher-entity/smart-teache
     SmartHousingEntityComponent,
     SmartRoomEntityComponent,
     SmartTeacherEntityComponent,
+    SmartControlEntityComponent,
   ],
   exports: [
     SmartDetailsComponent,

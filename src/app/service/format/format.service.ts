@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
+import { IGroup } from 'src/core/interfaces/group.interface';
 import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 import { IWithId } from 'src/core/interfaces/select-option.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
@@ -31,7 +32,7 @@ export class FormatService {
       .filter(key => group1[key] !== group2[key] && (typeof group1 !== typeof group2 || !this.isObjectsSimilar(group1[key], group2[key])));
     const difference2 = Object.keys(group2)
       .filter(key => !difference1.includes(key) && group1[key] !== group2[key]
-          && (typeof group1 !== typeof group2 || !this.isObjectsSimilar(group1[key], group2[key])));
+        && (typeof group1 !== typeof group2 || !this.isObjectsSimilar(group1[key], group2[key])));
     return [...difference1, ...difference2];
   }
 
@@ -43,7 +44,7 @@ export class FormatService {
 
   public getControlError(formGroup: FormGroup, controlName: string): string {
     const control = formGroup ? formGroup.get(controlName) : undefined;
-    if (!control || this.isControlValid(formGroup, controlName, control)) return '';
+    if (!control || !control.errors || this.isControlValid(formGroup, controlName, control)) return '';
     if (control.errors.required) return 'Обов`язкове поле';
     if (control.errors.pattern) return 'Поле не відповідає патерну';
     if (control.errors.min) return 'Недостатньо велике число';
@@ -62,8 +63,13 @@ export class FormatService {
     this.autoPatchAddictedControl(course, 'specialty', courseControl, specControl);
   }
 
-  public autoPatchAddictedControl<T extends IWithId>(entity: T, key: keyof T, srcControl: FormControl, dstControl: FormControl): void {
-    if (!!srcControl && !!dstControl && !!entity && entity.id === srcControl.value && entity[key] !== dstControl.value)
+  public onLoadGroup(group: IGroup, groupControl: FormControl, courseControl: FormControl, groupIdKey: 'id' | 'slug' = 'id'): void {
+    this.autoPatchAddictedControl(group, 'course', groupControl, courseControl, groupIdKey);
+  }
+
+  public autoPatchAddictedControl<T extends IWithId>(entity: T, key: keyof T, srcControl: FormControl, dstControl: FormControl,
+                                                     entityIdKey: string = 'id'): void {
+    if (!!srcControl && !!dstControl && !!entity && entity[entityIdKey] === srcControl.value && entity[key] !== dstControl.value)
       dstControl.patchValue(entity[key]);
   }
 

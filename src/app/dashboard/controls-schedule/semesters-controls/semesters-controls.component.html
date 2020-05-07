@@ -1,0 +1,23 @@
+<div class="first-column">
+  <h3>Доступні семестри</h3>
+  <div *ngIf="!groupsemesters || !groupsemesters.length">Оберіть групу</div>
+  <app-enabled-semesters [(currGroupsemester)]="currGroupsemester"
+                         [groupsemesters]="groupsemesters"
+                         [semesters]="semesters"></app-enabled-semesters>
+  <app-smart-details titleText="Деталі контроля"></app-smart-details>
+</div>
+
+<div class="second-column">
+  <h3 class="controls-list-column-header">
+    <span>Доступний список контролів</span>
+    <button mat-flat-button color="primary" [disabled]="!currGroupsemester" (click)="createControl()">
+      <mat-icon>add</mat-icon>
+      <span>Створити контроль</span>
+    </button>
+  </h3>
+  <div *ngIf="!currGroupsemester">Оберіть семестер</div>
+  <app-controls-list *ngIf="!!currGroupsemester"
+                     [themes]="themes"
+                     [housings]="housings"
+                     [filters]="controlListFilters"></app-controls-list>
+</div>

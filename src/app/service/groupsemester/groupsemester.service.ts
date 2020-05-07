@@ -12,8 +12,12 @@ export class GroupsemesterService {
 
   constructor(private http: HttpClient) {}
 
-  public getGroupsemester(group: number, semester: number | string = ''): Observable<IPageable<IGroupsemester>> {
+  public getGroupsemesters(group: number, semester: number | string = ''): Observable<IPageable<IGroupsemester>> {
     return this.http.get<IPageable<IGroupsemester>>(URLS.GROUPSEMESTERS, {params: {group, semester} as {}});
+  }
+
+  public getGroupsemester(id: number): Observable<IGroupsemester> {
+    return this.http.get<IGroupsemester>(URLS.GROUPSEMESTER(id));
   }
 
   public updateGroupsemester(groupsemester: IGroupsemester): Observable<IGroupsemesterSimplified> {

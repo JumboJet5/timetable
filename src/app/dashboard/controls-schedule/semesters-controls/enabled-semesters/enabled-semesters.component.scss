@@ -1,0 +1,19 @@
+:host {
+  max-height: 320px;
+  height: unset;
+  overflow: auto;
+  margin: 0 -16px 20px;
+  padding-bottom: 16px;
+}
+
+.groupsemester {
+  justify-content: space-between;
+
+  &:not(:hover):not(.active) mat-icon {
+    opacity: 0;
+  }
+
+  mat-icon {
+    transition: 0.25s ease-in-out;
+  }
+}

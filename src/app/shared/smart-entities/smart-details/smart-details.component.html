@@ -1,5 +1,5 @@
-<h3 class="support-header grid-last-column">{{title}}</h3>
-<div class="support-entity-settings grid-last-column" [ngSwitch]="smartDetailsService.currentEntity?.type">
+<h3>{{titleText}}</h3>
+<div [ngSwitch]="smartDetailsService.currentEntity?.type">
   <app-smart-faculty-entity *ngSwitchCase="'FACULTY'"
                             [faculty]="smartDetailsService.currentEntity.entity"></app-smart-faculty-entity>
 
@@ -30,6 +30,9 @@
 
   <app-smart-teacher-entity *ngSwitchCase="'TEACHER'"
                             [teacher]="smartDetailsService.currentEntity.entity"></app-smart-teacher-entity>
+
+  <app-smart-control-entity *ngSwitchCase="'CONTROL'"
+                            [control]="smartDetailsService.currentEntity.entity"></app-smart-control-entity>
 
   <div *ngSwitchDefault>Оберіть сутність для подробиць</div>
 </div>

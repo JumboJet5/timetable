@@ -1,0 +1,38 @@
+<div class="date-picker-wrapper" appClickOutside (clickOutside)="isOpened = false">
+  <button class="tt-input date-picker-value"
+          [disabled]="isDisabled"
+          (click)="isOpened = !dateControl.value || isSelected(dateControl.value)">
+    <span>{{(dateControl.value | date: 'dd.MM.yyyy') || placeholder}}</span>
+    <mat-icon>calendar_today</mat-icon>
+  </button>
+
+  <div class="date-picker-label {{position}}" *ngIf="isOpened && !!currentMonth">
+    <div class="month-row">
+      <button mat-icon-button (click)="nextMonth(-1)" [disabled]="!isPreviousMonthEnable()">
+        <img [ngStyle]="{transform: 'rotate(180deg)'}" src="../../../../static/assets/img/ic_show_black.svg" alt>
+      </button>
+
+      <span class="month">{{currentMonth | date: 'MMMM y'}}</span>
+
+      <button mat-icon-button (click)="nextMonth()" [disabled]="!isNextMonthEnable()">
+        <img src="../../../../static/assets/img/ic_show_black.svg" alt>
+      </button>
+    </div>
+
+    <div class="week-row">
+      <div class="day-name" *ngFor="let day of weekDays">{{day}}</div>
+    </div>
+
+    <div class="days-table">
+      <button *ngFor="let day of currentDays"
+              class="day"
+              [class.previous-month-day]="currentMonth.getMonth() - 1 === day.getMonth()"
+              [class.next-month-day]="currentMonth.getMonth() + 1 === day.getMonth()"
+              [class.selected-day]="isSelected(day)"
+              [class.today]="isToday(day)"
+              [disabled]="isUnactivated(day)"
+              (click)="chooseDay(day)"
+              matRipple>{{day.getDate()}}</button>
+    </div>
+  </div>
+</div>

@@ -48,3 +48,6 @@ export const TIMETABLE = API + '/timetable/';
 
 export const GROUPSEMESTERS = API + '/groupsemester/';
 export const GROUPSEMESTER = (id: number): string => `${GROUPSEMESTERS}${id}/`;
+
+export const CONTROLS = API + '/controls/';
+export const CONTROL = (id: number): string => `${CONTROLS}${id}/`;

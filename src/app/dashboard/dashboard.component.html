@@ -5,6 +5,7 @@
   <a *ngFor="let navItem of navPanels"
      [routerLink]="navItem.link"
      [title]="navItem.title"
+     routerLinkActive="active"
      class="menu-button"
      mat-icon-button>
     <mat-icon>{{navItem.image}}</mat-icon>

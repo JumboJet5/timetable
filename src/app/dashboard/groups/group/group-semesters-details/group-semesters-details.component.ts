@@ -85,7 +85,7 @@ export class GroupSemestersDetailsComponent implements OnInit {
     this.themeService.getThemes({group})
       .subscribe(res => this.groupThemes = res.results);
 
-    this.groupsemesterService.getGroupsemester(group)
+    this.groupsemesterService.getGroupsemesters(group)
       .subscribe(res => this.groupsemesters = res.results);
 
     this.semesterService.getSemesters({group})

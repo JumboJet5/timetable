@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { INavPanel } from 'src/core/interfaces/nav-panel';
 
 @Component({
@@ -8,7 +9,8 @@ import { INavPanel } from 'src/core/interfaces/nav-panel';
 })
 export class DashboardComponent implements OnInit {
   public navPanels: INavPanel[] = [
-    {title: 'Розклад', link: '/dashboard/lessons-schedule', image: 'calendar_today'},
+    {title: 'Розклад пар', link: '/dashboard/lessons-schedule', image: 'calendar_today'},
+    {title: 'Розклад контролів', link: '/dashboard/controls-schedule', image: 'storage'},
     {title: 'Групи', link: '/dashboard/groups', image: 'people_alt'},
     {title: 'Спеціальності', link: '/dashboard/specialties', image: 'work'},
     {title: 'Факультети', link: '/dashboard/faculties', image: 'business'},
@@ -17,7 +19,7 @@ export class DashboardComponent implements OnInit {
     {title: 'Викладачі', link: '/dashboard/teachers', image: 'school'},
   ];
 
-  constructor() { }
+  constructor(public route: ActivatedRoute) { }
 
   ngOnInit(): void {
   }

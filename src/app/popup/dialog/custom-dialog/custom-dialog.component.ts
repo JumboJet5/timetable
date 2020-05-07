@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ICustomDialog } from '@interfaces';
 
 @Component({
@@ -10,13 +10,14 @@ import { ICustomDialog } from '@interfaces';
 export class CustomDialogComponent implements OnInit {
   public data: ICustomDialog;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private route: ActivatedRoute) {}
 
   public ngOnInit(): void {
     this.data = history.state.data || this.closeModal();
   }
 
   public closeModal(answer: 'accept' | 'cancel' = 'cancel'): void {
-    this.router.navigate([{outlets: {dialog: null}}], {state: {answer}});
+    this.router.navigate([{outlets: {dialog: null}}], {state: {answer}, queryParams: this.route.snapshot.queryParams});
   }
 }

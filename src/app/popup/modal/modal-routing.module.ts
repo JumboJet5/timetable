@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { CreateControlComponent } from '@app/popup/modal/create-control/create-control.component';
 import { CreateCourseComponent } from '@app/popup/modal/create-course/create-course.component';
 import { CreateFacultyComponent } from '@app/popup/modal/create-faculty/create-faculty.component';
 import { CreateGroupComponent } from '@app/popup/modal/create-group/create-group.component';
@@ -28,6 +29,7 @@ const routes: Routes = [
   {path: 'create-housing', component: CreateHousingComponent},
   {path: 'create-room', component: CreateRoomComponent},
   {path: 'create-teacher', component: CreateTeacherComponent},
+  {path: 'create-control', component: CreateControlComponent},
 ];
 
 @NgModule({

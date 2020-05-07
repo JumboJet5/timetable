@@ -1,0 +1,7 @@
+<div (click)="currGroupsemesterChange.emit(groupsemester.id)"
+     *ngFor="let groupsemester of groupsemesters"
+     [class.active]="groupsemester.id === currGroupsemester"
+     class="groupsemester item">
+  <span>{{semestersMap.get(groupsemester.semester)?.start | date: 'dd.MM.yyyy'}} - {{semestersMap.get(groupsemester.semester)?.end | date: 'dd.MM.yyyy'}}</span>
+  <mat-icon>keyboard_arrow_right</mat-icon>
+</div>

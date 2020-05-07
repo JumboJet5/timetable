@@ -6,6 +6,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { InViewportModule } from 'ng-in-viewport';
+import { ControlTypeSelectorComponent } from 'src/app/shared/menu-select/control-type-selector/control-type-selector.component';
 import { ScrollModule } from '../scroll/scroll.module';
 import { SelectInputModule } from '../select-input/select-input.module';
 import { CourseSelectComponent } from './course-select/course-select.component';
@@ -24,11 +25,11 @@ import { SemesterSelectComponent } from './semester-select/semester-select.compo
 import { SpecialtyInterfaceTypeSelectComponent } from './specialty-interface-type-select/specialty-interface-type-select.component';
 import { SpecialtySelectComponent } from './specialty-select/specialty-select.component';
 import { TeacherAutocompleteComponent } from './teacher-autocomplete/teacher-autocomplete.component';
+import { TeacherDegreeSelectorComponent } from './teacher-degree-selector/teacher-degree-selector.component';
 import { TeacherSelectComponent } from './teacher-select/teacher-select.component';
 import { ThemeSelectComponent } from './theme-select/theme-select.component';
 import { UniversitySelectComponent } from './university-select/university-select.component';
 import { YearSelectComponent } from './year-select/year-select.component';
-import { TeacherDegreeSelectorComponent } from './teacher-degree-selector/teacher-degree-selector.component';
 
 
 const exportComponents = [
@@ -52,11 +53,13 @@ const exportComponents = [
   LessonFormatSelectComponent,
   DegreeSelectorComponent,
   SpecialtyInterfaceTypeSelectComponent,
+  TeacherDegreeSelectorComponent,
+  ControlTypeSelectorComponent,
 ];
 
 @NgModule({
-  declarations: [...exportComponents, TeacherDegreeSelectorComponent],
-  exports: [...exportComponents, TeacherDegreeSelectorComponent],
+  declarations: [...exportComponents],
+  exports: [...exportComponents],
   imports: [
     CommonModule,
     ScrollModule,

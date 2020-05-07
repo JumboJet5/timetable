@@ -7,11 +7,11 @@ import { IRange } from 'src/core/interfaces/range.interface';
 
 
 @Component({
-  selector: 'app-date-picker',
-  templateUrl: './date-picker.component.html',
-  styleUrls: ['../../../core/stylesheet/default-form.scss', './date-picker.component.scss'],
+  selector: 'app-date-range-picker',
+  templateUrl: './date-range-picker.component.html',
+  styleUrls: ['../../../../core/stylesheet/default-form.scss', './date-range-picker.component.scss'],
 })
-export class DatePickerComponent implements OnInit {
+export class DateRangePickerComponent implements OnInit {
   @Input() public isDisabled: boolean;
   @Input() public min: Date;
   @Input() public max: Date;

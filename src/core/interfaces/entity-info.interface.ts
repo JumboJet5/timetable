@@ -1,3 +1,4 @@
+import { IControl } from 'src/core/interfaces/control.interface';
 import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
 import { IGroup } from 'src/core/interfaces/group.interface';
@@ -11,7 +12,7 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
 
 export interface IEntityInfo {
   type: EntityTypesEnum;
-  entity: IFaculty | ISpecialty | ICourse | IGroup | ILessonTime | ITheme | ISemester | IHousing | IRoom | ITeacher;
+  entity: IFaculty | ISpecialty | ICourse | IGroup | ILessonTime | ITheme | ISemester | IHousing | IRoom | ITeacher | IControl;
 }
 
 export enum EntityTypesEnum {
@@ -25,4 +26,5 @@ export enum EntityTypesEnum {
   HOUSING = 'HOUSING',
   ROOM = 'ROOM',
   TEACHER = 'TEACHER',
+  CONTROL = 'CONTROL',
 }

@@ -1,0 +1,146 @@
+@import '../../../../core/stylesheet/functions';
+@import '../../../../core/stylesheet/breakpoints';
+
+:host {
+  display: block;
+  position: relative;
+}
+
+.date-picker-value {
+  padding: 0 19px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: unset;
+
+  img {
+    cursor: pointer;
+  }
+}
+
+.date-picker-label {
+  position: absolute;
+  top: 7px;
+  width: 280px;
+  padding: 22px 20px 12px;
+  border-radius: 4px;
+  background-color: #FFFFFF;
+  box-shadow: 0 3px 25px 0 rgba(179, 179, 179, 0.48);
+  z-index: 21;
+
+  & > * {
+    min-width: 280px;
+  }
+
+  &.left {
+    left: -1px;
+  }
+
+  &.right {
+    right: -1px;
+  }
+}
+
+.month-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 17px;
+
+  .month {
+    text-transform: uppercase;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #282828;
+  }
+
+  .mat-icon-button {
+    opacity: .5;
+    transition: opacity 0.25s ease;
+
+    &:first-child {
+      transform: translateX(-13px);
+    }
+
+    &:last-child {
+      transform: translateX(13px);
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &:disabled {
+      opacity: .3;
+    }
+  }
+
+  img {
+    width: 14px;
+    height: 12px;
+  }
+}
+
+.week-row {
+  display: flex;
+  justify-content: space-around;
+  color: #BBBBBB;
+  font-size: 12px;
+  font-weight: 300;
+  line-height: 20px;
+}
+
+.days-table {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 5px;
+
+  .day {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 14px;
+    background-color: inherit;
+    //transition: customTransitions(ease, 0.5s, background-color, opacity, color);
+    cursor: pointer;
+    outline: unset;
+    border: unset;
+    box-sizing: border-box;
+    position: relative;
+
+    &:hover {
+      background-color: #e2e2e2;
+    }
+
+    &:disabled {
+      opacity: .3;
+      color: initial;
+    }
+
+    &.today {
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+    }
+
+    &.other-month-day {
+      opacity: .5;
+    }
+
+    &.selected-day {
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+    }
+  }
+}
+
+@media screen and (max-width: $x-large) {
+  .date-picker-value {
+    padding: 0 15px;
+  }
+}

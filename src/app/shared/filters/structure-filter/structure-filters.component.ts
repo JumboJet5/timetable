@@ -20,11 +20,13 @@ export class StructureFiltersComponent implements OnInit, OnDestroy {
   public facControl: FormControl = new FormControl();
   public specControl: FormControl = new FormControl();
   public courseControl: FormControl = new FormControl();
+  public groupControl: FormControl = new FormControl();
   public filterForm: FormGroup = new FormGroup({
     univ: this.univControl,
     faculty: this.facControl,
     specialty: this.specControl,
     course: this.courseControl,
+    group: this.groupControl,
   });
   public isOpened = true;
   private _unsubscribe: Subject<void> = new Subject();
@@ -33,30 +35,6 @@ export class StructureFiltersComponent implements OnInit, OnDestroy {
               public formatService: FormatService,
               @Inject(FILTER_CONFIG) public filterConfig: IFilterConfig,
               private _route: ActivatedRoute) { }
-
-  private _withCourse = false;
-
-  public get withCourse(): boolean {
-    return this._withCourse;
-  }
-
-  @Input()
-  public set withCourse(value: boolean) {
-    this._withCourse = value;
-    if (value) this.withSpecialty = true;
-  }
-
-  private _withSpecialty = false;
-
-  public get withSpecialty(): boolean {
-    return this._withSpecialty;
-  }
-
-  @Input()
-  public set withSpecialty(value: boolean) {
-    this._withSpecialty = value;
-    if (value) this.withFaculty = true;
-  }
 
   public ngOnInit(): void {
     this._applyFiltersChange();
@@ -74,7 +52,8 @@ export class StructureFiltersComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe))
       .pipe(distinctUntilChanged((source, previous) => this.formatService.isObjectsSimilar(source, previous)))
       .pipe(debounceTime(100))
-      .subscribe(({univ, faculty, specialty, course}) => {
+      .subscribe(({univ, faculty, specialty, course, group}) => {
+        if (!!group) return this._router.navigate([], {queryParams: {group}});
         if (!!course) return this._router.navigate([], {queryParams: {course}});
         if (!!specialty) return this._router.navigate([], {queryParams: {specialty}});
         if (!!faculty) return this._router.navigate([], {queryParams: {faculty}});

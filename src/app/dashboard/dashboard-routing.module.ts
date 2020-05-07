@@ -43,6 +43,10 @@ const routes: Routes = [
         path: 'lessons-schedule', loadChildren: () => import('./week-schedule/week-schedule.module')
           .then(module => module.WeekScheduleModule),
       },
+      {
+        path: 'controls-schedule', loadChildren: () => import('./controls-schedule/controls-schedule.module')
+          .then(module => module.ControlsScheduleModule),
+      },
     ],
   },
   {path: '**', redirectTo: 'lessons-schedule/groupSlug'},

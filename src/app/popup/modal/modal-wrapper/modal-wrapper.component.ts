@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-modal-wrapper',
@@ -8,10 +8,13 @@ import { Router } from '@angular/router';
 })
 export class ModalWrapperComponent {
   @Input() public isLoading = false;
+  @Input() public withQueryParamsClose = false;
 
-  constructor(private _router: Router) { }
+  constructor(private _router: Router,
+              private _route: ActivatedRoute) { }
 
   public closeModal(): void {
-    this._router.navigate([{outlets: {modal: null}}]);
+    const queryParams = this.withQueryParamsClose ? this._route.snapshot.queryParams : {};
+    this._router.navigate([{outlets: {modal: null}}], {queryParams});
   }
 }

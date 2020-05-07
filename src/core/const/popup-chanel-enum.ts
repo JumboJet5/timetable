@@ -10,4 +10,5 @@ export enum PopupChanelEnum {
   CREATE_HOUSING,
   CREATE_ROOM,
   CREATE_TEACHER,
+  CREATE_CONTROL,
 }

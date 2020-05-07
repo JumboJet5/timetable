@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { ICustomDialog, IRequestParams } from '@interfaces';
 import { Observable, Subject } from 'rxjs';
 import { filter, takeUntil } from 'rxjs/operators';
@@ -9,10 +9,11 @@ export class PopupService {
   private _chanelsMap: Map<number, Subject<any>> = new Map<number, Subject<any>>();
   private unsubscribe: Subject<void> = new Subject();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private route: ActivatedRoute) { }
 
   public openDialog(data: ICustomDialog, onAccept: () => void = () => {}, onCancel: () => void = () => {}) {
-    this.router.navigate([{outlets: {dialog: ['dialog', 'custom']}}], {state: {data}})
+    this.router.navigate([{outlets: {dialog: ['dialog', 'custom']}}], {state: {data}, queryParams: this.route.snapshot.queryParams})
       .then(() => this.router.events
         .pipe(takeUntil(this.unsubscribe), filter(event => event instanceof NavigationEnd))
         .subscribe(() => this.unsubscribe.next())

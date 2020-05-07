@@ -1,5 +1,10 @@
 <div class="filters-wrapper" [formGroup]="filterForm" [@filterAppearAnimation]="isOpened">
-  <div class="description">Фільтри</div>
+  <div class="description">
+    <span>Фільтри</span>
+    <button (click)="filterForm.reset()" class="mini-button" mat-icon-button title="Скинути фільтри">
+      <mat-icon>refresh</mat-icon>
+    </button>
+  </div>
 
   <div class="placeholder">Університет</div>
   <app-university-select [selectControl]="univControl"></app-university-select>
@@ -32,6 +37,17 @@
                        [dropByFilterKeys]="['univ', 'faculty', 'specialty']"
                        [filters]="{univ: univControl.value, faculty: facControl.value, specialty: specControl.value}"
                        [selectControl]="courseControl"></app-course-select>
+  </ng-container>
+
+
+  <ng-container *ngIf="filterConfig.withGroup">
+    <div class="placeholder">Група</div>
+    <app-group-select (selectedOptionLoad)="formatService.onLoadGroup($event, groupControl, courseControl)"
+                      [dropByFilterDefinition]="false"
+                      [dropByFilterKeys]="['univ', 'faculty', 'specialty', 'course']"
+                      [filters]="{univ: univControl.value, faculty: facControl.value, specialty: specControl.value, course: courseControl.value}"
+                      [selectControl]="groupControl"
+                      optionIdKey="id"></app-group-select>
   </ng-container>
 
 </div>

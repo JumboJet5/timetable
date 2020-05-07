@@ -20,7 +20,10 @@ export class TeacherAutocompleteComponent extends TeacherSelectComponent {
 
   public onDeleteOption(option: number): void {
     const currentValue = this.selectControl.value;
-    if (currentValue && currentValue instanceof Array) this.selectControl.patchValue(currentValue.filter(
-      item => item !== option));
+    if (!currentValue || !(currentValue instanceof Array)) return;
+
+    this.selectControl.patchValue(currentValue.filter(item => item !== option));
+    this.selectControl.markAsDirty();
+    this.selectControl.markAsTouched();
   }
 }

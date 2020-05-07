@@ -13,6 +13,7 @@ import { UniversitiesListComponent } from 'src/app/shared/list/univs-list/univer
 import { HousingsListComponent } from 'src/app/shared/list/housing-list/housings-list.component';
 import { RoomsListComponent } from './rooms-list/rooms-list.component';
 import { TeachersListComponent } from './teachers-list/teachers-list.component';
+import { ControlsListComponent } from './controls-list/controls-list.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { TeachersListComponent } from './teachers-list/teachers-list.component';
     HousingsListComponent,
     RoomsListComponent,
     TeachersListComponent,
+    ControlsListComponent,
   ],
   exports: [
     GroupsListComponent,
@@ -35,6 +37,7 @@ import { TeachersListComponent } from './teachers-list/teachers-list.component';
     HousingsListComponent,
     RoomsListComponent,
     TeachersListComponent,
+    ControlsListComponent,
   ],
   imports: [
     CommonModule,

@@ -160,8 +160,10 @@ export class AsyncOptionsSelectComponent<TOption extends IWithId> implements OnI
 
   private _comparator(first: TOption, second: TOption): number {
     const selected = this.selectControl.value;
-    const isFirstSelected = this.multiple ? !selected.includes(first[this.optionIdKey]) : first[this.optionIdKey] !== selected;
-    const isSecondSelected = this.multiple ? !selected.includes(second[this.optionIdKey]) : second[this.optionIdKey] !== selected;
+    const isFirstSelected = this.multiple ?
+      !!selected && !selected.includes(first[this.optionIdKey]) : first[this.optionIdKey] !== selected;
+    const isSecondSelected = this.multiple ?
+      !!selected && !selected.includes(second[this.optionIdKey]) : second[this.optionIdKey] !== selected;
     const equal = isFirstSelected === isSecondSelected;
     return equal ? 0 : isFirstSelected ? 1 : -1;
   }

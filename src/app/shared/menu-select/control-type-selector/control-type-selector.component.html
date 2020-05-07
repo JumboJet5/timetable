@@ -1,0 +1,5 @@
+<app-select [abstractControl]="selectControl">
+  <app-select-result>{{controlTypesMap.get(selectControl.value) || 'Оберіть формат проведення'}}</app-select-result>
+  <app-option-item *ngFor="let option of controlTypesMap | keyvalue"
+                   [value]="option.key">{{option.value}}</app-option-item>
+</app-select>

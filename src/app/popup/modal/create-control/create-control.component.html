@@ -1,0 +1,77 @@
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
+  <h4>Створення факультета</h4>
+  <form [formGroup]="controlEntityService.form" class="tt-form">
+    <div class="column">
+      <label class="tt-input-label degree">
+        <span class="placeholder">Формат контролю *</span>
+        <app-control-type-selector [selectControl]="controlEntityService.formatControl"></app-control-type-selector>
+        <span class="tt-error">{{controlEntityService.getControlError('format')}}</span>
+      </label>
+      <label class="tt-input-label degree">
+        <span class="placeholder">Предмет *</span>
+        <app-theme-select [selectControl]="controlEntityService.themeControl"
+                          [filters]="controlEntityService.groupIdFilter"></app-theme-select>
+        <span class="tt-error">{{controlEntityService.getControlError('theme')}}</span>
+      </label>
+      <div class="tt-input-label degree">
+        <span class="placeholder">Викладач(*чі)</span>
+        <app-teacher-autocomplete [filters]="controlEntityService.teachersFilter"
+                                  [dropByFilterDefinition]="false"
+                                  [selectControl]="controlEntityService.teachersControl"></app-teacher-autocomplete>
+        <span class="tt-error">{{controlEntityService.getControlError('teachers')}}</span>
+      </div>
+      <div class="tt-input-label">
+        <span class="placeholder">Дата проведення *</span>
+        <app-date-picker [dateControl]="controlEntityService.dayControl"
+                         [min]="controlEntityService.getEnableRangeDates()?.min"
+                         [max]="controlEntityService.getEnableRangeDates()?.max"
+                         placeholder="Оберіть дату проведення"></app-date-picker>
+      </div>
+      <label class="tt-input-label name">
+        <span class="placeholder">Початок *</span>
+        <input class="tt-input" formControlName="start" placeholder="Введіть час початку" type="time">
+        <span class="tt-error">{{controlEntityService.getControlError('start')}}</span>
+      </label>
+
+    </div>
+
+    <div class="column">
+      <label class="tt-input-label degree">
+        <span class="placeholder">Корпус *</span>
+        <app-housing-select [selectControl]="controlEntityService.housingControl"
+                            [filters]="controlEntityService.groupIdFilter"></app-housing-select>
+        <span class="tt-error">{{controlEntityService.getControlError('housing')}}</span>
+      </label>
+      <label class="tt-input-label degree">
+        <span class="placeholder">Аудиторія *</span>
+        <app-room-select [selectControl]="controlEntityService.roomControl"
+                         [filters]="controlEntityService.roomFilter"></app-room-select>
+        <span class="tt-error">{{controlEntityService.getControlError('room')}}</span>
+      </label>
+      <label class="tt-input-label degree">
+        <span class="placeholder">Формат проведення *</span>
+        <app-lesson-format-select [selectControl]="controlEntityService.conductTypeControl"></app-lesson-format-select>
+        <span class="tt-error">{{controlEntityService.getControlError('conduct_type')}}</span>
+      </label>
+      <label class="tt-input-label name">
+        <span class="placeholder">Посилання</span>
+        <input class="tt-input" formControlName="link" placeholder="Введіть посилання">
+        <span class="tt-error">{{controlEntityService.getControlError('link')}}</span>
+      </label>
+      <label class="tt-input-label name">
+        <span class="placeholder">Підгрупа</span>
+        <input class="tt-input" formControlName="subgroup" placeholder="Введіть підгрупу" type="number"
+               [max]="controlEntityService.subgroupsCount">
+        <span class="tt-error">{{controlEntityService.getControlError('subgroup')}}</span>
+      </label>
+    </div>
+  </form>
+  <div class="control-row">
+    <button (click)="createFaculty()"
+            [disabled]="controlEntityService.form.invalid"
+            color="primary"
+            mat-flat-button>Зберегти
+    </button>
+    <button mat-stroked-button (click)="closeModal()">Скинути</button>
+  </div>
+</app-modal-wrapper>

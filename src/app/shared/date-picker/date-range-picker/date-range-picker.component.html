@@ -13,13 +13,13 @@
         <div class="from-month">
           <div class="month-row">
             <button mat-icon-button (click)="nextMonth(-1, 'from')" [disabled]="!isPreviousMonthEnable('from')">
-              <img [ngStyle]="{transform: 'rotate(180deg)'}" src="../../../static/assets/img/ic_show_black.svg" alt>
+              <img [ngStyle]="{transform: 'rotate(180deg)'}" src="../../../../static/assets/img/ic_show_black.svg" alt>
             </button>
 
             <span class="month">{{currentMonth?.from | date: 'MMMM y'}}</span>
 
             <button mat-icon-button (click)="nextMonth(1, 'from')" [disabled]="!isNextMonthEnable('from')">
-              <img src="../../../static/assets/img/ic_show_black.svg" alt>
+              <img src="../../../../static/assets/img/ic_show_black.svg" alt>
             </button>
           </div>
 
@@ -44,13 +44,13 @@
         <div class="to-month">
           <div class="month-row">
             <button mat-icon-button (click)="nextMonth(-1, 'to')" [disabled]="!isPreviousMonthEnable('to')">
-              <img [ngStyle]="{transform: 'rotate(180deg)'}" src="../../../static/assets/img/ic_show_black.svg" alt>
+              <img [ngStyle]="{transform: 'rotate(180deg)'}" src="../../../../static/assets/img/ic_show_black.svg" alt>
             </button>
 
             <span class="month">{{currentMonth.to | date: 'MMMM y'}}</span>
 
             <button mat-icon-button (click)="nextMonth(1, 'to')" [disabled]="!isNextMonthEnable('to')">
-              <img src="../../../static/assets/img/ic_show_black.svg" alt>
+              <img src="../../../../static/assets/img/ic_show_black.svg" alt>
             </button>
           </div>
 

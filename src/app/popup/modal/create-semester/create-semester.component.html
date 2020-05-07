@@ -12,10 +12,10 @@
 
   <div class="tt-input-label">
     <span class="placeholder">Семестр</span>
-    <app-date-picker [dateControl]="semesterEntityService.form"
-                     [min]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.start)"
-                     [max]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.end)"
-                     placeholder="Оберіть діапазон дат"></app-date-picker>
+    <app-date-range-picker [dateControl]="semesterEntityService.form"
+                           [min]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.start)"
+                           [max]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.end)"
+                           placeholder="Оберіть діапазон дат"></app-date-range-picker>
   </div>
 
   <div class="control-row">

@@ -38,6 +38,7 @@ export class OptionItemComponent implements OnInit, OnDestroy {
   public onClick(): boolean {
     if (this.selectService.select && this.selectService.select.isMulti) this._onMultiItemClick();
     else this._onRadioItemClick();
+    this.selectService.select.abstractControl.markAsTouched();
 
     return false;
   }
@@ -70,6 +71,7 @@ export class OptionItemComponent implements OnInit, OnDestroy {
       const controlValue = this.selectService.select.abstractControl.value || [];
       if (!this.checked) this.selectService.select.abstractControl.patchValue([...controlValue, this.value]);
       else this.selectService.select.abstractControl.patchValue(controlValue.filter(item => item !== this.value));
+      this.selectService.select.abstractControl.markAsDirty();
     }
   }
 

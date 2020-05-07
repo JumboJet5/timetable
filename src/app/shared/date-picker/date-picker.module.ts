@@ -5,11 +5,13 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon';
 import { DateFormatService } from '@app/service/date-format/date-format.service';
 import { ClickOutsideModule } from '@app/shared/click-outside/click-outside.module';
-import { DatePickerComponent } from './date-picker.component';
+import { DatePickerComponent } from '@app/shared/date-picker/date-picker/date-picker.component';
+import { DateRangePickerComponent } from '@app/shared/date-picker/date-range-picker/date-range-picker.component';
 
 @NgModule({
-  declarations: [DatePickerComponent],
+  declarations: [DateRangePickerComponent, DatePickerComponent],
   exports: [
+    DateRangePickerComponent,
     DatePickerComponent,
   ],
   imports: [
