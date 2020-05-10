@@ -34,7 +34,7 @@ export class RoomEntityService {
   public getFormValue(): IRoom {
     this.form.get('housing').enable();
     const result = this.form.value;
-    if (this.form.value.univ) this.form.get('housing').disable({onlySelf: true});
+    if (this.form.value.housing) this.form.get('housing').disable({onlySelf: true});
     return result;
   }
 

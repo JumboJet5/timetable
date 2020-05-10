@@ -44,7 +44,7 @@ export class LessontimeEntityService {
   public getFormValue(): ILessonTime {
     this.form.get('faculty').enable();
     const result = this.form.value;
-    if (this.form.value.univ) this.form.get('faculty').disable({onlySelf: true});
+    if (this.form.value.faculty) this.form.get('faculty').disable({onlySelf: true});
     return result;
   }
 }

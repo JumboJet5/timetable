@@ -25,4 +25,8 @@ export class SemesterService {
   public updateSemester(id: number, semester: ISemester): Observable<ISemester> {
     return this.http.put<ISemester>(URLS.SEMESTER(id), semester);
   }
+
+  public deleteSemester(id: number): Observable<null> {
+    return this.http.delete<null>(URLS.SEMESTER(id));
+  }
 }

@@ -17,7 +17,7 @@ export interface IFilterParams {
   search?: string;
   ordering?: string;
   visible?: boolean;
-  semester?: string;
+  semester?: number;
   group_semester?: number;
   year?: number;
 }

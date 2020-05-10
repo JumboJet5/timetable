@@ -1,0 +1,20 @@
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
+  <h4>Створення навчального року</h4>
+  <form class="tt-form" [formGroup]="yearEntityService.form">
+    <div class="tt-input-label">
+      <span class="placeholder">Рамки навчального року *</span>
+      <app-date-range-picker [dateControl]="yearEntityService.form"
+                             placeholder="Оберіть діапазон дат"></app-date-range-picker>
+    </div>
+  </form>
+
+  <div class="control-row">
+    <button (click)="create()" [disabled]="yearEntityService.form.invalid" mat-flat-button color="primary">
+      <span>Створити</span>
+    </button>
+
+    <button (click)="closeModal()" mat-flat-button>
+      <span>Скасувати</span>
+    </button>
+  </div>
+</app-modal-wrapper>

@@ -1,0 +1,59 @@
+<h3 class="years-header">
+  <span>Навчальні роки</span>
+  <button mat-flat-button color="primary" (click)="createYear()">
+    <mat-icon>add</mat-icon>
+    <span>Додати н.р.</span>
+  </button>
+</h3>
+
+<div class="years">
+  <div (click)="activeYear = year.id" *ngFor="let year of years" [class.active]="activeYear === year.id" class="year item">
+    <span class="range">{{year.start | date: 'dd.MM.yyyy'}} - {{year.end | date: 'dd.MM.yyyy'}}</span>
+    <button mat-icon-button class="mini-button" (click)="getYearDetails(year); $event.stopPropagation()">
+      <mat-icon>input</mat-icon>
+    </button>
+    <button mat-icon-button class="mini-button" (click)="deleteYear(year.id); $event.stopPropagation()">
+      <mat-icon>delete</mat-icon>
+    </button>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </div>
+</div>
+
+<h3 class="semesters-header">
+  <span>Семестри і періоди</span>
+  <button mat-flat-button color="primary" [disabled]="!activeYear" (click)="createSemester()">
+    <mat-icon>add</mat-icon>
+    <span>Додати семестр</span>
+  </button>
+</h3>
+
+<div class="semesters">
+  <app-accordion class="semester" *ngFor="let semester of semestersMap.get(activeYear)">
+    <app-accordion-header>
+      <b class="number">№{{semester.num}}</b>
+      <span class="range">{{semester.start | date: 'dd.MM.yyyy'}} - {{semester.end | date: 'dd.MM.yyyy'}}</span>
+
+      <button mat-icon-button class="mini-button" (click)="getSemesterDetails(semester); $event.stopPropagation()">
+        <mat-icon>input</mat-icon>
+      </button>
+      <button mat-icon-button class="mini-button" (click)="createPeriod(semester.id); $event.stopPropagation()">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-icon-button class="mini-button" (click)="deleteSemester(semester.id); $event.stopPropagation()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </app-accordion-header>
+    <div *ngFor="let period of periodsMap.get(semester.id)" class="period item">
+      <b class="kind">{{periodTypesMap.get(period.kind)}}</b>
+      <span class="range">{{period.start | date: 'dd.MM.yyyy'}} - {{period.end | date: 'dd.MM.yyyy'}}</span>
+      <button mat-icon-button class="mini-button" (click)="getPeriodDetails(period); $event.stopPropagation()">
+        <mat-icon>input</mat-icon>
+      </button>
+      <button mat-icon-button class="mini-button" (click)="deletePeriod(period.id, semester.id); $event.stopPropagation()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </app-accordion>
+</div>
+
+<app-smart-details titleText="Деталі навчальних періодів"></app-smart-details>

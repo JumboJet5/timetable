@@ -33,7 +33,7 @@ export class SemesterEntityService {
   public getFormValue(): ISemester {
     this.form.get('year').enable();
     const result = this.form.value;
-    if (this.form.value.univ) this.form.get('year').disable({onlySelf: true});
+    if (this.form.value.year) this.form.get('year').disable({onlySelf: true});
     return result;
   }
 }

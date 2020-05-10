@@ -17,4 +17,16 @@ export class YearService {
   public getYear(id: number): Observable<IYear> {
     return this.http.get<IYear>(URLS.YEAR(id));
   }
+
+  public createYear(year: IYear): Observable<IYear> {
+    return this.http.post<IYear>(URLS.YEARS, year);
+  }
+
+  public updateYear(id: number, year: IYear): Observable<IYear> {
+    return this.http.put<IYear>(URLS.YEAR(id), year);
+  }
+
+  public deleteYear(id: number): Observable<null> {
+    return this.http.delete<null>(URLS.YEAR(id));
+  }
 }

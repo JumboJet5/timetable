@@ -19,8 +19,14 @@
   <app-smart-lessontime-entity *ngSwitchCase="'LESSONTIME'"
                                [lessontime]="smartDetailsService.currentEntity.entity"></app-smart-lessontime-entity>
 
+  <app-smart-year-entity *ngSwitchCase="'YEAR'"
+                         [year]="smartDetailsService.currentEntity.entity"></app-smart-year-entity>
+
   <app-smart-semester-entity *ngSwitchCase="'SEMESTER'"
                              [semester]="smartDetailsService.currentEntity.entity"></app-smart-semester-entity>
+
+  <app-smart-period-entity *ngSwitchCase="'PERIOD'"
+                           [period]="smartDetailsService.currentEntity.entity"></app-smart-period-entity>
 
   <app-smart-housing-entity *ngSwitchCase="'HOUSING'"
                             [housing]="smartDetailsService.currentEntity.entity"></app-smart-housing-entity>

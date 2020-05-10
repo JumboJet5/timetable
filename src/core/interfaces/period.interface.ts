@@ -3,4 +3,6 @@ export interface IPeriod {
   id: number;
   kind: number;
   start: string;
+  semester?: number;
+  url?: string;
 }

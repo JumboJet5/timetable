@@ -1,0 +1,39 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.control-row {
+  .mat-flat-button, .mat-stroked-button {
+    min-width: 100px;
+    margin: 0 10px;
+
+    &:first-child {
+      margin-left: 0;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.loading-wrapper {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .loader-wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  mat-spinner, ::ng-deep mat-spinner svg {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}

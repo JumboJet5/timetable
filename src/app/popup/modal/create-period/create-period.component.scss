@@ -1,0 +1,16 @@
+:host app-modal-wrapper ::ng-deep.modal-wrapper {
+  min-height: 300px;
+}
+
+
+.control-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 80px;
+
+  .mat-flat-button {
+    min-width: 100px;
+    margin: 0 10px;
+  }
+}

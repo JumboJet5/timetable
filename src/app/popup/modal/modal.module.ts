@@ -25,6 +25,8 @@ import { ModalWrapperComponent } from './modal-wrapper/modal-wrapper.component';
 import { CreateRoomComponent } from './create-room/create-room.component';
 import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
 import { CreateControlComponent } from './create-control/create-control.component';
+import { CreateYearComponent } from './create-year/create-year.component';
+import { CreatePeriodComponent } from './create-period/create-period.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { CreateControlComponent } from './create-control/create-control.componen
     CreateRoomComponent,
     CreateTeacherComponent,
     CreateControlComponent,
+    CreateYearComponent,
+    CreatePeriodComponent,
   ],
   imports: [
     CommonModule,

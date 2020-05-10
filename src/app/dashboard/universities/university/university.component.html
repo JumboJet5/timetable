@@ -11,6 +11,8 @@
                          [university]="university"
                          (save)="saveUniversity($event)"></app-university-entity>
 
+  <app-university-years [universityId]="university?.id" class="grid-all-columns"></app-university-years>
+
   <div class="additional grid-two-first-columns">
     <h3>Додаткові налаштування</h3>
     <app-university-housings [univId]="univId"></app-university-housings>

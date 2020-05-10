@@ -1,0 +1,123 @@
+:host {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 25px;
+  padding-bottom: 16px;
+  overflow: unset;
+
+  .mini-button {
+    margin-left: 0;
+  }
+}
+
+.years-header, .semesters-header {
+  grid-row-start: 1;
+  grid-row-end: 2;
+  height: 22.67px;
+  display: flex;
+  align-items: center;
+}
+
+.years-header {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.semesters-header {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+.years, .semesters {
+  height: 300px;
+  overflow: auto;
+}
+
+.years {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.semesters {
+  grid-column-start: 2;
+  grid-column-end: 3;
+}
+
+app-smart-details {
+  grid-column-start: 3;
+  grid-column-end: 4;
+  grid-row-start: 1;
+  grid-row-end: 3;
+}
+
+.year {
+  justify-content: space-between;
+
+  &:not(:hover) .mini-button {
+    opacity: 0;
+  }
+
+  .mini-button {
+    margin-left: 0;
+
+    &:first-of-type {
+      margin-left: 4px;
+    }
+  }
+
+  &:not(:hover):not(.active) > mat-icon {
+    opacity: 0;
+  }
+
+  & > mat-icon {
+    margin-left: auto;
+    transition: 0.25s ease-in-out;
+  }
+}
+
+.semester {
+  margin-bottom: 8px;
+  display: block;
+
+  .number {
+    min-width: 40px;
+    margin-right: 8px;
+  }
+
+  .range {
+    margin: 0 auto;
+  }
+}
+
+.period {
+  &:not(:hover) .mini-button {
+    opacity: 0;
+  }
+
+  .mini-button:first-of-type {
+    margin-left: auto;
+  }
+
+  .kind {
+    min-width: 130px;
+    margin-right: 8px;
+    font-size: 12px;
+
+    &:first-letter {
+      text-transform: capitalize;
+    }
+  }
+
+  .range {
+    margin: 0 auto;
+  }
+}
+
+.mini-button:first-of-type {
+  margin-left: 8px;
+}
+
+.range {
+  font-size: 12px;
+  font-weight: 300;
+}

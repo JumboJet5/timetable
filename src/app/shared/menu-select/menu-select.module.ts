@@ -30,6 +30,7 @@ import { TeacherSelectComponent } from './teacher-select/teacher-select.componen
 import { ThemeSelectComponent } from './theme-select/theme-select.component';
 import { UniversitySelectComponent } from './university-select/university-select.component';
 import { YearSelectComponent } from './year-select/year-select.component';
+import { PeriodTypesSelectComponent } from './period-types-select/period-types-select.component';
 
 
 const exportComponents = [
@@ -58,8 +59,8 @@ const exportComponents = [
 ];
 
 @NgModule({
-  declarations: [...exportComponents],
-  exports: [...exportComponents],
+  declarations: [...exportComponents, PeriodTypesSelectComponent],
+  exports: [...exportComponents, PeriodTypesSelectComponent],
   imports: [
     CommonModule,
     ScrollModule,

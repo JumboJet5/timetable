@@ -2,7 +2,7 @@
     <button class="tt-input date-picker-value"
             [disabled]="isDisabled"
             (click)="isOpened = !isOpened">
-        <span *ngIf="chosenRange.from || chosenRange.to; else placeholderLabel">{{(chosenRange.from | date: 'dd.M.y') + ' - ' + (chosenRange.to | date: 'dd.M.y')}}</span>
+        <span *ngIf="chosenRange.from || chosenRange.to; else placeholderLabel">{{(chosenRange.from | date: 'dd.MM.y') + ' - ' + (chosenRange.to | date: 'dd.MM.y')}}</span>
         <ng-template #placeholderLabel>{{placeholder}}</ng-template>
       <mat-icon>calendar_today</mat-icon>
     </button>

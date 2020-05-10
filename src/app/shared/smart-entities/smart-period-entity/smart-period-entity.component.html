@@ -1,0 +1,27 @@
+<form [formGroup]="periodEntityService.form" class="tt-form">
+  <label class="tt-input-label">
+    <span class="placeholder">Тип *</span>
+    <app-period-types-select [selectControl]="periodEntityService.kindControl"></app-period-types-select>
+    <span class="tt-error">{{periodEntityService.getControlError('kind')}}</span>
+  </label>
+  <div class="tt-input-label">
+    <span class="placeholder">Період *</span>
+    <app-date-range-picker [dateControl]="periodEntityService.form"
+                           [min]="periodEntityService.getEnableRangeDates()?.min"
+                           [max]="periodEntityService.getEnableRangeDates()?.max"
+                           placeholder="Оберіть діапазон дат"></app-date-range-picker>
+  </div>
+  <div class="control-row">
+    <button (click)="save()"
+            [disabled]="periodEntityService.form.invalid || periodEntityService.form.pristine"
+            color="primary"
+            mat-flat-button>Зберегти</button>
+    <button mat-stroked-button (click)="reset()" [disabled]="periodEntityService.form.pristine">Скинути</button>
+  </div>
+</form>
+
+<div class="loading-wrapper" *ngIf="isLoading">
+  <div class="loader-wrapper">
+    <mat-spinner></mat-spinner>
+  </div>
+</div>

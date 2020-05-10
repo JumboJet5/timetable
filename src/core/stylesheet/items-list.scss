@@ -33,6 +33,10 @@
       var(--primary-color-20) 90%,
       rgba(0, 0, 0, 0)) 1;
 
+  &:last-child {
+    border-bottom: none;
+  }
+
   &:not(.header-row):nth-child(odd) {
   }
 

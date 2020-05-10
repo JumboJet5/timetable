@@ -41,6 +41,9 @@ export const YEAR = (id: number): string => `${YEARS}${id}/`;
 export const SEMESTERS = API + '/semesters/';
 export const SEMESTER = (id: number): string => `${SEMESTERS}${id}/`;
 
+export const PERIODS = API + '/periods/';
+export const PERIOD = (id: number): string => `${PERIODS}${id}/`;
+
 export const LESSON_TIMES = API + '/lessontime/';
 export const LESSON_TIME = (id: number): string => `${LESSON_TIMES}${id}/`;
 

@@ -1,0 +1,27 @@
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
+  <h4>Створення періода в навчальному році</h4>
+  <form class="tt-form" [formGroup]="periodEntityService.form">
+    <label class="tt-input-label">
+      <span class="placeholder">Тип *</span>
+      <app-period-types-select [selectControl]="periodEntityService.kindControl"></app-period-types-select>
+      <span class="tt-error">{{periodEntityService.getControlError('kind')}}</span>
+    </label>
+    <div class="tt-input-label">
+      <span class="placeholder">Період *</span>
+      <app-date-range-picker [dateControl]="periodEntityService.form"
+                             [min]="periodEntityService.getEnableRangeDates()?.min"
+                             [max]="periodEntityService.getEnableRangeDates()?.max"
+                             placeholder="Оберіть діапазон дат"></app-date-range-picker>
+    </div>
+  </form>
+
+  <div class="control-row">
+    <button (click)="create()" [disabled]="periodEntityService.form.invalid" mat-flat-button color="primary">
+      <span>Створити</span>
+    </button>
+
+    <button (click)="closeModal()" mat-flat-button>
+      <span>Скасувати</span>
+    </button>
+  </div>
+</app-modal-wrapper>

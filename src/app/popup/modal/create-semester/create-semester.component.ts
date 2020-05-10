@@ -30,7 +30,7 @@ export class CreateSemesterComponent implements OnInit {
   }
 
   public closeModal(): void {
-    this.router.navigate([{outlets: {modal: null}}]);
+    this.router.navigate([{outlets: {modal: null}}], {queryParams: this.route.snapshot.queryParams});
   }
 
   public create() {

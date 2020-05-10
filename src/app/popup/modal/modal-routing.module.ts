@@ -7,11 +7,13 @@ import { CreateGroupComponent } from '@app/popup/modal/create-group/create-group
 import { CreateGroupsemesterComponent } from '@app/popup/modal/create-groupsemester/create-groupsemester.component';
 import { CreateHousingComponent } from '@app/popup/modal/create-housing/create-housing.component';
 import { CreateLessontimeComponent } from '@app/popup/modal/create-lessontime/create-lessontime.component';
+import { CreatePeriodComponent } from '@app/popup/modal/create-period/create-period.component';
 import { CreateRoomComponent } from '@app/popup/modal/create-room/create-room.component';
 import { CreateSemesterComponent } from '@app/popup/modal/create-semester/create-semester.component';
 import { CreateSpecialtyComponent } from '@app/popup/modal/create-specialty/create-specialty.component';
 import { CreateTeacherComponent } from '@app/popup/modal/create-teacher/create-teacher.component';
 import { CreateUniversityComponent } from '@app/popup/modal/create-university/create-university.component';
+import { CreateYearComponent } from '@app/popup/modal/create-year/create-year.component';
 import { LessonEditorComponent } from '@app/popup/modal/lesson-editor/lesson-editor.component';
 
 const routes: Routes = [
@@ -19,7 +21,9 @@ const routes: Routes = [
   {path: 'lesson/:groupSlug', redirectTo: ''},
   {path: 'add-lesson/:groupSlug/:day/:time/:groupsemesterId', component: LessonEditorComponent},
   {path: 'add-semester-to-group', component: CreateGroupsemesterComponent},
+  {path: 'create-year', component: CreateYearComponent},
   {path: 'create-semester', component: CreateSemesterComponent},
+  {path: 'create-period', component: CreatePeriodComponent},
   {path: 'create-lessontime', component: CreateLessontimeComponent},
   {path: 'create-group', component: CreateGroupComponent},
   {path: 'create-course', component: CreateCourseComponent},

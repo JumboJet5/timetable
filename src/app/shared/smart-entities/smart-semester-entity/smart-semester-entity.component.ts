@@ -34,7 +34,7 @@ export class SmartSemesterEntityComponent {
 
     this.isLoading = true;
     this.semesterService.updateSemester(this.semester.id, this.semesterEntityService.getFormValue())
-      .subscribe(res => Object.assign(this.semester, res))
+      .subscribe(res => Object.assign(this.semester, res) && this.reset())
       .add(() => this.isLoading = false);
   }
 
