@@ -12,6 +12,7 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   ],
 })
 export class FacultiesInfoComponent extends EntitiesList {
+  public listTitle = 'Список факультетів';
   protected _createItemPath = ['create-faculty'];
   protected _newItemChanel = PopupChanelEnum.CREATE_FACULTY;
 }

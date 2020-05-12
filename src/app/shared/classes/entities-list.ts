@@ -7,6 +7,7 @@ import { debounceTime, takeUntil } from 'rxjs/operators';
 import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 
 export class EntitiesList implements OnInit, OnDestroy {
+  public listTitle = 'Список елементів';
   public searchControl: FormControl = new FormControl('');
   public ordering = 'name';
   public filters: IFilterParams = {ordering: this.ordering, search: ''};
@@ -31,6 +32,10 @@ export class EntitiesList implements OnInit, OnDestroy {
     this._popupService.openReactiveModal(this._createItemPath, {...this.filters});
   }
 
+  public refresh() {
+    this.filters = {...this.filters};
+  }
+
   @HostListener('window:beforeunload')
   public ngOnDestroy(): void {
     this._unsubscribe.next();
@@ -45,7 +50,7 @@ export class EntitiesList implements OnInit, OnDestroy {
       .pipe(debounceTime(500))
       .subscribe(value => {
         this._searchValue = value;
-        this.filters = {ordering: this.ordering, search: this._searchValue, ...(value || {})};
+        this.filters = {ordering: this.ordering, search: this._searchValue};
       });
   }
 
@@ -54,7 +59,7 @@ export class EntitiesList implements OnInit, OnDestroy {
 
     this._popupService.getChanel(this._newItemChanel)
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe(() => this.filters = {...this.filters});
+      .subscribe(() => this.refresh());
   }
 
   private _listenQueryParamsFilters(): void {

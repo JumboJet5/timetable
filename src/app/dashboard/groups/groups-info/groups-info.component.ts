@@ -12,6 +12,7 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   ],
 })
 export class GroupsInfoComponent extends EntitiesList {
+  public listTitle = 'Список груп';
   protected _createItemPath = ['create-group'];
   protected _newItemChanel = PopupChanelEnum.CREATE_GROUP;
 }

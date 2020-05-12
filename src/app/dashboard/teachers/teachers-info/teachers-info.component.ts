@@ -12,6 +12,7 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   ],
 })
 export class TeachersInfoComponent extends EntitiesList {
+  public listTitle = 'Список викладачів';
   protected _createItemPath = ['create-teacher'];
   protected _newItemChanel = PopupChanelEnum.CREATE_TEACHER;
   public ordering = 'last_name';
