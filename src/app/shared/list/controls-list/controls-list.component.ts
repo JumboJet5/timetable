@@ -19,6 +19,7 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
   styleUrls: ['../../../../core/stylesheet/items-list.scss', './controls-list.component.scss'],
 })
 export class ControlsListComponent extends ItemsListComponent<IControl> {
+  public emptyListMessage = 'Список контролів пустий';
   public themesMap: Map<number, ITheme> = new Map<number, ITheme>();
   public housingsMap: Map<number, IHousing> = new Map<number, IHousing>();
   public teachersMap: Map<number, ITeacher> = new Map<number, ITeacher>();

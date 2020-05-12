@@ -12,6 +12,8 @@ import { IFaculty } from 'src/core/interfaces/faculty.interface';
   styleUrls: ['../../../../core/stylesheet/items-list.scss', './faculties-list.component.scss'],
 })
 export class FacultiesListComponent extends ItemsListComponent<IFaculty> {
+  public emptyListMessage = 'Список факультетів пустий';
+
   constructor(private _facultyService: FacultyService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {

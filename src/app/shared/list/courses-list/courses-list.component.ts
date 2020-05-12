@@ -13,6 +13,7 @@ import { EntityTypesEnum } from 'src/core/interfaces/entity-info.interface';
   styleUrls: ['../../../../core/stylesheet/items-list.scss', './courses-list.component.scss'],
 })
 export class CoursesListComponent extends ItemsListComponent<ICourse> {
+  public emptyListMessage = 'Список курсів пустий';
   public degreeMap = degreeMap();
 
   constructor(private _courseService: CourseService,

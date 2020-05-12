@@ -70,10 +70,23 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
     this._popupService.openReactiveModal(['create-control'], this._getActualQueryParams());
   }
 
+  private _autoDefiningCurrentSemester(): void {
+    (this.groupsemesters || []).some(groupsemester => {
+      const semester = this.semesters.find(item => item.id === groupsemester.semester);
+      if (!semester) return false;
+
+      const now = Date.now();
+      const isCurrentSemester = new Date(semester.end).getTime() > now && now > new Date(semester.start).getTime();
+      if (isCurrentSemester) this.currGroupsemester = groupsemester.id;
+
+      return isCurrentSemester;
+    });
+  }
+
   private _getGroupByRoute(): void {
     this._route.queryParams
       .pipe(takeUntil(this._unsubscribe))
-      .pipe(filter(params => !!params.group && params.group !== this.groupId))
+      .pipe(filter(params => !!params.group && +params.group !== this.groupId))
       .pipe(tap(params => this.groupId = +params.group))
       .pipe(tap(params => this.currGroupsemester = +params.group_semester))
       .pipe(tap(() => this.isLoading = true))
@@ -90,9 +103,11 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
     this.groupsemesters = [];
     this.themes = [];
     this._groupsemesterService.getGroupsemesters(this.groupId)
-      .subscribe(res => this.groupsemesters = res.results);
+      .subscribe(res => this.groupsemesters = res.results)
+      .add(() => !!this.semesters.length && this._autoDefiningCurrentSemester());
     this._semesterService.getSemesters({group: this.groupId})
-      .subscribe(res => this.semesters = res.results);
+      .subscribe(res => this.semesters = res.results)
+      .add(() => !!this.groupsemesters.length && this._autoDefiningCurrentSemester());
     this._themeService.getThemes({group: this.groupId})
       .subscribe(res => this.themes = res.results);
     this._housingService.getHousings({group: this.groupId})

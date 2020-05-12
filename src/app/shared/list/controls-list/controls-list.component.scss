@@ -2,12 +2,21 @@
   margin: 0 -16px;
 }
 
-.time, .theme {
+.time, .theme, .format {
   font-weight: 500;
 }
 
-.date, .teachers {
+.date, .teachers, .location {
   font-size: 12px;
   line-height: 18px;
   font-weight: 300;
+}
+
+.location {
+  font-weight: 600;
+  flex: 0 0 80px;
+}
+
+.format:first-letter {
+  text-transform: capitalize;
 }

@@ -12,6 +12,8 @@ import { IHousing } from 'src/core/interfaces/housing.interface';
   styleUrls: ['../../../../core/stylesheet/items-list.scss', './housings-list.component.scss'],
 })
 export class HousingsListComponent extends ItemsListComponent<IHousing> {
+  public emptyListMessage = 'Список корпусів пустий';
+
   constructor(private _housingService: HousingService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {

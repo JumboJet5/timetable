@@ -12,6 +12,8 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
   styleUrls: ['../../../../core/stylesheet/items-list.scss', './specialties-list.component.scss'],
 })
 export class SpecialtiesListComponent extends ItemsListComponent<ISpecialty> {
+  public emptyListMessage = 'Список спеціальностей пустий';
+
   constructor(private _specialtyService: SpecialtyService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {

@@ -1,13 +1,19 @@
 <div class="relative-wrapper">
+  <div class="loader-wrapper" *ngIf="isLoading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div *ngIf="!isLoading" class="viewport-bottom" inViewport
+       (inViewportAction)="!!$event && $event.visible && loadItems()"></div>
+
   <div (click)="getItemDetailsEntity(control);" *ngFor="let control of items; let index = index" class="item">
-    <div class="item-details middle">{{formatTypesMap.get(control.format)}}</div>
+    <div class="item-details format middle">{{formatTypesMap.get(control.format)}}</div>
     <div class="item-details long">
       <div class="theme">{{themesMap.get(control.theme)?.name}}</div>
       <div class="teachers">
         <ng-container *ngFor="let teacher of control.teachers">{{getTeacher(teacher)?.short_name}}<br/></ng-container>
       </div>
     </div>
-    <div class="item-details">{{getRoom(control.room)?.num}} {{housingsMap.get(control.housing)?.short_name}}</div>
+    <div class="item-details location">{{housingsMap.get(control.housing)?.short_name}}-{{getRoom(control.room)?.num}}</div>
     <div class="item-details">
       <div class="time">{{control.start}}</div>
       <div class="date">{{control.date | date: 'dd.MM.yyyy'}}</div>
@@ -20,9 +26,6 @@
       </button>
     </div>
   </div>
-  <div class="loader-wrapper" *ngIf="isLoading">
-    <mat-spinner></mat-spinner>
-  </div>
-  <div *ngIf="!isLoading" class="viewport-bottom" inViewport
-       (inViewportAction)="!!$event && $event.visible && loadItems()"></div>
+
+  <div class="empty-list" *ngIf="!isLoading && !items?.length">{{emptyListMessage}}</div>
 </div>

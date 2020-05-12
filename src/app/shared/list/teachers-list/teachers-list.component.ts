@@ -15,6 +15,7 @@ import { ITeacher } from 'src/core/interfaces/teacher.interface';
 })
 export class TeachersListComponent extends ItemsListComponent<ITeacher> {
   public degreeMap = teacherDegreesMap();
+  public emptyListMessage = 'Список викладачів пустий';
   protected _filters: IFilterParams = {ordering: 'last_name'};
 
   constructor(private _teacherService: TeacherService,

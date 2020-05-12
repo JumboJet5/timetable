@@ -11,6 +11,8 @@ import { IUniversity } from 'src/core/interfaces/university';
   styleUrls: ['../../../../core/stylesheet/items-list.scss', './universities-list.component.scss'],
 })
 export class UniversitiesListComponent extends ItemsListComponent<IUniversity> {
+  public emptyListMessage = 'Список університетів пустий';
+
   constructor(private _universityService: UniversityService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {

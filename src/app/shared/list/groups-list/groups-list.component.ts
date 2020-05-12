@@ -14,6 +14,7 @@ import { IGroup } from 'src/core/interfaces/group.interface';
 })
 export class GroupsListComponent extends ItemsListComponent<IGroup> {
   public degreeMap = degreeMap();
+  public emptyListMessage = 'Список груп пустий';
 
   constructor(private _groupService: GroupService,
               protected _popupService: PopupService,

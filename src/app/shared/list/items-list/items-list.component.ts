@@ -20,6 +20,7 @@ export abstract class ItemsListComponent<IItem extends IWithId> implements OnIni
   @Input() deleteDialogBody = 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?';
   public isLoading = false;
   public items: IItem[] = [];
+  public emptyListMessage = 'Список пустий';
   private _paginationParams: IPaginationParams = {offset: 0, limit: 20};
   private _isLastLoaded = false;
 

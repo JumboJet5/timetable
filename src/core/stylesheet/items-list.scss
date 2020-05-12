@@ -11,6 +11,14 @@
   background-color: inherit;
 }
 
+.empty-list {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 16px auto;
+  padding: 0 16px;
+}
+
 .item {
   display: flex;
   align-items: center;

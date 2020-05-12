@@ -14,6 +14,7 @@ import { IRoom } from 'src/core/interfaces/room.interface';
 })
 export class RoomsListComponent extends ItemsListComponent<IRoom> {
   protected _filters: IFilterParams = {ordering: 'num'};
+  public emptyListMessage = 'Список аудиторій пустий';
 
   constructor(private _roomService: RoomService,
               protected _popupService: PopupService,
