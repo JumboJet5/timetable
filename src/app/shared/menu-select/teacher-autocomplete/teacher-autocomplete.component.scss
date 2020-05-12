@@ -6,7 +6,8 @@
     align-items: center;
     justify-content: flex-start;
     flex-flow: row wrap;
-    min-height: 7px;
+    max-height: 96px;
+    overflow: auto;
 
     .selected {
       line-height: 24px;
