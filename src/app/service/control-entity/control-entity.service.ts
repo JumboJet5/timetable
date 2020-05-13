@@ -5,6 +5,7 @@ import { FormatService } from '@app/service/format/format.service';
 import { GroupService } from '@app/service/group/group.service';
 import { GroupsemesterService } from '@app/service/groupsemester/groupsemester.service';
 import { SemesterService } from '@app/service/semester/semester.service';
+import { EntityFormService } from '@app/shared/classes/entity-form.service';
 import { filter, switchMap, tap } from 'rxjs/operators';
 import { IControl } from 'src/core/interfaces/control.interface';
 import { IGroupsemester } from 'src/core/interfaces/groupsemester.interface';
@@ -12,7 +13,7 @@ import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 import { ISemester } from 'src/core/interfaces/semester.interface';
 
 @Injectable()
-export class ControlEntityService {
+export class ControlEntityService extends EntityFormService<IControl> {
   public isAllFiltersReady = false;
   public groupIdFilter: IFilterParams;
   public teachersFilter: IFilterParams;
@@ -50,6 +51,8 @@ export class ControlEntityService {
               private dateFormatService: DateFormatService,
               private groupService: GroupService,
               private groupsemesterService: GroupsemesterService) {
+    super(formatService);
+
     this.housingControl.valueChanges
       .subscribe(housing => {
         if (!!housing && this.roomControl.disabled) this.roomControl.enable();
@@ -75,32 +78,22 @@ export class ControlEntityService {
       .subscribe(value => this.dayControl.patchValue(dateFormatService.getDateFromString(value), {emitEvent: false}));
   }
 
-  public resetForm(course: Partial<IControl>): void {
-    this.form.reset({...course, day: this.dateFormatService.getDateFromString(course.date)});
-  }
-
   public getEnableRangeDates(): { min: Date, max: Date } {
-    const min = !!this.semester ? new Date(this.semester.start) : undefined;
-    const max = !!this.semester ? new Date(this.semester.end) : undefined;
-    return {min, max};
-  }
-
-  public getControlError(controlName: keyof IControl): string {
-    return this.formatService.getControlError(this.form, controlName);
+    return this.formatService.getEnableRangeDates(this.semester);
   }
 
   private getInfo(groupsemester: IGroupsemester): void {
     this.groupIdFilter = {group: groupsemester.group};
     this.teachersFilter = {group: groupsemester.group, ordering: 'last_name'};
     this.isAllFiltersReady = true;
-    this.groupService.getGroup(groupsemester.group)
+    this.groupService.getItem(groupsemester.group)
       .pipe(filter(value => !!value))
       .subscribe(group => {
         this.subgroupsCount = group.subgroups;
         this.subgroupControl.setValidators(Validators.max(group.subgroups));
       });
 
-    this.semesterService.getSemester(groupsemester.semester)
+    this.semesterService.getItem(groupsemester.semester)
       .subscribe(semester => this.semester = semester);
   }
 }

@@ -80,7 +80,7 @@ export class LessonEditorComponent implements OnInit {
   }
 
   private _getGroup(): void {
-    if (this.weekSchedule) this.groupService.getGroup(this.weekSchedule.getScheduleGroupId())
+    if (this.weekSchedule) this.groupService.getItem(this.weekSchedule.getScheduleGroupId())
       .subscribe(group => this.group = group);
   }
 

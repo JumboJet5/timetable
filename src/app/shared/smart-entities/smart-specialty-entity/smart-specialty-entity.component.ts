@@ -31,7 +31,7 @@ export class SmartSpecialtyEntityComponent {
     if (this.specialtyEntityService.form.invalid || !this.specialty) return;
 
     this.isLoading = true;
-    this.specialtyService.updateSpecialty(this.specialty.id, this.specialtyEntityService.form.value)
+    this.specialtyService.updateItem(this.specialty.id, this.specialtyEntityService.form.value)
       .subscribe(res => Object.assign(this.specialty, res))
       .add(() => this.isLoading = false);
   }

@@ -45,7 +45,7 @@ export class FacultyLessonTimesComponent implements OnInit {
         header: 'Вилучити розклад пари?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => (this.isLoading = true) && this._lessonTimeService.deleteLessonTime(id)
+      () => (this.isLoading = true) && this._lessonTimeService.deleteItem(id)
         .subscribe(() => this.lessonTimes.splice(index, 1))
         .add(() => this.isLoading = false));
   }
@@ -56,7 +56,7 @@ export class FacultyLessonTimesComponent implements OnInit {
 
   private _loadLessonTimes(): void {
     this.isLoading = true;
-    this._lessonTimeService.getLessonTimes({faculty: this._facultyId})
+    this._lessonTimeService.getItems({faculty: this._facultyId})
       .subscribe(res => this.lessonTimes = res.results)
       .add(() => this.isLoading = false);
   }

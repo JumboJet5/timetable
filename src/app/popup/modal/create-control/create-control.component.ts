@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { ControlEntityService } from '@app/service/control-entity/control-entity.service';
 import { ControlService } from '@app/service/control/control.service';
@@ -12,7 +12,6 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   providers: [ControlEntityService],
 })
 export class CreateControlComponent implements OnInit {
-  @Input() public isLogoUpdating = false;
   public isLoading = false;
   private _chanelId: number = PopupChanelEnum.CREATE_CONTROL;
 
@@ -24,7 +23,6 @@ export class CreateControlComponent implements OnInit {
 
   public ngOnInit(): void {
     this._popupService.createChanel(this._chanelId);
-    this._applyParamsChange(this._route.snapshot.queryParams);
     this._route.queryParams
       .subscribe(params => this._applyParamsChange(params));
   }
@@ -34,8 +32,10 @@ export class CreateControlComponent implements OnInit {
   }
 
   public createFaculty() {
+    if (this.controlEntityService.form.invalid) return;
+
     this.isLoading = true;
-    this._controlService.createControl(this.controlEntityService.form.value)
+    this._controlService.createItem(this.controlEntityService.form.value)
       .subscribe(faculty => this._popupService.sendMessage(this._chanelId, faculty))
       .add(() => this.closeModal());
   }

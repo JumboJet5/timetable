@@ -34,7 +34,7 @@ export class CreateTeacherComponent implements OnInit {
 
   public createTeacher() {
     this.isLoading = true;
-    this._teacherService.createTeacher(this.teacherEntityService.form.value)
+    this._teacherService.createItem(this.teacherEntityService.form.value)
       .subscribe(teacher => this._popupService.sendMessage(this._chanelId, teacher))
       .add(() => this.closeModal());
   }

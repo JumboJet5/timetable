@@ -1,5 +1,4 @@
 import { Component, Input } from '@angular/core';
-import { DateFormatService } from '@app/service/date-format/date-format.service';
 import { SemesterEntityService } from '@app/service/semester-entity/semester-entity.service';
 import { SemesterService } from '@app/service/semester/semester.service';
 import { ISemester } from 'src/core/interfaces/semester.interface';
@@ -14,8 +13,9 @@ export class SmartSemesterEntityComponent {
   public isLoading = false;
 
   constructor(private semesterService: SemesterService,
-              public semesterEntityService: SemesterEntityService,
-              public dateFormatService: DateFormatService) { }
+              public semesterEntityService: SemesterEntityService) {
+    semesterEntityService.disableControls(['year']);
+  }
 
   private _semester: ISemester;
 
@@ -33,12 +33,13 @@ export class SmartSemesterEntityComponent {
     if (this.semesterEntityService.form.invalid || !this.semester) return;
 
     this.isLoading = true;
-    this.semesterService.updateSemester(this.semester.id, this.semesterEntityService.getFormValue())
+    this.semesterService.updateItem(this.semester.id, this.semesterEntityService.getFormValue())
       .subscribe(res => Object.assign(this.semester, res) && this.reset())
       .add(() => this.isLoading = false);
   }
 
   public reset() {
     this.semesterEntityService.resetForm(this.semester);
+    console.log(this.semesterEntityService.form);
   }
 }

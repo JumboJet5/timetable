@@ -19,12 +19,12 @@
       </label>
       <label class="tt-input-label">
         <span class="placeholder">Університет *</span>
-        <app-university-select [selectControl]="teacherEntityService.univControl"></app-university-select>
+        <app-university-select [selectControl]="teacherEntityService.form.get('univ')"></app-university-select>
         <span class="tt-error">{{teacherEntityService.getControlError('univ')}}</span>
       </label>
       <label class="tt-input-label">
         <span class="placeholder">ОКР *</span>
-        <app-teacher-degree-selector [selectControl]="teacherEntityService.degreeControl"></app-teacher-degree-selector>
+        <app-teacher-degree-selector [selectControl]="teacherEntityService.form.get('degree')"></app-teacher-degree-selector>
         <span class="tt-error">{{teacherEntityService.getControlError('degree')}}</span>
       </label>
     </div>

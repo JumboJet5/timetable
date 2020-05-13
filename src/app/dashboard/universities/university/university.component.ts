@@ -37,7 +37,7 @@ export class UniversityComponent implements OnInit, OnDestroy {
 
   public saveUniversity(faculty: IUniversity): void {
     this.isEntityLoading = true;
-    this._universityService.updateUniversity(this.univId, faculty)
+    this._universityService.updateItem(this.univId, faculty)
       .subscribe(res => this.university = res)
       .add(() => this.isEntityLoading = false);
   }
@@ -47,7 +47,7 @@ export class UniversityComponent implements OnInit, OnDestroy {
         header: 'Вилучити університет?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._universityService.deleteUniversity(this.univId)
+      () => this._universityService.deleteItem(this.univId)
         .subscribe(() => this._router.navigate(['dashboard', 'universities'])));
   }
 
@@ -63,7 +63,7 @@ export class UniversityComponent implements OnInit, OnDestroy {
 
   private _getCurrentFaculty(): void {
     this.isEntityLoading = true;
-    this._universityService.getUniversity(this.univId)
+    this._universityService.getItem(this.univId)
       .subscribe(specialty => this.university = specialty)
       .add(() => this.isEntityLoading = false);
   }

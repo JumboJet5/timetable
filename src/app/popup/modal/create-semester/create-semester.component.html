@@ -2,7 +2,8 @@
   <h4>Створення семестру</h4>
   <label class="tt-input-label">
     <span class="placeholder">Рік</span>
-    <app-year-select #yearSelect [selectControl]="semesterEntityService.form.get('year')"></app-year-select>
+    <app-year-select [selectControl]="semesterEntityService.form.get('year')"
+                     [filters]="{univ: univId}"></app-year-select>
   </label>
 
   <label class="tt-input-label">
@@ -13,8 +14,8 @@
   <div class="tt-input-label">
     <span class="placeholder">Семестр</span>
     <app-date-range-picker [dateControl]="semesterEntityService.form"
-                           [min]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.start)"
-                           [max]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.end)"
+                           [min]="semesterEntityService.getEnableRangeDates()?.min"
+                           [max]="semesterEntityService.getEnableRangeDates()?.max"
                            placeholder="Оберіть діапазон дат"></app-date-range-picker>
   </div>
 

@@ -35,7 +35,7 @@ export class CreatePeriodComponent implements OnInit {
     if (this.periodEntityService.form.invalid) return;
 
     this.isLoading = true;
-    this.periodService.createPeriod(this.periodEntityService.form.value)
+    this.periodService.createItem(this.periodEntityService.form.value)
       .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
       .add(() => this.isLoading = false);
   }

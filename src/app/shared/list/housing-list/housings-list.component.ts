@@ -17,8 +17,8 @@ export class HousingsListComponent extends ItemsListComponent<IHousing> {
   constructor(private _housingService: HousingService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<IHousing>(params => this._housingService.getHousings(params),
-      id => this._housingService.deleteHousing(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<IHousing>(params => this._housingService.getItems(params),
+      id => this._housingService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: IHousing): void {

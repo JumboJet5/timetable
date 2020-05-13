@@ -35,7 +35,7 @@ export class CreateYearComponent implements OnInit {
     if (this.yearEntityService.form.invalid) return;
 
     this.isLoading = true;
-    this.yearService.createYear(this.yearEntityService.form.value)
+    this.yearService.createItem(this.yearEntityService.form.value)
       .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
       .add(() => this.isLoading = false);
   }

@@ -3,7 +3,7 @@
   <form class="tt-form" [formGroup]="roomEntityService.form">
     <label class="tt-input-label">
       <span class="placeholder">Корпус *</span>
-      <app-housing-select [selectControl]="roomEntityService.housingControl"></app-housing-select>
+      <app-housing-select [selectControl]="roomEntityService.form.get('housing')"></app-housing-select>
       <span class="tt-error">{{roomEntityService.getControlError('housing')}}</span>
     </label>
     <label class="tt-input-label">

@@ -15,8 +15,8 @@ export class SemesterSelectComponent extends AsyncSelectorWithFiltersComponent<I
   constructor(public semesterService: SemesterService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<ISemester>(id => semesterService.getSemester(id),
-      params => semesterService.getSemesters(params)), formBuilder, formatService);
+    super(optionServiceFactory<ISemester>(id => semesterService.getItem(id),
+      params => semesterService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть семестр';
     this.multiplePlaceholder = 'Оберіть семестри';
   }

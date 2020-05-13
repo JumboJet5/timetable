@@ -10,10 +10,11 @@
   <app-group-entity class="grid-all-columns"
                     (save)="saveGroupEntity($event)"
                     (facultyChanged)="facultyId = $event"
+                    (univChanged)="univId = $event"
                     [group]="group"></app-group-entity>
   <div class="grid-two-first-columns">
     <h3>Додаткові налаштування</h3>
-    <app-group-semesters-details [facultyId]="facultyId" [group]="group"></app-group-semesters-details>
+    <app-group-semesters-details [facultyId]="facultyId" [group]="group" [univId]="univId"></app-group-semesters-details>
   </div>
 
   <app-smart-details class="grid-last-column"></app-smart-details>

@@ -31,7 +31,7 @@ export class SmartPeriodEntityComponent {
     if (this.periodEntityService.form.invalid || !this.period) return;
 
     this.isLoading = true;
-    this._periodService.updatePeriod(this.period.id, this.periodEntityService.form.value)
+    this._periodService.updateItem(this.period.id, this.periodEntityService.form.value)
       .subscribe(res => Object.assign(this.period, res) && this.reset())
       .add(() => this.isLoading = false);
   }

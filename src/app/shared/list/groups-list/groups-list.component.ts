@@ -19,8 +19,8 @@ export class GroupsListComponent extends ItemsListComponent<IGroup> {
   constructor(private _groupService: GroupService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<IGroup>(params => this._groupService.getGroups(params),
-      id => this._groupService.deleteGroup(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<IGroup>(params => this._groupService.getItems(params),
+      id => this._groupService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: IGroup): void {

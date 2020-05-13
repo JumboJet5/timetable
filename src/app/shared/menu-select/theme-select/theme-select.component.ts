@@ -15,8 +15,8 @@ export class ThemeSelectComponent extends AsyncSelectorWithFiltersComponent<IThe
   constructor(public themeService: ThemeService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<ITheme>(id => themeService.getTheme(id),
-      params => themeService.getThemes(params)), formBuilder, formatService);
+    super(optionServiceFactory<ITheme>(id => themeService.getItem(id),
+      params => themeService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть назву предмета';
     this.multiplePlaceholder = 'Оберіть назви предмета';
     this.withSearch = false;

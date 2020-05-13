@@ -26,7 +26,7 @@ export class CourseThemesComponent {
 
   private _loadCourseThemes(): void {
     this.isLoading = false;
-    this._themeService.getThemes({specialty: this._courseId})
+    this._themeService.getItems({specialty: this._courseId})
       .subscribe(res => this.themes = res.results)
       .add(() => this.isLoading = false);
   }

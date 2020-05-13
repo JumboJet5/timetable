@@ -16,8 +16,8 @@ export class UniversitiesListComponent extends ItemsListComponent<IUniversity> {
   constructor(private _universityService: UniversityService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<IUniversity>(params => this._universityService.getUniversities(params),
-      id => this._universityService.deleteUniversity(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<IUniversity>(params => this._universityService.getItems(params),
+      id => this._universityService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: IUniversity): void {

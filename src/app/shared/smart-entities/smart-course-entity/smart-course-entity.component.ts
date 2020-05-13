@@ -31,7 +31,7 @@ export class SmartCourseEntityComponent {
     if (this.courseEntityService.form.invalid || !this.course) return;
 
     this.isLoading = true;
-    this.courseService.updateCourse(this.course.id, this.courseEntityService.form.value)
+    this.courseService.updateItem(this.course.id, this.courseEntityService.form.value)
       .subscribe(res => Object.assign(this.course, res) && this.reset())
       .add(() => this.isLoading = false);
   }

@@ -17,8 +17,8 @@ export class FacultiesListComponent extends ItemsListComponent<IFaculty> {
   constructor(private _facultyService: FacultyService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<IFaculty>(params => this._facultyService.getFaculties(params),
-      id => this._facultyService.deleteFaculty(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<IFaculty>(params => this._facultyService.getItems(params),
+      id => this._facultyService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: IFaculty): void {

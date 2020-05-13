@@ -1,38 +1,17 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormatService } from '@app/service/format/format.service';
-import { Observable } from 'rxjs';
+import { EntityWithImageCrudService } from '@app/shared/classes/entity-with-image-crud.service';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
-import { IPageable } from 'src/core/interfaces/pageable.interface';
-import { IRequestParams } from 'src/core/interfaces/request-param.interface';
-import * as URLS from 'src/core/urls';
+import { FACULTIES, FACULTY } from 'src/core/urls';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class FacultyService {
-  constructor(private http: HttpClient,
-              private formatService: FormatService) { }
+@Injectable({providedIn: 'root'})
+export class FacultyService extends EntityWithImageCrudService<IFaculty> {
+  protected _itemsURL = FACULTIES;
+  protected _itemURL = FACULTY;
 
-  public getFaculties(params: IRequestParams): Observable<IPageable<IFaculty>> {
-    return this.http.get<IPageable<IFaculty>>(URLS.FACULTIES, {params: params as {}});
-  }
-
-  public getFaculty(id: number): Observable<IFaculty> {
-    return this.http.get<IFaculty>(URLS.FACULTY(id));
-  }
-
-  public createFaculty(faculty: IFaculty): Observable<IFaculty> {
-    return this.http.post<IFaculty>(URLS.FACULTIES, this.formatService.getFormDataFromObject(faculty));
-  }
-
-  public updateFaculty(id: number, faculty: IFaculty): Observable<IFaculty> {
-    const body = this.formatService.getFormDataFromObject(faculty);
-    if (typeof faculty.img === 'string') body.delete('img');
-    return this.http.put<IFaculty>(URLS.FACULTY(id), body);
-  }
-
-  public deleteFaculty(id: number): Observable<null> {
-    return this.http.delete<null>(URLS.FACULTY(id));
+  constructor(protected http: HttpClient,
+              protected formatService: FormatService) {
+    super(http, formatService);
   }
 }

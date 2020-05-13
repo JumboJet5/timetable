@@ -3,6 +3,7 @@ import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import { ICourse } from 'src/core/interfaces/course.interface';
 import { IFaculty } from 'src/core/interfaces/faculty.interface';
 import { IGroup } from 'src/core/interfaces/group.interface';
+import { IRange, IStudyPeriodRange } from 'src/core/interfaces/range.interface';
 import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 import { IWithId } from 'src/core/interfaces/select-option.interface';
 import { ISpecialty } from 'src/core/interfaces/specialty.interface';
@@ -78,5 +79,11 @@ export class FormatService {
       result[key] = params[key];
       return result;
     }, {});
+  }
+
+  public getEnableRangeDates(limiter: IStudyPeriodRange): { min: Date, max: Date } {
+    const min = !!limiter ? new Date(limiter.start) : undefined;
+    const max = !!limiter ? new Date(limiter.end) : undefined;
+    return {min, max};
   }
 }

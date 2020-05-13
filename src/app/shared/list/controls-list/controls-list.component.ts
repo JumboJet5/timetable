@@ -31,8 +31,8 @@ export class ControlsListComponent extends ItemsListComponent<IControl> {
               private _roomService: RoomService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<IControl>(params => this._controlService.getControls(params),
-      id => this._controlService.deleteControl(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<IControl>(params => this._controlService.getItems(params),
+      id => this._controlService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   @Input()
@@ -55,7 +55,7 @@ export class ControlsListComponent extends ItemsListComponent<IControl> {
     if (this.teachersMap.has(teacherId)) return this.teachersMap.get(teacherId);
 
     this.teachersMap.set(teacherId, undefined);
-    this._teacherService.getTeacher(teacherId)
+    this._teacherService.getItem(teacherId)
       .subscribe(teacher => this.teachersMap.set(teacherId, teacher));
   }
 
@@ -63,7 +63,7 @@ export class ControlsListComponent extends ItemsListComponent<IControl> {
     if (this.roomsMap.has(roomId)) return this.roomsMap.get(roomId);
 
     this.roomsMap.set(roomId, undefined);
-    this._roomService.getRoom(roomId)
+    this._roomService.getItem(roomId)
       .subscribe(room => this.roomsMap.set(roomId, room));
   }
 }

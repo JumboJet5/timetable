@@ -18,8 +18,8 @@ export class GroupSelectComponent extends AsyncSelectorWithFiltersComponent<IGro
   constructor(public groupService: GroupService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<IGroup>(id => groupService.getGroup(id),
-      params => groupService.getGroups(params)), formBuilder, formatService);
+    super(optionServiceFactory<IGroup>(id => groupService.getItem(id),
+      params => groupService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть групу';
     this.multiplePlaceholder = 'Оберіть групи';
     this.withSearch = true;

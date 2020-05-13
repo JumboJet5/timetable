@@ -15,8 +15,8 @@ export class YearSelectComponent extends AsyncSelectorWithFiltersComponent<IYear
   constructor(public yearService: YearService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<any>(id => yearService.getYear(id),
-      params => yearService.getYears(params)), formBuilder, formatService);
+    super(optionServiceFactory<any>(id => yearService.getItem(id),
+      params => yearService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть рік';
     this.multiplePlaceholder = 'Оберіть роки';
   }

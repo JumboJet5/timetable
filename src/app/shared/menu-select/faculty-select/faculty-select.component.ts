@@ -15,8 +15,8 @@ export class FacultySelectComponent extends AsyncSelectorWithFiltersComponent<IF
   constructor(public facultyService: FacultyService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<IFaculty>(id => facultyService.getFaculty(id),
-      params => facultyService.getFaculties(params)), formBuilder, formatService);
+    super(optionServiceFactory<IFaculty>(id => facultyService.getItem(id),
+      params => facultyService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть факультет';
     this.multiplePlaceholder = 'Оберіть факультети';
     this.withSearch = true;

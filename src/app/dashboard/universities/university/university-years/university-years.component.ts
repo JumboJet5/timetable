@@ -78,7 +78,7 @@ export class UniversityYearsComponent implements OnInit, OnDestroy {
   }
 
   public createSemester(): void {
-    this._popupService.openReactiveModal(['create-semester'], {year: this.activeYear});
+    this._popupService.openReactiveModal(['create-semester'], {year: this.activeYear, univ: this.universityId});
   }
 
   public createPeriod(semester: number): void {
@@ -93,7 +93,7 @@ export class UniversityYearsComponent implements OnInit, OnDestroy {
         header: 'Вилучити навчальний рік?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._yearService.deleteYear(year)
+      () => this._yearService.deleteItem(year)
         .subscribe(() => this.years.splice(index, 1)));
   }
 
@@ -106,7 +106,7 @@ export class UniversityYearsComponent implements OnInit, OnDestroy {
         header: 'Вилучити семестер?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._semesterService.deleteSemester(semester)
+      () => this._semesterService.deleteItem(semester)
         .subscribe(() => semesters.splice(index, 1)));
   }
 
@@ -119,7 +119,7 @@ export class UniversityYearsComponent implements OnInit, OnDestroy {
         header: 'Вилучити навчальний період?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._periodService.deletePeriod(period)
+      () => this._periodService.deleteItem(period)
         .subscribe(() => periods.splice(index, 1)));
   }
 
@@ -132,20 +132,20 @@ export class UniversityYearsComponent implements OnInit, OnDestroy {
   private _getYears(univ: number): void {
     this.isYearsLoading = true;
     this.semestersMap.clear();
-    this._yearService.getYears({univ})
+    this._yearService.getItems({univ})
       .subscribe(res => this.years = res.results)
       .add(() => (this.years || []).forEach(year => this._getSemesters(year.id)))
       .add(() => this.isYearsLoading = false);
   }
 
   private _getSemesters(year: number, ordering: keyof ISemester = 'num'): void {
-    this._semesterService.getSemesters({year, ordering})
+    this._semesterService.getItems({year, ordering})
       .subscribe(res => this.semestersMap.set(year, res.results))
       .add(() => (this.semestersMap.get(year) || []).forEach(semester => this._getPeriods(semester.id)));
   }
 
   private _getPeriods(semester: number): void {
-    this._periodService.getPeriods({semester})
+    this._periodService.getItems({semester})
       .subscribe(res => this.periodsMap.set(semester, res.results));
   }
 }

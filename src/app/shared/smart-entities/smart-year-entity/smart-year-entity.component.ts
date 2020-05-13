@@ -31,7 +31,7 @@ export class SmartYearEntityComponent {
     if (this.yearEntityService.form.invalid || !this.year) return;
 
     this.isLoading = true;
-    this._yearService.updateYear(this.year.id, this.yearEntityService.form.value)
+    this._yearService.updateItem(this.year.id, this.yearEntityService.form.value)
       .subscribe(res => Object.assign(this.year, res) && this.reset())
       .add(() => this.isLoading = false);
   }

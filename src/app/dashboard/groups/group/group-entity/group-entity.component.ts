@@ -13,6 +13,7 @@ import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
 export class GroupEntityComponent implements OnInit, OnDestroy {
   @Output() save: EventEmitter<IUpdateGroup> = new EventEmitter<IUpdateGroup>();
   @Output() facultyChanged: EventEmitter<number> = new EventEmitter<number>();
+  @Output() univChanged: EventEmitter<number> = new EventEmitter<number>();
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(public groupEntityService: GroupEntityService) { }
@@ -33,6 +34,10 @@ export class GroupEntityComponent implements OnInit, OnDestroy {
     this.groupEntityService.facControl.valueChanges
       .pipe(takeUntil(this._unsubscribe))
       .subscribe(value => this.facultyChanged.emit(+value));
+
+    this.groupEntityService.univControl.valueChanges
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(value => this.univChanged.emit(+value));
   }
 
   public resetForm(): void {

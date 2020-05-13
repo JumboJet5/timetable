@@ -31,7 +31,7 @@ export class SmartTeacherEntityComponent {
     if (this.teacherEntityService.form.invalid || !this.teacher) return;
 
     this.isLoading = true;
-    this.teacherService.updateTeacher(this.teacher.id, this.teacherEntityService.form.value)
+    this.teacherService.updateItem(this.teacher.id, this.teacherEntityService.form.value)
       .subscribe(res => Object.assign(this.teacher, res))
       .add(() => this.isLoading = false);
   }

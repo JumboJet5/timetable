@@ -48,14 +48,14 @@ export class UniversityHousingsComponent implements OnInit {
         header: 'Вилучити корпус?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => (this.isLoading = true) && this._housingService.deleteHousing(id)
+      () => (this.isLoading = true) && this._housingService.deleteItem(id)
         .subscribe(() => this.housings.splice(index, 1))
         .add(() => this.isLoading = false));
   }
 
   private _loadUnivHousings(): void {
     this.isLoading = false;
-    this._housingService.getHousings({univ: this._univId})
+    this._housingService.getItems({univ: this._univId})
       .subscribe(res => this.housings = res.results)
       .add(() => this.isLoading = false);
   }

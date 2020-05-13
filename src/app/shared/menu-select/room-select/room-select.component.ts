@@ -16,8 +16,8 @@ export class RoomSelectComponent extends AsyncSelectorWithFiltersComponent<IRoom
   constructor(public roomService: RoomService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<any>(id => roomService.getRoom(id),
-      params => roomService.getRooms(params)), formBuilder, formatService);
+    super(optionServiceFactory<any>(id => roomService.getItem(id),
+      params => roomService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть аудиторію';
     this.multiplePlaceholder = 'Оберіть аудиторії';
     this.withSearch = true;

@@ -4,7 +4,7 @@
     <div class="column">
       <label class="tt-input-label">
         <span class="placeholder">Університет *</span>
-        <app-university-select [selectControl]="housingEntityService.univControl"></app-university-select>
+        <app-university-select [selectControl]="housingEntityService.form.get('univ')"></app-university-select>
         <span class="tt-error">{{housingEntityService.getControlError('univ')}}</span>
       </label>
       <label class="tt-input-label">

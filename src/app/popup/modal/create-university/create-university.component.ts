@@ -36,7 +36,7 @@ export class CreateUniversityComponent implements OnInit {
 
   public createUniversity() {
     this.isLoading = true;
-    this._universityService.createUniversity(this.universityEntityService.form.value)
+    this._universityService.createItem(this.universityEntityService.form.value)
       .subscribe(university => this._popupService.sendMessage(this._chanelId, university))
       .add(() => this.closeModal());
   }

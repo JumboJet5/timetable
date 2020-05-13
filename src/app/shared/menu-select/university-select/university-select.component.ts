@@ -15,8 +15,8 @@ export class UniversitySelectComponent extends AsyncSelectorWithFiltersComponent
   constructor(public universityService: UniversityService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<any>(id => universityService.getUniversity(id),
-      params => universityService.getUniversities(params)), formBuilder, formatService);
+    super(optionServiceFactory<any>(id => universityService.getItem(id),
+      params => universityService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть університет';
     this.multiplePlaceholder = 'Оберіть університети';
   }

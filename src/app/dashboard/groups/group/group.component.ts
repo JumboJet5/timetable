@@ -14,6 +14,7 @@ import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
 export class GroupComponent implements OnInit, OnDestroy {
   public group: IGroup;
   public facultyId: number;
+  public univId: number;
   public isLoading = false;
   private _groupSlug: string;
   private _unsubscribe: Subject<void> = new Subject();
@@ -29,7 +30,7 @@ export class GroupComponent implements OnInit, OnDestroy {
 
   public saveGroupEntity(updateGroup: IUpdateGroup) {
     this.isLoading = true;
-    this._groupService.updateGroup(this.group.id, updateGroup)
+    this._groupService.updateItem(this.group.id, updateGroup)
       .subscribe(group => this.group = group)
       .add(() => this.isLoading = false);
   }
@@ -39,7 +40,7 @@ export class GroupComponent implements OnInit, OnDestroy {
         header: 'Вилучити групу?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._groupService.deleteGroup(this.group.id)
+      () => this._groupService.deleteItem(this.group.id)
         .subscribe(() => this._router.navigate(['dashboard', 'groups'])));
   }
 
@@ -55,7 +56,7 @@ export class GroupComponent implements OnInit, OnDestroy {
       .pipe(filter(params => params.groupSlug !== this._groupSlug))
       .pipe(tap(params => this._groupSlug = params.groupSlug))
       .pipe(tap(() => this.isLoading = true))
-      .pipe(switchMap(() => this._groupService.getGroup(this._groupSlug)))
+      .pipe(switchMap(() => this._groupService.getItem(this._groupSlug)))
       .subscribe(res => {
         this.group = res;
         this.isLoading = false;

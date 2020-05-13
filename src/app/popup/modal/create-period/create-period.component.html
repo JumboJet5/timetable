@@ -3,7 +3,7 @@
   <form class="tt-form" [formGroup]="periodEntityService.form">
     <label class="tt-input-label">
       <span class="placeholder">Тип *</span>
-      <app-period-types-select [selectControl]="periodEntityService.kindControl"></app-period-types-select>
+      <app-period-types-select [selectControl]="periodEntityService.form.get('kind')"></app-period-types-select>
       <span class="tt-error">{{periodEntityService.getControlError('kind')}}</span>
     </label>
     <div class="tt-input-label">

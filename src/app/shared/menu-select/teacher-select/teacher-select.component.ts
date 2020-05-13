@@ -15,8 +15,8 @@ export class TeacherSelectComponent extends AsyncSelectorWithFiltersComponent<IT
   constructor(public teacherService: TeacherService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<ITeacher>(id => teacherService.getTeacher(id),
-      params => teacherService.getTeachers(params)), formBuilder, formatService);
+    super(optionServiceFactory<ITeacher>(id => teacherService.getItem(id),
+      params => teacherService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть викладача';
     this.multiplePlaceholder = 'Оберіть викладачів';
     this.withSearch = true;

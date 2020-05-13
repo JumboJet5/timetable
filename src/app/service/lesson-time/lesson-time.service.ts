@@ -1,34 +1,12 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { EntityCrudService } from '@app/shared/classes/entity-crud.service';
 import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
-import { IPageable } from 'src/core/interfaces/pageable.interface';
-import { IRequestParams } from 'src/core/interfaces/request-param.interface';
-import * as URLS from 'src/core/urls';
+import { LESSON_TIME, LESSON_TIMES } from 'src/core/urls';
 
 @Injectable({
   providedIn: 'root',
 })
-export class LessonTimeService {
-  constructor(private http: HttpClient) {}
-
-  public getLessonTimes(params: IRequestParams): Observable<IPageable<ILessonTime>> {
-    return this.http.get<IPageable<ILessonTime>>(URLS.LESSON_TIMES, {params: params as {}});
-  }
-
-  public getLessonTime(id: number): Observable<ILessonTime> {
-    return this.http.get<ILessonTime>(URLS.LESSON_TIME(id));
-  }
-
-  public createLessonTime(body: any): Observable<ILessonTime> {
-    return this.http.post<ILessonTime>(URLS.LESSON_TIMES, body);
-  }
-
-  public updateLessonTime(id: number, body: any): Observable<ILessonTime> {
-    return this.http.put<ILessonTime>(URLS.LESSON_TIME(id), body);
-  }
-
-  public deleteLessonTime(id: number): Observable<null> {
-    return this.http.delete<null>(URLS.LESSON_TIME(id));
-  }
+export class LessonTimeService extends EntityCrudService<ILessonTime> {
+  protected _itemsURL = LESSON_TIMES;
+  protected _itemURL = LESSON_TIME;
 }

@@ -32,7 +32,7 @@ export class SmartGroupEntityComponent {
     if (this.groupEntityService.form.invalid || !this.group) return;
 
     this.isLoading = true;
-    this.groupService.updateGroup(this.group.id, this.groupEntityService.form.value)
+    this.groupService.updateItem(this.group.id, this.groupEntityService.form.value)
       .subscribe(res => Object.assign(this.group, res) && this.reset())
       .add(() => this.isLoading = false);
   }

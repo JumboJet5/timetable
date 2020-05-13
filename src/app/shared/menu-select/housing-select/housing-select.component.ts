@@ -14,8 +14,8 @@ export class HousingSelectComponent extends AsyncSelectorWithFiltersComponent<an
   constructor(public housingService: HousingService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<any>(id => housingService.getHousing(id),
-      params => housingService.getHousings(params)), formBuilder, formatService);
+    super(optionServiceFactory<any>(id => housingService.getItem(id),
+      params => housingService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть корпус';
     this.multiplePlaceholder = 'Оберіть корпуси';
     this.withSearch = false;

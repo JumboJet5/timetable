@@ -1,39 +1,26 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DateFormatService } from '@app/service/date-format/date-format.service';
+import { FormatService } from '@app/service/format/format.service';
+import { YearService } from '@app/service/year/year.service';
+import { EntityWithLimitedRangeFormService } from '@app/shared/classes/entity-with-limited-range-form.service';
 import { ISemester } from 'src/core/interfaces/semester.interface';
+import { IYear } from 'src/core/interfaces/year.interface';
 
 @Injectable()
-export class SemesterEntityService {
+export class SemesterEntityService extends EntityWithLimitedRangeFormService<ISemester, IYear> {
   public form: FormGroup = new FormGroup({
     num: new FormControl('', Validators.compose([Validators.required, Validators.min(1)])),
-    year: new FormControl('', Validators.required),
-    start: new FormControl('', Validators.required),
-    end: new FormControl('', Validators.required),
-    from: new FormControl(''),
-    to: new FormControl(''),
+    year: this.limiterControl,
+    from: this.fromControl,
+    to: this.toControl,
+    end: this.endControl,
+    start: this.startControl,
   });
 
-  constructor(public dateFormatService: DateFormatService) {
-    this.form.get('from').valueChanges
-      .subscribe(value => this.form.get('start').patchValue(dateFormatService.getDateString(value)));
-    this.form.get('to').valueChanges
-      .subscribe(value => this.form.get('end').patchValue(dateFormatService.getDateString(value)));
-  }
-
-  public resetForm(housing: Partial<ISemester>): void {
-    this.form.patchValue({
-      ...housing,
-      from: this.dateFormatService.getDateFromString(housing.start),
-      to: this.dateFormatService.getDateFromString(housing.end),
-    });
-    if (housing.year) this.form.get('year').disable({onlySelf: true});
-  }
-
-  public getFormValue(): ISemester {
-    this.form.get('year').enable();
-    const result = this.form.value;
-    if (this.form.value.year) this.form.get('year').disable({onlySelf: true});
-    return result;
+  constructor(public formatService: FormatService,
+              public dateFormatService: DateFormatService,
+              public yearService: YearService) {
+    super(formatService, dateFormatService, yearService);
   }
 }

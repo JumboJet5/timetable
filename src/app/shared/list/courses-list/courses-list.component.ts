@@ -19,8 +19,8 @@ export class CoursesListComponent extends ItemsListComponent<ICourse> {
   constructor(private _courseService: CourseService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<ICourse>(params => this._courseService.getCourses(params),
-      id => this._courseService.deleteCourse(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<ICourse>(params => this._courseService.getItems(params),
+      id => this._courseService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: ICourse): void {

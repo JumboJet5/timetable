@@ -73,14 +73,14 @@ export class FacultyHousingsComponent implements OnInit {
 
   private _loadFacultyHousings(): void {
     this.isLoading = false;
-    this._housingService.getHousings({faculty: this._facultyId})
+    this._housingService.getItems({faculty: this._facultyId})
       .subscribe(res => (this.facultyHousings = res.results) && !!this.univHousings && (this.univHousings = [...this.univHousings]))
       .add(() => this.isLoading = false);
   }
 
   private _loadUnivHousings(): void {
     this.isLoading = false;
-    this._housingService.getHousings({univ: this._univId})
+    this._housingService.getItems({univ: this._univId})
       .subscribe(res => this.univHousings = res.results)
       .add(() => this.isLoading = false);
   }

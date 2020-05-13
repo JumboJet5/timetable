@@ -19,8 +19,8 @@ export class RoomsListComponent extends ItemsListComponent<IRoom> {
   constructor(private _roomService: RoomService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<IRoom>(params => this._roomService.getRooms(params),
-      id => this._roomService.deleteRoom(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<IRoom>(params => this._roomService.getItems(params),
+      id => this._roomService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: IRoom): void {

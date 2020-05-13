@@ -105,12 +105,12 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
     this._groupsemesterService.getGroupsemesters(this.groupId)
       .subscribe(res => this.groupsemesters = res.results)
       .add(() => !!this.semesters.length && this._autoDefiningCurrentSemester());
-    this._semesterService.getSemesters({group: this.groupId})
+    this._semesterService.getItems({group: this.groupId})
       .subscribe(res => this.semesters = res.results)
       .add(() => !!this.groupsemesters.length && this._autoDefiningCurrentSemester());
-    this._themeService.getThemes({group: this.groupId})
+    this._themeService.getItems({group: this.groupId})
       .subscribe(res => this.themes = res.results);
-    this._housingService.getHousings({group: this.groupId})
+    this._housingService.getItems({group: this.groupId})
       .subscribe(res => this.housings = res.results);
   }
 }

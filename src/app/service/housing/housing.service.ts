@@ -1,32 +1,10 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { IPageable, IRequestParams } from '@interfaces';
-import { Observable } from 'rxjs';
+import { EntityCrudService } from '@app/shared/classes/entity-crud.service';
 import { IHousing } from 'src/core/interfaces/housing.interface';
-import * as URLS from '../../../core/urls';
+import { HOUSING, HOUSINGS } from 'src/core/urls';
 
 @Injectable({providedIn: 'root'})
-export class HousingService {
-  constructor(private http: HttpClient) {
-  }
-
-  public getHousings(params: IRequestParams): Observable<IPageable<IHousing>> {
-    return this.http.get<IPageable<IHousing>>(URLS.HOUSINGS, {params: params as {}});
-  }
-
-  public getHousing(id: number): Observable<IHousing> {
-    return this.http.get<IHousing>(URLS.HOUSING(id));
-  }
-
-  public createHousing(housing: IHousing): Observable<IHousing> {
-    return this.http.post<IHousing>(URLS.HOUSINGS, housing);
-  }
-
-  public updateHousing(id: number, housing: IHousing): Observable<IHousing> {
-    return this.http.put<IHousing>(URLS.HOUSING(id), housing);
-  }
-
-  public deleteHousing(id: number): Observable<null> {
-    return this.http.delete<null>(URLS.HOUSING(id));
-  }
+export class HousingService extends EntityCrudService<IHousing> {
+  protected _itemsURL = HOUSINGS;
+  protected _itemURL = HOUSING;
 }

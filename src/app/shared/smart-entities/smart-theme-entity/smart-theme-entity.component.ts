@@ -31,7 +31,7 @@ export class SmartThemeEntityComponent {
     if (this.themeEntityService.form.invalid || !this.theme) return;
 
     this.isLoading = true;
-    this._themeService.updateTheme(this.theme.id, this.themeEntityService.form.value)
+    this._themeService.updateItem(this.theme.id, this.themeEntityService.getFormValue())
       .subscribe(res => Object.assign(this.theme, res))
       .add(() => this.isLoading = false);
   }

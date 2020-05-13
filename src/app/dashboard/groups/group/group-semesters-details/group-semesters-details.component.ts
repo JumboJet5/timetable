@@ -18,6 +18,7 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
 })
 export class GroupSemestersDetailsComponent implements OnInit {
   @Input() facultyId: number;
+  @Input() univId: number;
   public groupsemesters: IGroupsemester[];
   public groupThemes: ITheme[];
   public lessonTimes: ILessonTime[];
@@ -60,7 +61,7 @@ export class GroupSemestersDetailsComponent implements OnInit {
   }
 
   public createSemester() {
-    if (!!this.group) this.popupService.openReactiveModal(['create-semester'], {year: this.group.year});
+    if (!!this.group) this.popupService.openReactiveModal(['create-semester'], {year: this.group.year, univ: this.univId});
   }
 
   private _addSemesterToGroup(semester: ISemester): void {
@@ -82,16 +83,16 @@ export class GroupSemestersDetailsComponent implements OnInit {
   }
 
   private _getAllGroupSemestersAdditionalInfo(group: number) {
-    this.themeService.getThemes({group})
+    this.themeService.getItems({group})
       .subscribe(res => this.groupThemes = res.results);
 
     this.groupsemesterService.getGroupsemesters(group)
       .subscribe(res => this.groupsemesters = res.results);
 
-    this.semesterService.getSemesters({group})
+    this.semesterService.getItems({group})
       .subscribe(res => res.results.forEach(semester => this.semesterMap.set(semester.id, semester)));
 
-    this.lessonTimeService.getLessonTimes({group})
+    this.lessonTimeService.getItems({group})
       .subscribe(res => this.lessonTimes = res.results);
   }
 }

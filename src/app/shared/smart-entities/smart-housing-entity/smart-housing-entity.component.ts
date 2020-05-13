@@ -31,7 +31,7 @@ export class SmartHousingEntityComponent {
     if (this.housingEntityService.form.invalid || !this.housing) return;
 
     this.isLoading = true;
-    this.housingService.updateHousing(this.housing.id, this.housingEntityService.getFormValue())
+    this.housingService.updateItem(this.housing.id, this.housingEntityService.getFormValue())
       .subscribe(res => Object.assign(this.housing, res) && this.reset())
       .add(() => this.isLoading = false);
   }

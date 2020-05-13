@@ -15,8 +15,8 @@ export class SpecialtySelectComponent extends AsyncSelectorWithFiltersComponent<
   constructor(public specialtyService: SpecialtyService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<ISpecialty>(id => specialtyService.getSpecialty(id),
-      params => specialtyService.getSpecialties(params)), formBuilder, formatService);
+    super(optionServiceFactory<ISpecialty>(id => specialtyService.getItem(id),
+      params => specialtyService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть спеціальність';
     this.multiplePlaceholder = 'Оберіть спеціальності';
     this.withSearch = true;

@@ -34,7 +34,7 @@ export class CreateSpecialtyComponent implements OnInit {
 
   public createSpecialty() {
     this.isLoading = true;
-    this._specialtyService.createSpecialty(this.specialtyEntityService.form.value)
+    this._specialtyService.createItem(this.specialtyEntityService.form.value)
       .subscribe(specialty => this._popupService.sendMessage(this._chanelId, specialty))
       .add(() => this.closeModal());
   }

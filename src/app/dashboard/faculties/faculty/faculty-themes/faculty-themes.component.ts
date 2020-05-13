@@ -26,7 +26,7 @@ export class FacultyThemesComponent {
 
   private _loadFacultyThemes(): void {
     this.isLoading = true;
-    this._themeService.getThemes({faculty: this._facultyId})
+    this._themeService.getItems({faculty: this._facultyId})
       .subscribe(res => this.themes = res.results)
       .add(() => this.isLoading = false);
   }

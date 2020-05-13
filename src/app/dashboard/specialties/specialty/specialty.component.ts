@@ -44,7 +44,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   public saveSpecialty(specialty: ISpecialty): void {
     this.isLoading = true;
-    this._specialtyService.updateSpecialty(this.specialtyId, specialty)
+    this._specialtyService.updateItem(this.specialtyId, specialty)
       .subscribe(res => this.specialty = res)
       .add(() => this.isLoading = false);
   }
@@ -54,7 +54,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
         header: 'Вилучити спеціальність?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._specialtyService.deleteSpecialty(this.specialtyId)
+      () => this._specialtyService.deleteItem(this.specialtyId)
         .subscribe(() => this._router.navigate(['dashboard', 'specialties'])));
   }
 
@@ -66,7 +66,7 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
 
   private _getCurrentSpecialty(): void {
     this.isLoading = true;
-    this._specialtyService.getSpecialty(this.specialtyId)
+    this._specialtyService.getItem(this.specialtyId)
       .subscribe(specialty => this.specialty = specialty)
       .add(() => this.isLoading = false);
   }

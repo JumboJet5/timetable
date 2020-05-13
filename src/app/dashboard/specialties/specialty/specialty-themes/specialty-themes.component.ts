@@ -26,7 +26,7 @@ export class SpecialtyThemesComponent {
 
   private _loadSpecialtyThemes(): void {
     this.isLoading = false;
-    this._themeService.getThemes({specialty: this._specialtyId})
+    this._themeService.getItems({specialty: this._specialtyId})
       .subscribe(res => this.themes = res.results)
       .add(() => this.isLoading = false);
   }

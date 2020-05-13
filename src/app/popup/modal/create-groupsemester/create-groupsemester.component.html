@@ -1,16 +1,16 @@
-<app-modal-wrapper [isLoading]="isLoading" [formGroup]="groupsemesterEntityService.form">
+<app-modal-wrapper [isLoading]="isLoading" [formGroup]="_groupsemesterEntityService.form">
   <h4>Прив'язування семестра до групи</h4>
 
   <div class="placeholder">Група</div>
-  <app-group-select [selectControl]="groupsemesterEntityService.form.get('group')" optionIdKey="id"></app-group-select>
+  <app-group-select [selectControl]="_groupsemesterEntityService.form.get('group')" optionIdKey="id"></app-group-select>
 
   <div class="placeholder">Доступні семестри</div>
   <div class="semester-row">
-    <app-semester-select [selectControl]="groupsemesterEntityService.form.get('semester')"
-                         [filters]="groupsemesterEntityService.groupFilters"
+    <app-semester-select [selectControl]="_groupsemesterEntityService.form.get('semester')"
+                         [filters]="_groupsemesterEntityService.groupFilters"
                          dropByFilter="true"></app-semester-select>
     <button (click)="createSemester()"
-            [disabled]="!groupsemesterEntityService.form.get('group')"
+            [disabled]="!_groupsemesterEntityService.form.get('group')"
             title="Створити новий"
             mat-icon-button>
       <mat-icon>add</mat-icon>
@@ -20,7 +20,7 @@
   <mat-checkbox formControlName="show_lessons_number" color="primary">Показувати номери пар</mat-checkbox>
 
   <div class="control-row">
-    <button (click)="create()" [disabled]="groupsemesterEntityService.form.invalid" mat-flat-button color="primary">
+    <button (click)="create()" [disabled]="_groupsemesterEntityService.form.invalid" mat-flat-button color="primary">
       <span>Створити</span>
     </button>
 

@@ -37,7 +37,7 @@ export class HousingComponent implements OnInit, OnDestroy {
 
   public saveHousing(housing: IHousing): void {
     this.isLoading = true;
-    this._housingService.updateHousing(this.housingId, housing)
+    this._housingService.updateItem(this.housingId, housing)
       .subscribe(res => this.housing = res)
       .add(() => this.isLoading = false);
   }
@@ -47,7 +47,7 @@ export class HousingComponent implements OnInit, OnDestroy {
         header: 'Вилучити корпус?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._housingService.deleteHousing(this.housingId)
+      () => this._housingService.deleteItem(this.housingId)
         .subscribe(() => this._router.navigate(['dashboard', 'faculties'])));
   }
 
@@ -63,7 +63,7 @@ export class HousingComponent implements OnInit, OnDestroy {
 
   private _getCurrentHousing(): void {
     this.isLoading = true;
-    this._housingService.getHousing(this.housingId)
+    this._housingService.getItem(this.housingId)
       .subscribe(housing => this.housing = housing)
       .add(() => this.isLoading = false);
   }

@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DateFormatService } from '@app/service/date-format/date-format.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { SemesterEntityService } from '@app/service/semester-entity/semester-entity.service';
 import { SemesterService } from '@app/service/semester/semester.service';
@@ -14,13 +13,13 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
 })
 export class CreateSemesterComponent implements OnInit {
   public isLoading = false;
+  public univId: number;
   private _chanelId: number = PopupChanelEnum.CREATE_SEMESTER;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private semesterService: SemesterService,
               public semesterEntityService: SemesterEntityService,
-              public dateFormatService: DateFormatService,
               private popupService: PopupService) { }
 
   ngOnInit(): void {
@@ -37,12 +36,13 @@ export class CreateSemesterComponent implements OnInit {
     if (this.semesterEntityService.form.invalid) return;
 
     this.isLoading = true;
-    this.semesterService.createSemester(this.semesterEntityService.getFormValue())
+    this.semesterService.createItem(this.semesterEntityService.getFormValue())
       .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
       .add(() => this.isLoading = false);
   }
 
   private _applyQueryParams() {
     this.semesterEntityService.resetForm({year: +this.route.snapshot.queryParams.year});
+    if (this.route.snapshot.queryParams.univ) this.univId = +this.route.snapshot.queryParams.univ;
   }
 }

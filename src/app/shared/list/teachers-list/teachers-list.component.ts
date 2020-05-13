@@ -21,8 +21,8 @@ export class TeachersListComponent extends ItemsListComponent<ITeacher> {
   constructor(private _teacherService: TeacherService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<ITeacher>(params => this._teacherService.getTeachers(params),
-      id => this._teacherService.deleteTeacher(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<ITeacher>(params => this._teacherService.getItems(params),
+      id => this._teacherService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: ITeacher): void {

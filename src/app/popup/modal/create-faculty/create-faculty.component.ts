@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FacultyEntityService } from '@app/service/faculty-entity/faculty-entity.service';
 import { FacultyService } from '@app/service/faculty/faculty.service';
@@ -12,7 +12,6 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   providers: [FacultyEntityService],
 })
 export class CreateFacultyComponent implements OnInit {
-  @Input() public isLogoUpdating = false;
   public isLoading = false;
   private _chanelId: number = PopupChanelEnum.CREATE_FACULTY;
 
@@ -24,7 +23,6 @@ export class CreateFacultyComponent implements OnInit {
 
   public ngOnInit(): void {
     this._popupService.createChanel(this._chanelId);
-    this._applyParamsChange(this._route.snapshot.queryParams);
     this._route.queryParams
       .subscribe(params => this._applyParamsChange(params));
   }
@@ -35,7 +33,7 @@ export class CreateFacultyComponent implements OnInit {
 
   public createFaculty() {
     this.isLoading = true;
-    this._facultyService.createFaculty(this.facultyEntityService.form.value)
+    this._facultyService.createItem(this.facultyEntityService.form.value)
       .subscribe(faculty => this._popupService.sendMessage(this._chanelId, faculty))
       .add(() => this.closeModal());
   }

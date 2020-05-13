@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service';
 import { LessontimeEntityService } from '@app/service/lessontime-entity/lessontime-entity.service';
 import { PopupService } from '@app/service/modal/popup.service';
@@ -23,7 +23,7 @@ export class CreateLessontimeComponent implements OnInit {
 
   public ngOnInit(): void {
     this.popupService.createChanel(this._chanelId);
-    this.route.queryParams.subscribe(() => this._applyQueryParams());
+    this.route.queryParams.subscribe(params => this._applyParamsChange(params));
   }
 
   public closeModal(): void {
@@ -34,14 +34,12 @@ export class CreateLessontimeComponent implements OnInit {
     if (this.lessontimeEntityService.form.invalid) return;
 
     this.isLoading = true;
-    this.lessonTimeService.createLessonTime(this.lessontimeEntityService.getFormValue())
+    this.lessonTimeService.createItem(this.lessontimeEntityService.getFormValue())
       .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
       .add(() => this.isLoading = false);
-
-    this._applyQueryParams();
   }
 
-  private _applyQueryParams() {
-    this.lessontimeEntityService.resetForm({faculty: +this.route.snapshot.queryParams.faculty});
+  private _applyParamsChange(params: Params) {
+    this.lessontimeEntityService.resetForm({faculty: +params.faculty});
   }
 }

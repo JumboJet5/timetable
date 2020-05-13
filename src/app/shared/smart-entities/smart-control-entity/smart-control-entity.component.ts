@@ -31,7 +31,7 @@ export class SmartControlEntityComponent {
     if (this.controlEntityService.form.invalid || !this.control) return;
 
     this.isLoading = true;
-    this.controlService.updateControl(this.control.id, this.controlEntityService.form.value)
+    this.controlService.updateItem(this.control.id, this.controlEntityService.form.value)
       .subscribe(res => Object.assign(this.control, res) && this.reset())
       .add(() => this.isLoading = false);
   }

@@ -35,7 +35,7 @@ export class CreateRoomComponent implements OnInit {
     if (this.roomEntityService.form.invalid) return;
 
     this.isLoading = true;
-    this.roomService.createRoom(this.roomEntityService.getFormValue())
+    this.roomService.createItem(this.roomEntityService.getFormValue())
       .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
       .add(() => this.isLoading = false);
   }

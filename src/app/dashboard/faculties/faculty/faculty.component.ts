@@ -37,7 +37,7 @@ export class FacultyComponent implements OnInit, OnDestroy {
 
   public saveFaculty(faculty: IFaculty): void {
     this.isLoading = true;
-    this._facultyService.updateFaculty(this.facultyId, faculty)
+    this._facultyService.updateItem(this.facultyId, faculty)
       .subscribe(res => this.faculty = res)
       .add(() => this.isLoading = false);
   }
@@ -47,7 +47,7 @@ export class FacultyComponent implements OnInit, OnDestroy {
         header: 'Вилучити факультет?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._facultyService.deleteFaculty(this.facultyId)
+      () => this._facultyService.deleteItem(this.facultyId)
         .subscribe(() => this._router.navigate(['dashboard', 'faculties'])));
   }
 
@@ -63,7 +63,7 @@ export class FacultyComponent implements OnInit, OnDestroy {
 
   private _getCurrentFaculty(): void {
     this.isLoading = true;
-    this._facultyService.getFaculty(this.facultyId)
+    this._facultyService.getItem(this.facultyId)
       .subscribe(specialty => this.faculty = specialty)
       .add(() => this.isLoading = false);
   }

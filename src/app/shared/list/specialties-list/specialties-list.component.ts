@@ -17,8 +17,8 @@ export class SpecialtiesListComponent extends ItemsListComponent<ISpecialty> {
   constructor(private _specialtyService: SpecialtyService,
               protected _popupService: PopupService,
               @Optional() public smartDetailsService: SmartDetailsService) {
-    super(itemServiceFactory<ISpecialty>(params => this._specialtyService.getSpecialties(params),
-      id => this._specialtyService.deleteSpecialty(id)), _popupService, smartDetailsService);
+    super(itemServiceFactory<ISpecialty>(params => this._specialtyService.getItems(params),
+      id => this._specialtyService.deleteItem(id)), _popupService, smartDetailsService);
   }
 
   public getItemDetailsEntity(entity: ISpecialty): void {

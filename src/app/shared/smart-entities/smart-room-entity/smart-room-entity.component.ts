@@ -31,7 +31,7 @@ export class SmartRoomEntityComponent {
     if (this.roomEntityService.form.invalid || !this.room) return;
 
     this.isLoading = true;
-    this._roomService.updateRoom(this.room.id, this.roomEntityService.form.value)
+    this._roomService.updateItem(this.room.id, this.roomEntityService.form.value)
       .subscribe(res => Object.assign(this.room, res) && this.reset())
       .add(() => this.isLoading = false);
   }

@@ -3,3 +3,8 @@ export interface IRange {
   to: Date;
   temp?: Date;
 }
+
+export interface IStudyPeriodRange {
+  start: string;
+  end: string;
+}

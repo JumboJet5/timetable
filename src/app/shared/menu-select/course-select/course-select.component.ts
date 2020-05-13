@@ -17,8 +17,8 @@ export class CourseSelectComponent extends AsyncSelectorWithFiltersComponent<ICo
   constructor(public courseService: CourseService,
               protected formBuilder: FormBuilder,
               protected formatService: FormatService) {
-    super(optionServiceFactory<ICourse>(id => courseService.getCourse(id),
-      params => courseService.getCourses(params)), formBuilder, formatService);
+    super(optionServiceFactory<ICourse>(id => courseService.getItem(id),
+      params => courseService.getItems(params)), formBuilder, formatService);
     this.simplePlaceholder = 'Оберіть курс';
     this.multiplePlaceholder = 'Оберіть курси';
   }

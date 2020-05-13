@@ -31,7 +31,7 @@ export class SmartFacultyEntityComponent {
     if (this.facultyEntityService.form.invalid || !this.faculty) return;
 
     this.isLoading = true;
-    this.facultyService.updateFaculty(this.faculty.id, this.facultyEntityService.form.value)
+    this.facultyService.updateItem(this.faculty.id, this.facultyEntityService.form.value)
       .subscribe(res => Object.assign(this.faculty, res) && this.reset())
       .add(() => this.isLoading = false);
   }

@@ -113,7 +113,7 @@ export class GroupsemesterDetailsComponent implements OnInit {
         header: 'Вилучити розклад пари?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this.lessonTimeService.deleteLessonTime(id)
+      () => this.lessonTimeService.deleteItem(id)
         .pipe(takeUntil(this._unsubscribeDeleting))
         .subscribe(() => this.lessonTimes.splice(index, 1) && (this.isUpdateSuccess = true), () => this.isUpdateFailed = true)
         .add(() => this.isLoading = false) && (this.isLoading = true));

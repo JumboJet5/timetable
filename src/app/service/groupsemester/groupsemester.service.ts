@@ -5,9 +5,7 @@ import { ICreateInfoGroupsemester, IGroupsemester, IGroupsemesterSimplified } fr
 import { IPageable } from 'src/core/interfaces/pageable.interface';
 import * as URLS from 'src/core/urls';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class GroupsemesterService {
 
   constructor(private http: HttpClient) {}

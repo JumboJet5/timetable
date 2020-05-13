@@ -39,7 +39,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   public saveCourse(course: ICourse): void {
     this.isEntityLoading = true;
-    this._courseService.updateCourse(this.courseId, course)
+    this._courseService.updateItem(this.courseId, course)
       .subscribe(res => this.course = res)
       .add(() => this.isEntityLoading = false);
   }
@@ -49,7 +49,7 @@ export class CourseComponent implements OnInit, OnDestroy {
         header: 'Вилучити курс?',
         body: 'Видалення несе невідворотній характер, та може спричинити нестабільну роботу системи.\n\rВи впевнані?',
       },
-      () => this._courseService.deleteCourse(this.courseId)
+      () => this._courseService.deleteItem(this.courseId)
         .subscribe(() => this._router.navigate(['dashboard', 'specialties', this.course.specialty])));
   }
 
@@ -65,7 +65,7 @@ export class CourseComponent implements OnInit, OnDestroy {
 
   private _getCurrentCourse(): void {
     this.isEntityLoading = true;
-    this._courseService.getCourse(this.courseId)
+    this._courseService.getItem(this.courseId)
       .subscribe(course => this.course = course)
       .add(() => this.isEntityLoading = false);
   }

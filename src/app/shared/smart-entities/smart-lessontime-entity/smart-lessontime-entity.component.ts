@@ -31,7 +31,7 @@ export class SmartLessontimeEntityComponent {
     if (this.lessontimeEntityService.form.invalid || !this.lessontime) return;
 
     this.isLoading = true;
-    this.lessonTimeService.updateLessonTime(this.lessontime.id, this.lessontimeEntityService.getFormValue())
+    this.lessonTimeService.updateItem(this.lessontime.id, this.lessontimeEntityService.getFormValue())
       .subscribe(res => Object.assign(this.lessontime, res))
       .add(() => this.isLoading = false);
   }

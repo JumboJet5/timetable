@@ -17,38 +17,38 @@ export class CreateGroupsemesterComponent implements OnInit {
   public isLoading = false;
   private _chanelId: number = PopupChanelEnum.ADD_SEMESTER_TO_GROUP;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private groupsemesterService: GroupsemesterService,
-              public groupsemesterEntityService: GroupsemesterEntityService,
-              private popupService: PopupService) { }
+  constructor(private _route: ActivatedRoute,
+              private _router: Router,
+              private _groupsemesterService: GroupsemesterService,
+              private _popupService: PopupService,
+              public _groupsemesterEntityService: GroupsemesterEntityService) { }
 
   ngOnInit(): void {
-    this.popupService.createChanel(this._chanelId);
-    this.groupsemesterEntityService.form.patchValue(this.route.snapshot.queryParams);
-    this.route.queryParams
+    this._popupService.createChanel(this._chanelId);
+    this._groupsemesterEntityService.form.patchValue(this._route.snapshot.queryParams);
+    this._route.queryParams
       .subscribe(params => this._applyQueryParams(params));
   }
 
   public closeModal(): void {
-    this.router.navigate([{outlets: {modal: null}}]);
+    this._router.navigate([{outlets: {modal: null}}]);
   }
 
   public create() {
-    if (this.groupsemesterEntityService.form.invalid) return;
+    if (this._groupsemesterEntityService.form.invalid) return;
 
     this.isLoading = true;
-    this.groupsemesterService.createGroupsemester(this.groupsemesterEntityService.getFormValue())
-      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
+    this._groupsemesterService.createGroupsemester(this._groupsemesterEntityService.getFormValue())
+      .subscribe(res => this._popupService.sendMessage(this._chanelId, res) && this.closeModal())
       .add(() => this.isLoading = false);
   }
 
   public createSemester() {
     const option = this.groupSelect.getSelectedOption();
-    if (!!option) this.popupService.openReactiveModal(['create-semester'], {year: option.year});
+    if (!!option) this._popupService.openReactiveModal(['create-semester'], {year: option.year});
   }
 
   private _applyQueryParams(params: Params) {
-    this.groupsemesterEntityService.resetForm({group: +params.group});
+    this._groupsemesterEntityService.resetForm({group: +params.group});
   }
 }

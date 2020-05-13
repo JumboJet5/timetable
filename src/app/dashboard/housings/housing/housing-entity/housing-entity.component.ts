@@ -12,7 +12,7 @@ export class HousingEntityComponent {
   @Output() public save: EventEmitter<IHousing> = new EventEmitter<IHousing>();
 
   constructor(public housingEntityService: HousingEntityService) {
-    housingEntityService.defaultUnivDisabling = false;
+    housingEntityService.disableControls(['univ']);
   }
 
   private _housing: IHousing;

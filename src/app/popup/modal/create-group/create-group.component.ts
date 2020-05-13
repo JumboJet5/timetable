@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { GroupEntityService } from '@app/service/group-entity/group-entity.service';
 import { GroupService } from '@app/service/group/group.service';
@@ -12,7 +12,6 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   providers: [GroupEntityService],
 })
 export class CreateGroupComponent implements OnInit { // todo write create entity super class
-  @Input() public isLogoUpdating = false;
   public isLoading = false;
   private _chanelId: number = PopupChanelEnum.CREATE_GROUP;
 
@@ -24,7 +23,6 @@ export class CreateGroupComponent implements OnInit { // todo write create entit
 
   public ngOnInit(): void {
     this._popupService.createChanel(this._chanelId);
-    this._applyParamsChange(this._route.snapshot.queryParams);
     this._route.queryParams
       .subscribe(params => this._applyParamsChange(params));
   }
@@ -35,7 +33,7 @@ export class CreateGroupComponent implements OnInit { // todo write create entit
 
   public createFaculty() {
     this.isLoading = true;
-    this._groupService.createGroup(this.groupEntityService.form.value)
+    this._groupService.createItem(this.groupEntityService.form.value)
       .subscribe(faculty => this._popupService.sendMessage(this._chanelId, faculty))
       .add(() => this.closeModal());
   }

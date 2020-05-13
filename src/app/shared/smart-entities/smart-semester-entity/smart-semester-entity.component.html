@@ -1,9 +1,4 @@
 <form [formGroup]="semesterEntityService.form">
-  <label class="tt-input-label year-select">
-    <span class="placeholder">Рік</span>
-    <app-year-select #yearSelect [selectControl]="semesterEntityService.form.get('year')"></app-year-select>
-  </label>
-
   <label class="tt-input-label">
     <span class="placeholder">Номер семестру</span>
     <input class="tt-input" formControlName="num" type="number" min="1">
@@ -12,8 +7,8 @@
   <div class="tt-input-label">
     <span class="placeholder">Семестр</span>
     <app-date-range-picker [dateControl]="semesterEntityService.form"
-                           [min]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.start)"
-                           [max]="dateFormatService.getDateFromString(yearSelect.getOptionById(yearSelect.selectControl?.value)?.end)"
+                           [min]="semesterEntityService.getEnableRangeDates()?.min"
+                           [max]="semesterEntityService.getEnableRangeDates()?.max"
                            placeholder="Оберіть діапазон дат"></app-date-range-picker>
   </div>
 
