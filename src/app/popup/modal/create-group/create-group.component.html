@@ -1,4 +1,4 @@
-<app-modal-wrapper [isLoading]="isLoading">
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
   <h4>Створення групи</h4>
   <form [formGroup]="groupEntityService.form" class="tt-form">
     <div class="column">
@@ -70,7 +70,7 @@
     </div>
   </form>
   <div class="control-row">
-    <button (click)="createFaculty()"
+    <button (click)="createItem()"
             [disabled]="groupEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти

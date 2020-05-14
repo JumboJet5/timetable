@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LessonTimeService } from '@app/service/lesson-time/lesson-time.service';
 import { LessontimeEntityService } from '@app/service/lessontime-entity/lessontime-entity.service';
 import { PopupService } from '@app/service/modal/popup.service';
+import { CreateEntityModal } from '@app/shared/classes/create-entity-modal';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
+import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 
 @Component({
   selector: 'app-create-lessontime',
@@ -11,35 +13,18 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './create-lessontime.component.scss'],
   providers: [LessontimeEntityService],
 })
-export class CreateLessontimeComponent implements OnInit {
-  public isLoading = false;
-  private _chanelId: number = PopupChanelEnum.CREATE_LESSONTIME;
+export class CreateLessontimeComponent extends CreateEntityModal<ILessonTime> {
+  protected _chanelId: number = PopupChanelEnum.CREATE_LESSONTIME;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private lessonTimeService: LessonTimeService,
-              public lessontimeEntityService: LessontimeEntityService,
-              private popupService: PopupService) { }
-
-  public ngOnInit(): void {
-    this.popupService.createChanel(this._chanelId);
-    this.route.queryParams.subscribe(params => this._applyParamsChange(params));
+  constructor(protected _route: ActivatedRoute,
+              protected _router: Router,
+              protected _lessonTimeService: LessonTimeService,
+              protected _popupService: PopupService,
+              public lessontimeEntityService: LessontimeEntityService) {
+    super(_route, _router, _popupService, _lessonTimeService, lessontimeEntityService);
   }
 
-  public closeModal(): void {
-    this.router.navigate([{outlets: {modal: null}}]);
-  }
-
-  public create() {
-    if (this.lessontimeEntityService.form.invalid) return;
-
-    this.isLoading = true;
-    this.lessonTimeService.createItem(this.lessontimeEntityService.getFormValue())
-      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
-      .add(() => this.isLoading = false);
-  }
-
-  private _applyParamsChange(params: Params) {
+  protected _applyParamsChange(params: Params) {
     this.lessontimeEntityService.resetForm({faculty: +params.faculty});
   }
 }

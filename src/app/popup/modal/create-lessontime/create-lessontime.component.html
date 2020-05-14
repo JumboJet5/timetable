@@ -1,4 +1,4 @@
-<app-modal-wrapper [isLoading]="isLoading" [formGroup]="lessontimeEntityService.form">
+<app-modal-wrapper [isLoading]="isLoading" [formGroup]="lessontimeEntityService.form" [withQueryParamsClose]="true">
   <h4>Створення розкладу пари</h4>
   <div class="placeholder">Факультет</div>
   <app-faculty-select [selectControl]="lessontimeEntityService.form.get('faculty')"></app-faculty-select>
@@ -34,7 +34,7 @@
   </div>
 
   <div class="control-row">
-    <button (click)="create()" [disabled]="lessontimeEntityService.form.invalid" mat-flat-button color="primary">
+    <button (click)="createItem()" [disabled]="lessontimeEntityService.form.invalid" mat-flat-button color="primary">
       <span>Створити</span>
     </button>
 

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PopupService } from '@app/service/modal/popup.service';
 import { SemesterEntityService } from '@app/service/semester-entity/semester-entity.service';
 import { SemesterService } from '@app/service/semester/semester.service';
+import { CreateEntityModal } from '@app/shared/classes/create-entity-modal';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
+import { ISemester } from 'src/core/interfaces/semester.interface';
 
 @Component({
   selector: 'app-create-semester',
@@ -11,38 +13,20 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './create-semester.component.scss'],
   providers: [SemesterEntityService],
 })
-export class CreateSemesterComponent implements OnInit {
-  public isLoading = false;
+export class CreateSemesterComponent extends CreateEntityModal<ISemester> {
   public univId: number;
-  private _chanelId: number = PopupChanelEnum.CREATE_SEMESTER;
+  protected _chanelId: number = PopupChanelEnum.CREATE_SEMESTER;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              private semesterService: SemesterService,
-              public semesterEntityService: SemesterEntityService,
-              private popupService: PopupService) { }
-
-  ngOnInit(): void {
-    this.popupService.createChanel(this._chanelId);
-    this.route.queryParams
-      .subscribe(() => this._applyQueryParams());
+  constructor(protected _route: ActivatedRoute,
+              protected _router: Router,
+              protected _popupService: PopupService,
+              protected _semesterService: SemesterService,
+              public semesterEntityService: SemesterEntityService) {
+    super(_route, _router, _popupService, _semesterService, semesterEntityService);
   }
 
-  public closeModal(): void {
-    this.router.navigate([{outlets: {modal: null}}], {queryParams: this.route.snapshot.queryParams});
-  }
-
-  public create() {
-    if (this.semesterEntityService.form.invalid) return;
-
-    this.isLoading = true;
-    this.semesterService.createItem(this.semesterEntityService.getFormValue())
-      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
-      .add(() => this.isLoading = false);
-  }
-
-  private _applyQueryParams() {
-    this.semesterEntityService.resetForm({year: +this.route.snapshot.queryParams.year});
-    if (this.route.snapshot.queryParams.univ) this.univId = +this.route.snapshot.queryParams.univ;
+  protected _applyParamsChange(params: Params): void {
+    this.semesterEntityService.resetForm({year: +params.year});
+    if (params.univ) this.univId = +params.univ;
   }
 }

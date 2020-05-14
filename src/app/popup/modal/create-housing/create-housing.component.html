@@ -1,4 +1,4 @@
-<app-modal-wrapper [isLoading]="isLoading">
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
   <h4>Створення корпуса</h4>
   <form class="tt-form" [formGroup]="housingEntityService.form">
     <div class="column">
@@ -39,7 +39,7 @@
   </form>
 
   <div class="control-row">
-    <button (click)="create()" [disabled]="housingEntityService.form.invalid" mat-flat-button color="primary">
+    <button (click)="createItem()" [disabled]="housingEntityService.form.invalid" mat-flat-button color="primary">
       <span>Створити</span>
     </button>
 

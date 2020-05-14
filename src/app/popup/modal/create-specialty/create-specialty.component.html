@@ -1,4 +1,4 @@
-<app-modal-wrapper [isLoading]="isLoading">
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
   <h4>Створення спеціальності</h4>
   <form [formGroup]="specialtyEntityService.form" class="tt-form">
     <div class="column">
@@ -20,8 +20,7 @@
       </label>
       <span class="placeholder">Логотип</span>
       <app-load-image (onImageChange)="specialtyEntityService.getImagePath($event)"
-                      [imageSrc]="specialtyEntityService.imageSrc"
-                      [isLoading]="isLogoUpdating"></app-load-image>
+                      [imageSrc]="specialtyEntityService.imageSrc"></app-load-image>
     </div>
 
     <div class="column">
@@ -52,7 +51,7 @@
     </div>
   </form>
   <div class="control-row">
-    <button (click)="createSpecialty()"
+    <button (click)="createItem()"
             [disabled]="specialtyEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти

@@ -1,4 +1,4 @@
-<app-modal-wrapper [isLoading]="isLoading">
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
   <h4>Створення аудиторії</h4>
   <form class="tt-form" [formGroup]="roomEntityService.form">
     <label class="tt-input-label">
@@ -19,7 +19,7 @@
   </form>
 
   <div class="control-row">
-    <button (click)="create()" [disabled]="roomEntityService.form.invalid" mat-flat-button color="primary">
+    <button (click)="createItem()" [disabled]="roomEntityService.form.invalid" mat-flat-button color="primary">
       <span>Створити</span>
     </button>
 

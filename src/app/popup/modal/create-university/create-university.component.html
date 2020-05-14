@@ -1,4 +1,4 @@
-<app-modal-wrapper [isLoading]="isLoading">
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
   <h4>Створення університету</h4>
   <form [formGroup]="universityEntityService.form" class="tt-form">
     <div class="column">
@@ -31,7 +31,7 @@
     </div>
   </form>
   <div class="control-row">
-    <button (click)="createUniversity()"
+    <button (click)="createItem()"
             [disabled]="universityEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти

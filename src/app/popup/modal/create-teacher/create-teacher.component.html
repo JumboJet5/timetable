@@ -1,4 +1,4 @@
-<app-modal-wrapper [isLoading]="isLoading">
+<app-modal-wrapper [isLoading]="isLoading" [withQueryParamsClose]="true">
   <h4>Створення Викладача</h4>
   <form [formGroup]="teacherEntityService.form" class="tt-form">
     <div class="column">
@@ -32,8 +32,7 @@
     <div class="column">
       <span class="placeholder">Фото</span>
       <app-load-image (onImageChange)="teacherEntityService.getImagePath($event)"
-                      [imageSrc]="teacherEntityService.imageSrc"
-                      [isLoading]="isLogoUpdating"></app-load-image>
+                      [imageSrc]="teacherEntityService.imageSrc"></app-load-image>
       <label class="tt-input-label">
         <span class="placeholder">Додаткові відомості</span>
         <textarea class="tt-textarea" formControlName="desc" placeholder="Додайте опис спеціальності"></textarea>
@@ -42,7 +41,7 @@
     </div>
   </form>
   <div class="control-row">
-    <button (click)="createTeacher()"
+    <button (click)="createItem()"
             [disabled]="teacherEntityService.form.invalid"
             color="primary"
             mat-flat-button>Зберегти

@@ -10,7 +10,7 @@ export class EntityFormService<TItem extends object, TFormBody = TItem> {
   private _disabledControlNames: string[] = [];
 
   constructor(public formatService: FormatService) {
-    this._getAllSatelliteInfo();
+    this._getAllSatelliteInfo(); // todo move all logic from children constructors to this function
   }
 
   public resetForm(item: Partial<TFormBody>): void { // todo do something with it)) (actual for group, course, specialty)

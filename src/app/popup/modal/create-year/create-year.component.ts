@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PopupService } from '@app/service/modal/popup.service';
 import { YearEntityService } from '@app/service/year-entity/year-entity.service';
 import { YearService } from '@app/service/year/year.service';
+import { CreateEntityModal } from '@app/shared/classes/create-entity-modal';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
+import { IYear } from 'src/core/interfaces/year.interface';
 
 @Component({
   selector: 'app-create-year',
@@ -11,36 +13,18 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './create-year.component.scss'],
   providers: [YearEntityService],
 })
-export class CreateYearComponent implements OnInit {
-  public isLoading = false;
-  private _chanelId: number = PopupChanelEnum.CREATE_YEAR;
+export class CreateYearComponent extends CreateEntityModal<IYear> {
+  protected _chanelId: number = PopupChanelEnum.CREATE_YEAR;
 
-  constructor(private router: Router,
-              private route: ActivatedRoute,
-              public yearEntityService: YearEntityService,
-              private yearService: YearService,
-              private popupService: PopupService) { }
-
-  ngOnInit(): void {
-    this.popupService.createChanel(this._chanelId);
-    this.route.queryParams
-      .subscribe(() => this._applyQueryParams());
+  constructor(protected _route: ActivatedRoute,
+              protected _router: Router,
+              protected _popupService: PopupService,
+              protected _yearService: YearService,
+              public yearEntityService: YearEntityService) {
+    super(_route, _router, _popupService, _yearService, yearEntityService);
   }
 
-  public closeModal(): void {
-    this.router.navigate([{outlets: {modal: null}}], {queryParams: this.route.snapshot.queryParams});
-  }
-
-  public create() {
-    if (this.yearEntityService.form.invalid) return;
-
-    this.isLoading = true;
-    this.yearService.createItem(this.yearEntityService.form.value)
-      .subscribe(res => this.popupService.sendMessage(this._chanelId, res) && this.closeModal())
-      .add(() => this.isLoading = false);
-  }
-
-  private _applyQueryParams() {
-    this.yearEntityService.resetForm({univ: +this.route.snapshot.queryParams.univ});
+  protected _applyParamsChange(params: Params): void {
+    this.yearEntityService.resetForm({univ: +params.univ});
   }
 }

@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FacultyEntityService } from '@app/service/faculty-entity/faculty-entity.service';
 import { FacultyService } from '@app/service/faculty/faculty.service';
 import { PopupService } from '@app/service/modal/popup.service';
+import { CreateEntityModal } from '@app/shared/classes/create-entity-modal';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
+import { IFaculty } from 'src/core/interfaces/faculty.interface';
 
 @Component({
   selector: 'app-create-faculty',
@@ -11,34 +13,18 @@ import { PopupChanelEnum } from '@const/popup-chanel-enum';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './create-faculty.component.scss'],
   providers: [FacultyEntityService],
 })
-export class CreateFacultyComponent implements OnInit {
-  public isLoading = false;
-  private _chanelId: number = PopupChanelEnum.CREATE_FACULTY;
+export class CreateFacultyComponent extends CreateEntityModal<IFaculty> {
+  protected _chanelId: number = PopupChanelEnum.CREATE_FACULTY;
 
-  constructor(private _route: ActivatedRoute,
-              private _router: Router,
-              public facultyEntityService: FacultyEntityService,
-              private _popupService: PopupService,
-              private _facultyService: FacultyService) { }
-
-  public ngOnInit(): void {
-    this._popupService.createChanel(this._chanelId);
-    this._route.queryParams
-      .subscribe(params => this._applyParamsChange(params));
+  constructor(protected _route: ActivatedRoute,
+              protected _router: Router,
+              protected _popupService: PopupService,
+              protected _facultyService: FacultyService,
+              public facultyEntityService: FacultyEntityService) {
+    super(_route, _router, _popupService, _facultyService, facultyEntityService);
   }
 
-  public closeModal(): void {
-    this._router.navigate([{outlets: {modal: null}}]);
-  }
-
-  public createFaculty() {
-    this.isLoading = true;
-    this._facultyService.createItem(this.facultyEntityService.form.value)
-      .subscribe(faculty => this._popupService.sendMessage(this._chanelId, faculty))
-      .add(() => this.closeModal());
-  }
-
-  private _applyParamsChange(params: Params): void {
+  protected _applyParamsChange(params: Params): void {
     this.facultyEntityService.resetForm({univ: +params.univ});
   }
 }
