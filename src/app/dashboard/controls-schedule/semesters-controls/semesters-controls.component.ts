@@ -4,6 +4,7 @@ import { GroupsemesterService } from '@app/service/groupsemester/groupsemester.s
 import { HousingService } from '@app/service/housing/housing.service';
 import { PopupService } from '@app/service/modal/popup.service';
 import { SemesterService } from '@app/service/semester/semester.service';
+import { SmartDetailsService } from '@app/service/smart-details/smart-details.service';
 import { ThemeService } from '@app/service/theme/theme.service';
 import { PopupChanelEnum } from '@const/popup-chanel-enum';
 import { Subject } from 'rxjs';
@@ -34,6 +35,7 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
               private _themeService: ThemeService,
               private _housingService: HousingService,
               private _popupService: PopupService,
+              private _smartDetailsService: SmartDetailsService,
               private _route: ActivatedRoute,
               private _router: Router) { }
 
@@ -47,6 +49,7 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
     if (value === this.currGroupsemester) return;
 
     this._currGroupsemester = value;
+    this._smartDetailsService.currentEntity = undefined;
     this.controlListFilters = {group_semester: value};
     this._router.navigate([], {queryParams: this._getActualQueryParams()});
   }
@@ -71,6 +74,9 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
   }
 
   private _autoDefiningCurrentSemester(): void {
+    const isCurrentActual = !!this.groupsemesters && !!this.groupsemesters.find(item => item.id === this.currGroupsemester);
+    if (isCurrentActual) return;
+
     (this.groupsemesters || []).some(groupsemester => {
       const semester = this.semesters.find(item => item.id === groupsemester.semester);
       if (!semester) return false;
@@ -88,7 +94,7 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsubscribe))
       .pipe(filter(params => !!params.group && +params.group !== this.groupId))
       .pipe(tap(params => this.groupId = +params.group))
-      .pipe(tap(params => this.currGroupsemester = +params.group_semester))
+      .pipe(tap(params => this.currGroupsemester = params.group_semester ? +params.group_semester : undefined))
       .pipe(tap(() => this.isLoading = true))
       .subscribe(() => this._updateInfo());
   }
@@ -104,12 +110,15 @@ export class SemestersControlsComponent implements OnInit, OnDestroy {
     this.themes = [];
     this._groupsemesterService.getGroupsemesters(this.groupId)
       .subscribe(res => this.groupsemesters = res.results)
-      .add(() => !!this.semesters.length && this._autoDefiningCurrentSemester());
+      .add(() => this._autoDefiningCurrentSemester());
+
     this._semesterService.getItems({group: this.groupId})
       .subscribe(res => this.semesters = res.results)
-      .add(() => !!this.groupsemesters.length && this._autoDefiningCurrentSemester());
+      .add(() => this._autoDefiningCurrentSemester());
+
     this._themeService.getItems({group: this.groupId})
       .subscribe(res => this.themes = res.results);
+
     this._housingService.getItems({group: this.groupId})
       .subscribe(res => this.housings = res.results);
   }

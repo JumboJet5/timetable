@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { DateFormatService } from '@app/service/date-format/date-format.service';
 import { FormatService } from '@app/service/format/format.service';
 import { EntityCrudService } from '@app/shared/classes/entity-crud.service';
 import { EntityWithRangeFormService } from '@app/shared/classes/entity-with-range-form.service';
@@ -16,9 +15,8 @@ export class EntityWithLimitedRangeFormService<TItem extends IStudyPeriodRange, 
   private limiter: TLimiter;
 
   constructor(public formatService: FormatService,
-              public dateFormatService: DateFormatService,
               public entityCrudService: EntityCrudService<TLimiter>) {
-    super(formatService, dateFormatService);
+    super(formatService);
 
     this.limiterControl.valueChanges
       .pipe(tap(() => this.isAllFiltersReady = false))

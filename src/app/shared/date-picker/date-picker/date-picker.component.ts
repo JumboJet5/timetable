@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { DateFormatService } from '@app/service/date-format/date-format.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -24,6 +24,7 @@ export class DatePickerComponent implements OnInit {
   public currentMonth: Date;
   public currentDays: Date[];
   public weekDays = ['MO', 'TU', 'WE', 'TH', 'FR', 'SA', 'SU'];
+  public dayControl: FormControl = new FormControl();
   private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private dateFormatService: DateFormatService) {
@@ -37,7 +38,7 @@ export class DatePickerComponent implements OnInit {
 
   public set isOpened(value: boolean) {
     this._isOpened = value;
-    this.setMonth(this.dateControl ? this.dateControl.value || new Date() : new Date());
+    this.setMonth(this.dayControl ? this.dayControl.value || new Date() : new Date());
   }
 
   private _dateControl: AbstractControl;
@@ -49,12 +50,21 @@ export class DatePickerComponent implements OnInit {
   @Input()
   public set dateControl(value: AbstractControl) {
     this._unsubscribe.next();
-    this._dateControl = value;
-    this.setMonth(value.value);
-    value.patchValue(this.dateFormatService.unificationDate(value.value));
-    value.valueChanges
+    this._dateControl = value || new FormControl();
+
+    if (value && value.value) this.setMonth(this.dateFormatService.getDateFromString(value.value));
+    this.dayControl.patchValue(this.dateFormatService.getDateFromString(value.value), {onlySelf: true, emitEvent: false});
+
+    this.dayControl.valueChanges
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe((date: Date) => this.setMonth(date));
+      .subscribe((date: Date) => !!date && this.dateControl.patchValue(this.dateFormatService.getDateString(date)));
+
+    this.dateControl.valueChanges
+      .pipe(takeUntil(this._unsubscribe))
+      .subscribe(date => {
+        this.setMonth(this.dateFormatService.getDateFromString(date));
+        this.dayControl.patchValue(this.dateFormatService.getDateFromString(date), {emitEvent: false});
+      });
   }
 
   public ngOnInit(): void {
@@ -66,7 +76,7 @@ export class DatePickerComponent implements OnInit {
   }
 
   public isSelected(day: Date): boolean {
-    return !!day && this.dateControl.value instanceof Date && this.dateControl.value.getTime() === day.getTime();
+    return !!day && this.dayControl.value instanceof Date && this.dayControl.value.getTime() === day.getTime();
   }
 
   public isUnactivated(day: Date): boolean {
@@ -93,16 +103,18 @@ export class DatePickerComponent implements OnInit {
   }
 
   public chooseDay(day: Date): void {
-    this.dateControl.patchValue(day);
+    this.dayControl.patchValue(day);
     this.dateControl.markAsDirty();
     this.isOpened = false;
   }
 
   private setMonth(date: Date): void {
-    if (date instanceof Date && (!this.currentMonth || date.getMonth() !== this.currentMonth.getMonth())) {
+    if (date && date instanceof Date && (!this.currentMonth || date.getMonth() !== this.currentMonth.getMonth())) {
       this.currentMonth = date;
-      this.currentDays = [...this.dateFormatService.getPrevDaysArray(date),
-        ...this.dateFormatService.getDaysArray(date), ...this.dateFormatService.getNextDaysArray(date)];
+      this.currentDays = [
+        ...this.dateFormatService.getPrevDaysArray(date),
+        ...this.dateFormatService.getDaysArray(date), ...this.dateFormatService.getNextDaysArray(date),
+      ];
     }
   }
 }

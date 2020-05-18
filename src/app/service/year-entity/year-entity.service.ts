@@ -7,8 +7,6 @@ import { IYear } from 'src/core/interfaces/year.interface';
 @Injectable()
 export class YearEntityService extends EntityWithRangeFormService<IYear> {
   public form: FormGroup = new FormGroup({
-    from: this.fromControl,
-    to: this.toControl,
     end: this.endControl,
     start: this.startControl,
     univ: new FormControl('', Validators.required),

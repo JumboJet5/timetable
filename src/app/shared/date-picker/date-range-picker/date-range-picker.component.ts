@@ -34,7 +34,7 @@ export class DateRangePickerComponent implements OnInit {
 
   public set isOpened(value: boolean) {
     this._isOpened = value;
-    if (value) this._setInitialValue(this.dateControl.value || {});
+    if (value) this._setInitialValue();
   }
 
   private _dateControl: AbstractControl;
@@ -47,15 +47,14 @@ export class DateRangePickerComponent implements OnInit {
   public set dateControl(value: AbstractControl) {
     this._unsubscribe.next();
     this._dateControl = value;
-    this._setInitialValue(value.value || {} as IRange);
-    value.patchValue(this.dateFormatService.unificationDate(value.value));
+    this._setInitialValue();
     value.valueChanges
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe((dates: IRange) => this._setInitialValue(dates || {} as IRange));
+      .subscribe(() => this._setInitialValue());
   }
 
   public ngOnInit(): void {
-    if (!this.currentMonth) this._setInitialValue({} as IRange);
+    if (!this.currentMonth) this._setInitialValue();
   }
 
   public nextMonth(increment: number = 1, monthOrderName: 'from' | 'to'): void {
@@ -123,15 +122,15 @@ export class DateRangePickerComponent implements OnInit {
   }
 
   public onReset() {
-    this.dateControl.patchValue({from: undefined, to: undefined});
+    this.dateControl.patchValue({start: undefined, end: undefined});
     this.dateControl.markAsDirty();
     this.isOpened = false;
   }
 
   public onApply() {
-    let to = new Date(this.chosenRange.to.getFullYear(), this.chosenRange.to.getMonth(), this.chosenRange.to.getDate() + 1);
-    to = new Date(to.getTime() - 1);
-    this.dateControl.patchValue({from: this.chosenRange.from, to});
+    const to = new Date(this.chosenRange.to.getFullYear(), this.chosenRange.to.getMonth(), this.chosenRange.to.getDate() + 1);
+    const end = this.dateFormatService.getDateString(new Date(to.getTime() - 1));
+    this.dateControl.patchValue({start: this.dateFormatService.getDateString(this.chosenRange.from), end});
     this.dateControl.markAsDirty();
     this.isOpened = false;
   }
@@ -147,7 +146,7 @@ export class DateRangePickerComponent implements OnInit {
     }
   }
 
-  private _setInitialValue(value: IRange): void {
+  private _setInitialValue(value: IRange = this._getControlRange()): void {
     this.chosenRange.from = value ? value.from : undefined;
     this.chosenRange.to = value && value.to ? new Date(value.to.getFullYear(), value.to.getMonth(), value.to.getDate()) : undefined;
     const now = (!!value && value.from) || new Date();
@@ -156,5 +155,13 @@ export class DateRangePickerComponent implements OnInit {
     next.setDate(1);
     next.setMonth(now.getMonth() + 1);
     this.setMonth(value ? value.to || next : next, 'to');
+  }
+
+  private _getControlRange(): IRange {
+    const initialRange = !!this.dateControl && this.dateControl.value;
+    const from = !!initialRange && initialRange.start ? this.dateFormatService.getDateFromString(initialRange.start) : undefined;
+    const to = !!initialRange && initialRange.end ? this.dateFormatService.getDateFromString(initialRange.end) : undefined;
+
+    return !!initialRange ? {from, to} : {} as IRange;
   }
 }

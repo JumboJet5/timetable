@@ -40,6 +40,5 @@ export class SmartSemesterEntityComponent {
 
   public reset() {
     this.semesterEntityService.resetForm(this.semester);
-    console.log(this.semesterEntityService.form);
   }
 }

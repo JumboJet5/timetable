@@ -14,7 +14,7 @@ export class EntityWithImageFormService<TItem extends { img: string | SafeUrl },
     super(formatService);
   }
 
-  public resetForm(item: Partial<TFormBody>): void { // todo same trouble as in parent class
+  public resetForm(item: Partial<TFormBody>): void {
     this.form.reset({...item});
     this.imageSrc = item.img;
   }

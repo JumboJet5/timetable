@@ -53,12 +53,18 @@ export class StructureFiltersComponent implements OnInit, OnDestroy {
       .pipe(distinctUntilChanged((source, previous) => this.formatService.isObjectsSimilar(source, previous)))
       .pipe(debounceTime(100))
       .subscribe(({univ, faculty, specialty, course, group}) => {
-        if (!!group) return this._router.navigate([], {queryParams: {group}});
-        if (!!course) return this._router.navigate([], {queryParams: {course}});
-        if (!!specialty) return this._router.navigate([], {queryParams: {specialty}});
-        if (!!faculty) return this._router.navigate([], {queryParams: {faculty}});
-        if (!!univ) return this._router.navigate([], {queryParams: {univ}});
-        return this._router.navigate([]);
+        const queryParams = {...this._route.snapshot.queryParams};
+        delete queryParams.group;
+        delete queryParams.course;
+        delete queryParams.specialty;
+        delete queryParams.faculty;
+        delete queryParams.univ;
+        if (!!group) Object.assign(queryParams, {group});
+        else if (!!course) Object.assign(queryParams, {course});
+        else if (!!specialty) Object.assign(queryParams, {specialty});
+        else if (!!faculty) Object.assign(queryParams, {faculty});
+        else if (!!univ) Object.assign(queryParams, {univ});
+        return this._router.navigate([], {queryParams});
       });
   }
 

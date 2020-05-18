@@ -16,7 +16,7 @@ export class EntityCrudService<TItem extends object> {
     return this.http.get<IPageable<TItem>>(this._itemsURL, {params: params as {}});
   }
 
-  public getAllItems(params: IFilterParams): Observable<IPageable<TItem>> {
+  public getAllItems(params: IFilterParams): Observable<IPageable<TItem>> { // todo write universal loader
     return this.http.get<IPageable<TItem>>(this._itemsURL, {params: params as {}});
   }
 
@@ -24,7 +24,7 @@ export class EntityCrudService<TItem extends object> {
     return this.http.get<TItem>(this._itemURL(id));
   }
 
-  public createItem(item: Partial<TItem>): Observable<TItem> { // todo define entity form service value type
+  public createItem(item: Partial<TItem>): Observable<TItem> {
     return this.http.post<TItem>(this._itemsURL, item);
   }
 

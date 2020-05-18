@@ -24,7 +24,6 @@ export class ControlEntityService extends EntityFormService<IControl> {
   public linkControl: FormControl = new FormControl('');
   public housingControl: FormControl = new FormControl('', Validators.required);
   public dateControl: FormControl = new FormControl('', Validators.required);
-  public dayControl: FormControl = new FormControl('', Validators.required);
   public roomControl: FormControl = new FormControl('', Validators.required);
   public themeControl: FormControl = new FormControl('', Validators.required);
   public conductTypeControl: FormControl = new FormControl('', Validators.required);
@@ -43,7 +42,6 @@ export class ControlEntityService extends EntityFormService<IControl> {
     teachers: this.teachersControl,
     conduct_type: this.conductTypeControl,
     link: this.linkControl,
-    day: this.dayControl,
   });
 
   constructor(public formatService: FormatService,
@@ -70,12 +68,6 @@ export class ControlEntityService extends EntityFormService<IControl> {
       .pipe(tap(() => this.isAllFiltersReady = false))
       .pipe(switchMap(value => this.groupsemesterService.getGroupsemester(value)))
       .subscribe(groupsemester => this.getInfo(groupsemester));
-
-    this.dayControl.valueChanges
-      .subscribe(value => this.dateControl.patchValue(dateFormatService.getDateString(value)));
-
-    this.dateControl.valueChanges
-      .subscribe(value => this.dayControl.patchValue(dateFormatService.getDateFromString(value), {emitEvent: false}));
   }
 
   public getEnableRangeDates(): { min: Date, max: Date } {

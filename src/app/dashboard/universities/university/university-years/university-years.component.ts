@@ -50,11 +50,17 @@ export class UniversityYearsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._popupService.getChanel(PopupChanelEnum.CREATE_YEAR)
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe((year: IYear) => this.years.push(year));
+      .subscribe((year: IYear) => {
+        this.years.push(year);
+        this.semestersMap.set(year.id, []);
+      });
 
     this._popupService.getChanel(PopupChanelEnum.CREATE_SEMESTER)
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe((semester: ISemester) => (this.semestersMap.get(semester.year) || []).push(semester));
+      .subscribe((semester: ISemester) => {
+        (this.semestersMap.get(semester.year) || []).push(semester);
+        this.periodsMap.set(semester.id, []);
+      });
 
     this._popupService.getChanel(PopupChanelEnum.CREATE_PERIOD)
       .pipe(takeUntil(this._unsubscribe))

@@ -1,8 +1,8 @@
 <div class="date-picker-wrapper" appClickOutside (clickOutside)="isOpened = false">
   <button class="tt-input date-picker-value"
           [disabled]="isDisabled"
-          (click)="isOpened = !dateControl.value || isSelected(dateControl.value)">
-    <span>{{(dateControl.value | date: 'dd.MM.yyyy') || placeholder}}</span>
+          (click)="isOpened = !dayControl.value || isSelected(dayControl.value)">
+    <span>{{(dayControl.value | date: 'dd.MM.yyyy') || placeholder}}</span>
     <mat-icon>calendar_today</mat-icon>
   </button>
 
