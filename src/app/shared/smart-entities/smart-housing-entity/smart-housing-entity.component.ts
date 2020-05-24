@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { HousingEntityService } from '@app/service/housing-entity/housing-entity.service';
 import { HousingService } from '@app/service/housing/housing.service';
+import { SmartItemEntity } from '@app/shared/classes/smart-item-entity';
 import { IHousing } from 'src/core/interfaces/housing.interface';
 
 @Component({
@@ -9,34 +10,9 @@ import { IHousing } from 'src/core/interfaces/housing.interface';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-housing-entity.component.scss'],
   providers: [HousingEntityService],
 })
-export class SmartHousingEntityComponent {
-  public isLoading = false;
-
-  constructor(private housingService: HousingService,
-              public housingEntityService: HousingEntityService) { }
-
-  private _housing: IHousing;
-
-  public get housing(): IHousing {
-    return this._housing;
-  }
-
-  @Input()
-  public set housing(value: IHousing) {
-    this._housing = value;
-    this.reset();
-  }
-
-  public save() {
-    if (this.housingEntityService.form.invalid || !this.housing) return;
-
-    this.isLoading = true;
-    this.housingService.updateItem(this.housing.id, this.housingEntityService.getFormValue())
-      .subscribe(res => Object.assign(this.housing, res) && this.reset())
-      .add(() => this.isLoading = false);
-  }
-
-  public reset() {
-    this.housingEntityService.resetForm(this.housing);
+export class SmartHousingEntityComponent extends SmartItemEntity<IHousing> {
+  constructor(protected _housingService: HousingService,
+              public housingEntityService: HousingEntityService) {
+    super(_housingService, housingEntityService);
   }
 }

@@ -1,44 +1,44 @@
 <h3>{{titleText}}</h3>
 <div [ngSwitch]="smartDetailsService.currentEntity?.type">
   <app-smart-faculty-entity *ngSwitchCase="'FACULTY'"
-                            [faculty]="smartDetailsService.currentEntity.entity"></app-smart-faculty-entity>
+                            [item]="smartDetailsService.currentEntity.entity"></app-smart-faculty-entity>
 
   <app-smart-specialty-entity *ngSwitchCase="'SPECIALTY'"
-                              [specialty]="smartDetailsService.currentEntity.entity"></app-smart-specialty-entity>
+                              [item]="smartDetailsService.currentEntity.entity"></app-smart-specialty-entity>
 
   <app-smart-course-entity *ngSwitchCase="'COURSE'"
-                           [course]="smartDetailsService.currentEntity.entity"></app-smart-course-entity>
+                           [item]="smartDetailsService.currentEntity.entity"></app-smart-course-entity>
 
   <app-smart-group-entity *ngSwitchCase="'GROUP'"
                           [isCourseReadonly]="isCourseInGroupReadonly"
-                          [group]="smartDetailsService.currentEntity.entity"></app-smart-group-entity>
+                          [item]="smartDetailsService.currentEntity.entity"></app-smart-group-entity>
 
   <app-smart-theme-entity *ngSwitchCase="'THEME'"
-                          [theme]="smartDetailsService.currentEntity.entity"></app-smart-theme-entity>
+                          [item]="smartDetailsService.currentEntity.entity"></app-smart-theme-entity>
 
   <app-smart-lessontime-entity *ngSwitchCase="'LESSONTIME'"
-                               [lessontime]="smartDetailsService.currentEntity.entity"></app-smart-lessontime-entity>
+                               [item]="smartDetailsService.currentEntity.entity"></app-smart-lessontime-entity>
 
   <app-smart-year-entity *ngSwitchCase="'YEAR'"
-                         [year]="smartDetailsService.currentEntity.entity"></app-smart-year-entity>
+                         [item]="smartDetailsService.currentEntity.entity"></app-smart-year-entity>
 
   <app-smart-semester-entity *ngSwitchCase="'SEMESTER'"
-                             [semester]="smartDetailsService.currentEntity.entity"></app-smart-semester-entity>
+                             [item]="smartDetailsService.currentEntity.entity"></app-smart-semester-entity>
 
   <app-smart-period-entity *ngSwitchCase="'PERIOD'"
-                           [period]="smartDetailsService.currentEntity.entity"></app-smart-period-entity>
+                           [item]="smartDetailsService.currentEntity.entity"></app-smart-period-entity>
 
   <app-smart-housing-entity *ngSwitchCase="'HOUSING'"
-                            [housing]="smartDetailsService.currentEntity.entity"></app-smart-housing-entity>
+                            [item]="smartDetailsService.currentEntity.entity"></app-smart-housing-entity>
 
   <app-smart-room-entity *ngSwitchCase="'ROOM'"
-                         [room]="smartDetailsService.currentEntity.entity"></app-smart-room-entity>
+                         [item]="smartDetailsService.currentEntity.entity"></app-smart-room-entity>
 
   <app-smart-teacher-entity *ngSwitchCase="'TEACHER'"
-                            [teacher]="smartDetailsService.currentEntity.entity"></app-smart-teacher-entity>
+                            [item]="smartDetailsService.currentEntity.entity"></app-smart-teacher-entity>
 
   <app-smart-control-entity *ngSwitchCase="'CONTROL'"
-                            [control]="smartDetailsService.currentEntity.entity"></app-smart-control-entity>
+                            [item]="smartDetailsService.currentEntity.entity"></app-smart-control-entity>
 
   <div *ngSwitchDefault>Оберіть сутність для подробиць</div>
 </div>

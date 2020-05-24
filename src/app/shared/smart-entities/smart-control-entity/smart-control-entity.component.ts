@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ControlEntityService } from '@app/service/control-entity/control-entity.service';
 import { ControlService } from '@app/service/control/control.service';
+import { SmartItemEntity } from '@app/shared/classes/smart-item-entity';
 import { IControl } from 'src/core/interfaces/control.interface';
 
 @Component({
@@ -9,34 +10,9 @@ import { IControl } from 'src/core/interfaces/control.interface';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-control-entity.component.scss'],
   providers: [ControlEntityService],
 })
-export class SmartControlEntityComponent {
-  public isLoading = false;
-
-  constructor(private controlService: ControlService,
-              public controlEntityService: ControlEntityService) { }
-
-  private _control: IControl;
-
-  public get control(): IControl {
-    return this._control;
-  }
-
-  @Input()
-  public set control(value: IControl) {
-    this._control = value;
-    this.reset();
-  }
-
-  public save() {
-    if (this.controlEntityService.form.invalid || !this.control) return;
-
-    this.isLoading = true;
-    this.controlService.updateItem(this.control.id, this.controlEntityService.form.value)
-      .subscribe(res => Object.assign(this.control, res) && this.reset())
-      .add(() => this.isLoading = false);
-  }
-
-  public reset() {
-    this.controlEntityService.resetForm(this.control);
+export class SmartControlEntityComponent extends SmartItemEntity<IControl> {
+  constructor(private _controlService: ControlService,
+              public controlEntityService: ControlEntityService) {
+    super(_controlService, controlEntityService);
   }
 }

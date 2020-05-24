@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { YearEntityService } from '@app/service/year-entity/year-entity.service';
 import { YearService } from '@app/service/year/year.service';
+import { SmartItemEntity } from '@app/shared/classes/smart-item-entity';
 import { IYear } from 'src/core/interfaces/year.interface';
 
 @Component({
@@ -9,34 +10,9 @@ import { IYear } from 'src/core/interfaces/year.interface';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-year-entity.component.scss'],
   providers: [YearEntityService],
 })
-export class SmartYearEntityComponent {
-  public isLoading = false;
-
-  constructor(public yearEntityService: YearEntityService,
-              private _yearService: YearService) { }
-
-  private _year: IYear;
-
-  public get year(): IYear {
-    return this._year;
-  }
-
-  @Input()
-  public set year(value: IYear) {
-    this._year = value;
-    this.reset();
-  }
-
-  public save() {
-    if (this.yearEntityService.form.invalid || !this.year) return;
-
-    this.isLoading = true;
-    this._yearService.updateItem(this.year.id, this.yearEntityService.form.value)
-      .subscribe(res => Object.assign(this.year, res) && this.reset())
-      .add(() => this.isLoading = false);
-  }
-
-  public reset() {
-    this.yearEntityService.resetForm(this.year);
+export class SmartYearEntityComponent extends SmartItemEntity<IYear> {
+  constructor(protected _yearService: YearService,
+              public yearEntityService: YearEntityService) {
+    super(_yearService, yearEntityService);
   }
 }

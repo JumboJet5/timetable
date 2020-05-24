@@ -1,7 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { GroupEntityService } from '@app/service/group-entity/group-entity.service';
 import { GroupService } from '@app/service/group/group.service';
-import { IGroup } from 'src/core/interfaces/group.interface';
+import { SmartItemEntity } from '@app/shared/classes/smart-item-entity';
+import { IGroup, IGroupEntity } from 'src/core/interfaces/group.interface';
 
 @Component({
   selector: 'app-smart-group-entity',
@@ -9,35 +10,11 @@ import { IGroup } from 'src/core/interfaces/group.interface';
   styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-group-entity.component.scss'],
   providers: [GroupEntityService],
 })
-export class SmartGroupEntityComponent {
+export class SmartGroupEntityComponent extends SmartItemEntity<IGroup, IGroupEntity> {
   @Input() public isCourseReadonly = true;
-  public isLoading = false;
 
-  constructor(private groupService: GroupService,
-              public groupEntityService: GroupEntityService) { }
-
-  private _group: IGroup;
-
-  public get group(): IGroup {
-    return this._group;
-  }
-
-  @Input()
-  public set group(value: IGroup) {
-    this._group = value;
-    this.reset();
-  }
-
-  public save() {
-    if (this.groupEntityService.form.invalid || !this.group) return;
-
-    this.isLoading = true;
-    this.groupService.updateItem(this.group.id, this.groupEntityService.form.value)
-      .subscribe(res => Object.assign(this.group, res) && this.reset())
-      .add(() => this.isLoading = false);
-  }
-
-  public reset() {
-    this.groupEntityService.resetForm(this.group);
+  constructor(protected _groupService: GroupService,
+              public groupEntityService: GroupEntityService) {
+    super(_groupService, groupEntityService);
   }
 }
