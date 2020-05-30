@@ -7,7 +7,11 @@ import { IYear } from 'src/core/interfaces/year.interface';
 @Component({
   selector: 'app-smart-year-entity',
   templateUrl: './smart-year-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-year-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-year-entity.component.scss',
+  ],
   providers: [YearEntityService],
 })
 export class SmartYearEntityComponent extends SmartItemEntity<IYear> {

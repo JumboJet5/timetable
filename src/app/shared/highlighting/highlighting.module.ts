@@ -6,8 +6,11 @@ import { HighlightingDirective } from './highlighting.directive';
 
 @NgModule({
   declarations: [HighlightingDirective],
+  exports: [
+    HighlightingDirective,
+  ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+  ],
 })
 export class HighlightingModule { }

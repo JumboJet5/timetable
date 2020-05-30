@@ -7,7 +7,11 @@ import { IPeriod } from 'src/core/interfaces/period.interface';
 @Component({
   selector: 'app-smart-period-entity',
   templateUrl: './smart-period-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-period-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-period-entity.component.scss',
+  ],
   providers: [PeriodEntityService],
 })
 export class SmartPeriodEntityComponent extends SmartItemEntity<IPeriod> {

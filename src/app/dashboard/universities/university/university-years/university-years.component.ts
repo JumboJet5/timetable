@@ -91,7 +91,7 @@ export class UniversityYearsComponent implements OnInit, OnDestroy {
     this._popupService.openReactiveModal(['create-period'], {semester, year: this.activeYear});
   }
 
-  public deleteYear(year: number) { // todo ask about delete satellite semester after deleting year and etc.
+  public deleteYear(year: number) {
     const index = this.years.findIndex(item => item.id === year);
     if (index < 0) return;
 

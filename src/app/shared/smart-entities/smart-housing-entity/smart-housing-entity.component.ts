@@ -7,7 +7,11 @@ import { IHousing } from 'src/core/interfaces/housing.interface';
 @Component({
   selector: 'app-smart-housing-entity',
   templateUrl: './smart-housing-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-housing-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-housing-entity.component.scss',
+  ],
   providers: [HousingEntityService],
 })
 export class SmartHousingEntityComponent extends SmartItemEntity<IHousing> {

@@ -7,7 +7,11 @@ import { IFaculty } from 'src/core/interfaces/faculty.interface';
 @Component({
   selector: 'app-smart-faculty-entity',
   templateUrl: './smart-faculty-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-faculty-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-faculty-entity.component.scss',
+  ],
   providers: [FacultyEntityService],
 })
 export class SmartFacultyEntityComponent extends SmartItemEntity<IFaculty> {

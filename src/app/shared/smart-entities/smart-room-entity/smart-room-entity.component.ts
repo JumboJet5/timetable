@@ -7,7 +7,11 @@ import { IRoom } from 'src/core/interfaces/room.interface';
 @Component({
   selector: 'app-smart-room-entity',
   templateUrl: './smart-room-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-room-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-room-entity.component.scss',
+  ],
   providers: [RoomEntityService],
 })
 export class SmartRoomEntityComponent extends SmartItemEntity<IRoom> {

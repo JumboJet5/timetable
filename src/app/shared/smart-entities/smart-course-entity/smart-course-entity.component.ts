@@ -7,7 +7,11 @@ import { ICourse, ICourseEntity } from 'src/core/interfaces/course.interface';
 @Component({
   selector: 'app-smart-course-entity',
   templateUrl: './smart-course-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-course-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-course-entity.component.scss',
+  ],
   providers: [CourseEntityService],
 })
 export class SmartCourseEntityComponent extends SmartItemEntity<ICourse, ICourseEntity> {

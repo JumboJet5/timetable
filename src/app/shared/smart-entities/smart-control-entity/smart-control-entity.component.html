@@ -68,10 +68,8 @@
   </div>
 </form>
 
-<div class="loading-wrapper" *ngIf="isLoading || !controlEntityService.isAllFiltersReady">
+<div class="centered-loading-wrapper" *ngIf="isLoading || !controlEntityService.isAllFiltersReady">
   <div class="loader-wrapper">
     <mat-spinner></mat-spinner>
   </div>
 </div>
-<!--format: new FormControl('', Validators.required),-->
-<!--date: new FormControl('', Validators.required),-->

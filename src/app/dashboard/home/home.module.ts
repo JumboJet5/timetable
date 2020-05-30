@@ -1,16 +1,17 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HighlightingDirective } from '@app/shared/highlighting/highlighting.directive';
+import { NgModule } from '@angular/core';
+import { HighlightingModule } from '@app/shared/highlighting/highlighting.module';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
 
 
 @NgModule({
-  declarations: [HomeComponent, HighlightingDirective],
+  declarations: [HomeComponent],
   imports: [
     CommonModule,
-    HomeRoutingModule
-  ]
+    HomeRoutingModule,
+    HighlightingModule,
+  ],
 })
-export class HomeModule { }
+export class HomeModule {}

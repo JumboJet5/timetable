@@ -10,7 +10,10 @@ import { IHousing } from 'src/core/interfaces/housing.interface';
 @Component({
   selector: 'app-faculty-housings',
   templateUrl: './faculty-housings.component.html',
-  styleUrls: ['./faculty-housings.component.scss'],
+  styleUrls: [
+    '../../../../../core/stylesheet/loader.scss',
+    './faculty-housings.component.scss',
+  ],
 })
 export class FacultyHousingsComponent implements OnInit {
   public facultyHousings: IHousing[];

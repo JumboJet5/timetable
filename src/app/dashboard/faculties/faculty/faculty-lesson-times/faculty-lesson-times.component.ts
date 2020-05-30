@@ -9,7 +9,10 @@ import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 @Component({
   selector: 'app-faculty-lesson-times',
   templateUrl: './faculty-lesson-times.component.html',
-  styleUrls: ['./faculty-lesson-times.component.scss'],
+  styleUrls: [
+    '../../../../../core/stylesheet/loader.scss',
+    './faculty-lesson-times.component.scss',
+  ],
 })
 export class FacultyLessonTimesComponent implements OnInit {
   public lessonTimes: ILessonTime[];

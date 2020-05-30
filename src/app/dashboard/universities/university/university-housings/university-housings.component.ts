@@ -9,7 +9,10 @@ import { IHousing } from 'src/core/interfaces/housing.interface';
 @Component({
   selector: 'app-university-housings',
   templateUrl: './university-housings.component.html',
-  styleUrls: ['./university-housings.component.scss'],
+  styleUrls: [
+    '../../../../../core/stylesheet/loader.scss',
+    './university-housings.component.scss',
+  ],
 })
 export class UniversityHousingsComponent implements OnInit {
   public housings: IHousing[];

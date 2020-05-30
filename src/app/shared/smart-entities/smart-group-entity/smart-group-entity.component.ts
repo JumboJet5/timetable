@@ -7,7 +7,11 @@ import { IGroup, IGroupEntity } from 'src/core/interfaces/group.interface';
 @Component({
   selector: 'app-smart-group-entity',
   templateUrl: './smart-group-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-group-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-group-entity.component.scss',
+  ],
   providers: [GroupEntityService],
 })
 export class SmartGroupEntityComponent extends SmartItemEntity<IGroup, IGroupEntity> {

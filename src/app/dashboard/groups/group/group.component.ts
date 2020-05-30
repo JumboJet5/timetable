@@ -9,7 +9,10 @@ import { IGroup, IUpdateGroup } from 'src/core/interfaces/group.interface';
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './group.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/loader.scss',
+    './group.component.scss',
+  ],
 })
 export class GroupComponent implements OnInit, OnDestroy {
   public group: IGroup;

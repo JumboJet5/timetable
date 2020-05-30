@@ -4,7 +4,10 @@ import { SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-load-image',
   templateUrl: './load-image.component.html',
-  styleUrls: ['./load-image.component.scss'],
+  styleUrls: [
+    '../../../core/stylesheet/loader.scss',
+    './load-image.component.scss',
+  ],
 })
 export class LoadImageComponent implements OnInit {
   @ViewChild('hidden') public hiddenInput: ElementRef<HTMLInputElement>;

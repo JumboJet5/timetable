@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-modal-wrapper',
   templateUrl: './modal-wrapper.component.html',
-  styleUrls: ['../../../../core/stylesheet/modal.scss', './modal-wrapper.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/modal.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './modal-wrapper.component.scss',
+  ],
 })
 export class ModalWrapperComponent {
   @Input() public isLoading = false;

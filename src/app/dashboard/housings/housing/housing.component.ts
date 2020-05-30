@@ -12,7 +12,10 @@ import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 @Component({
   selector: 'app-housing',
   templateUrl: './housing.component.html',
-  styleUrls: ['./housing.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/loader.scss',
+    './housing.component.scss',
+  ],
 })
 export class HousingComponent implements OnInit, OnDestroy {
   public isLoading = false;

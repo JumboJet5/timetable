@@ -7,7 +7,11 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
 @Component({
   selector: 'app-specialty-themes',
   templateUrl: './specialty-themes.component.html',
-  styleUrls: ['../../../../../core/stylesheet/default-form.scss', './specialty-themes.component.scss'],
+  styleUrls: [
+    '../../../../../core/stylesheet/default-form.scss',
+    '../../../../../core/stylesheet/loader.scss',
+    './specialty-themes.component.scss',
+  ],
 })
 export class SpecialtyThemesComponent {
   public themes: ITheme[] = [];
@@ -24,14 +28,14 @@ export class SpecialtyThemesComponent {
     this._loadSpecialtyThemes();
   }
 
+  public openDetails(entity: ITheme) {
+    this._smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.THEME};
+  }
+
   private _loadSpecialtyThemes(): void {
     this.isLoading = false;
     this._themeService.getItems({specialty: this._specialtyId})
       .subscribe(res => this.themes = res.results)
       .add(() => this.isLoading = false);
-  }
-
-  public openDetails(entity: ITheme) {
-    this._smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.THEME};
   }
 }

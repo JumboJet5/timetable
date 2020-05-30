@@ -7,7 +7,11 @@ import { ISemester } from 'src/core/interfaces/semester.interface';
 @Component({
   selector: 'app-smart-semester-entity',
   templateUrl: './smart-semester-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-semester-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-semester-entity.component.scss',
+  ],
   providers: [SemesterEntityService],
 })
 export class SmartSemesterEntityComponent extends SmartItemEntity<ISemester> {

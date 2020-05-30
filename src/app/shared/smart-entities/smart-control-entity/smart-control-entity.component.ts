@@ -7,7 +7,11 @@ import { IControl } from 'src/core/interfaces/control.interface';
 @Component({
   selector: 'app-smart-control-entity',
   templateUrl: './smart-control-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-control-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-control-entity.component.scss',
+  ],
   providers: [ControlEntityService],
 })
 export class SmartControlEntityComponent extends SmartItemEntity<IControl> {

@@ -13,15 +13,18 @@ import { ISpecialty } from 'src/core/interfaces/specialty.interface';
 @Component({
   selector: 'app-specialty',
   templateUrl: './specialty.component.html',
-  styleUrls: ['./specialty.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/loader.scss',
+    './specialty.component.scss',
+  ],
 })
 export class SpecialtyComponent implements OnInit, OnDestroy {
   public isLoading = false;
   public specialty: ISpecialty;
   public specialtyId: number;
-  private _unsubscribe: Subject<void> = new Subject();
   public courseFilters: IFilterParams;
   public groupFilters: IFilterParams;
+  private _unsubscribe: Subject<void> = new Subject();
 
   constructor(private _route: ActivatedRoute,
               private _router: Router,
@@ -64,6 +67,18 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
+  public createGroup() {
+    this._popupService.openReactiveModal(['create-group'], {specialty: this.specialtyId});
+  }
+
+  public createCourse() {
+    this._popupService.openReactiveModal(['create-course'], {specialty: this.specialtyId});
+  }
+
+  public onCourseClick(course: ICourse) {
+    console.log(course);
+  }
+
   private _getCurrentSpecialty(): void {
     this.isLoading = true;
     this._specialtyService.getItem(this.specialtyId)
@@ -85,17 +100,5 @@ export class SpecialtyComponent implements OnInit, OnDestroy {
     this.groupFilters = {specialty: this.specialtyId};
     this.courseFilters = {specialty: this.specialtyId};
     this._getCurrentSpecialty();
-  }
-
-  public createGroup() {
-    this._popupService.openReactiveModal(['create-group'], {specialty: this.specialtyId});
-  }
-
-  public createCourse() {
-    this._popupService.openReactiveModal(['create-course'], {specialty: this.specialtyId});
-  }
-
-  public onCourseClick(course: ICourse) {
-    console.log(course);
   }
 }

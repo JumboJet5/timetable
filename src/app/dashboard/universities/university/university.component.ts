@@ -12,10 +12,13 @@ import { IUniversity } from 'src/core/interfaces/university';
 @Component({
   selector: 'app-university',
   templateUrl: './university.component.html',
-  styleUrls: ['./university.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/loader.scss',
+    './university.component.scss',
+  ],
 })
 export class UniversityComponent implements OnInit, OnDestroy {
-  public isEntityLoading = false;
+  public isLoading = false;
   public university: IUniversity;
   public univId: number;
   public facultyFilters: IFilterParams;
@@ -36,10 +39,10 @@ export class UniversityComponent implements OnInit, OnDestroy {
   }
 
   public saveUniversity(faculty: IUniversity): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._universityService.updateItem(this.univId, faculty)
       .subscribe(res => this.university = res)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   public delete() {
@@ -62,10 +65,10 @@ export class UniversityComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentFaculty(): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._universityService.getItem(this.univId)
       .subscribe(specialty => this.university = specialty)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   private _getFacultyByRoute(): void {

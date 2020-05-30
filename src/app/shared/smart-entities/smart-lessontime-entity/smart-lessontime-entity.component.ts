@@ -7,7 +7,11 @@ import { ILessonTime } from 'src/core/interfaces/lesson-time.interface';
 @Component({
   selector: 'app-smart-lessontime-entity',
   templateUrl: './smart-lessontime-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-lessontime-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-lessontime-entity.component.scss',
+  ],
   providers: [LessontimeEntityService],
 })
 export class SmartLessontimeEntityComponent extends SmartItemEntity<ILessonTime> {

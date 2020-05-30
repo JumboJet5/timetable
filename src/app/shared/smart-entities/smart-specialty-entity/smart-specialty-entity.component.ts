@@ -7,7 +7,11 @@ import { ISpecialty, ISpecialtyEntity } from 'src/core/interfaces/specialty.inte
 @Component({
   selector: 'app-smart-specialty-entity',
   templateUrl: './smart-specialty-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-specialty-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-specialty-entity.component.scss',
+  ],
   providers: [SpecialtyEntityService],
 })
 export class SmartSpecialtyEntityComponent extends SmartItemEntity<ISpecialty, ISpecialtyEntity> {

@@ -13,10 +13,13 @@ import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
-  styleUrls: ['./course.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/loader.scss',
+    './course.component.scss',
+  ],
 })
 export class CourseComponent implements OnInit, OnDestroy {
-  public isEntityLoading = false;
+  public isLoading = false;
   public course: ICourse;
   public courseId: number;
   public degreeMap = degreeMap();
@@ -38,10 +41,10 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   public saveCourse(course: ICourse): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._courseService.updateItem(this.courseId, course)
       .subscribe(res => this.course = res)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   public delete() {
@@ -64,10 +67,10 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   private _getCurrentCourse(): void {
-    this.isEntityLoading = true;
+    this.isLoading = true;
     this._courseService.getItem(this.courseId)
       .subscribe(course => this.course = course)
-      .add(() => this.isEntityLoading = false);
+      .add(() => this.isLoading = false);
   }
 
   private _getCourseByRoute(): void {

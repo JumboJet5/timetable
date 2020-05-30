@@ -12,7 +12,10 @@ import { IFilterParams } from 'src/core/interfaces/request-param.interface';
 @Component({
   selector: 'app-faculty',
   templateUrl: './faculty.component.html',
-  styleUrls: ['./faculty.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/loader.scss',
+    './faculty.component.scss',
+  ],
 })
 export class FacultyComponent implements OnInit, OnDestroy {
   public isLoading = false;

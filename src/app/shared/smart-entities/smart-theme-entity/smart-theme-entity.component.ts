@@ -7,7 +7,11 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
 @Component({
   selector: 'app-smart-theme-entity',
   templateUrl: './smart-theme-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-theme-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-theme-entity.component.scss',
+  ],
   providers: [ThemeEntityService],
 })
 export class SmartThemeEntityComponent extends SmartItemEntity<ITheme> {

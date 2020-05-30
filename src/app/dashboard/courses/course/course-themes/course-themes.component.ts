@@ -7,7 +7,11 @@ import { ITheme } from 'src/core/interfaces/theme.interface';
 @Component({
   selector: 'app-course-themes',
   templateUrl: './course-themes.component.html',
-  styleUrls: ['../../../../../core/stylesheet/default-form.scss', './course-themes.component.scss'],
+  styleUrls: [
+    '../../../../../core/stylesheet/default-form.scss',
+    '../../../../../core/stylesheet/loader.scss',
+    './course-themes.component.scss',
+  ],
 })
 export class CourseThemesComponent {
   public themes: ITheme[] = [];
@@ -24,14 +28,14 @@ export class CourseThemesComponent {
     this._loadCourseThemes();
   }
 
+  public openDetails(entity: ITheme) {
+    this._smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.THEME};
+  }
+
   private _loadCourseThemes(): void {
     this.isLoading = false;
     this._themeService.getItems({specialty: this._courseId})
       .subscribe(res => this.themes = res.results)
       .add(() => this.isLoading = false);
-  }
-
-  public openDetails(entity: ITheme) {
-    this._smartDetailsService.currentEntity = {entity, type: EntityTypesEnum.THEME};
   }
 }

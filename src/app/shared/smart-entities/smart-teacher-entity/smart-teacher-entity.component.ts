@@ -7,7 +7,11 @@ import { ITeacher } from 'src/core/interfaces/teacher.interface';
 @Component({
   selector: 'app-smart-teacher-entity',
   templateUrl: './smart-teacher-entity.component.html',
-  styleUrls: ['../../../../core/stylesheet/default-form.scss', './smart-teacher-entity.component.scss'],
+  styleUrls: [
+    '../../../../core/stylesheet/default-form.scss',
+    '../../../../core/stylesheet/loader.scss',
+    './smart-teacher-entity.component.scss',
+  ],
   providers: [TeacherEntityService],
 })
 export class SmartTeacherEntityComponent extends SmartItemEntity<ITeacher> {
