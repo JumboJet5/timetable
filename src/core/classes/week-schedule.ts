@@ -88,8 +88,12 @@ export class WeekSchedule {
   }
 
   public getDateByWeekIndexAndDay(index: number, day: number) {
-    const firstDate = new Date(this.getSchedulePeriod().start);
-    return new Date(firstDate.getFullYear(), firstDate.getMonth(), firstDate.getDate() + index * 7 + day);
+    const firstDateOfSemester = new Date(this.getSchedulePeriod().start);
+    const year = firstDateOfSemester.getFullYear();
+    const month = firstDateOfSemester.getMonth();
+    const dayOffset = day - firstDateOfSemester.getDay() + 1;
+    const firstDateOfSemesterByDayNumber = firstDateOfSemester.getDate() + dayOffset;
+    return new Date(year, month, firstDateOfSemesterByDayNumber + index * 7);
   }
 
   public sortLessons(array: Lesson[]): Lesson[] {
@@ -114,15 +118,21 @@ export class WeekSchedule {
 
   private _getVacantWeekInfo(concreteLesson: Lesson, day: number,
                              timeId: number, weekIndex: number): VacantWeekInfoInterface {
+    const fistDate = new Date(this.getSchedulePeriod().start);
     const lastDate = new Date(this.getSchedulePeriod().end);
+    const startOffset = new Date(fistDate).getTimezoneOffset() * 60000;
+    const endOffset = new Date(lastDate).getTimezoneOffset() * 60000;
+    const firstTime = fistDate.getTime() + startOffset;
+    const lastTime = lastDate.getTime() + endOffset;
     // todo remove temporary week vacant filter
+    const date = this.getDateByWeekIndexAndDay(weekIndex, day);
     return {
-      date: this.getDateByWeekIndexAndDay(weekIndex, day),
+      date,
       isUsed: !!concreteLesson && !concreteLesson.isVacantByWeek(weekIndex),
       isVacant: true,
       isConflicted: this.getAssociativeLessons(dayMap().get(day), timeId, concreteLesson)
         .every(associatedLesson => associatedLesson.isWeekVacant(concreteLesson, weekIndex)),
-      isHidden: this.getDateByWeekIndexAndDay(weekIndex, day).getTime() > lastDate.getTime(),
+      isHidden: date.getTime() < firstTime || date.getTime() > lastTime,
     };
   }
 
