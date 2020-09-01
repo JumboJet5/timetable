@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GroupService } from '@app/service/group/group.service';
 import { LessonService } from '@app/service/lesson/lesson.service';
 import { MenuSelectModule } from '@app/shared/menu-select/menu-select.module';
@@ -29,5 +29,4 @@ import { ModalRoutingModule } from 'src/app/popup/modal/modal-routing.module';
     GroupService,
   ],
 })
-export class ModalModule {
-}
+export class ModalModule {}

@@ -7,6 +7,10 @@ import { filter, takeUntil } from 'rxjs/operators';
 @Injectable()
 export class PopupService {
   private unsubscribe: Subject<void> = new Subject();
+  private _dialogAnswerAccept: () => void;
+  private _dialogAnswerCancel: () => void;
+  private _modalAnswerAccept: () => void;
+  private _modalAnswerCancel: () => void;
 
   constructor(private router: Router) { }
 
@@ -27,15 +31,17 @@ export class PopupService {
                    onAccept: () => void = () => {},
                    onCancel: () => void = () => {},
                    state?: any) {
-    this.router.navigate([{outlets: {modal: ['modal', ...restUrl]}}], {state: {state}})
-      .then(() => this.router.events
-        .pipe(takeUntil(this.unsubscribe), filter(event => event instanceof NavigationEnd))
-        .subscribe(() => this.unsubscribe.next())
-        .add(() => history.state.answer === 'accept' ? onAccept && onAccept() : onCancel && onCancel()));
+    this.router.navigate([{outlets: {modal: ['modal', ...restUrl]}}], {state: {state}});
+    this._modalAnswerAccept = onAccept;
+    this._modalAnswerCancel = onCancel;
   }
 
-  public closeModal(): void {
-    if (this.router.url.includes('(modal:modal'))
-      this.router.navigate([{outlets: {modal: null}}]);
+  public closeModal(answer: 'accept' | 'cancel' = 'cancel'): void {
+    if (answer === 'accept' && !!this._modalAnswerAccept) this._modalAnswerAccept();
+    else if (answer === 'cancel' && !!this._modalAnswerCancel) this._modalAnswerCancel();
+
+    this._modalAnswerCancel = null;
+    this._modalAnswerCancel = null;
+    window.history.back();
   }
 }

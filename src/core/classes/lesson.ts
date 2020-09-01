@@ -28,8 +28,15 @@ export class Lesson implements ILesson {
   }
 
   public hasLessonsInsertConflicts(that: Lesson): boolean {
-    return this._hasLessonsScheduleConflicts(that) && !this._isLessonSimilar(that)
-      && (!this._hasLessonDifferentSubgroup(that) || !this._hasLessonDifferentRooms(that));
+    const scheduleConflicts = this._hasLessonsScheduleConflicts(that);
+    const isSimilar = this._isLessonSimilar(that);
+    const differentSubgroups = this._hasLessonDifferentSubgroup(that);
+    const differentRooms = this._hasLessonDifferentRooms(that);
+    const sameTeacher = this._hasLessonSameTeachers(that);
+    const sameFormat = this._hasLessonSameFormat(that);
+
+    return scheduleConflicts && !isSimilar
+      && (!differentSubgroups || (sameTeacher && (!sameFormat || differentRooms)) || !differentRooms);
   }
 
   public getLessonWeekSchedule(): boolean[] {
@@ -70,6 +77,15 @@ export class Lesson implements ILesson {
 
   private _hasLessonDifferentSubgroup(that: Lesson): boolean {
     return !!that && !!this.subgroup && !!that.subgroup && this.subgroup !== that.subgroup;
+  }
+
+  private _hasLessonSameFormat(that: Lesson): boolean {
+    return this.format === that.format;
+  }
+
+  private _hasLessonSameTeachers(that: Lesson): boolean {
+    return this.teachers.some(thisTeacher => that.teachers
+      .find(thatTeacher => thisTeacher.id === thatTeacher.id));
   }
 
   private _hasLessonDifferentRooms(that: Lesson): boolean {

@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GroupService } from '@app/service/group/group.service';
 import { LessonService } from '@app/service/lesson/lesson.service';
+import { PopupService } from '@app/service/modal/popup.service';
 import { ScheduleService } from '@app/service/schedule/schedule.service';
 import { Lesson } from '@classes/lesson';
 import { WeekSchedule } from '@classes/week-schedule';
@@ -31,6 +32,7 @@ export class LessonEditorComponent implements OnInit {
               private route: ActivatedRoute,
               private scheduleService: ScheduleService,
               private groupService: GroupService,
+              private popupService: PopupService,
               private lessonService: LessonService) {}
 
   public ngOnInit(): void {
@@ -46,6 +48,7 @@ export class LessonEditorComponent implements OnInit {
       lesson_time: +params.get('time'),
       group_semester: +params.get('groupsemesterId'),
     });
+    this.onFormatChanges(null);
   }
 
   public setWeekSchedule(value: WeekSchedule): void {
@@ -54,7 +57,7 @@ export class LessonEditorComponent implements OnInit {
   }
 
   public closeModal(answer: 'accept' | 'cancel' = 'cancel'): void {
-    this.router.navigate([{outlets: {modal: null}}], {state: {answer}});
+    this.popupService.closeModal(answer);
   }
 
   public onCreate(): void {
@@ -73,6 +76,7 @@ export class LessonEditorComponent implements OnInit {
       .subscribe(lesson => {
         this.lesson = new Lesson(lesson);
         this.lessonForm.patchValue(lesson);
+        this.onFormatChanges(lesson.conduct_type);
       })
       .add(() => this.isLessonLoading = false);
   }
@@ -80,5 +84,30 @@ export class LessonEditorComponent implements OnInit {
   private _getGroup(): void {
     if (this.weekSchedule) this.groupService.getGroup(this.weekSchedule.getScheduleGroupId())
       .subscribe(group => this.group = group);
+  }
+
+  public onFormatChanges(value: 'online' | 'offline' | 'unknown') {
+    switch (value) {
+      case 'offline':
+        this.lessonForm.get('housing').enable();
+        this.lessonForm.get('room').enable();
+        this.lessonForm.get('link').disable();
+        break;
+      case 'online':
+        this.lessonForm.get('housing').disable();
+        this.lessonForm.get('room').disable();
+        this.lessonForm.get('link').enable();
+        break;
+      case 'unknown':
+        this.lessonForm.get('housing').enable();
+        this.lessonForm.get('room').enable();
+        this.lessonForm.get('link').enable();
+        break;
+      default:
+        this.lessonForm.get('housing').disable();
+        this.lessonForm.get('room').disable();
+        this.lessonForm.get('link').disable();
+    }
+    console.log(value);
   }
 }

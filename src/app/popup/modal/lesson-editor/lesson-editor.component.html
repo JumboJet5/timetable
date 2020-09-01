@@ -16,6 +16,19 @@
     </div>
 
     <div class="info-row">
+      <div class="select-column middle">
+        <div class="placeholder">Формат проведення</div>
+        <app-lesson-format-select (onChangeValue)="onFormatChanges($event)"
+                                  [selectControl]="lessonForm.get('conduct_type')"></app-lesson-format-select>
+      </div>
+
+      <div class="select-column long">
+        <div class="placeholder">Посилання</div>
+        <input class="tb-input" formControlName="link">
+      </div>
+    </div>
+
+    <div class="info-row with-border">
       <div class="select-column short">
         <div class="placeholder">Підгрупи</div>
         <app-lesson-subgroup-select [selectControl]="lessonForm.get('subgroup')"
@@ -33,18 +46,6 @@
         <app-room-select [filters]="{housing: lessonForm.get('housing').value, ordering: 'num'}"
                          [disabled]="lessonForm.get('housing').invalid"
                          [selectControl]="lessonForm.get('room')"></app-room-select>
-      </div>
-    </div>
-
-    <div class="info-row with-border">
-      <div class="select-column middle">
-        <div class="placeholder">Формат проведення</div>
-        <app-lesson-format-select [selectControl]="lessonForm.get('conduct_type')"></app-lesson-format-select>
-      </div>
-
-      <div class="select-column long">
-        <div class="placeholder">Посилання</div>
-        <input class="tb-input" formControlName="link">
       </div>
     </div>
 

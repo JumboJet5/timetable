@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, Scroll } from '@angular/router';
 import { PopupService } from '@app/service/modal/popup.service';
 import { GroupSelectComponent } from '@app/shared/menu-select/group-select/group-select.component';
 import { Lesson } from '@classes/lesson';
@@ -8,7 +8,8 @@ import { WeekSchedule } from '@classes/week-schedule';
 import { degreeMap } from '@const/collections';
 import { environment } from '@environment/environment';
 import { ICreateLessonBody, ILesson } from '@interfaces';
-import { switchMap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { filter, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { FormatService } from 'src/app/service/format/format.service';
 import { LessonService } from 'src/app/service/lesson/lesson.service';
 import { ScheduleService } from 'src/app/service/schedule/schedule.service';

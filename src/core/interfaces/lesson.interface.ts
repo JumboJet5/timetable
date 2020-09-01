@@ -6,7 +6,7 @@ export interface ILesson {
   dates: string[];
   format: number;
   link?: null | string;
-  conduct_type?: string;
+  conduct_type?: 'online' | 'offline' | 'unknown';
   housing: number | {
     id: number;
     name: string;
