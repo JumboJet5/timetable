@@ -107,7 +107,7 @@ export class WeekSchedule {
   }
 
   public isLessonAdditional(lesson: Lesson, associativeLessons: Lesson[]): boolean {
-    const mainLesson = associativeLessons.find(item => item.format === lesson.format
+    const mainLesson = associativeLessons.find(item => item.format === lesson.format && lesson.conduct_type === item.conduct_type
       && item.name_full === lesson.name_full && item.getWeeksAsString() === lesson.getWeeksAsString());
     return mainLesson !== lesson;
   }

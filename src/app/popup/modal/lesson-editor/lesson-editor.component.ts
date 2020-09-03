@@ -108,6 +108,5 @@ export class LessonEditorComponent implements OnInit {
         this.lessonForm.get('room').disable();
         this.lessonForm.get('link').disable();
     }
-    console.log(value);
   }
 }

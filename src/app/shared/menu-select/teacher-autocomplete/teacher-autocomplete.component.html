@@ -14,7 +14,7 @@
             [isCircularSelecting]="!isLoading"
             [isDisabled]="selectControl.disabled || disabled">
 
-  <app-select-result>
+  <app-select-result [toggleFunc]="null">
     <label [formGroup]="filterForm">
       <input #searchInput
              (keydown.enter)="$event.preventDefault(); filterForm.get('search').patchValue('')"

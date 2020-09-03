@@ -16,6 +16,7 @@ export class Lesson implements ILesson {
   public subgroup: number | string;
   public teachers: TimetableTeacherInfoInterface[];
   public weeks: string;
+  public conduct_type: 'online' | 'offline' | 'unknown';
 
   constructor(lesson: ILesson) {
     Object.assign(this, lesson);

@@ -35,7 +35,10 @@
     </div>
 
     <div class="description-col">
-      <div class="lesson-name" [title]="lesson.name_full">{{lesson.name_full}}</div>
+      <div class="lesson-name" [title]="lesson.name_full">
+        <b class="name">{{lesson.name_full}} </b>
+        <span class="conduct-type">({{lesson.conduct_type}})</span>
+      </div>
       <div class="small-text teachers-info-row">Викл.: <span
         class="semi-bold">{{lesson.getTeachersInfoString()}}</span></div>
       <div class="small-text weeks-info-row">Тижні: <span class="semi-bold">{{lesson.getWeeksAsString()}}</span></div>

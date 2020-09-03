@@ -29,6 +29,7 @@ export class SelectComponent implements OnDestroy {
   @HostBinding('tabindex') public tabindex = 0;
   @ViewChild('optionsContent') public optionsContent: ElementRef<HTMLDivElement>;
   public selectState: BehaviorSubject<AbstractControl> = new BehaviorSubject(this.abstractControl);
+  public isFocusEventsTriggerOpenSelect = false;
   private unsubscribe: Subject<void> = new Subject<void>();
 
   constructor(private _selectService: SelectService,
@@ -113,14 +114,25 @@ export class SelectComponent implements OnDestroy {
     this._selectService.setNextOptionActive('prev', this.isCircularSelecting);
   }
 
-  @HostListener('focus')
-  public onFocus() {
+  @HostListener('focus', ['$event'])
+  public onFocus(event) {
+    if (this.isOpened) {
+      this.isFocusEventsTriggerOpenSelect = false;
+      return;
+    }
+
     this.isOpened = true;
+    this.isFocusEventsTriggerOpenSelect = true;
+
+    setTimeout(() => this.isFocusEventsTriggerOpenSelect = false, 500);
   }
 
   @HostListener('keydown.tab')
   public onBlur() {
     this.isOpened = false;
+    this.isFocusEventsTriggerOpenSelect = true;
+
+    setTimeout(() => this.isFocusEventsTriggerOpenSelect = false, 500);
   }
 
   @HostListener('beforeunload')

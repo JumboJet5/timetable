@@ -116,10 +116,13 @@
 
     .lesson-name {
       word-break: break-word;
-      font-weight: 500;
       margin-bottom: 4px;
       padding-bottom: 4px;
       border-bottom: 1px solid #909090;
+
+      .conduct-type {
+        font-size: 12px;
+      }
     }
 
     .description-info-row {
