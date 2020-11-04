@@ -101,7 +101,7 @@ export class WeekSchedule {
       if (l1.format !== l2.format) return l1.format - l2.format;
       if (l1.name_full !== l2.name_full) return l1.name_full > l2.name_full ? 1 : -1;
       if (l1.getWeeksAsString() !== l2.getWeeksAsString()) return l1.weeks > l2.weeks ? 1 : -1;
-      if (!!l1.subgroup && !!l2.subgroup && l1.subgroup !== l2.subgroup) return (+l1.subgroup) - (+l2.subgroup);
+      if (!!l1.subgroup && !!l2.subgroup && l1.subgroup !== l2.subgroup) return l1.subgroup > l2.subgroup ? 1 : -1;
       return 0;
     });
   }

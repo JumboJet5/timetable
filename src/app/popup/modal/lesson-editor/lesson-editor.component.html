@@ -31,8 +31,9 @@
     <div class="info-row with-border">
       <div class="select-column short">
         <div class="placeholder">Підгрупи</div>
-        <app-lesson-subgroup-select [selectControl]="lessonForm.get('subgroup')"
-                                    [group]="group"></app-lesson-subgroup-select>
+        <input class="tb-input" formControlName="subgroup" placeholder="Всі">
+<!--        <app-lesson-subgroup-select [selectControl]="lessonForm.get('subgroup')"-->
+<!--                                    [group]="group"></app-lesson-subgroup-select>-->
       </div>
 
       <div class="select-column long">
