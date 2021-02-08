@@ -34,7 +34,7 @@ export class DateRangePickerComponent implements OnInit {
 
   public set isOpened(value: boolean) {
     this._isOpened = value;
-    if (value) this._setInitialValue();
+    this._setInitialValue();
   }
 
   private _dateControl: AbstractControl;
@@ -107,8 +107,8 @@ export class DateRangePickerComponent implements OnInit {
   }
 
   public onEnter(day: Date): void {
-    if (this.isRangeChanging && (this.chosenRange.to.getTime() < this.chosenRange.temp.getTime()
-      || this.chosenRange.temp.getTime() < this.chosenRange.from.getTime()))
+    if (this.isRangeChanging && (this.chosenRange.to?.getTime() < this.chosenRange.temp?.getTime()
+      || this.chosenRange.temp?.getTime() < this.chosenRange.from?.getTime()))
       [this.chosenRange.from, this.chosenRange.to] = [this.chosenRange.to, this.chosenRange.from];
 
     if (this.isRangeChanging)
@@ -125,6 +125,7 @@ export class DateRangePickerComponent implements OnInit {
     this.dateControl.patchValue({start: undefined, end: undefined});
     this.dateControl.markAsDirty();
     this.isOpened = false;
+    this.isRangeChanging = false;
   }
 
   public onApply() {
@@ -149,6 +150,9 @@ export class DateRangePickerComponent implements OnInit {
   private _setInitialValue(value: IRange = this._getControlRange()): void {
     this.chosenRange.from = value ? value.from : undefined;
     this.chosenRange.to = value && value.to ? new Date(value.to.getFullYear(), value.to.getMonth(), value.to.getDate()) : undefined;
+    this.chosenRange.temp = undefined;
+    this.isRangeChanging = false;
+
     const now = (!!value && value.from) || new Date();
     this.setMonth(now, 'from');
     const next = new Date(now);
